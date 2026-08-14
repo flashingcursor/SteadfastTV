@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import tv.own.owntv.R
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvPreview
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -88,6 +90,6 @@ private fun MediaContextMenuPreview() = OwnTVPreview {
             MenuEntry("Delete", onClick = {}),
         ),
         onDismiss = {},
-        closeLabel = "Close",
+        closeLabel = stringResource(R.string.content_close),
     )
 }

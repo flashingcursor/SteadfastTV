@@ -87,6 +87,7 @@ private fun MediaListRowPreview() = OwnTVPreview {
     Column(Modifier.width(420.dp)) {
         MediaListRow(title = "Big Buck Bunny", onClick = {})
         MediaListRow(title = "Sintel", onClick = {}, dimmed = true)
+        MediaListRow(title = "Elephants Dream", onClick = {}, selected = true)
         MediaListRow(
             title = "Tears of Steel",
             onClick = {},

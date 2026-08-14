@@ -2897,6 +2897,11 @@
 1	log	app/src/main/java/tv/own/owntv/features/shell/ShellViewModel.kt	epgRefill sourceId=${src.id} — synced before but guide is empty, re-fetching
 1	technical	app/src/main/java/tv/own/owntv/features/shell/ShellViewModel.kt	migration_refill
 2	empty	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	\0
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	All Channels
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	Favorites
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	History
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	News
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	Sports
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	__rail_search__
 1	empty	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	\0
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	,
@@ -2924,6 +2929,11 @@
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	webp
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	–
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	−
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/Sidebar.kt	Living Room
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/Sidebar.kt	My Playlist
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	Live TV
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	London
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	My Playlist
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	clearNight
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	cloudy
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	continueChipAlpha
@@ -3768,6 +3778,9 @@
 1	log	app/src/main/java/tv/own/owntv/player/VolumeBoost.kt	volume boost unavailable: ${it.javaClass.simpleName}
 1	file-path	app/src/main/java/tv/own/owntv/ui/components/BackgroundImageChooserDialog.kt	background_${System.currentTimeMillis()}.$ext
 1	file-path	app/src/main/java/tv/own/owntv/ui/components/BackgroundImageChooserDialog.kt	png
+1	technical	app/src/main/java/tv/own/owntv/ui/components/CategoryHeader.kt	3 titles
+1	technical	app/src/main/java/tv/own/owntv/ui/components/CategoryHeader.kt	All Movies
+1	technical	app/src/main/java/tv/own/owntv/ui/components/CategoryHeader.kt	Live TV
 1	performance	app/src/main/java/tv/own/owntv/ui/components/FocusableSurface.kt	focusContainer
 1	performance	app/src/main/java/tv/own/owntv/ui/components/FocusableSurface.kt	focusScale
 1	protocol	app/src/main/java/tv/own/owntv/ui/components/GenreColor.kt	+18
@@ -4192,17 +4205,31 @@
 1	protocol	app/src/main/java/tv/own/owntv/ui/components/GenreColor.kt	وثائق
 1	protocol	app/src/main/java/tv/own/owntv/ui/components/GenreColor.kt	کارتون
 1	protocol	app/src/main/java/tv/own/owntv/ui/components/GenreColor.kt	کودک
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaContextMenu.kt	Add to Favorites
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaContextMenu.kt	Big Buck Bunny
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaContextMenu.kt	Delete
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaContextMenu.kt	Play
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaListRow.kt	Big Buck Bunny
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaListRow.kt	Elephants Dream
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaListRow.kt	Sintel
+1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaListRow.kt	Tears of Steel
 1	empty	app/src/main/java/tv/own/owntv/ui/components/MoveOrderOverlay.kt	\0
 1	performance	app/src/main/java/tv/own/owntv/ui/components/NavLadder.kt	navAccentBar
 1	performance	app/src/main/java/tv/own/owntv/ui/components/NavLadder.kt	navLadderBg
 1	performance	app/src/main/java/tv/own/owntv/ui/components/NavLadder.kt	navLadderFg
 1	performance	app/src/main/java/tv/own/owntv/ui/components/NavLadder.kt	navLadderIcon
 1	empty	app/src/main/java/tv/own/owntv/ui/components/NumberInputDialog.kt	\0
+1	technical	app/src/main/java/tv/own/owntv/ui/components/OwnTVButton.kt	Compact
+1	technical	app/src/main/java/tv/own/owntv/ui/components/OwnTVButton.kt	Disabled
+1	technical	app/src/main/java/tv/own/owntv/ui/components/OwnTVButton.kt	Primary
+1	technical	app/src/main/java/tv/own/owntv/ui/components/OwnTVButton.kt	Secondary
 1	empty	app/src/main/java/tv/own/owntv/ui/components/OwnTVTextField.kt	\0
 1	technical	app/src/main/java/tv/own/owntv/ui/components/PosterCard.kt	✓
 1	empty	app/src/main/java/tv/own/owntv/ui/components/SetTmdbNameDialog.kt	\0
 1	performance	app/src/main/java/tv/own/owntv/ui/components/StateViews.kt	spinner
 1	performance	app/src/main/java/tv/own/owntv/ui/components/StateViews.kt	spinnerAngle
+2	technical	app/src/main/java/tv/own/owntv/ui/components/StepperDialog.kt	$it%
+2	technical	app/src/main/java/tv/own/owntv/ui/components/StepperDialog.kt	UI Zoom
 1	empty	app/src/main/java/tv/own/owntv/ui/components/StorageBrowser.kt	\0
 1	locale	app/src/main/java/tv/own/owntv/ui/components/TrackOptionText.kt	und
 1	uri	app/src/main/java/tv/own/owntv/ui/components/TrailerPlayerScreen.kt	https://www.youtube.com/watch?v=$videoKey
@@ -4210,6 +4237,8 @@
 1	log	app/src/main/java/tv/own/owntv/ui/components/TvImeMetrics.kt	frame=$rect imeBottom=$imeBottom
 1	technical	app/src/main/java/tv/own/owntv/ui/format/TimeFormat.kt	Hm
 1	technical	app/src/main/java/tv/own/owntv/ui/format/TimeFormat.kt	hm
+1	technical	app/src/main/java/tv/own/owntv/ui/preview/OwnTVPreview.kt	OwnTV preview harness
+1	technical	app/src/main/java/tv/own/owntv/ui/preview/OwnTVPreview.kt	spec:width=1920dp,height=1080dp,dpi=213
 1	empty	app/src/main/java/tv/own/owntv/ui/theme/OwnTVColors.kt	\0
 1	technical	app/src/main/java/tv/own/owntv/ui/theme/OwnTVColors.kt	#
 1	empty	app/src/main/java/tv/own/owntv/ui/theme/Theme.kt	\0
