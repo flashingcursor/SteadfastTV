@@ -60,6 +60,8 @@ import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.glass
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvPreview
 
 /**
  * A category as shown in the rail: just its full name, optionally prefixed with an [icon] (the
@@ -292,4 +294,22 @@ private fun RailPill(
             }
         }
     }
+}
+
+private val PreviewCategories = listOf(
+    RailCategory(fullName = "Favorites", icon = OwnTVIcon.FAVORITE),
+    RailCategory(fullName = "History", icon = OwnTVIcon.HISTORY),
+    RailCategory(fullName = "All Channels", showGenreDot = false),
+    RailCategory(fullName = "Sports"),
+    RailCategory(fullName = "News"),
+)
+
+@TvPreview
+@Composable
+private fun CategoryRailPreview() = OwnTVPreview {
+    CategoryRail(
+        categories = PreviewCategories,
+        selectedIndex = 0,
+        onSelect = {},
+    )
 }

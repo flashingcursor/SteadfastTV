@@ -49,6 +49,8 @@ import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.WeatherGlyph
 import tv.own.owntv.ui.theme.glass
 import tv.own.owntv.ui.theme.ownTvTween
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvComponentPreview
 import java.util.Date
 
 // Top-bar chips: corner matches the nav buttons (14dp, not full-pill) and a lighter frost than the
@@ -347,5 +349,16 @@ private fun WeatherConditionIcon(info: WeatherInfo, modifier: Modifier = Modifie
             "thunder" -> { cloud(50f, 35f, 1.05f); bolt(52f, 48f); drops(28f, 66f, 2, rainC) }
             else -> cloud(46f, 48f, 1.15f)
         }
+    }
+}
+
+@TvComponentPreview
+@Composable
+private fun TopBarChipsPreview() = OwnTVPreview {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        SectionChip(label = "Live TV")
+        WeatherChip(info = WeatherInfo(temperatureC = 22f, city = "London", weatherCode = 0, isDay = true), fahrenheit = false)
+        ClockChip()
+        PlaylistChip(label = "My Playlist")
     }
 }

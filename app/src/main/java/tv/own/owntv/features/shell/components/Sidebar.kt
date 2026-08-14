@@ -55,6 +55,9 @@ import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.format.localizedInteger
 import tv.own.owntv.ui.theme.glass
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvComponentPreview
+import tv.own.owntv.ui.preview.TvPreview
 
 /**
  * Layer 1 — the MD3 navigation panel. A FIXED icon rail: brand logo at the top (Phase 2), the nav items
@@ -441,3 +444,31 @@ private val MainSection.navIcon: OwnTVIcon
         MainSection.EPG -> OwnTVIcon.EPG
         MainSection.SETTINGS -> OwnTVIcon.SETTINGS
     }
+
+@TvPreview
+@Composable
+private fun SidebarPreview() = OwnTVPreview {
+    Sidebar(
+        selected = MainSection.LIVE_TV,
+        onSelect = {},
+        visibleSections = MainSection.allBrowse,
+        avatarId = 0,
+        onPickAvatar = {},
+        profileName = "Living Room",
+        sourceSummary = "My Playlist",
+        onSwitchProfile = {},
+        selectedItemFocusRequester = remember { FocusRequester() },
+        onFocused = {},
+        counts = { if (it == MainSection.DOWNLOADS) 3 else 0 },
+    )
+}
+
+@TvComponentPreview
+@Composable
+private fun NavItemStatesPreview() = OwnTVPreview {
+    Column(Modifier.width(Dimens.SidebarWidthCollapsed).padding(8.dp)) {
+        NavItem(section = MainSection.HOME, active = false, expanded = false, count = 0, onClick = {})
+        NavItem(section = MainSection.LIVE_TV, active = true, expanded = false, count = 0, onClick = {})
+        NavItem(section = MainSection.DOWNLOADS, active = false, expanded = false, count = 3, onClick = {})
+    }
+}
