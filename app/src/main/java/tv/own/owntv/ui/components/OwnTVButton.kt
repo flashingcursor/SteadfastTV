@@ -12,6 +12,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvComponentPreview
 import tv.own.owntv.ui.theme.LocalActionSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -91,5 +93,16 @@ fun OwnTVButton(
                 modifier = Modifier.weight(1f, fill = false),
             )
         }
+    }
+}
+
+@TvComponentPreview
+@Composable
+private fun OwnTVButtonPreview() = OwnTVPreview {
+    Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        OwnTVButton(label = "Primary", onClick = {})
+        OwnTVButton(label = "Secondary", onClick = {}, style = OwnTVButtonStyle.SECONDARY)
+        OwnTVButton(label = "Compact", onClick = {}, compact = true)
+        OwnTVButton(label = "Disabled", onClick = {}, enabled = false)
     }
 }

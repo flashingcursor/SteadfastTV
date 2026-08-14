@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvPreview
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
@@ -135,4 +137,36 @@ private fun StepBtn(label: String, enabled: Boolean, modifier: Modifier = Modifi
         contentAlignment = Alignment.Center,
         surface = GlassSurface.DIALOGS,
     ) { _ -> Text(label, style = MaterialTheme.typography.titleMedium, color = if (enabled) colors.onSurface else colors.outline) }
+}
+
+@TvPreview
+@Composable
+private fun StepperDialogWithResetPreview() = OwnTVPreview {
+    StepperDialog(
+        title = "UI Zoom",
+        value = 100,
+        step = 5,
+        min = 70,
+        max = 130,
+        format = { "$it%" },
+        onSet = {},
+        onDismiss = {},
+        onReset = {},
+    )
+}
+
+@TvPreview
+@Composable
+private fun StepperDialogNoResetPreview() = OwnTVPreview {
+    StepperDialog(
+        title = "UI Zoom",
+        value = 100,
+        step = 5,
+        min = 70,
+        max = 130,
+        format = { "$it%" },
+        onSet = {},
+        onDismiss = {},
+        onReset = null,
+    )
 }

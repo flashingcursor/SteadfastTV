@@ -22,6 +22,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvPreview
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** One option row in a [MediaContextMenu]. The label arrives resolved (stringResource at the caller). */
@@ -73,4 +75,19 @@ fun MediaContextMenu(
             OwnTVButton(closeLabel, onClick = onDismiss, modifier = Modifier.fillMaxWidth())
         }
     }
+}
+
+@TvPreview
+@Composable
+private fun MediaContextMenuPreview() = OwnTVPreview {
+    MediaContextMenu(
+        title = "Big Buck Bunny",
+        entries = listOf(
+            MenuEntry("Play", onClick = {}),
+            MenuEntry("Add to Favorites", onClick = {}, icon = OwnTVIcon.FAVORITE),
+            MenuEntry("Delete", onClick = {}),
+        ),
+        onDismiss = {},
+        closeLabel = "Close",
+    )
 }

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -15,6 +17,8 @@ import androidx.tv.material3.LocalContentColor
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.ProvideTextStyle
 import androidx.tv.material3.Text
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvComponentPreview
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -74,5 +78,21 @@ fun MediaListRow(
             }
             trailing?.invoke()
         }
+    }
+}
+
+@TvComponentPreview
+@Composable
+private fun MediaListRowPreview() = OwnTVPreview {
+    Column(Modifier.width(420.dp)) {
+        MediaListRow(title = "Big Buck Bunny", onClick = {})
+        MediaListRow(title = "Sintel", onClick = {}, dimmed = true)
+        MediaListRow(
+            title = "Tears of Steel",
+            onClick = {},
+            trailing = {
+                OwnTVIcon(icon = OwnTVIcon.FAVORITE, tint = OwnTVTheme.colors.primary, modifier = Modifier.size(20.dp))
+            },
+        )
     }
 }

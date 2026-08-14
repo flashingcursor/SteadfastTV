@@ -1,7 +1,10 @@
 package tv.own.owntv.ui.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -13,6 +16,8 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvComponentPreview
 
 /**
  * An object-themed avatar drawn entirely with Canvas — no image assets, fully scalable. There are
@@ -136,4 +141,15 @@ private fun pentagon(center: Offset, r: Float): Path = Path().apply {
         if (i == 0) moveTo(x, y) else lineTo(x, y)
     }
     close()
+}
+
+@TvComponentPreview
+@Composable
+private fun OwnTVAvatarPreview() = OwnTVPreview {
+    Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        OwnTVAvatar(avatarId = 0, modifier = Modifier.size(46.dp))
+        OwnTVAvatar(avatarId = 3, modifier = Modifier.size(46.dp))
+        OwnTVAvatar(avatarId = 6, modifier = Modifier.size(46.dp))
+        OwnTVAvatar(avatarId = -1, modifier = Modifier.size(46.dp))
+    }
 }

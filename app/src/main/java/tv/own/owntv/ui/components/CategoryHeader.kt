@@ -2,12 +2,15 @@ package tv.own.owntv.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import tv.own.owntv.ui.preview.OwnTVPreview
+import tv.own.owntv.ui.preview.TvComponentPreview
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -39,5 +42,14 @@ fun CategoryHeader(
                 overflow = TextOverflow.Ellipsis,
             )
         }
+    }
+}
+
+@TvComponentPreview
+@Composable
+private fun CategoryHeaderPreview() = OwnTVPreview {
+    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        CategoryHeader(title = "All Movies", subtitle = "3 titles")
+        CategoryHeader(title = "Live TV", subtitle = null)
     }
 }
