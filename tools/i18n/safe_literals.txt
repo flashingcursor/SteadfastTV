@@ -2904,6 +2904,9 @@
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	News
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	Sports
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/CategoryRail.kt	__rail_search__
+2	technical	app/src/main/java/tv/own/owntv/features/shell/components/FloatingRail.kt	Bedroom
+2	technical	app/src/main/java/tv/own/owntv/features/shell/components/FloatingRail.kt	Living Room
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/FloatingRail.kt	navAccentBarTop
 1	empty	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	\0
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	,
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	·
