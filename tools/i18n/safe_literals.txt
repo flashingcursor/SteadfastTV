@@ -2933,6 +2933,17 @@
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	webp
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	–
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	−
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	\0
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	clearNight
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	cloudy
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	drizzle
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	fog
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	partlyDay
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	partlyNight
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	rain
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	snow
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	sunny
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	thunder
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/Sidebar.kt	Living Room
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/Sidebar.kt	My Playlist
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	Live TV
