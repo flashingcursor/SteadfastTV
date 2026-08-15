@@ -83,10 +83,11 @@ private val RailPanelShapeTop = RoundedCornerShape(50)
 
 /**
  * Floating shell nav rail (Task 2 of the floating-shell plan) — a self-positioning "pill" that
- * replaces [Sidebar] (LEFT) and introduces a horizontal TOP mode, per [RailPosition]. Unlike
- * Sidebar this composable does NOT fill the screen: it wraps its own content, floats over the
- * page, and the shell (Task 4) is responsible for placement/inset (`Alignment.CenterStart` for
- * LEFT, centered below the header for TOP) via [modifier].
+ * replaces the old fixed Sidebar (deleted; LEFT is this component's default orientation) and
+ * introduces a horizontal TOP mode, per [RailPosition]. Unlike Sidebar, this composable does NOT
+ * fill the screen: it wraps its own content, floats over the page, and the shell (Task 4) is
+ * responsible for placement/inset (`Alignment.CenterStart` for LEFT, centered below the header for
+ * TOP) via [modifier].
  *
  * Three areas, start→end (top→bottom for LEFT, start→end for TOP): avatar / destinations /
  * Settings, separated by thin translucent dividers.
@@ -109,9 +110,11 @@ fun FloatingRail(
     profileName: String,
     selectedItemFocusRequester: FocusRequester,
     onActiveChange: (Boolean) -> Unit,
+    // ModifierParameter (final-review cleanup, M8): modifier must be the first OPTIONAL parameter,
+    // so it sits right after the last required one — ahead of counts/forceActive below, not after.
+    modifier: Modifier = Modifier,
     counts: (MainSection) -> Int = { 0 },
     forceActive: Boolean = false,
-    modifier: Modifier = Modifier,
 ) {
     val colors = OwnTVTheme.colors
     var focusWithin by remember { mutableStateOf(false) }

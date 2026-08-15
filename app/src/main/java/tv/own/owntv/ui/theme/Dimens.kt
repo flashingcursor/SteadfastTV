@@ -9,8 +9,13 @@ object Dimens {
 
     // Layer 1 — MD3 navigation panel. Expands to a drawer (labels) when focused,
     // collapses to an icon rail when focus moves into a submenu.
-    val SidebarWidthExpanded = 272.dp
     val SidebarWidthCollapsed = 72.dp
+
+    // Floating shell rail (features/shell/components/FloatingRail.kt): the idle icon-rail's nominal
+    // cross-axis footprint (avatar 48dp + the rail panel's own padding), used ONLY as a same-frame
+    // fallback for the shell's content-area reservation before the rail has reported its first real
+    // idle measurement (cold start, or right after a runtime LEFT<->TOP switch resets the capture).
+    val RailIdleNominal = 66.dp
 
     // Layer 2 — category rail (expands to show full names when it holds focus)
     val RailWidth = 92.dp

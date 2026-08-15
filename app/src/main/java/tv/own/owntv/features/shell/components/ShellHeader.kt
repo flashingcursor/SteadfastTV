@@ -63,13 +63,15 @@ fun ShellHeader(
     onSearch: () -> Unit,
     weatherInfo: WeatherInfo?,
     weatherFahrenheit: Boolean,
+    // ModifierParameter (final-review cleanup, M8): modifier must be the first OPTIONAL parameter,
+    // so it sits right after the last required one — ahead of searchFocusable below, not after it.
+    modifier: Modifier = Modifier,
     // Task 5 (F6): the pill is reachable by D-pad ONLY while the rail holds focus — same gate the old
     // TopBar's SearchPill used (`searchVisible = focusedLayer == SIDEBAR`). Without this, focus can land
     // here from any direction and never update the shell's focusedLayer, corrupting the BACK state
     // machine (BACK from an unreachable-but-focused pill would fall through to stale layer logic).
     // Defaults true so every other/preview caller keeps the pill reachable as before.
     searchFocusable: Boolean = true,
-    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier.fillMaxWidth().padding(horizontal = 32.dp, vertical = 20.dp),
@@ -154,8 +156,8 @@ private fun ShellClock() {
     Text(formatted, style = MaterialTheme.typography.labelLarge.copy(color = Color.White, shadow = HeaderTextShadow))
 }
 
-// Moved verbatim from TopBar.kt's WeatherChip/WeatherConditionIcon (weather glyph canvas drawing).
-// TopBar keeps its own copy until Task 4 removes TopBar from the tree.
+// Moved verbatim from the old TopBar.kt's WeatherChip/WeatherConditionIcon (weather glyph canvas
+// drawing) — TopBar.kt itself was deleted in Task 4 once this header replaced it.
 @Composable
 private fun WeatherConditionIcon(info: WeatherInfo, modifier: Modifier = Modifier) {
     val key = info.symbolKey()

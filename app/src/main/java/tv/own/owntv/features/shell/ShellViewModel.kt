@@ -302,30 +302,13 @@ class ShellViewModel(
         .flatMapLatest { pid -> if (pid < 0) flowOf("") else profileDao.observeById(pid).map { it?.name ?: "" } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), "")
 
-    /** The active (default) source's name for the sidebar; null means the profile has none. */
-    val sourceSummary: StateFlow<String?> = settings.activeProfileId
-        .flatMapLatest { pid -> if (pid < 0) flowOf(emptyList<tv.own.owntv.core.database.entity.SourceEntity>()) else sourceRepository.observeSources(pid) }
-        .combine(settings.defaultSourceId) { sources, defaultId ->
-            when {
-                sources.isEmpty() -> null
-                else -> (sources.firstOrNull { it.id == defaultId } ?: sources.first()).name
-            }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
-
-    /** The active profile's playlists, for the top-bar quick switcher (empty when the profile has none). */
-    val playlists: StateFlow<List<tv.own.owntv.core.database.entity.SourceEntity>> = settings.activeProfileId
-        .flatMapLatest { pid -> if (pid < 0) flowOf(emptyList()) else sourceRepository.observeSources(pid) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
-
-    /** The chosen active-playlist filter: -1 = All playlists (merged view), else a single playlist id. */
+    /** The chosen active-playlist filter: -1 = All playlists (merged view), else a single playlist id.
+     *  Still consumed by [tv.own.owntv.features.shell.OwnTVShell] as a refresh key (Home re-fetches
+     *  when the active playlist changes) even after the header's playlist quick-switcher chip was
+     *  removed (final-review cleanup, M8) — switching the active playlist itself now lives in
+     *  Settings ([tv.own.owntv.features.settings.SettingsViewModel.setDefaultSource]). */
     val activePlaylistId: StateFlow<Long> = settings.defaultSourceId
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), -1L)
-
-    /** Switch the active-playlist filter from the top-bar picker. Persists (survives restart). */
-    fun setActivePlaylist(id: Long) {
-        viewModelScope.launch { settings.setDefaultSource(id) }
-    }
 
     /**
      * Phase 7 — weather chip. Refreshes when connectivity returns, cached 30 min by repository.
@@ -362,8 +345,9 @@ class ShellViewModel(
      * - **STATIC** (default): all six browse items minus the user's hidden set.
      * - **DYNAMIC**: derived from the active source's live content — Home always; Live/EPG when there are
      *   channels; Movies/Series when their table has rows; Downloads when Movies OR Series exist (Live has
-     *   no download). When the top-bar picker is on "All playlists" (`defaultSourceId <= 0`) the counts are
-     *   unioned across every source in the profile, so a VOD-only source still hides Live in the merged view.
+     *   no download). When the active-playlist filter is "All playlists" (`defaultSourceId <= 0`, set from
+     *   Settings) the counts are unioned across every source in the profile, so a VOD-only source still
+     *   hides Live in the merged view.
      *
      * The content counts come from the existing reactive `countAll` DAO flows, which Room re-emits on every
      * table write — so icons update on their own right after each sync, with no migration or probe call.

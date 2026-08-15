@@ -2883,6 +2883,7 @@
 1	protocol	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	United States
 1	protocol	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	ass
 1	performance	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	epg-preload
+1	technical	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	railScrim
 1	performance	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	shell-composed
 1	protocol	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	srt
 1	protocol	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	ssa
@@ -2933,7 +2934,7 @@
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	webp
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	–
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/SettingsScreen.kt	−
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	\0
+1	empty	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	\0
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	clearNight
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	cloudy
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	drizzle
@@ -2944,23 +2945,6 @@
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	snow
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	sunny
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	thunder
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/Sidebar.kt	Living Room
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/Sidebar.kt	My Playlist
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	Live TV
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	London
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	My Playlist
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	clearNight
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	cloudy
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	continueChipAlpha
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	drizzle
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	fog
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	partlyDay
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	partlyNight
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	rain
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	searchPillAlpha
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	snow
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	sunny
-1	technical	app/src/main/java/tv/own/owntv/features/shell/components/TopBar.kt	thunder
 1	json	app/src/main/java/tv/own/owntv/features/subtitles/SubtitleSearchViewModel.kt	ai_translated
 1	json	app/src/main/java/tv/own/owntv/features/subtitles/SubtitleSearchViewModel.kt	attributes
 1	json	app/src/main/java/tv/own/owntv/features/subtitles/SubtitleSearchViewModel.kt	data

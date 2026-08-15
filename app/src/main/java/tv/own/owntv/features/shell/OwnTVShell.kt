@@ -30,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
@@ -112,10 +111,10 @@ fun OwnTVShell(
     avatarId: Int,
     onSetAvatar: (Int) -> Unit,
     profileName: String,
-    sourceSummary: String?,
-    playlists: List<tv.own.owntv.core.database.entity.SourceEntity> = emptyList(),
+    // Home re-fetches when the active playlist changes (see the LaunchedEffect keyed on this below);
+    // switching the active playlist itself lives in Settings now (final-review cleanup, M8) — this is
+    // read-only here.
     activePlaylistId: Long = -1L,
-    onSelectPlaylist: (Long) -> Unit = {},
     weatherInfo: tv.own.owntv.core.weather.WeatherInfo? = null, // Phase 7
     weatherFahrenheit: Boolean = false,
     activeProfileId: Long?,
@@ -160,10 +159,17 @@ fun OwnTVShell(
     // TOP mode: combined height of the header AND the Audio Mode now-playing row (when present) —
     // the rail must dock below whichever of those is currently on screen, not just the header alone.
     var topBlockHeightPx by remember { mutableIntStateOf(0) }
-    var railHeightPx by remember { mutableIntStateOf(0) }
+    // The rail's own measured cross-axis size (height in TOP mode, width in LEFT mode below) drives
+    // the content reservation, frozen at the smallest ("truly idle") size ever observed — see the
+    // FloatingRail onSizeChanged callback further down, which is where the freeze is actually
+    // enforced. `remember(railPositionValue)` resets both to 0 (unmeasured) on every LEFT<->TOP
+    // switch: LEFT's frozen width is meaningless as a TOP-mode height reservation and vice versa —
+    // without this key, switching orientation at runtime would apply a stale reservation from the
+    // OTHER orientation for a pass (content shoved off-screen) until the rail happened to re-measure.
+    var railHeightPx by remember(railPositionValue) { mutableIntStateOf(0) }
     // LEFT mode: the rail's own measured width, so the content start-inset always reserves exactly
     // enough room regardless of rail padding/border/content changes.
-    var railWidthPx by remember { mutableIntStateOf(0) }
+    var railWidthPx by remember(railPositionValue) { mutableIntStateOf(0) }
     val density = LocalDensity.current
     // Deep-link: the Guide's "Add EPG" button switches to Settings and opens EPG Sources → add.
     var openEpgAdd by remember { mutableStateOf(false) }
@@ -462,10 +468,11 @@ fun OwnTVShell(
       if (playerMode != PlayerMode.FULLSCREEN) {
         Column(modifier = Modifier.fillMaxSize()) {
           if (isOffline) OfflineBanner()
-          // Floating shell (Task 4): the header spans the full width and the rail floats independently
-          // over this area (LEFT: centered on the edge; TOP: centered below the header) rather than
-          // sitting in a fixed column like the old Sidebar — both live in one Box below the offline
-          // banner so FloatingRail's CenterStart/TopCenter alignment matches the old Sidebar's extent.
+          // Floating shell: the header spans the full width and the rail floats independently over
+          // this area (LEFT: centered on the edge; TOP: centered below the header) rather than
+          // sitting in a fixed column like the deleted Sidebar did — both live in one Box below the
+          // offline banner so FloatingRail's CenterStart/TopCenter alignment matches the same
+          // vertical extent Sidebar used to fill.
           Box(modifier = Modifier.weight(1f).fillMaxSize()) {
             Column(
                 modifier = Modifier
@@ -560,28 +567,27 @@ fun OwnTVShell(
                                 railForceActive = false
                             }
                         }
-                        // Task 6 (finding #2): TOP mode only. LEFT mode's rail sits beside content, so a
-                        // spatial "start" search already reaches it with no help (verified on-device).
-                        // TOP mode's rail sits directly ABOVE content, but so does the header's search
-                        // pill (further up still) — left to the default spatial search, UP from the top
-                        // of content could resolve to the pill instead of the rail. Force it
-                        // deterministically to the rail's selected item.
+                        // Final-review finding (I4): an explicit `Modifier.focusProperties { up =
+                        // sidebarFocus }` override used to sit here for TOP mode, but it was INERT — every
+                        // section below interposes its own FocusTarget (each wraps its content in
+                        // `.focusGroup()`/a focusable descendant), so this ancestor Box's `up` override was
+                        // never the one consulted; `fetchFocusProperties()` walks the CURRENTLY FOCUSED
+                        // node's own ancestors; it never reached this far up. Deleted rather than kept as
+                        // dead defense-in-depth.
                         //
-                        // This override is resolved relative to whichever descendant is CURRENTLY FOCUSED
-                        // when UP is pressed (FocusTargetNode.fetchFocusProperties() walks that node's own
-                        // ancestors) — never relative to a DIFFERENT direction's search landing on this
-                        // subtree from outside, so it cannot be what affects a DOWN press starting in the
-                        // (sibling, not ancestor) rail. Traced against the actual androidx.compose.ui
-                        // 1.11.4 focus-search source to confirm before ruling it out as a DOWN-direction
-                        // suspect (FocusOwnerImpl.focusSearch calls customFocusSearch on the currently
-                        // *focused* node, never on the destination).
-                        .then(
-                            if (railPositionValue == RailPosition.TOP) {
-                                Modifier.focusProperties { up = sidebarFocus }
-                            } else {
-                                Modifier
-                            },
-                        )
+                        // The real, verified-on-device mechanism, recorded here since it's easy to
+                        // re-break by accident: UP reaches the rail via the DEFAULT spatial search wherever
+                        // a section doesn't block it. Single-pane sections (Settings/Home/Search/EPG) and
+                        // the browse 3-pane path's ContentPane/PreviewPane don't trap vertical exits, so UP
+                        // from their top row resolves spatially straight to the rail (LEFT: it's beside
+                        // content, so this needs no help at all; TOP: it's directly above, and reachable the
+                        // same way once the header's search pill is out of the running — see ShellHeader's
+                        // `searchFocusable` gate above). Live/Movies/Series/Downloads and CategoryRail itself
+                        // deliberately call `trapVerticalFocusExit()` (held Up/Down can outrun a lazy list's
+                        // composition and escape to the wrong place) — UP is intentionally swallowed there,
+                        // so on those screens the rail is reached via BACK (the unified BACK floor, spec §4)
+                        // or by first moving to the CategoryRail's top edge. This is the intended design, not
+                        // a gap.
                         // Content reservation for the floating rail, implemented ONCE here rather than
                         // per-screen, both driven by the rail's OWN measured size (self-correcting — no
                         // magic constants that can drift out of sync with the rail's real geometry):
@@ -591,14 +597,21 @@ fun OwnTVShell(
                         // column flow, so only the rail itself needs an explicit reservation here — the
                         // matching gap between the header block and the rail is added at the rail's own
                         // top padding below, so both gaps land at GapMedium).
+                        //
+                        // railWidthPx/railHeightPx are 0 until the rail's onSizeChanged callback below
+                        // reports its first idle measurement (cold start, or right after a LEFT<->TOP
+                        // switch resets the capture — both keyed to railPositionValue) — fall back to
+                        // Dimens.RailIdleNominal for that one frame instead of reserving zero space.
                         .padding(
                             start = if (railPositionValue == RailPosition.LEFT) {
-                                30.dp + with(density) { railWidthPx.toDp() } + Dimens.GapMedium
+                                val w = if (railWidthPx == 0) Dimens.RailIdleNominal else with(density) { railWidthPx.toDp() }
+                                30.dp + w + Dimens.GapMedium
                             } else {
                                 0.dp
                             },
                             top = if (railPositionValue == RailPosition.TOP) {
-                                with(density) { railHeightPx.toDp() } + Dimens.GapMedium * 2
+                                val h = if (railHeightPx == 0) Dimens.RailIdleNominal else with(density) { railHeightPx.toDp() }
+                                h + Dimens.GapMedium * 2
                             } else {
                                 0.dp
                             },
@@ -795,12 +808,22 @@ fun OwnTVShell(
                         // under the expanded rail — an overlay — never pushes/reflows it (the old
                         // Sidebar's "fixed rail, layout never jumps" principle). Active (focused or
                         // BACK-forced) rendering balloons the rail with labels + the glass panel; skip
-                        // capturing that and keep the last collapsed measurement as the reservation, so
-                        // the expanded rail floats over the (already dimmed, via the scrim above)
-                        // content instead of shoving it aside.
+                        // capturing that while active, so the expanded rail floats over the (already
+                        // dimmed, via the scrim above) content instead of shoving it aside.
+                        //
+                        // minOf (not a plain overwrite) is what makes the freeze hold during the ~220ms
+                        // COLLAPSE animation too, not just while active: the moment focus leaves, this
+                        // guard reopens, but the collapse animation's intermediate frames are all still
+                        // LARGER than the true idle size (shrinking down toward it) — since the value
+                        // already sitting in railWidthPx/railHeightPx from before the rail ever expanded
+                        // IS that true idle size, minOf(idle, anyLargerTransientFrame) always stays at
+                        // idle. Content genuinely never moves, not even eased, through a full
+                        // expand-then-collapse cycle. The `== 0` branch is only the very first
+                        // measurement after a cold start or a railPositionValue-keyed reset (see the
+                        // state declarations above), where there is no prior floor to take a min against.
                         if (!(railActive || railForceActive)) {
-                            railWidthPx = it.width
-                            railHeightPx = it.height
+                            railWidthPx = if (railWidthPx == 0) it.width else minOf(railWidthPx, it.width)
+                            railHeightPx = if (railHeightPx == 0) it.height else minOf(railHeightPx, it.height)
                         }
                     },
             )

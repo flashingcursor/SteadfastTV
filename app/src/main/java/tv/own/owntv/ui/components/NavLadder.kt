@@ -21,8 +21,10 @@ import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.ownTvTween
 
 /**
- * The single 4-state visual "ladder" shared by every top-level navigation surface (the [Sidebar]
- * nav items and the folder [CategoryRail] pills), so both panels read identically (#47).
+ * The single 4-state visual "ladder" shared by every top-level navigation surface (the floating
+ * shell rail's [tv.own.owntv.features.shell.components.FloatingRail] nav items — the fixed Sidebar
+ * this originally described was replaced by FloatingRail in the floating-shell redesign — and the
+ * folder [CategoryRail] pills), so both panels read identically (#47).
  *
  * Standard TV `ListItem` colours collapse "selected" and "focused" into one visual, which makes it
  * impossible to tell "the section I'm actually in" from "the item my cursor is hovering". This ladder

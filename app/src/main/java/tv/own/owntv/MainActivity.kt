@@ -217,8 +217,6 @@ class MainActivity : ComponentActivity() {
             val glassConfig by viewModel.glassConfig.collectAsStateWithLifecycle()
             val avatarId by viewModel.avatarId.collectAsStateWithLifecycle()
             val profileName by viewModel.profileName.collectAsStateWithLifecycle()
-            val sourceSummary by viewModel.sourceSummary.collectAsStateWithLifecycle()
-            val playlists by viewModel.playlists.collectAsStateWithLifecycle()
             val activePlaylistId by viewModel.activePlaylistId.collectAsStateWithLifecycle()
             val weather by viewModel.weather.collectAsStateWithLifecycle()
             val weatherFahrenheit by viewModel.weatherFahrenheit.collectAsStateWithLifecycle()
@@ -380,10 +378,7 @@ class MainActivity : ComponentActivity() {
                                 avatarId = avatarId,
                                 onSetAvatar = viewModel::setAvatar,
                                 profileName = profileName,
-                                sourceSummary = sourceSummary,
-                                playlists = playlists,
                                 activePlaylistId = activePlaylistId,
-                                onSelectPlaylist = viewModel::setActivePlaylist,
                                 weatherInfo = weather,
                                 weatherFahrenheit = weatherFahrenheit,
                                 activeProfileId = activeProfileId,
