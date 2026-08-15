@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
@@ -62,6 +63,12 @@ fun ShellHeader(
     onSearch: () -> Unit,
     weatherInfo: WeatherInfo?,
     weatherFahrenheit: Boolean,
+    // Task 5 (F6): the pill is reachable by D-pad ONLY while the rail holds focus — same gate the old
+    // TopBar's SearchPill used (`searchVisible = focusedLayer == SIDEBAR`). Without this, focus can land
+    // here from any direction and never update the shell's focusedLayer, corrupting the BACK state
+    // machine (BACK from an unreachable-but-focused pill would fall through to stale layer logic).
+    // Defaults true so every other/preview caller keeps the pill reachable as before.
+    searchFocusable: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -71,7 +78,7 @@ fun ShellHeader(
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
             ShellTitle(title)
         }
-        ShellSearchPill(onClick = onSearch)
+        ShellSearchPill(onClick = onSearch, focusable = searchFocusable)
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
             ShellWeatherAndClock(weatherInfo = weatherInfo, weatherFahrenheit = weatherFahrenheit)
         }
@@ -90,12 +97,13 @@ private fun ShellTitle(title: String) {
 
 /** The header's only capsule: translucent glass when glass mode is on, else a faint flat fill + hairline border. */
 @Composable
-private fun ShellSearchPill(onClick: () -> Unit) {
+private fun ShellSearchPill(onClick: () -> Unit, focusable: Boolean) {
     val glassy = LocalGlass.current.isGlassy(GlassSurface.TOPBAR)
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier
             .widthIn(max = 220.dp)
+            .focusProperties { canFocus = focusable }
             .then(if (!glassy) Modifier.border(1.dp, Color.White.copy(alpha = 0.13f), SearchPillShape) else Modifier),
         shape = SearchPillShape,
         surface = GlassSurface.TOPBAR,

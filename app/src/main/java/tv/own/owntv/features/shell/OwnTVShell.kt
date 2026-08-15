@@ -142,8 +142,15 @@ fun OwnTVShell(
         .railPosition.collectAsStateWithLifecycle(initialValue = RailPosition.DEFAULT)
     // True while D-pad focus sits inside the rail (fires from FloatingRail's onActiveChange).
     var railActive by remember { mutableStateOf(false) }
-    // BACK-forced expansion (Task 5 wires this true at the unified BACK floor); stays false here.
-    val railForceActive = false
+    // BACK-forced expansion (Task 5's unified BACK floor, §4): content BACK sets this true and focuses
+    // the rail so it renders expanded immediately, before the focus-within transition itself lands
+    // (see the LaunchedEffect below, which clears it once railActive catches up).
+    var railForceActive by remember { mutableStateOf(false) }
+    // Once real D-pad focus settles inside the rail, `railActive` already keeps the panel expanded
+    // (`active = forceActive || focusWithin` in FloatingRail) — the forced flag has done its job and
+    // stops being needed. Clearing it here (rather than leaving it stuck true) is what lets a later
+    // BACK press correctly read "rail active" from railActive alone once focus later leaves the rail.
+    LaunchedEffect(railActive) { if (railActive) railForceActive = false }
     // Measured header/audio-row/rail dimensions (px), used to place the rail relative to whatever's
     // actually above it and to reserve exactly that much space for the content below/beside it —
     // computed once per layout pass rather than hard-coded, so it self-corrects for UI zoom,
@@ -404,13 +411,31 @@ fun OwnTVShell(
         }
     }
 
+    // Task 5 — the unified BACK floor (spec §4). Registered here, near the TOP of this composable's
+    // body, so it's added to the dispatcher BEFORE any child screen's own BackHandler — Compose/
+    // OnBackPressedDispatcher runs callbacks LIFO, so every page-local handler (drills, overlays,
+    // dialogs, the player HUD) is added later and therefore wins first, exactly preserving their
+    // existing unwind chains. This handler only ever fires once nothing below it consumed BACK, i.e.
+    // once a section's own state is already at its top ("deep page state → page top" already happened
+    // via those page-local handlers before this one is even reached). From there BACK always walks:
+    // rail activates → rail active → exit confirmation.
     BackHandler {
         when {
+            // The fullscreen player owns BACK entirely while open (unchanged) — leaving it takes
+            // priority over any rail/exit bookkeeping below.
             playerMode == PlayerMode.FULLSCREEN -> exitPlayer()
             showAvatarPicker -> showAvatarPicker = false
             showExit -> showExit = false
-            focusedLayer == ShellLayer.SIDEBAR -> showExit = true
-            else -> runCatching { sidebarFocus.requestFocus() }
+            // Rail already active (real D-pad focus inside it, or still BACK-forced expanded from the
+            // previous press) → next BACK is the exit confirmation.
+            railActive || railForceActive -> showExit = true
+            // Content (or anything else) holds focus → activate the rail: force it to render expanded
+            // immediately and move focus onto it. railForceActive clears itself once railActive catches
+            // up (LaunchedEffect above) or once a section is picked (FloatingRail's onSelect below).
+            else -> {
+                railForceActive = true
+                runCatching { sidebarFocus.requestFocus() }
+            }
         }
     }
 
@@ -450,6 +475,10 @@ fun OwnTVShell(
                         onSearch = { onSelectSection(MainSection.SEARCH) },
                         weatherInfo = weatherInfo,
                         weatherFahrenheit = weatherFahrenheit,
+                        // F6 (Task 5 review carry-over): only reachable by D-pad while the rail holds
+                        // focus — matches the old TopBar SearchPill's `searchVisible` gate. Keeps the
+                        // pill from stealing focus (and leaving focusedLayer stale) from any direction.
+                        searchFocusable = focusedLayer == ShellLayer.SIDEBAR,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     // Audio Mode now-playing bar: the transparent header (Task 3) has exactly three fixed
@@ -655,8 +684,8 @@ fun OwnTVShell(
                         }
                     }
                     // Active-rail scrim: dims the content area only (not the header/rail) while the rail
-                    // holds D-pad focus or is BACK-forced active (Task 5 wires railForceActive true at the
-                    // unified BACK floor). Content stays visible underneath — focus lives in the rail.
+                    // holds D-pad focus or is BACK-forced active (Task 5's unified BACK floor sets
+                    // railForceActive true). Content stays visible underneath — focus lives in the rail.
                     val scrimAlpha by animateFloatAsState(
                         targetValue = if (railActive || railForceActive) 0.45f else 0f,
                         animationSpec = ownTvTween(),
@@ -671,7 +700,9 @@ fun OwnTVShell(
                 position = railPositionValue,
                 selected = selectedSection,
                 visibleSections = visibleSections,
-                onSelect = onSelectSection,
+                // Rail activation clears on selection too (spec §4), not just on the focus-settles path
+                // above — belt-and-suspenders for the same click-without-a-focus-transition edge case.
+                onSelect = { section -> railForceActive = false; onSelectSection(section) },
                 avatarId = avatarId,
                 onPickAvatar = { showAvatarPicker = true },
                 onSwitchProfile = onSwitchProfile,
