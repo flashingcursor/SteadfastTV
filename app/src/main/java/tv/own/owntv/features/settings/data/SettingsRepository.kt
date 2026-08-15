@@ -133,6 +133,8 @@ class SettingsRepository(private val context: Context, private val localeStore: 
         // Docked mini-player: size (% of screen width) and screen corner/edge.
         val MINI_PLAYER_SIZE_PCT = intPreferencesKey("mini_player_size_pct")
         val MINI_PLAYER_POSITION = stringPreferencesKey("mini_player_position")
+        // Persistent navigation rail: left sidebar vs. top bar (a RailPosition name).
+        val RAIL_POSITION = stringPreferencesKey("rail_position")
         // Live TV latency: preset name + the custom seconds used when the preset is CUSTOM.
         val LIVE_LATENCY_MODE = stringPreferencesKey("live_latency_mode")
         val LIVE_LATENCY_CUSTOM_SECS = intPreferencesKey("live_latency_custom_secs")
@@ -1272,6 +1274,15 @@ class SettingsRepository(private val context: Context, private val localeStore: 
 
     suspend fun setMiniPlayerPosition(name: String) {
         context.dataStore.edit { it[Keys.MINI_PLAYER_POSITION] = name }
+    }
+
+    /** Persistent navigation rail screen position (a [RailPosition] name). */
+    val railPosition: Flow<RailPosition> = prefsFlow { prefs ->
+        RailPosition.fromName(prefs[Keys.RAIL_POSITION])
+    }
+
+    suspend fun setRailPosition(position: RailPosition) {
+        context.dataStore.edit { it[Keys.RAIL_POSITION] = position.name }
     }
 
     /** Live TV latency preset (a [LiveLatency] name). */

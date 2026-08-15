@@ -184,7 +184,9 @@ fun SettingsScreen(
     var showBgRemote by remember { mutableStateOf(false) }
     var showGlassEffect by remember { mutableStateOf(false) }
     var showBrowsing by remember { mutableStateOf(false) }
+    var showRailPosition by remember { mutableStateOf(false) }
     val browsingRowFocus = remember { FocusRequester() }
+    val railPositionRowFocus = remember { FocusRequester() }
     // U2 — background-image ingest copies a multi-megabyte file; it runs here, off the main thread.
     val ingestScope = rememberCoroutineScope()
 
@@ -221,13 +223,13 @@ fun SettingsScreen(
     // doesn't visibly jump/scroll when the dialog opens or when we refocus the opener row afterward.
     val scrollState = rememberScrollState()
     var savedScroll by remember { mutableIntStateOf(0) }
-    val anyDialogOpen = showZoom || showTheme || showAccent || showFolderPicker || showUpdate || showAbout || showCatchupTime || showEpgOffset || showClearHistory || showAnimations || showStartup || showErrorLog || showAfrWarning || showLivePreviewPanelWarning || showBgImageChooser || showBgPicker || showGlassEffect || showBrowsing
+    val anyDialogOpen = showZoom || showTheme || showAccent || showFolderPicker || showUpdate || showAbout || showCatchupTime || showEpgOffset || showClearHistory || showAnimations || showStartup || showErrorLog || showAfrWarning || showLivePreviewPanelWarning || showBgImageChooser || showBgPicker || showGlassEffect || showBrowsing || showRailPosition
     // When a dialog closes, restore focus to the row that opened it. NOTE: this restore crosses
     // INTO the root focus group from outside (the dialog), but onEnter does NOT fire for programmatic
     // requestsFocus (only for directional entry) — so dialogReturn must be cleared HERE, not in onEnter.
     // If it's left set, the next directional entry (e.g. sidebar→here) would re-route to a stale row.
     var dialogReturn by remember { mutableStateOf<FocusRequester?>(null) }
-    LaunchedEffect(showZoom, showTheme, showAccent, showFolderPicker, showUpdate, showAbout, showCatchupTime, showEpgOffset, showClearHistory, showAnimations, showStartup, showErrorLog, showAfrWarning, showLivePreviewPanelWarning, showBgImageChooser, showBgPicker, showGlassEffect, showBrowsing) {
+    LaunchedEffect(showZoom, showTheme, showAccent, showFolderPicker, showUpdate, showAbout, showCatchupTime, showEpgOffset, showClearHistory, showAnimations, showStartup, showErrorLog, showAfrWarning, showLivePreviewPanelWarning, showBgImageChooser, showBgPicker, showGlassEffect, showBrowsing, showRailPosition) {
         if (!anyDialogOpen) {
             // When a scrim dialog is torn down, Compose's focus re-search through the newly-exposed
             // scrollable Column resets its scroll to 0 and then bringIntoView-animates to wherever
@@ -270,6 +272,7 @@ fun SettingsScreen(
     val weatherEnabled by settingsVm.weatherEnabled.collectAsStateWithLifecycle()
     val startupMode by settingsVm.startupMode.collectAsStateWithLifecycle()
     val navMenuMode by settingsVm.navMenuMode.collectAsStateWithLifecycle()
+    val railPosition by settingsVm.railPosition.collectAsStateWithLifecycle()
     val chNavEnabled by settingsVm.chNavEnabled.collectAsStateWithLifecycle()
     val rememberLastLive by settingsVm.rememberLastLive.collectAsStateWithLifecycle()
     val rememberLastMovies by settingsVm.rememberLastMovies.collectAsStateWithLifecycle()
@@ -489,6 +492,14 @@ fun SettingsScreen(
             chipTone = if (navMenuMode == tv.own.owntv.features.settings.data.SettingsRepository.NavMenuMode.DYNAMIC) TileTone.PRIMARY else TileTone.SECONDARY,
             onClick = { open(SettingsTab.NAV_MENU) }, showChevron = true,
             modifier = Modifier.focusRequester(rowFocus.getValue(SettingsTab.NAV_MENU)),
+        )
+        SettingsRow(
+            tone = TileTone.PRIMARY, icon = OwnTVIcon.MENU,
+            title = stringResource(R.string.settings_rail_position), desc = stringResource(R.string.settings_rail_position_description),
+            chip = railPositionLabel(railPosition),
+            chipTone = if (railPosition == tv.own.owntv.features.settings.data.RailPosition.DEFAULT) TileTone.SECONDARY else TileTone.PRIMARY,
+            onClick = { savedScroll = scrollState.value; dialogReturn = railPositionRowFocus; showRailPosition = true }, showChevron = true,
+            modifier = Modifier.focusRequester(railPositionRowFocus),
         )
         SettingsRow(
             tone = TileTone.PRIMARY, icon = OwnTVIcon.PLAYLIST,
@@ -747,6 +758,8 @@ fun SettingsScreen(
                 SettingsSearchEntry(stringResource(R.string.settings_group_content), stringResource(R.string.settings_customize), stringResource(R.string.settings_search_keywords_customize), OwnTVIcon.SORT, TileTone.PRIMARY) { open(SettingsTab.CUSTOMIZE) },
                 SettingsSearchEntry(stringResource(R.string.settings_group_content), stringResource(R.string.settings_sidebar_customization), stringResource(R.string.settings_search_keywords_sidebar), OwnTVIcon.MENU, TileTone.PRIMARY,
                     chip = navModeLabel(navMenuMode), chipTone = if (navMenuMode == tv.own.owntv.features.settings.data.SettingsRepository.NavMenuMode.DYNAMIC) TileTone.PRIMARY else TileTone.SECONDARY) { open(SettingsTab.NAV_MENU) },
+                SettingsSearchEntry(stringResource(R.string.settings_group_content), stringResource(R.string.settings_rail_position), stringResource(R.string.settings_search_keywords_rail_position), OwnTVIcon.MENU, TileTone.PRIMARY,
+                    chip = railPositionLabel(railPosition), chipTone = if (railPosition == tv.own.owntv.features.settings.data.RailPosition.DEFAULT) TileTone.SECONDARY else TileTone.PRIMARY) { savedScroll = scrollState.value; dialogReturn = searchFieldFocus; showRailPosition = true },
                 SettingsSearchEntry(stringResource(R.string.settings_group_content), stringResource(R.string.settings_ch_paging), stringResource(R.string.settings_search_keywords_ch), OwnTVIcon.PLAYLIST, TileTone.PRIMARY,
                     chip = if (chNavEnabled) stringResource(R.string.common_on) else stringResource(R.string.common_off), chipTone = if (chNavEnabled) TileTone.PRIMARY else TileTone.SECONDARY) { open(SettingsTab.CH_NAV) },
                 SettingsSearchEntry(stringResource(R.string.settings_group_content), stringResource(R.string.settings_panel_width), stringResource(R.string.settings_search_keywords_panel_width), OwnTVIcon.ZOOM, TileTone.PRIMARY,
@@ -867,6 +880,15 @@ fun SettingsScreen(
             selected = themeMode.name,
             onSelect = { settingsVm.setThemeMode(ThemeMode.valueOf(it)); showTheme = false },
             onDismiss = { showTheme = false },
+        )
+    }
+    if (showRailPosition) {
+        tv.own.owntv.features.settings.PickerDialog(
+            title = stringResource(R.string.settings_rail_position_dialog),
+            options = tv.own.owntv.features.settings.data.RailPosition.entries.map { it.name to railPositionLabel(it) },
+            selected = railPosition.name,
+            onSelect = { settingsVm.setRailPosition(tv.own.owntv.features.settings.data.RailPosition.fromName(it)); showRailPosition = false },
+            onDismiss = { showRailPosition = false },
         )
     }
     if (showStartup) {
@@ -1026,6 +1048,14 @@ private fun startupLabel(mode: tv.own.owntv.features.settings.data.StartupMode):
 @Composable
 private fun navModeLabel(mode: tv.own.owntv.features.settings.data.SettingsRepository.NavMenuMode): String = stringResource(
     if (mode == tv.own.owntv.features.settings.data.SettingsRepository.NavMenuMode.DYNAMIC) R.string.settings_dynamic else R.string.settings_static,
+)
+
+@Composable
+private fun railPositionLabel(position: tv.own.owntv.features.settings.data.RailPosition): String = stringResource(
+    when (position) {
+        tv.own.owntv.features.settings.data.RailPosition.LEFT -> R.string.settings_rail_position_left
+        tv.own.owntv.features.settings.data.RailPosition.TOP -> R.string.settings_rail_position_top
+    },
 )
 
 /** Chip text for the Language settings row: system-default label, or the selected locale's endonym. */

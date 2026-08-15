@@ -573,6 +573,13 @@ class SettingsViewModel(
         viewModelScope.launch { settings.setMiniPlayerPosition(position.name) }
     }
 
+    // Persistent navigation rail: left sidebar vs. top bar.
+    val railPosition: StateFlow<tv.own.owntv.features.settings.data.RailPosition> =
+        settings.railPosition.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), tv.own.owntv.features.settings.data.RailPosition.DEFAULT)
+    fun setRailPosition(position: tv.own.owntv.features.settings.data.RailPosition) {
+        viewModelScope.launch { settings.setRailPosition(position) }
+    }
+
     // Live TV latency (#72): preset + custom seconds.
     val liveLatencyMode: StateFlow<tv.own.owntv.features.settings.data.LiveLatency> =
         settings.liveLatencyMode

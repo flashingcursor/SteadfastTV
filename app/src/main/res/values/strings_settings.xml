@@ -294,6 +294,14 @@
     <string name="settings_customize_nav_description">Hide &amp; unhide items, rename &amp; reorder categories</string>
     <!-- Translators: Description of the Sidebar Menu Customization settings. -->
     <string name="settings_sidebar_description_root">Auto-adapt side icons to your playlist, or hide specific ones</string>
+    <!-- Translators: Settings navigation label for where the app's navigation rail is docked on screen. -->
+    <string name="settings_rail_position">Navigation rail position</string>
+    <!-- Translators: Description of the navigation rail position setting. -->
+    <string name="settings_rail_position_description">Dock the navigation rail to the side, or collapse it to a bar along the top</string>
+    <!-- Translators: Navigation rail position option: docked to the left edge of the screen. -->
+    <string name="settings_rail_position_left">Left</string>
+    <!-- Translators: Navigation rail position option: collapsed into a bar along the top of the screen. -->
+    <string name="settings_rail_position_top">Top</string>
     <!-- Translators: Settings navigation label for CH+ Key Paging. -->
     <string name="settings_ch_paging">CH+- Key Paging</string>
     <!-- Translators: Description of the CH+ Key Paging settings. -->
@@ -555,6 +563,8 @@
     <string name="settings_search_keywords_customize">hide unhide rename reorder categories</string>
     <!-- Translators: Hidden keyword bag for the Sidebar Menu Customization settings. Translate as individual search terms. -->
     <string name="settings_search_keywords_sidebar">side rail icons dynamic static hide show adapt playlist</string>
+    <!-- Translators: Hidden keyword bag for the Navigation rail position settings. Translate as individual search terms. -->
+    <string name="settings_search_keywords_rail_position">nav rail sidebar top bar left dock position layout</string>
     <!-- Translators: Hidden keyword bag for the CH+ Key Paging settings. Translate as individual search terms. -->
     <string name="settings_search_keywords_ch">channel up down skip page list category channel</string>
     <!-- Translators: Hidden keyword bag for the Browsing & lists settings. Translate as individual search terms. -->
@@ -916,6 +926,8 @@ Choose Balanced if a channel becomes unreliable.</string>
     <string name="settings_pick_background_title">Pick a background image</string>
     <!-- Translators: Dialog title for the theme picker. -->
     <string name="settings_theme_dialog">Theme</string>
+    <!-- Translators: Dialog title for the navigation rail position picker. -->
+    <string name="settings_rail_position_dialog">Navigation rail position</string>
     <!-- Translators: Dialog title for the app startup picker. -->
     <string name="settings_app_startup_dialog">App startup</string>
     <!-- Translators: Dialog title for the animations toggle. -->
