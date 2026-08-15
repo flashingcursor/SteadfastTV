@@ -3,6 +3,7 @@ package tv.own.owntv.features.shell
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +34,13 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -75,7 +82,6 @@ import tv.own.owntv.features.shell.components.ShellHeader
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.compose.ui.res.stringResource
-import tv.own.owntv.ui.components.BrandLockup
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
@@ -138,11 +144,18 @@ fun OwnTVShell(
     var railActive by remember { mutableStateOf(false) }
     // BACK-forced expansion (Task 5 wires this true at the unified BACK floor); stays false here.
     val railForceActive = false
-    // Measured header/rail heights (px), used to place the TOP-mode rail below the header and to
-    // reserve that much extra top inset for the content below it — computed once per layout pass
-    // rather than hard-coded, so it tracks UI zoom/locale-driven text size changes automatically.
-    var headerHeightPx by remember { mutableIntStateOf(0) }
+    // Measured header/audio-row/rail dimensions (px), used to place the rail relative to whatever's
+    // actually above it and to reserve exactly that much space for the content below/beside it —
+    // computed once per layout pass rather than hard-coded, so it self-corrects for UI zoom,
+    // locale-driven text size, and the Audio Mode row's presence instead of drifting out of sync
+    // with a hand-tuned constant.
+    // TOP mode: combined height of the header AND the Audio Mode now-playing row (when present) —
+    // the rail must dock below whichever of those is currently on screen, not just the header alone.
+    var topBlockHeightPx by remember { mutableIntStateOf(0) }
     var railHeightPx by remember { mutableIntStateOf(0) }
+    // LEFT mode: the rail's own measured width, so the content start-inset always reserves exactly
+    // enough room regardless of rail padding/border/content changes.
+    var railWidthPx by remember { mutableIntStateOf(0) }
     val density = LocalDensity.current
     // Deep-link: the Guide's "Add EPG" button switches to Settings and opens EPG Sources → add.
     var openEpgAdd by remember { mutableStateOf(false) }
@@ -426,47 +439,50 @@ fun OwnTVShell(
                     // the image shows through the gaps between the content panels.
                     .background(shellBase),
             ) {
-                // Floating shell header (Task 3): fully transparent, zones over the full width. Shown on
-                // EVERY section now, including Settings ("top bar same for all"). Measured so the rail can
-                // dock below it in TOP mode.
-                ShellHeader(
-                    title = stringResource(selectedSection.labelRes),
-                    onSearch = { onSelectSection(MainSection.SEARCH) },
-                    weatherInfo = weatherInfo,
-                    weatherFahrenheit = weatherFahrenheit,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .onSizeChanged { headerHeightPx = it.height },
-                )
-                // Audio Mode now-playing bar: the transparent header (Task 3) has exactly three fixed
-                // zones and no slot for it, so it floats as its own end-aligned row directly under the
-                // header — the same adjacency ("left of the weather chip") the old top bar gave it.
-                if (playerMode == PlayerMode.AUDIO) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-                        horizontalArrangement = Arrangement.End,
-                    ) {
-                        val isLiveStream = liveOnExo || player.isLiveContent
-                        val zapFn: ((Int) -> Unit)? = when {
-                            !isLiveStream -> null
-                            zapSource == MainSection.LIVE_TV && liveCanZap -> liveVm::zap
-                            else -> null
+                // Floating shell header (Task 3) + Audio Mode now-playing row, measured TOGETHER: the
+                // rail must dock below whichever of these is actually on screen, not just the header —
+                // when Audio Mode is active the row adds real height below the header that the rail
+                // would otherwise draw over.
+                Column(modifier = Modifier.fillMaxWidth().onSizeChanged { topBlockHeightPx = it.height }) {
+                    // Shown on EVERY section now, including Settings ("top bar same for all").
+                    ShellHeader(
+                        title = stringResource(selectedSection.labelRes),
+                        onSearch = { onSelectSection(MainSection.SEARCH) },
+                        weatherInfo = weatherInfo,
+                        weatherFahrenheit = weatherFahrenheit,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    // Audio Mode now-playing bar: the transparent header (Task 3) has exactly three fixed
+                    // zones and no slot for it, so it floats as its own end-aligned row directly under the
+                    // header — the same adjacency ("left of the weather chip") the old top bar gave it.
+                    if (playerMode == PlayerMode.AUDIO) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+                            horizontalArrangement = Arrangement.End,
+                        ) {
+                            val isLiveStream = liveOnExo || player.isLiveContent
+                            val zapFn: ((Int) -> Unit)? = when {
+                                !isLiveStream -> null
+                                zapSource == MainSection.LIVE_TV && liveCanZap -> liveVm::zap
+                                else -> null
+                            }
+                            val audioEngine = if (liveOnExo) liveVm.previewEngine else mpvEngine
+                            val vodNav by audioEngine.nav.collectAsStateWithLifecycle()
+                            tv.own.owntv.player.AudioNowPlayingBar(
+                                player = audioEngine,
+                                isLive = isLiveStream,
+                                canPrev = if (isLiveStream) zapFn != null else vodNav.hasPrev,
+                                canNext = if (isLiveStream) zapFn != null else vodNav.hasNext,
+                                onPrev = { if (isLiveStream) zapFn?.invoke(-1) else mpvEngine.previous() },
+                                onNext = { if (isLiveStream) zapFn?.invoke(1) else mpvEngine.next() },
+                                onExpand = expandPlayer,
+                                onClose = exitPlayer,
+                                // Always reachable in Audio Mode — its own D-pad trap keeps focus inside
+                                // once entered and Back is the only way out (unchanged from the old
+                                // top-bar slot).
+                                focusable = true,
+                            )
                         }
-                        val audioEngine = if (liveOnExo) liveVm.previewEngine else mpvEngine
-                        val vodNav by audioEngine.nav.collectAsStateWithLifecycle()
-                        tv.own.owntv.player.AudioNowPlayingBar(
-                            player = audioEngine,
-                            isLive = isLiveStream,
-                            canPrev = if (isLiveStream) zapFn != null else vodNav.hasPrev,
-                            canNext = if (isLiveStream) zapFn != null else vodNav.hasNext,
-                            onPrev = { if (isLiveStream) zapFn?.invoke(-1) else mpvEngine.previous() },
-                            onNext = { if (isLiveStream) zapFn?.invoke(1) else mpvEngine.next() },
-                            onExpand = expandPlayer,
-                            onClose = exitPlayer,
-                            // Always reachable in Audio Mode — its own D-pad trap keeps focus inside once
-                            // entered and Back is the only way out (unchanged from the old top-bar slot).
-                            focusable = true,
-                        )
                     }
                 }
                 Box(
@@ -474,13 +490,22 @@ fun OwnTVShell(
                         .weight(1f)
                         .fillMaxWidth()
                         // Content reservation for the floating rail, implemented ONCE here rather than
-                        // per-screen: LEFT reserves rail width + gap (SidebarWidthCollapsed, same figure
-                        // the old fixed Sidebar occupied); TOP reserves the rail's own measured height
-                        // (it floats below the header, which the Column above already accounts for).
+                        // per-screen, both driven by the rail's OWN measured size (self-correcting — no
+                        // magic constants that can drift out of sync with the rail's real geometry):
+                        // LEFT reserves the rail's 30dp edge inset + its measured width + one gap, so
+                        // content never sits under the floating pill; TOP reserves the rail's measured
+                        // height + one gap (the header/audio block above it is already accounted for by
+                        // column flow, so only the rail itself needs an explicit reservation here — the
+                        // matching gap between the header block and the rail is added at the rail's own
+                        // top padding below, so both gaps land at GapMedium).
                         .padding(
-                            start = if (railPositionValue == RailPosition.LEFT) Dimens.SidebarWidthCollapsed else 0.dp,
+                            start = if (railPositionValue == RailPosition.LEFT) {
+                                30.dp + with(density) { railWidthPx.toDp() } + Dimens.GapMedium
+                            } else {
+                                0.dp
+                            },
                             top = if (railPositionValue == RailPosition.TOP) {
-                                with(density) { railHeightPx.toDp() } + Dimens.GapMedium
+                                with(density) { railHeightPx.toDp() } + Dimens.GapMedium * 2
                             } else {
                                 0.dp
                             },
@@ -661,13 +686,19 @@ fun OwnTVShell(
                     .align(if (railPositionValue == RailPosition.LEFT) Alignment.CenterStart else Alignment.TopCenter)
                     .padding(
                         start = if (railPositionValue == RailPosition.LEFT) 30.dp else 0.dp,
+                        // Docks below whichever of header/audio-row is actually on screen (topBlockHeightPx
+                        // measures both together, F2) — one GapMedium gap; the content Box below reserves
+                        // a second GapMedium past the rail's own measured height so both gaps match.
                         top = if (railPositionValue == RailPosition.TOP) {
-                            with(density) { headerHeightPx.toDp() } + Dimens.GapMedium
+                            with(density) { topBlockHeightPx.toDp() } + Dimens.GapMedium
                         } else {
                             0.dp
                         },
                     )
-                    .onSizeChanged { railHeightPx = it.height },
+                    .onSizeChanged {
+                        railWidthPx = it.width
+                        railHeightPx = it.height
+                    },
             )
           }
         }
@@ -982,21 +1013,49 @@ private fun OfflineBanner() {
 }
 
 /**
- * Bottom-right brand watermark (design spec §3) — the play-glyph + "OwnTV" wordmark row, reused
- * verbatim from [BrandLockup] (the same treatment Setup's onboarding uses) rather than the orphaned
- * `R.drawable.owntv_wordmark` PNG: BrandLockup is theme-adaptive (vector, not a near-white raster that
- * vanishes on AMOLED black) and IS the play-glyph-plus-wordmark row the mockup calls for. Non-focusable
- * (BrandLockup contains no focus targets), decorative-only, drawn above content and below dialogs/player.
+ * Bottom-right brand watermark (design spec §3) — the play-glyph + "OwnTV" wordmark row. Same shape
+ * as `ui/components/BrandLockup` (the treatment Setup's onboarding uses) and the old Sidebar's
+ * `AppLogo` mark, but tinted with [OwnTVTheme.colors.primary] instead of BrandLockup's fixed
+ * `AccentCyan` so the watermark follows the user's chosen accent color like the rest of the shell's
+ * chrome (matching the old `AppLogo`, which used `colors.primary` too) — not the orphaned
+ * `R.drawable.owntv_wordmark` PNG, which has a near-white "Own" that vanishes on AMOLED black.
+ * Non-focusable (no focus targets), decorative-only, drawn above content and below dialogs/player.
  */
 @Composable
 private fun ShellWatermark(modifier: Modifier = Modifier) {
-    BrandLockup(
-        markSize = 28,
-        textSize = 20,
+    val colors = OwnTVTheme.colors
+    val own = stringResource(R.string.brand_own)
+    val tv = stringResource(R.string.brand_tv)
+    val markShape = RoundedCornerShape(percent = 28)
+    val markSize = 28.dp
+    Row(
         modifier = modifier
             .padding(end = Dimens.GapLarge, bottom = Dimens.GapLarge)
             .alpha(0.13f),
-    )
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(markSize)
+                .clip(markShape)
+                .background(colors.card)
+                .border(2.dp, colors.primary, markShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            OwnTVIcon(icon = OwnTVIcon.PLAY, tint = colors.primary, filled = true, modifier = Modifier.size(markSize * 0.5f))
+        }
+        Text(
+            text = buildAnnotatedString {
+                withStyle(SpanStyle(color = colors.textPrimary, fontWeight = FontWeight.Bold)) { append(own) }
+                withStyle(SpanStyle(color = colors.primary, fontWeight = FontWeight.Bold)) { append(tv) }
+            },
+            fontSize = 20.sp,
+            maxLines = 1,
+            softWrap = false,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
 }
 
 private val MainSection.emptyIcon: OwnTVIcon
