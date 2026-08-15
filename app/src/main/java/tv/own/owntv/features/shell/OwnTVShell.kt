@@ -791,8 +791,17 @@ fun OwnTVShell(
                         },
                     )
                     .onSizeChanged {
-                        railWidthPx = it.width
-                        railHeightPx = it.height
+                        // Reserve the IDLE rail size only. The approved mockup dims content IN PLACE
+                        // under the expanded rail — an overlay — never pushes/reflows it (the old
+                        // Sidebar's "fixed rail, layout never jumps" principle). Active (focused or
+                        // BACK-forced) rendering balloons the rail with labels + the glass panel; skip
+                        // capturing that and keep the last collapsed measurement as the reservation, so
+                        // the expanded rail floats over the (already dimmed, via the scrim above)
+                        // content instead of shoving it aside.
+                        if (!(railActive || railForceActive)) {
+                            railWidthPx = it.width
+                            railHeightPx = it.height
+                        }
                     },
             )
           }
