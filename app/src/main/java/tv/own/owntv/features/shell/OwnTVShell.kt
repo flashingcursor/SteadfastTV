@@ -541,6 +541,19 @@ fun OwnTVShell(
                         // longer holding it, so this is where a forced rail expansion that never actually
                         // got real focus (BACK pressed, sidebarFocus.requestFocus() silently failed) gets
                         // cleared too, instead of leaving the rail stuck expanded forever.
+                        //
+                        // Deliberately NOT paired with .focusGroup() here (Task 6 follow-up, post-fa73e2c):
+                        // that would make this whole content area — which every section already wraps in
+                        // its OWN focusGroup() a level in (Settings/EPG directly, Home/Search/Live/Movies/
+                        // Series/Downloads internally) — into a SECOND, OUTER FocusTargetNode. That node's
+                        // full-content-sized bounds then become a real candidate in Compose's default
+                        // bounds-based two-dimensional search (TwoDimensionalFocusSearch.searchChildren),
+                        // which is what DOWN-from-a-rail-item consults once the rail's own internal search
+                        // bubbles up past FloatingRail with nothing found — and that broke TOP mode's
+                        // rail-to-content exit (focus stayed trapped in the rail). onFocusChanged doesn't
+                        // need a focusTarget on this same node to observe descendants' hasFocus (it isn't a
+                        // participant in that bounds search at all), so dropping focusGroup() here removes
+                        // the only structurally new element without giving up the hasFocus tracking.
                         .onFocusChanged {
                             if (it.hasFocus) {
                                 focusedLayer = ShellLayer.CONTENT
@@ -553,6 +566,15 @@ fun OwnTVShell(
                         // pill (further up still) — left to the default spatial search, UP from the top
                         // of content could resolve to the pill instead of the rail. Force it
                         // deterministically to the rail's selected item.
+                        //
+                        // This override is resolved relative to whichever descendant is CURRENTLY FOCUSED
+                        // when UP is pressed (FocusTargetNode.fetchFocusProperties() walks that node's own
+                        // ancestors) — never relative to a DIFFERENT direction's search landing on this
+                        // subtree from outside, so it cannot be what affects a DOWN press starting in the
+                        // (sibling, not ancestor) rail. Traced against the actual androidx.compose.ui
+                        // 1.11.4 focus-search source to confirm before ruling it out as a DOWN-direction
+                        // suspect (FocusOwnerImpl.focusSearch calls customFocusSearch on the currently
+                        // *focused* node, never on the destination).
                         .then(
                             if (railPositionValue == RailPosition.TOP) {
                                 Modifier.focusProperties { up = sidebarFocus }
@@ -560,7 +582,6 @@ fun OwnTVShell(
                                 Modifier
                             },
                         )
-                        .focusGroup()
                         // Content reservation for the floating rail, implemented ONCE here rather than
                         // per-screen, both driven by the rail's OWN measured size (self-correcting — no
                         // magic constants that can drift out of sync with the rail's real geometry):
