@@ -1460,6 +1460,8 @@ class SettingsRepository(private val context: Context, private val localeStore: 
         Keys.NAV_MENU_MODE,
         // Docked mini-player position rides with settings backup (size is an int key, see backupIntKeys).
         Keys.MINI_PLAYER_POSITION,
+        // Navigation rail position rides with settings backup so a reinstall keeps the user's LEFT/TOP choice.
+        Keys.RAIL_POSITION,
         // Live TV latency preset (custom seconds is an int key, see backupIntKeys).
         Keys.LIVE_LATENCY_MODE,
         // Liquid Glass: the background image path + scope/alpha so a reinstall keeps the look.
