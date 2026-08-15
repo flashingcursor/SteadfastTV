@@ -167,8 +167,6 @@ class HomeViewModel(
     private val heroPreviewEngine: HeroPreviewEngine,
     private val epgSourceStore: EpgSourceStore,
     private val epgDao: EpgDao,
-    private val historyDao: tv.own.owntv.core.database.dao.HistoryDao,
-    private val progressDao: tv.own.owntv.core.database.dao.ProgressDao,
     private val metadata: MetadataRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
