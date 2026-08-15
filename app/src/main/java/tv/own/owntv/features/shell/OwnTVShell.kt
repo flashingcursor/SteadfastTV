@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
@@ -356,6 +357,17 @@ fun OwnTVShell(
         runCatching { sidebarFocus.requestFocus() }
         Unit
     }
+    // Task 6 (finding #3): closing the exit dialog — via Cancel or BACK — must deterministically put
+    // the user back on the expanded rail (the "menu" state BACK just led them to), rather than
+    // trusting whatever railActive/focus happen to read once the dialog's own focus trap releases.
+    // showExit only ever becomes true while the rail was already active/forced, so re-asserting both
+    // here is what makes the restore land the same way every time.
+    val dismissExit = {
+        showExit = false
+        railForceActive = true
+        runCatching { sidebarFocus.requestFocus() }
+        Unit
+    }
 
     LaunchedEffect(Unit) { tv.own.owntv.Perf.stamp("shell-composed"); runCatching { sidebarFocus.requestFocus() } }
 
@@ -425,7 +437,7 @@ fun OwnTVShell(
             // priority over any rail/exit bookkeeping below.
             playerMode == PlayerMode.FULLSCREEN -> exitPlayer()
             showAvatarPicker -> showAvatarPicker = false
-            showExit -> showExit = false
+            showExit -> dismissExit()
             // Rail already active (real D-pad focus inside it, or still BACK-forced expanded from the
             // previous press) → next BACK is the exit confirmation.
             railActive || railForceActive -> showExit = true
@@ -518,6 +530,37 @@ fun OwnTVShell(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
+                        // Task 6 (finding #1 + #4): the single source of truth for "content holds focus",
+                        // covering EVERY section — single-pane (Settings/Home/Search/Guide) as well as the
+                        // browse 3-pane path — since this Box is the common ancestor of the whole `when`
+                        // block below. Per-screen onChildFocused/onFocusChanged wiring still fires and is
+                        // harmless/redundant with this, but this ancestor is what guarantees focusedLayer
+                        // is never left stale at SIDEBAR from an earlier rail visit (which was silently
+                        // reopening the ShellHeader search pill's D-pad gate and skipping straight to the
+                        // exit dialog on BACK). Any real focus landing here also means the rail is no
+                        // longer holding it, so this is where a forced rail expansion that never actually
+                        // got real focus (BACK pressed, sidebarFocus.requestFocus() silently failed) gets
+                        // cleared too, instead of leaving the rail stuck expanded forever.
+                        .onFocusChanged {
+                            if (it.hasFocus) {
+                                focusedLayer = ShellLayer.CONTENT
+                                railForceActive = false
+                            }
+                        }
+                        // Task 6 (finding #2): TOP mode only. LEFT mode's rail sits beside content, so a
+                        // spatial "start" search already reaches it with no help (verified on-device).
+                        // TOP mode's rail sits directly ABOVE content, but so does the header's search
+                        // pill (further up still) — left to the default spatial search, UP from the top
+                        // of content could resolve to the pill instead of the rail. Force it
+                        // deterministically to the rail's selected item.
+                        .then(
+                            if (railPositionValue == RailPosition.TOP) {
+                                Modifier.focusProperties { up = sidebarFocus }
+                            } else {
+                                Modifier
+                            },
+                        )
+                        .focusGroup()
                         // Content reservation for the floating rail, implemented ONCE here rather than
                         // per-screen, both driven by the rail's OWN measured size (self-correcting — no
                         // magic constants that can drift out of sync with the rail's real geometry):
@@ -968,7 +1011,7 @@ fun OwnTVShell(
       }
 
         if (showExit) {
-            ExitDialog(onConfirm = onExitApp, onDismiss = { showExit = false })
+            ExitDialog(onConfirm = onExitApp, onDismiss = dismissExit)
         }
         if (showAvatarPicker) {
             AvatarPickerDialog(
