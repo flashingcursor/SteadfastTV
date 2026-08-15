@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -160,7 +159,6 @@ private fun WeatherConditionIcon(info: WeatherInfo, modifier: Modifier = Modifie
     Canvas(modifier) {
         val s = size.minDimension / 100f
         val fill = androidx.compose.ui.graphics.drawscope.Fill
-        val stk = Stroke(width = 4f * s, cap = StrokeCap.Round, join = StrokeJoin.Round)
         fun o(x: Float, y: Float) = Offset(x * s, y * s)
 
         fun sun(cx: Float, cy: Float, r: Float) {

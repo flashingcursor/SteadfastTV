@@ -1,6 +1,7 @@
 package tv.own.owntv.features.shell
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,10 +26,13 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.first
@@ -56,26 +61,28 @@ import tv.own.owntv.player.MiniPlayer
 import tv.own.owntv.player.MpvVideoSurface
 import tv.own.owntv.player.OwnTVPlayer
 import tv.own.owntv.player.PlayerHud
+import tv.own.owntv.features.settings.data.RailPosition
 import tv.own.owntv.features.shell.components.AvatarPickerDialog
 import tv.own.owntv.features.shell.components.CategoryRail
 import tv.own.owntv.features.shell.components.ContentPane
 import tv.own.owntv.features.shell.components.ExitDialog
+import tv.own.owntv.features.shell.components.FloatingRail
 import tv.own.owntv.features.shell.components.IncompleteRestoreDialog
-import tv.own.owntv.features.shell.components.PlaylistPickerDialog
 import tv.own.owntv.features.shell.components.PreviewPane
 import tv.own.owntv.features.shell.components.RailCategory
 import tv.own.owntv.features.shell.components.SettingsScreen
-import tv.own.owntv.features.shell.components.Sidebar
-import tv.own.owntv.features.shell.components.TopBar
+import tv.own.owntv.features.shell.components.ShellHeader
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.compose.ui.res.stringResource
+import tv.own.owntv.ui.components.BrandLockup
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.ThemeMode
+import tv.own.owntv.ui.theme.ownTvTween
 
 /** Which layer currently holds focus (drives Back navigation). */
 private enum class ShellLayer { SIDEBAR, RAIL, CONTENT }
@@ -113,7 +120,6 @@ fun OwnTVShell(
     modifier: Modifier = Modifier,
 ) {
     val colors = OwnTVTheme.colors
-    val noSourceLabel = stringResource(R.string.shell_no_source)
     val subtitleLoadFailed = stringResource(R.string.content_subtitle_load_failed)
     val railSelection = remember { mutableStateMapOf<MainSection, Int>() }
     val selectedRail = railSelection[selectedSection] ?: 0
@@ -124,8 +130,20 @@ fun OwnTVShell(
     var focusedLayer by remember { mutableStateOf(ShellLayer.SIDEBAR) }
     var showExit by remember { mutableStateOf(false) }
     var showAvatarPicker by remember { mutableStateOf(false) }
-    var showPlaylistPicker by remember { mutableStateOf(false) }
     var playerMode by remember { mutableStateOf(PlayerMode.NONE) }
+    // Floating shell (Task 4): rail docking edge, persisted in Settings (Task 1). Default LEFT.
+    val railPositionValue by koinInject<tv.own.owntv.features.settings.data.SettingsRepository>()
+        .railPosition.collectAsStateWithLifecycle(initialValue = RailPosition.DEFAULT)
+    // True while D-pad focus sits inside the rail (fires from FloatingRail's onActiveChange).
+    var railActive by remember { mutableStateOf(false) }
+    // BACK-forced expansion (Task 5 wires this true at the unified BACK floor); stays false here.
+    val railForceActive = false
+    // Measured header/rail heights (px), used to place the TOP-mode rail below the header and to
+    // reserve that much extra top inset for the content below it — computed once per layout pass
+    // rather than hard-coded, so it tracks UI zoom/locale-driven text size changes automatically.
+    var headerHeightPx by remember { mutableIntStateOf(0) }
+    var railHeightPx by remember { mutableIntStateOf(0) }
+    val density = LocalDensity.current
     // Deep-link: the Guide's "Add EPG" button switches to Settings and opens EPG Sources → add.
     var openEpgAdd by remember { mutableStateOf(false) }
     // One-shot: set when leaving the player so the returning browse screen re-focuses the item you played.
@@ -222,9 +240,6 @@ fun OwnTVShell(
         if (historyChannels.isEmpty()) { value = emptyMap(); return@produceState }
         value = runCatching { liveVm.nowPlayingFor(historyChannels) }.getOrDefault(emptyMap())
     }
-    // Batch 7 — the single most-recent resumable item, surfaced as a shared top-bar "Continue" chip.
-    val continueTarget by homeVm.continueTarget.collectAsStateWithLifecycle()
-
     // "Resume last channel on startup" (opt-in, default off): once when the shell first appears, if enabled
     // and nothing is playing, jump straight back into the last live channel watched. Reads the setting once
     // (via first()) so toggling it later in Settings never yanks the user into a channel.
@@ -380,7 +395,6 @@ fun OwnTVShell(
         when {
             playerMode == PlayerMode.FULLSCREEN -> exitPlayer()
             showAvatarPicker -> showAvatarPicker = false
-            showPlaylistPicker -> showPlaylistPicker = false
             showExit -> showExit = false
             focusedLayer == ShellLayer.SIDEBAR -> showExit = true
             else -> runCatching { sidebarFocus.requestFocus() }
@@ -398,23 +412,13 @@ fun OwnTVShell(
       if (playerMode != PlayerMode.FULLSCREEN) {
         Column(modifier = Modifier.fillMaxSize()) {
           if (isOffline) OfflineBanner()
-          Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
-            Sidebar(
-                selected = selectedSection,
-                onSelect = onSelectSection,
-                visibleSections = visibleSections,
-                avatarId = avatarId,
-                onPickAvatar = { showAvatarPicker = true },
-                profileName = profileName,
-                sourceSummary = sourceSummary,
-                onSwitchProfile = onSwitchProfile,
-                selectedItemFocusRequester = sidebarFocus,
-                onFocused = { focusedLayer = ShellLayer.SIDEBAR },
-            )
-
+          // Floating shell (Task 4): the header spans the full width and the rail floats independently
+          // over this area (LEFT: centered on the edge; TOP: centered below the header) rather than
+          // sitting in a fixed column like the old Sidebar — both live in one Box below the offline
+          // banner so FloatingRail's CenterStart/TopCenter alignment matches the old Sidebar's extent.
+          Box(modifier = Modifier.weight(1f).fillMaxSize()) {
             Column(
                 modifier = Modifier
-                    .weight(1f)
                     .fillMaxSize()
                     // Phase 6 — unified panel surface: panels and content area share #102520 so the
                     // rounded borders define regions on one continuous dark-green surface.
@@ -422,88 +426,68 @@ fun OwnTVShell(
                     // the image shows through the gaps between the content panels.
                     .background(shellBase),
             ) {
-                // Phase 5 — top bar above the content (active section + Search pill + clock + playlist).
-                // Shown on EVERY section now, including Settings ("top bar same for all").
-                TopBar(
-                    sectionLabel = stringResource(selectedSection.labelRes),
-                    onSearchClick = { onSelectSection(MainSection.SEARCH) },
-                    // The chip reflects the active filter: "All playlists" when none is chosen (id <= 0),
-                    // the chosen playlist's name otherwise. With a single playlist there's nothing to switch,
-                    // so just show its name.
-                    playlistName = when {
-                        playlists.size <= 1 -> sourceSummary ?: noSourceLabel
-                        activePlaylistId <= 0L -> stringResource(R.string.content_all_playlists)
-                        else -> playlists.firstOrNull { it.id == activePlaylistId }?.name ?: (sourceSummary ?: noSourceLabel)
-                    },
+                // Floating shell header (Task 3): fully transparent, zones over the full width. Shown on
+                // EVERY section now, including Settings ("top bar same for all"). Measured so the rail can
+                // dock below it in TOP mode.
+                ShellHeader(
+                    title = stringResource(selectedSection.labelRes),
+                    onSearch = { onSelectSection(MainSection.SEARCH) },
                     weatherInfo = weatherInfo,
                     weatherFahrenheit = weatherFahrenheit,
-                    // The Search pill only exists while focus sits on the nav panel — inside a
-                    // section it fades out and turns unfocusable, so focus can never jump to it.
-                    searchVisible = focusedLayer == ShellLayer.SIDEBAR,
-                    // The playlist chip becomes a quick-switcher only when there's more than one to pick.
-                    playlistInteractive = playlists.size > 1,
-                    onPlaylistClick = { showPlaylistPicker = true },
-                    // Batch 7 — shared "Continue" chip: one-press resume of the most-recent item.
-                    continueLabel = continueTarget?.let { target ->
-                        val action = when (target.action) {
-                            tv.own.owntv.features.home.ContinueAction.RESUME -> stringResource(R.string.content_action_resume)
-                            tv.own.owntv.features.home.ContinueAction.PLAY -> stringResource(R.string.content_action_play)
-                            tv.own.owntv.features.home.ContinueAction.NEXT_UP -> stringResource(R.string.content_action_next_up)
-                            tv.own.owntv.features.home.ContinueAction.LAST_CHANNEL -> stringResource(R.string.content_action_last_channel)
-                        }
-                        stringResource(R.string.content_continue_label, action, target.name)
-                    },
-                    continueIcon = when (continueTarget?.kind) {
-                        tv.own.owntv.features.home.ContinueKind.LIVE -> OwnTVIcon.LIVE_TV
-                        tv.own.owntv.features.home.ContinueKind.MOVIE -> OwnTVIcon.MOVIES
-                        tv.own.owntv.features.home.ContinueKind.EPISODE -> OwnTVIcon.SERIES
-                        null -> OwnTVIcon.PLAY
-                    },
-                    onContinueClick = {
-                        continueTarget?.let { t ->
-                            scope.launch {
-                                when (t.kind) {
-                                    tv.own.owntv.features.home.ContinueKind.LIVE ->
-                                        if (liveVm.ensurePlayingByIdAsync(t.channelId)) openFullscreen(MainSection.LIVE_TV)
-                                    tv.own.owntv.features.home.ContinueKind.MOVIE ->
-                                        if (movieVm.playByIdAsync(t.movieId, t.positionMs) && !movieVm.externalPlayerOn.value) openFullscreen(MainSection.MOVIES)
-                                    tv.own.owntv.features.home.ContinueKind.EPISODE ->
-                                        if (seriesVm.playFromHomeAsync(t.seriesId, t.episodeId, t.positionMs) && !seriesVm.externalPlayerOn.value) openFullscreen(MainSection.SERIES)
-                                }
-                            }
-                        }
-                    },
-                    // Audio Mode: the now-playing bar, left of the weather chip. Present only while
-                    // PlayerMode.AUDIO; focusable only while the nav panel holds focus (same rule as Search).
-                    audioBar = if (playerMode == PlayerMode.AUDIO) {
-                        {
-                            val isLiveStream = liveOnExo || player.isLiveContent
-                            val zapFn: ((Int) -> Unit)? = when {
-                                !isLiveStream -> null
-                                zapSource == MainSection.LIVE_TV && liveCanZap -> liveVm::zap
-                                else -> null
-                            }
-                            val audioEngine = if (liveOnExo) liveVm.previewEngine else mpvEngine
-                            val vodNav by audioEngine.nav.collectAsStateWithLifecycle()
-                            tv.own.owntv.player.AudioNowPlayingBar(
-                                player = audioEngine,
-                                isLive = isLiveStream,
-                                canPrev = if (isLiveStream) zapFn != null else vodNav.hasPrev,
-                                canNext = if (isLiveStream) zapFn != null else vodNav.hasNext,
-                                onPrev = { if (isLiveStream) zapFn?.invoke(-1) else mpvEngine.previous() },
-                                onNext = { if (isLiveStream) zapFn?.invoke(1) else mpvEngine.next() },
-                                onExpand = expandPlayer,
-                                onClose = exitPlayer,
-                                // Always reachable while Audio Mode is active (from the Search/Continue
-                                // pills on the left or the playlist chip on the right) — not gated on the
-                                // nav panel like the other chips, because its own D-pad trap keeps focus
-                                // inside once entered and Back is the only way out.
-                                focusable = true,
-                            )
-                        }
-                    } else null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .onSizeChanged { headerHeightPx = it.height },
                 )
-                Box(modifier = Modifier.weight(1f).fillMaxWidth().padding(start = 0.dp, end = 6.dp, bottom = 6.dp)) {
+                // Audio Mode now-playing bar: the transparent header (Task 3) has exactly three fixed
+                // zones and no slot for it, so it floats as its own end-aligned row directly under the
+                // header — the same adjacency ("left of the weather chip") the old top bar gave it.
+                if (playerMode == PlayerMode.AUDIO) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+                        horizontalArrangement = Arrangement.End,
+                    ) {
+                        val isLiveStream = liveOnExo || player.isLiveContent
+                        val zapFn: ((Int) -> Unit)? = when {
+                            !isLiveStream -> null
+                            zapSource == MainSection.LIVE_TV && liveCanZap -> liveVm::zap
+                            else -> null
+                        }
+                        val audioEngine = if (liveOnExo) liveVm.previewEngine else mpvEngine
+                        val vodNav by audioEngine.nav.collectAsStateWithLifecycle()
+                        tv.own.owntv.player.AudioNowPlayingBar(
+                            player = audioEngine,
+                            isLive = isLiveStream,
+                            canPrev = if (isLiveStream) zapFn != null else vodNav.hasPrev,
+                            canNext = if (isLiveStream) zapFn != null else vodNav.hasNext,
+                            onPrev = { if (isLiveStream) zapFn?.invoke(-1) else mpvEngine.previous() },
+                            onNext = { if (isLiveStream) zapFn?.invoke(1) else mpvEngine.next() },
+                            onExpand = expandPlayer,
+                            onClose = exitPlayer,
+                            // Always reachable in Audio Mode — its own D-pad trap keeps focus inside once
+                            // entered and Back is the only way out (unchanged from the old top-bar slot).
+                            focusable = true,
+                        )
+                    }
+                }
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        // Content reservation for the floating rail, implemented ONCE here rather than
+                        // per-screen: LEFT reserves rail width + gap (SidebarWidthCollapsed, same figure
+                        // the old fixed Sidebar occupied); TOP reserves the rail's own measured height
+                        // (it floats below the header, which the Column above already accounts for).
+                        .padding(
+                            start = if (railPositionValue == RailPosition.LEFT) Dimens.SidebarWidthCollapsed else 0.dp,
+                            top = if (railPositionValue == RailPosition.TOP) {
+                                with(density) { railHeightPx.toDp() } + Dimens.GapMedium
+                            } else {
+                                0.dp
+                            },
+                            end = 6.dp,
+                            bottom = 6.dp,
+                        ),
+                ) {
                     when {
                         selectedSection == MainSection.SETTINGS -> SettingsScreen(
                             themeMode = themeMode,
@@ -645,8 +629,46 @@ fun OwnTVShell(
                             }
                         }
                     }
+                    // Active-rail scrim: dims the content area only (not the header/rail) while the rail
+                    // holds D-pad focus or is BACK-forced active (Task 5 wires railForceActive true at the
+                    // unified BACK floor). Content stays visible underneath — focus lives in the rail.
+                    val scrimAlpha by animateFloatAsState(
+                        targetValue = if (railActive || railForceActive) 0.45f else 0f,
+                        animationSpec = ownTvTween(),
+                        label = "railScrim",
+                    )
+                    if (scrimAlpha > 0f) {
+                        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = scrimAlpha)))
+                    }
                 }
             }
+            FloatingRail(
+                position = railPositionValue,
+                selected = selectedSection,
+                visibleSections = visibleSections,
+                onSelect = onSelectSection,
+                avatarId = avatarId,
+                onPickAvatar = { showAvatarPicker = true },
+                onSwitchProfile = onSwitchProfile,
+                profileName = profileName,
+                selectedItemFocusRequester = sidebarFocus,
+                onActiveChange = { active ->
+                    railActive = active
+                    if (active) focusedLayer = ShellLayer.SIDEBAR
+                },
+                forceActive = railForceActive,
+                modifier = Modifier
+                    .align(if (railPositionValue == RailPosition.LEFT) Alignment.CenterStart else Alignment.TopCenter)
+                    .padding(
+                        start = if (railPositionValue == RailPosition.LEFT) 30.dp else 0.dp,
+                        top = if (railPositionValue == RailPosition.TOP) {
+                            with(density) { headerHeightPx.toDp() } + Dimens.GapMedium
+                        } else {
+                            0.dp
+                        },
+                    )
+                    .onSizeChanged { railHeightPx = it.height },
+            )
           }
         }
       }
@@ -655,6 +677,12 @@ fun OwnTVShell(
       // backgrounded first import, remainder worker, auto refresh — but never over fullscreen video.
       if (playerMode != PlayerMode.FULLSCREEN) {
           tv.own.owntv.features.shell.components.SyncStatusPill(modifier = Modifier.align(Alignment.BottomCenter))
+      }
+
+      // Brand watermark (Task 4): bottom-right, above content and below dialogs/player. Hidden the
+      // moment ANY player mode is active (fullscreen, docked mini, or audio-only), not just fullscreen.
+      if (playerMode == PlayerMode.NONE) {
+          ShellWatermark(modifier = Modifier.align(Alignment.BottomEnd))
       }
 
       // Player surface — hoisted so it persists across fullscreen <-> mini (same call site = the
@@ -887,15 +915,6 @@ fun OwnTVShell(
                 onDismiss = { showAvatarPicker = false },
             )
         }
-        if (showPlaylistPicker) {
-            PlaylistPickerDialog(
-                playlists = playlists,
-                activeId = activePlaylistId,
-                onSelect = onSelectPlaylist,
-                onDismiss = { showPlaylistPicker = false },
-            )
-        }
-
         // Automatic update check (GitHub Releases) shortly after launch, once per session: a small
         // top-right status card shows "Checking… / up to date" (auto-hides) or stays with
         // Update now / Later when a release is newer. Hidden while in Settings (its manual
@@ -960,6 +979,24 @@ private fun OfflineBanner() {
             color = colors.onTertiaryContainer,
         )
     }
+}
+
+/**
+ * Bottom-right brand watermark (design spec §3) — the play-glyph + "OwnTV" wordmark row, reused
+ * verbatim from [BrandLockup] (the same treatment Setup's onboarding uses) rather than the orphaned
+ * `R.drawable.owntv_wordmark` PNG: BrandLockup is theme-adaptive (vector, not a near-white raster that
+ * vanishes on AMOLED black) and IS the play-glyph-plus-wordmark row the mockup calls for. Non-focusable
+ * (BrandLockup contains no focus targets), decorative-only, drawn above content and below dialogs/player.
+ */
+@Composable
+private fun ShellWatermark(modifier: Modifier = Modifier) {
+    BrandLockup(
+        markSize = 28,
+        textSize = 20,
+        modifier = modifier
+            .padding(end = Dimens.GapLarge, bottom = Dimens.GapLarge)
+            .alpha(0.13f),
+    )
 }
 
 private val MainSection.emptyIcon: OwnTVIcon
