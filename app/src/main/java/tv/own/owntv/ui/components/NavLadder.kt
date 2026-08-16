@@ -30,21 +30,25 @@ import tv.own.owntv.ui.theme.ownTvTween
  * impossible to tell "the section I'm actually in" from "the item my cursor is hovering". This ladder
  * keeps them distinct, strongest → weakest:
  *
- *  1. **selected + focused** — full [primaryContainer] fill, [onPrimaryContainer] content: the peak.
- *  2. **focused, unselected** — surface fill + teal focus outline, bright [onSurface] content: the cursor.
+ *  1. **selected + focused** — the same [card] fill as the focused-unselected cursor (no
+ *     [primaryContainer] fill peak) + the white [focusBorder] ring + accent content: both the cursor
+ *     AND the active-section marker are visible at once, never merged into their own third look.
+ *  2. **focused, unselected** — [card] fill + white [focusBorder] ring, bright [onSurface] content:
+ *     the cursor.
  *  3. **selected, unfocused** — soft [secondaryContainer] tonal fill + accent content + a left accent
  *     bar: a persistent, colour-independent marker of the active section while focus is elsewhere.
  *  4. **idle** — transparent, muted [onSurfaceVariant] content.
  *
  * Colours animate on the shared [ownTvTween]. [showAccentBar] and [focusBorder] are booleans/nullable
- * the call site draws itself (bar via [NavAccentBar], outline via `Modifier.border`).
+ * the call site draws itself (bar via [NavAccentBar], outline via `Modifier.border`). Accent marks
+ * "selected", the white ring marks "focused" — combined state shows both, never an accent-coloured ring.
  */
 data class NavLadderColors(
     val container: Color,
     val content: Color,
     val icon: Color,
     val showAccentBar: Boolean,
-    /** Teal focus outline colour when the item is the cursor (focused & not selected); null otherwise. */
+    /** White focus-ring colour whenever the item is focused (the cursor), selected or not; null otherwise. */
     val focusBorder: Color?,
 )
 
@@ -55,7 +59,9 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
 
     val container by animateColorAsState(
         when {
-            activeSelected -> colors.primaryContainer
+            // Combined state keeps the SAME fill as the plain focus cursor (no primaryContainer
+            // peak) — accent content + the white ring below are what mark it as also selected.
+            activeSelected -> colors.card
             focused -> colors.card
             selected -> colors.secondaryContainer.copy(alpha = 0.45f)
             else -> Color.Transparent
@@ -65,7 +71,7 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
     )
     val content by animateColorAsState(
         when {
-            activeSelected -> colors.onPrimaryContainer
+            activeSelected -> colors.accent   // accent cyan even while focused: "this is active"
             focused -> colors.onSurface       // bright white = "where the remote is"
             selected -> colors.accent         // accent cyan = "this is active"
             else -> colors.onSurfaceVariant
@@ -75,7 +81,7 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
     )
     val icon by animateColorAsState(
         when {
-            activeSelected -> colors.onPrimaryContainer
+            activeSelected -> colors.accent
             focused -> colors.onSurface
             selected -> colors.accent
             else -> colors.onSurfaceVariant
@@ -89,7 +95,9 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
         content = content,
         icon = icon,
         showAccentBar = selected,
-        focusBorder = if (focused && !selected) colors.focusBorder else null,
+        // White ring whenever focused, selected or not — the ring marks "focused", accent marks
+        // "selected"; combined state shows both instead of merging into an accent-coloured ring.
+        focusBorder = if (focused) colors.focusBorder else null,
     )
 }
 

@@ -347,9 +347,11 @@ private fun RailNavItem(
         showFocusBorder = false,
         contentAlignment = Alignment.Center,
     ) { focused ->
+        // Ladder alone is the single source of truth for tint (it already returns accent for both
+        // selected states, focused or not) — no local peak-state override needed here.
         val ladder = rememberNavLadderColors(selected = selected, focused = focused)
-        val iconTint = if (selected) colors.accent else ladder.icon
-        val contentTint = if (selected) colors.accent else ladder.content
+        val iconTint = ladder.icon
+        val contentTint = ladder.content
         Box(
             modifier = Modifier
                 .clip(RailItemShape)
