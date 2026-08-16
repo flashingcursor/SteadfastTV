@@ -22,6 +22,21 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.GridOn
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.LiveTv
+import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.VideoLibrary
+import androidx.compose.material.icons.rounded.Download
+import androidx.compose.material.icons.rounded.GridOn
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.LiveTv
+import androidx.compose.material.icons.rounded.Movie
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.VideoLibrary
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,12 +51,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import kotlinx.coroutines.launch
@@ -50,7 +67,6 @@ import tv.own.owntv.features.settings.data.RailPosition
 import tv.own.owntv.features.shell.MainSection
 import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.NavAccentBar
-import tv.own.owntv.ui.components.NavDuotoneIcon
 import tv.own.owntv.ui.components.OwnTVAvatar
 import tv.own.owntv.ui.components.rememberNavLadderColors
 import tv.own.owntv.ui.format.localizedInteger
@@ -366,7 +382,12 @@ private fun RailNavItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = if (expanded) Arrangement.spacedBy(12.dp) else Arrangement.Center,
             ) {
-                NavDuotoneIcon(section = section, color = iconTint, modifier = Modifier.size(RailIconSize))
+                Icon(
+                    imageVector = navIcon(section = section, selected = selected),
+                    contentDescription = null,
+                    tint = iconTint,
+                    modifier = Modifier.size(RailIconSize),
+                )
                 if (expanded) {
                     Text(
                         text = stringResource(section.labelRes),
@@ -402,6 +423,26 @@ private fun RailNavItem(
             }
         }
     }
+}
+
+/**
+ * Rail glyph for a [MainSection] — flat Material icon, filled ([Icons.Rounded]) when [selected],
+ * outlined ([Icons.Outlined]) otherwise. Replaced the bespoke [NavDuotoneIcon] canvas glyphs for
+ * this rail only (`ui/components/NavMenuSettingsScreen.kt` still uses NavDuotoneIcon, so that
+ * composable stays). EPG maps to `GridOn` over `TableRows`: an EPG is a two-axis grid (channel
+ * rows × time columns), which `GridOn`'s grid-of-cells glyph reads as more directly than
+ * `TableRows`' column-less horizontal bars. SEARCH has no rail item (it lives in the top bar per
+ * [MainSection.isBrowse]) so it's unreachable here.
+ */
+private fun navIcon(section: MainSection, selected: Boolean): ImageVector = when (section) {
+    MainSection.HOME -> if (selected) Icons.Rounded.Home else Icons.Outlined.Home
+    MainSection.LIVE_TV -> if (selected) Icons.Rounded.LiveTv else Icons.Outlined.LiveTv
+    MainSection.MOVIES -> if (selected) Icons.Rounded.Movie else Icons.Outlined.Movie
+    MainSection.SERIES -> if (selected) Icons.Rounded.VideoLibrary else Icons.Outlined.VideoLibrary
+    MainSection.DOWNLOADS -> if (selected) Icons.Rounded.Download else Icons.Outlined.Download
+    MainSection.EPG -> if (selected) Icons.Rounded.GridOn else Icons.Outlined.GridOn
+    MainSection.SETTINGS -> if (selected) Icons.Rounded.Settings else Icons.Outlined.Settings
+    MainSection.SEARCH -> error("FloatingRail has no Search nav item; Search lives in the top bar")
 }
 
 /**
