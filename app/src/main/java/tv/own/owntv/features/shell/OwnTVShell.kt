@@ -1,7 +1,6 @@
 package tv.own.owntv.features.shell
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -157,7 +156,7 @@ fun OwnTVShell(
     // Hoisted above the header (final-review, I2): the LEFT edge drawer being active is needed both
     // here — to fade the header title out from under the full-height drawer (ShellHeader's
     // `titleVisible` below) — and again down at the FloatingRail call site for the drawer's own
-    // geometry (leftRailInset/fillMaxHeight/width). One shared boolean keeps both in lockstep instead
+    // geometry (fillMaxHeight/width). One shared boolean keeps both in lockstep instead
     // of two independent computations that could drift.
     val leftRailActive = railPositionValue == RailPosition.LEFT && (railActive || railForceActive)
     // Measured header/audio-row/rail dimensions (px), used to place the rail relative to whatever's
@@ -607,8 +606,8 @@ fun OwnTVShell(
                         // Content reservation for the floating rail, implemented ONCE here rather than
                         // per-screen, both driven by the rail's OWN measured size (self-correcting — no
                         // magic constants that can drift out of sync with the rail's real geometry):
-                        // LEFT reserves the rail's 30dp edge inset + its measured width + one gap, so
-                        // content never sits under the floating pill; TOP reserves the rail's measured
+                        // LEFT reserves the flush rail's measured width + one gap, so content never
+                        // sits under the floating pill; TOP reserves the rail's measured
                         // height + one gap (the header/audio block above it is already accounted for by
                         // column flow, so only the rail itself needs an explicit reservation here — the
                         // matching gap between the header block and the rail is added at the rail's own
@@ -622,7 +621,7 @@ fun OwnTVShell(
                         .padding(
                             start = if (railPositionValue == RailPosition.LEFT) {
                                 val w = if (railWidthPx == 0) Dimens.RailIdleNominal else with(density) { railWidthPx.toDp() }
-                                Dimens.RailEdgeInset + w + Dimens.GapMedium
+                                w + Dimens.GapMedium
                             } else {
                                 0.dp
                             },
@@ -790,21 +789,10 @@ fun OwnTVShell(
                     }
                 }
             }
-            // LEFT edge drawer (shell-refinements Task 3): when the rail is active, its 30dp floating
-            // outer inset animates to 0 and it becomes an edge-pinned, full-height drawer instead of a
-            // centered floating pill. Lives HERE (not inside FloatingRail) because it's screen-level
-            // placement — the same "where does the rail sit in the Box" responsibility that already
-            // owns the 30dp/CenterStart values below — whereas the panel's own corner radius (28dp ->
-            // 0dp) animates inside FloatingRail itself, since that composable already threads a single
-            // `shape` value through its shadow/clip/glass/border chain. `leftRailActive` itself is
-            // hoisted above the header (see its declaration near the top of this composable) since
-            // ShellHeader's title-fade (I2) needs the same boolean; only this Dp animation stays here,
-            // scoped to the rail's own modifier chain.
-            val leftRailInset by animateDpAsState(
-                targetValue = if (leftRailActive) 0.dp else Dimens.RailEdgeInset,
-                animationSpec = ownTvTween(),
-                label = "railLeftInset",
-            )
+            // LEFT sits flush at the start edge in BOTH states (the 30dp floating inset — and its
+            // active->0 animation — was removed along with the vestigial corner radius: expanding is
+            // now purely the panel appearing + labels extending, with no positional shift). Active
+            // still swaps the centered icon column for the edge-pinned, full-height drawer below.
             FloatingRail(
                 position = railPositionValue,
                 selected = selectedSection,
@@ -857,7 +845,6 @@ fun OwnTVShell(
                     // makes that fillMaxWidth() mean "drawer width" instead of "screen width".
                     .then(if (leftRailActive) Modifier.fillMaxHeight().width(Dimens.RailDrawerWidth) else Modifier)
                     .padding(
-                        start = if (railPositionValue == RailPosition.LEFT) leftRailInset else 0.dp,
                         // Docks below whichever of header/audio-row is actually on screen (topBlockHeightPx
                         // measures both together, F2) — one RailTopGap gap; the content Box below reserves
                         // a second RailTopGap past the rail's own measured height so both gaps match.

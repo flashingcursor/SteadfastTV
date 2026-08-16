@@ -499,7 +499,7 @@ private val PreviewCounts: (MainSection) -> Int = { if (it == MainSection.DOWNLO
 @TvPreview
 @Composable
 private fun FloatingRailLeftIdlePreview() = OwnTVPreview {
-    Box(Modifier.fillMaxSize().padding(24.dp)) {
+    Box(Modifier.fillMaxSize()) {
         FloatingRail(
             position = RailPosition.LEFT,
             selected = MainSection.LIVE_TV,
@@ -519,11 +519,10 @@ private fun FloatingRailLeftIdlePreview() = OwnTVPreview {
 }
 
 /**
- * LEFT + forceActive renders the Task 3 edge drawer: full-height, flush to the start edge (no
- * outer padding on the preview's own [Box], unlike the idle preview above), squared corners — the
- * same geometry [tv.own.owntv.features.shell.OwnTVShell] produces by dropping its 30dp inset to
- * 0dp and adding `fillMaxHeight()` once the rail is active (see OwnTVShell's FloatingRail call
- * site).
+ * LEFT + forceActive renders the Task 3 edge drawer: full-height, flush to the start edge, squared
+ * corners — the same geometry [tv.own.owntv.features.shell.OwnTVShell] produces by adding
+ * `fillMaxHeight()` once the rail is active (see OwnTVShell's FloatingRail call site; both states
+ * sit flush at the edge, so activation adds no positional shift).
  */
 @TvPreview
 @Composable
