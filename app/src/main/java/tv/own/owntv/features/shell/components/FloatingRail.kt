@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -528,9 +529,10 @@ private fun FloatingRailLeftIdlePreview() = OwnTVPreview {
 
 /**
  * LEFT + forceActive renders the Task 3 edge drawer: full-height, flush to the start edge, squared
- * corners — the same geometry [tv.own.owntv.features.shell.OwnTVShell] produces by adding
- * `fillMaxHeight()` once the rail is active (see OwnTVShell's FloatingRail call site; both states
- * sit flush at the edge, so activation adds no positional shift).
+ * corners, content-width — the same geometry [tv.own.owntv.features.shell.OwnTVShell] produces by
+ * adding `fillMaxHeight().width(IntrinsicSize.Max)` once the rail is active (see OwnTVShell's
+ * FloatingRail call site; both states sit flush at the edge, so activation adds no positional
+ * shift, and the widest row — not a fixed Dp — dictates the drawer width).
  */
 @TvPreview
 @Composable
@@ -549,7 +551,7 @@ private fun FloatingRailLeftActivePreview() = OwnTVPreview {
             onActiveChange = {},
             counts = PreviewCounts,
             forceActive = true,
-            modifier = Modifier.align(Alignment.CenterStart).fillMaxHeight(),
+            modifier = Modifier.align(Alignment.CenterStart).fillMaxHeight().width(IntrinsicSize.Max),
         )
     }
 }

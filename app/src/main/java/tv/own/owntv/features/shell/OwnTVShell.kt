@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.aspectRatio
@@ -841,9 +842,12 @@ fun OwnTVShell(
                     // Final-review CRITICAL fix (C1): fillMaxHeight() alone left the drawer's Column
                     // cross-axis (width) unbounded, so the active separator's fillMaxWidth() (M2, prior
                     // round) resolved against the screen instead of the drawer and the whole panel ballooned
-                    // to full viewport width. Bounding the container to Dimens.RailDrawerWidth here is what
-                    // makes that fillMaxWidth() mean "drawer width" instead of "screen width".
-                    .then(if (leftRailActive) Modifier.fillMaxHeight().width(Dimens.RailDrawerWidth) else Modifier)
+                    // to full viewport width. width(IntrinsicSize.Max) is the bound that makes that
+                    // fillMaxWidth() mean "drawer width" instead of "screen width" — while letting the
+                    // widest real row (longest label at the current locale/zoom, or the avatar block)
+                    // dictate the drawer width rather than a fixed Dp (it replaced a fixed 280dp;
+                    // fillMaxWidth children report 0 intrinsic width, so the separators can't inflate it).
+                    .then(if (leftRailActive) Modifier.fillMaxHeight().width(IntrinsicSize.Max) else Modifier)
                     .padding(
                         // Docks below whichever of header/audio-row is actually on screen (topBlockHeightPx
                         // measures both together, F2) — one RailTopGap gap; the content Box below reserves
