@@ -9,14 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -154,11 +151,17 @@ fun OwnTVShell(
     // stops being needed. Clearing it here (rather than leaving it stuck true) is what lets a later
     // BACK press correctly read "rail active" from railActive alone once focus later leaves the rail.
     LaunchedEffect(railActive) { if (railActive) railForceActive = false }
-    // Hoisted above the header (final-review, I2): the LEFT edge drawer being active is needed both
-    // here — to fade the header title out from under the full-height drawer (ShellHeader's
-    // `titleVisible` below) — and again down at the FloatingRail call site for the drawer's own
-    // geometry (fillMaxHeight/width). One shared boolean keeps both in lockstep instead
-    // of two independent computations that could drift.
+    // Avatar/Settings (and their focus anchors) only compose while the rail is active, so the
+    // BACK-floor's synchronous sidebarFocus.requestFocus() can fire a frame before its target item
+    // exists (sidebarFocus attaches to the Settings item when Settings is the selected section).
+    // Retry after the forced expansion has actually recomposed the drawer contents.
+    LaunchedEffect(railForceActive) {
+        if (railForceActive) runCatching { sidebarFocus.requestFocus() }
+    }
+    // Hoisted above the header (final-review, I2): the LEFT edge drawer being active drives the
+    // header title fade (ShellHeader's `titleVisible` below). The drawer's active geometry itself
+    // now lives inside FloatingRail (keyed off its own `active`), so this boolean's remaining job
+    // is the shell-level title coordination.
     val leftRailActive = railPositionValue == RailPosition.LEFT && (railActive || railForceActive)
     // Measured header/audio-row/rail dimensions (px), used to place the rail relative to whatever's
     // actually above it and to reserve exactly that much space for the content below/beside it —
@@ -839,15 +842,10 @@ fun OwnTVShell(
                 forceActive = railForceActive,
                 modifier = Modifier
                     .align(if (railPositionValue == RailPosition.LEFT) Alignment.CenterStart else Alignment.TopCenter)
-                    // Final-review CRITICAL fix (C1): fillMaxHeight() alone left the drawer's Column
-                    // cross-axis (width) unbounded, so the active separator's fillMaxWidth() (M2, prior
-                    // round) resolved against the screen instead of the drawer and the whole panel ballooned
-                    // to full viewport width. width(IntrinsicSize.Max) is the bound that makes that
-                    // fillMaxWidth() mean "drawer width" instead of "screen width" — while letting the
-                    // widest real row (longest label at the current locale/zoom, or the avatar block)
-                    // dictate the drawer width rather than a fixed Dp (it replaced a fixed 280dp;
-                    // fillMaxWidth children report 0 intrinsic width, so the separators can't inflate it).
-                    .then(if (leftRailActive) Modifier.fillMaxHeight().width(IntrinsicSize.Max) else Modifier)
+                    // The drawer's active geometry (fillMaxHeight + IntrinsicSize.Max width, C1
+                    // bound included) moved INTO FloatingRail's own column chain so it can sit
+                    // below the panel's shadow/clip/glass/border and be eased open by the
+                    // animateContentSize there — the shell now only places the rail.
                     .padding(
                         // Docks below whichever of header/audio-row is actually on screen (topBlockHeightPx
                         // measures both together, F2) — one RailTopGap gap; the content Box below reserves

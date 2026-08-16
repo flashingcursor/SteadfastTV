@@ -95,9 +95,11 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
         content = content,
         icon = icon,
         showAccentBar = selected,
-        // White ring whenever focused, selected or not — the ring marks "focused", accent marks
+        // Ring whenever focused, selected or not — the ring marks "focused", accent marks
         // "selected"; combined state shows both instead of merging into an accent-coloured ring.
-        focusBorder = if (focused) colors.focusBorder else null,
+        // 70% alpha (user feedback): full-strength focusBorder read as glaring on nav items,
+        // which sit on dark glass rather than over artwork like the app's cards.
+        focusBorder = if (focused) colors.focusBorder.copy(alpha = 0.7f) else null,
     )
 }
 

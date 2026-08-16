@@ -2,6 +2,7 @@ package tv.own.owntv.features.shell.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.snap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
@@ -210,12 +211,31 @@ fun FloatingRail(
         }
         val columnAlignment = Alignment.Start
         Column(
-            modifier = panel.padding(columnPadding),
+            // Ease-open (user feedback): the drawer's bounds animate HERE — below the panel's
+            // shadow/clip/glass/border chain, so those visuals track the animated size — while the
+            // fillMaxHeight()/width(IntrinsicSize.Max) underneath snap the CONTENT to its final
+            // drawer layout immediately (focus targets exist at once; the clip(shape) above reveals
+            // it as the panel grows in step with the labels' own 220ms animateContentSize).
+            // width(IntrinsicSize.Max) keeps the C1 bound: fillMaxWidth separators report zero
+            // intrinsic width, so they can't balloon the drawer to screen width — the widest real
+            // row dictates it. The spec flips to snap() when collapsing: the node must stay
+            // resident through the transition to know its start size, but collapse stays instant —
+            // the panel/avatar/Settings decompose with `active` anyway, and animating the then-
+            // invisible wrapper would drag the idle icons across the screen.
+            modifier = panel
+                .animateContentSize(animationSpec = if (active) ownTvTween(220) else snap())
+                .then(if (active) Modifier.fillMaxHeight().width(IntrinsicSize.Max) else Modifier)
+                .padding(columnPadding),
             horizontalAlignment = columnAlignment,
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
-            RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
-            RailSeparator(position = position, active = active)
+            // Profile + Settings (and their separators) are drawer furniture, not idle chrome —
+            // composed only while expanded (user feedback), so the idle rail is purely the browse
+            // destinations.
+            if (active) {
+                RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
+                RailSeparator(position = position, active = active)
+            }
             // Review round 2 (M1): three-area drawer, matching the idle column's own distribution —
             // avatar pinned top, Settings pinned bottom (both outside this Box, unchanged below), and
             // this destinations area as the ONE weighted middle region so the nav cluster stays
@@ -245,29 +265,37 @@ fun FloatingRail(
                     }
                 }
             }
-            RailSeparator(position = position, active = active)
-            RailNavItem(
-                section = MainSection.SETTINGS,
-                selected = selected == MainSection.SETTINGS,
-                expanded = active,
-                count = 0,
-                position = position,
-                onClick = { onSelect(MainSection.SETTINGS) },
-                modifier = if (focusSection == MainSection.SETTINGS) {
-                    Modifier.focusRequester(selectedItemFocusRequester)
-                } else {
-                    Modifier
-                },
-            )
+            if (active) {
+                RailSeparator(position = position, active = active)
+                RailNavItem(
+                    section = MainSection.SETTINGS,
+                    selected = selected == MainSection.SETTINGS,
+                    expanded = active,
+                    count = 0,
+                    position = position,
+                    onClick = { onSelect(MainSection.SETTINGS) },
+                    modifier = if (focusSection == MainSection.SETTINGS) {
+                        Modifier.focusRequester(selectedItemFocusRequester)
+                    } else {
+                        Modifier
+                    },
+                )
+            }
         }
     } else {
         Row(
-            modifier = panel.padding(horizontal = 14.dp, vertical = 8.dp),
+            // Same ease-open treatment as LEFT: avatar/Settings popping in on expand would
+            // otherwise widen the pill in one frame while the labels ease.
+            modifier = panel
+                .animateContentSize(animationSpec = if (active) ownTvTween(220) else snap())
+                .padding(horizontal = 14.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(22.dp),
         ) {
-            RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
-            RailSeparator(position = position)
+            if (active) {
+                RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
+                RailSeparator(position = position)
+            }
             Box(modifier = Modifier.horizontalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
                 Row(horizontalArrangement = Arrangement.spacedBy(9.dp), verticalAlignment = Alignment.CenterVertically) {
                     MainSection.browseOrder.filter { it in visibleSections }.forEach { section ->
@@ -287,20 +315,22 @@ fun FloatingRail(
                     }
                 }
             }
-            RailSeparator(position = position)
-            RailNavItem(
-                section = MainSection.SETTINGS,
-                selected = selected == MainSection.SETTINGS,
-                expanded = active,
-                count = 0,
-                position = position,
-                onClick = { onSelect(MainSection.SETTINGS) },
-                modifier = if (focusSection == MainSection.SETTINGS) {
-                    Modifier.focusRequester(selectedItemFocusRequester)
-                } else {
-                    Modifier
-                },
-            )
+            if (active) {
+                RailSeparator(position = position)
+                RailNavItem(
+                    section = MainSection.SETTINGS,
+                    selected = selected == MainSection.SETTINGS,
+                    expanded = active,
+                    count = 0,
+                    position = position,
+                    onClick = { onSelect(MainSection.SETTINGS) },
+                    modifier = if (focusSection == MainSection.SETTINGS) {
+                        Modifier.focusRequester(selectedItemFocusRequester)
+                    } else {
+                        Modifier
+                    },
+                )
+            }
         }
     }
 }
@@ -391,6 +421,9 @@ private fun RailNavItem(
         focusedContainerColor = Color.Transparent,
         unfocusedContainerColor = Color.Transparent,
         selectedContainerColor = Color.Transparent,
+        // No focus glow on rail items (user feedback): the halo bloomed around the ring and read
+        // as a brighter, fatter border — the crisp FocusBorderWidth ring alone is the cursor here.
+        glowElevation = 0,
         showFocusBorder = false,
         contentAlignment = Alignment.Center,
     ) { focused ->
@@ -464,7 +497,10 @@ private fun RailNavItem(
                 }
             }
             if (position == RailPosition.LEFT) {
-                NavAccentBar(visible = selected)
+                // Expanded drawer drops the bar (user feedback): the accent icon+label already
+                // marks the active section there, and the bar crowded the ring's left edge on the
+                // selected+focused item. Idle (icons only) keeps it as the active-section marker.
+                NavAccentBar(visible = selected && !expanded)
             } else {
                 HorizontalNavAccentBar(visible = selected)
             }
@@ -529,10 +565,9 @@ private fun FloatingRailLeftIdlePreview() = OwnTVPreview {
 
 /**
  * LEFT + forceActive renders the Task 3 edge drawer: full-height, flush to the start edge, squared
- * corners, content-width — the same geometry [tv.own.owntv.features.shell.OwnTVShell] produces by
- * adding `fillMaxHeight().width(IntrinsicSize.Max)` once the rail is active (see OwnTVShell's
- * FloatingRail call site; both states sit flush at the edge, so activation adds no positional
- * shift, and the widest row — not a fixed Dp — dictates the drawer width).
+ * corners, content-width — the active geometry (`fillMaxHeight().width(IntrinsicSize.Max)`) is
+ * internal to FloatingRail now, so the preview only places it like the shell does (both states sit
+ * flush at the edge; the widest row — not a fixed Dp — dictates the drawer width).
  */
 @TvPreview
 @Composable
@@ -551,7 +586,7 @@ private fun FloatingRailLeftActivePreview() = OwnTVPreview {
             onActiveChange = {},
             counts = PreviewCounts,
             forceActive = true,
-            modifier = Modifier.align(Alignment.CenterStart).fillMaxHeight().width(IntrinsicSize.Max),
+            modifier = Modifier.align(Alignment.CenterStart),
         )
     }
 }
