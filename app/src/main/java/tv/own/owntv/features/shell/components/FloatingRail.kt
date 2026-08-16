@@ -39,6 +39,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -82,8 +83,11 @@ private val RailPanelBorderColor = Color.White.copy(alpha = 0.12f)
 private const val RailPanelFillAlpha = 0.82f
 
 private val RailItemShape = RoundedCornerShape(50)
-// LEFT's panel shape is no longer a constant (Task 3: corners animate 28dp -> 0dp when active via
-// leftCornerRadius below) — only TOP's stays fixed (always a pill, active or idle).
+// The panel (fill/border/shadow) only renders when active, and LEFT's active state is the squared
+// edge drawer — so LEFT's shape is a constant rectangle. It used to animate 28dp -> 0dp on expand,
+// but the idle rail draws no panel at all, so the rounded start value was only ever visible as a
+// transient corner-morph artifact during the expand tween. TOP stays a pill, active or idle.
+private val RailPanelShapeLeft = RectangleShape
 private val RailPanelShapeTop = RoundedCornerShape(50)
 
 /**
@@ -136,16 +140,7 @@ fun FloatingRail(
         else -> MainSection.browseOrder.firstOrNull { it in visibleSections } ?: MainSection.SETTINGS
     }
 
-    // LEFT active drawer (shell-refinements Task 3): corners square off (28dp -> 0dp) as the panel
-    // becomes a full-height edge drawer — animated here (not in the shell) since this composable
-    // already owns `active` and already threads a single `shape` value through shadow/clip/glass/
-    // border below. TOP's pill shape never changes with `active`, so it stays the constant.
-    val leftCornerRadius by animateDpAsState(
-        targetValue = if (position == RailPosition.LEFT && active) 0.dp else 28.dp,
-        animationSpec = ownTvTween(),
-        label = "railLeftCornerRadius",
-    )
-    val shape = if (position == RailPosition.LEFT) RoundedCornerShape(leftCornerRadius) else RailPanelShapeTop
+    val shape = if (position == RailPosition.LEFT) RailPanelShapeLeft else RailPanelShapeTop
 
     val panel = modifier
         .onFocusChanged { state ->
@@ -180,7 +175,7 @@ fun FloatingRail(
                         surface = GlassSurface.SIDEBAR,
                         baseFill = colors.surfaceContainer.copy(alpha = RailPanelFillAlpha),
                         shape = shape,
-                        cornerRadius = if (position == RailPosition.LEFT) leftCornerRadius else 999.dp,
+                        cornerRadius = if (position == RailPosition.LEFT) 0.dp else 999.dp,
                     )
                     .border(1.dp, RailPanelBorderColor, shape)
             } else {
