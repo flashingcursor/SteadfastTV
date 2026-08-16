@@ -203,8 +203,10 @@ fun HomeScreen(
         val targetIndex = targetRow?.let { renderRows.indexOf(it) } ?: 0
         runCatching { listState.scrollToItem(targetIndex.coerceAtLeast(0)) }
 
-        // Only pull focus INTO the Home content when returning from the player (restoreFocus). On a cold
-        // start or a tab switch, leave focus on the sidebar's Home item so the nav is immediately navigable.
+        // Pull focus INTO the Home content whenever restoreFocus is set — both when returning from the
+        // player AND, since the shell's rail-select wiring now arms this same flag (final-review, M5),
+        // when a tab switch lands on Home. Only a genuine cold start (restoreFocus still false on first
+        // composition) leaves focus on the rail's Home item so the nav is immediately navigable.
         if (restoreFocus) {
             kotlinx.coroutines.delay(60)
             val focusTarget = when {

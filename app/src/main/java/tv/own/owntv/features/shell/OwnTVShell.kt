@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -153,6 +154,12 @@ fun OwnTVShell(
     // stops being needed. Clearing it here (rather than leaving it stuck true) is what lets a later
     // BACK press correctly read "rail active" from railActive alone once focus later leaves the rail.
     LaunchedEffect(railActive) { if (railActive) railForceActive = false }
+    // Hoisted above the header (final-review, I2): the LEFT edge drawer being active is needed both
+    // here — to fade the header title out from under the full-height drawer (ShellHeader's
+    // `titleVisible` below) — and again down at the FloatingRail call site for the drawer's own
+    // geometry (leftRailInset/fillMaxHeight/width). One shared boolean keeps both in lockstep instead
+    // of two independent computations that could drift.
+    val leftRailActive = railPositionValue == RailPosition.LEFT && (railActive || railForceActive)
     // Measured header/audio-row/rail dimensions (px), used to place the rail relative to whatever's
     // actually above it and to reserve exactly that much space for the content below/beside it —
     // computed once per layout pass rather than hard-coded, so it self-corrects for UI zoom,
@@ -176,6 +183,8 @@ fun OwnTVShell(
     // Deep-link: the Guide's "Add EPG" button switches to Settings and opens EPG Sources → add.
     var openEpgAdd by remember { mutableStateOf(false) }
     // One-shot: set when leaving the player so the returning browse screen re-focuses the item you played.
+    // Also armed on rail SELECT (Task 4) so choosing a section jumps focus straight into its content —
+    // but only for the sections that consume it; see the onSelect wiring at the FloatingRail call site.
     var restoreFocus by remember { mutableStateOf(false) }
     val player = koinInject<OwnTVPlayer>()
     // Docked mini-player size (% of screen width) + position, configurable in Settings and from the
@@ -500,6 +509,11 @@ fun OwnTVShell(
                         // focus — matches the old TopBar SearchPill's `searchVisible` gate. Keeps the
                         // pill from stealing focus (and leaving focusedLayer stale) from any direction.
                         searchFocusable = focusedLayer == ShellLayer.SIDEBAR,
+                        // Final-review (I2): the LEFT edge drawer is full-height (spec #1, user-confirmed
+                        // top-to-bottom), which paints directly over the header's start-zone title behind
+                        // it. Rather than shrink the drawer back down, fade the title out while the drawer
+                        // is up (weather/clock stay — they sit at the far/end zone, never covered).
+                        titleVisible = !leftRailActive,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     // Audio Mode now-playing bar: the transparent header (Task 3) has exactly three fixed
@@ -782,11 +796,10 @@ fun OwnTVShell(
             // placement — the same "where does the rail sit in the Box" responsibility that already
             // owns the 30dp/CenterStart values below — whereas the panel's own corner radius (28dp ->
             // 0dp) animates inside FloatingRail itself, since that composable already threads a single
-            // `shape` value through its shadow/clip/glass/border chain. `railActive || railForceActive`
-            // is the same "is the rail active" union FloatingRail computes internally as `active`
-            // (forceActive param || its own focusWithin, which feeds railActive back up via
-            // onActiveChange below) — reusing it here keeps both halves of the animation in lockstep.
-            val leftRailActive = railPositionValue == RailPosition.LEFT && (railActive || railForceActive)
+            // `shape` value through its shadow/clip/glass/border chain. `leftRailActive` itself is
+            // hoisted above the header (see its declaration near the top of this composable) since
+            // ShellHeader's title-fade (I2) needs the same boolean; only this Dp animation stays here,
+            // scoped to the rail's own modifier chain.
             val leftRailInset by animateDpAsState(
                 targetValue = if (leftRailActive) 0.dp else Dimens.RailEdgeInset,
                 animationSpec = ownTvTween(),
@@ -802,18 +815,29 @@ fun OwnTVShell(
                 // Task 4 (shell-refinements): SELECT also jumps focus into the new section's content —
                 // the same one-shot `restoreFocus` flag/`onRestored` contract already used when leaving
                 // the player (see exitPlayer/dockPlayer/toAudioMode above, and LiveScreen's consumption
-                // of it). Browse screens (Home/Live/Movies/Series/Downloads/EPG) each guard their
-                // restoreFocus LaunchedEffect on their data actually being loaded (itemCount/size == 0 ->
-                // early return without grabbing focus or calling onRestored), so a still-loading section
-                // simply leaves focus on the rail item just pressed (the safe fallback — no stranding)
-                // until data arrives, then focuses automatically; re-selecting the current section
-                // re-triggers the same effect and jumps back into its content. Search isn't wired to this
-                // flag at all — SearchScreen already self-focuses its search field on every entry via its
-                // own LaunchedEffect(Unit), independent of restoreFocus. Settings doesn't consume
-                // restoreFocus either (its onEnter-based focus-restore only fires for directional D-pad
-                // entry, not a programmatic flag) — selecting it also leaves focus on the rail, which is
-                // the documented safe fallback there too.
-                onSelect = { section -> railForceActive = false; restoreFocus = true; onSelectSection(section) },
+                // of it). Only armed for the sections that actually consume it (MainSection.browseOrder:
+                // Home/Live/Movies/Series/Downloads/EPG) — final-review fix (M6): arming it unconditionally
+                // for EVERY section let it latch true after selecting Settings or Search (neither reads nor
+                // clears the flag), so a LATER unrelated focus-into-content entry — a deep link, or picking
+                // a browse section from Settings — could see that stale `true` and yank focus somewhere the
+                // user never asked for. Search isn't wired to this flag at all regardless — SearchScreen
+                // already self-focuses its search field on every entry via its own LaunchedEffect(Unit).
+                // Settings doesn't consume it either — its onEnter-based focus-restore only fires for
+                // directional D-pad entry, not a programmatic flag — so selecting either leaves focus on
+                // the rail, the documented safe fallback.
+                //
+                // Each browse screen guards its restoreFocus LaunchedEffect on its data actually being
+                // loaded (itemCount/size == 0 -> early return without grabbing focus or calling
+                // onRestored), so a still-loading section simply leaves focus on the rail item just pressed
+                // until data arrives, then focuses automatically. (M7: this IS a late-yank window — if the
+                // user navigates away again before that data arrives, the deferred focus grab can still
+                // fire once it does, landing on a screen the user is no longer looking at. Not fixed here;
+                // flagged for a follow-up that ties the effect to "still the selected section" too.)
+                onSelect = { section ->
+                    railForceActive = false
+                    if (section in MainSection.browseOrder) restoreFocus = true
+                    onSelectSection(section)
+                },
                 avatarId = avatarId,
                 onPickAvatar = { showAvatarPicker = true },
                 onSwitchProfile = onSwitchProfile,
@@ -826,7 +850,12 @@ fun OwnTVShell(
                 forceActive = railForceActive,
                 modifier = Modifier
                     .align(if (railPositionValue == RailPosition.LEFT) Alignment.CenterStart else Alignment.TopCenter)
-                    .then(if (leftRailActive) Modifier.fillMaxHeight() else Modifier)
+                    // Final-review CRITICAL fix (C1): fillMaxHeight() alone left the drawer's Column
+                    // cross-axis (width) unbounded, so the active separator's fillMaxWidth() (M2, prior
+                    // round) resolved against the screen instead of the drawer and the whole panel ballooned
+                    // to full viewport width. Bounding the container to Dimens.RailDrawerWidth here is what
+                    // makes that fillMaxWidth() mean "drawer width" instead of "screen width".
+                    .then(if (leftRailActive) Modifier.fillMaxHeight().width(Dimens.RailDrawerWidth) else Modifier)
                     .padding(
                         start = if (railPositionValue == RailPosition.LEFT) leftRailInset else 0.dp,
                         // Docks below whichever of header/audio-row is actually on screen (topBlockHeightPx

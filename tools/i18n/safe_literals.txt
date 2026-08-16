@@ -2883,6 +2883,7 @@
 1	protocol	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	United States
 1	protocol	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	ass
 1	performance	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	epg-preload
+1	technical	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	railLeftInset
 1	technical	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	railScrim
 1	performance	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	shell-composed
 1	protocol	app/src/main/java/tv/own/owntv/features/shell/OwnTVShell.kt	srt
@@ -2908,6 +2909,7 @@
 2	technical	app/src/main/java/tv/own/owntv/features/shell/components/FloatingRail.kt	Bedroom
 2	technical	app/src/main/java/tv/own/owntv/features/shell/components/FloatingRail.kt	Living Room
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/FloatingRail.kt	navAccentBarTop
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/FloatingRail.kt	railLeftCornerRadius
 1	empty	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	\0
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	,
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/MediaDetailsScreen.kt	·
@@ -2942,6 +2944,7 @@
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	partlyDay
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	partlyNight
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	rain
+1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	shellTitleAlpha
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	snow
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	sunny
 1	technical	app/src/main/java/tv/own/owntv/features/shell/components/ShellHeader.kt	thunder
@@ -4213,6 +4216,7 @@
 1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaListRow.kt	Sintel
 1	technical	app/src/main/java/tv/own/owntv/ui/components/MediaListRow.kt	Tears of Steel
 1	empty	app/src/main/java/tv/own/owntv/ui/components/MoveOrderOverlay.kt	\0
+1	technical	app/src/main/java/tv/own/owntv/ui/components/NavIcons.kt	navIcon has no Search glyph; Search lives in the top bar
 1	performance	app/src/main/java/tv/own/owntv/ui/components/NavLadder.kt	navAccentBar
 1	performance	app/src/main/java/tv/own/owntv/ui/components/NavLadder.kt	navLadderBg
 1	performance	app/src/main/java/tv/own/owntv/ui/components/NavLadder.kt	navLadderFg

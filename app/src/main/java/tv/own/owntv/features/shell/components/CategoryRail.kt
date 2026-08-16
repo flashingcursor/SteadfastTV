@@ -228,7 +228,6 @@ private fun RailPill(
     // both panels read the same (#47): active+focused (full fill) → focused cursor (outline) →
     // selected-idle (tonal fill + left accent bar) → idle.
     val ladder = rememberNavLadderColors(selected = selected, focused = focused)
-    val activeSelected = selected && focused
 
     // Box-style corners (8.dp), close to the live-TV channel list item, not an over-rounded pill.
     val shape = if (expanded) RoundedCornerShape(8.dp) else CircleShape
@@ -273,7 +272,14 @@ private fun RailPill(
             // Favorites / History carry an [icon] inline before the name; category folders show the
             // name alone with no abbreviation badge (#75).
             if (category.icon != null) {
-                OwnTVIcon(icon = category.icon, tint = ladder.icon, filled = activeSelected, modifier = Modifier.size(if (expanded) 20.dp else Dimens.RailPillSize / 2))
+                // Final-review fix (M8): filled tracks `selected` alone, matching the rail's own icon
+                // contract — FloatingRail's shared `navIcon` mapping (ui/components/NavIcons.kt) picks the
+                // filled glyph whenever a section is selected, regardless of focus. `activeSelected`
+                // (selected && focused) instead tied the fill to the focus cursor too, so the same
+                // category read as outlined-while-selected-but-unfocused here yet filled-while-selected on
+                // the rail — the two nav surfaces this shared ladder exists to keep identical (#47) had
+                // diverged on this one visual.
+                OwnTVIcon(icon = category.icon, tint = ladder.icon, filled = selected, modifier = Modifier.size(if (expanded) 20.dp else Dimens.RailPillSize / 2))
                 if (expanded) Spacer(Modifier.width(8.dp))
             } else if (expanded && category.showGenreDot) {
                 // Genre hint dot (Sport/News/Movies/Action/…); unknown categories show the grey

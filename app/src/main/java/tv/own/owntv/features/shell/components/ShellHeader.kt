@@ -1,6 +1,7 @@
 package tv.own.owntv.features.shell.components
 
 import android.text.format.DateFormat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
@@ -46,6 +48,7 @@ import tv.own.owntv.ui.preview.TvPreview
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.WeatherGlyph
+import tv.own.owntv.ui.theme.ownTvTween
 import java.util.Date
 
 // Floating shell header: fully transparent, three zones (start title / center search / end weather+
@@ -75,13 +78,19 @@ fun ShellHeader(
     // machine (BACK from an unreachable-but-focused pill would fall through to stale layer logic).
     // Defaults true so every other/preview caller keeps the pill reachable as before.
     searchFocusable: Boolean = true,
+    // Final-review (I2): the LEFT rail's active edge drawer is full-height (spec #1, user-confirmed
+    // top-to-bottom) and paints directly over this header's start-zone title. Rather than shrink the
+    // drawer to dodge it, the caller fades the title out instead — weather/clock (end zone) are never
+    // covered, so they're untouched. Alpha-animated HERE (not by the caller) so every caller gets the
+    // same feel for free; defaults true so every other/preview caller is unaffected.
+    titleVisible: Boolean = true,
 ) {
     Row(
         modifier = modifier.fillMaxWidth().padding(horizontal = 32.dp, vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
-            ShellTitle(title)
+            ShellTitle(title, visible = titleVisible)
         }
         ShellSearchPill(onClick = onSearch, focusable = searchFocusable)
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
@@ -91,12 +100,20 @@ fun ShellHeader(
 }
 
 @Composable
-private fun ShellTitle(title: String) {
+private fun ShellTitle(title: String, visible: Boolean) {
+    // Same tween the active-rail content scrim animates on (OwnTVShell's `railScrim`) — keeps the
+    // title fade and the drawer's own expand/collapse reading as one coordinated motion.
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = ownTvTween(),
+        label = "shellTitleAlpha",
+    )
     Text(
         title,
         style = MaterialTheme.typography.headlineSmall.copy(color = Color.White, shadow = HeaderTextShadow),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
+        modifier = Modifier.alpha(alpha),
     )
 }
 

@@ -231,6 +231,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material.icons.core)
+    // Versionless under the Compose BOM above, so it doesn't strictly need a catalog entry to pin a
+    // version — but it belongs in libs.versions.toml for consistency with every other dependency here.
+    // Not moved in this pass: that file already carries uncommitted local changes; move this once those land.
     implementation("androidx.compose.material:material-icons-extended")
 
     // Compose for TV

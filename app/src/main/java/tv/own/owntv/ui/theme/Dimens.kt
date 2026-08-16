@@ -23,6 +23,16 @@ object Dimens {
     // 0dp when the rail becomes an edge-pinned active drawer (shell-refinements Task 3 review).
     val RailEdgeInset = 30.dp
 
+    // LEFT rail's active edge-drawer width (final-review CRITICAL fix, C1): without an explicit
+    // bound here, the drawer's Column has no cross-axis constraint of its own, so the active
+    // separator's fillMaxWidth() (Task 3 review, M2) resolves against the screen rather than the
+    // drawer and the whole panel balloons to full viewport width. 280dp is a sane fixed TV-drawer
+    // width — comfortably fits every rail label (Downloads is the longest) at default UI zoom; tune
+    // upward if a locale's longest label clips. Always > RailIdleNominal(66dp), so the min-convergence
+    // idle-width capture (OwnTVShell's `railWidthPx = minOf(...)`, guarded to idle frames only) is
+    // unaffected — this value never feeds that capture regardless.
+    val RailDrawerWidth = 280.dp
+
     // Layer 2 — category rail (expands to show full names when it holds focus)
     val RailWidth = 92.dp
     val RailWidthExpanded = 325.dp // expanded (focused overlay) width — fits long category names
