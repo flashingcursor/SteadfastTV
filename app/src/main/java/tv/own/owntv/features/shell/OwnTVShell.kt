@@ -1,6 +1,7 @@
 package tv.own.owntv.features.shell
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -596,7 +598,8 @@ fun OwnTVShell(
                         // height + one gap (the header/audio block above it is already accounted for by
                         // column flow, so only the rail itself needs an explicit reservation here — the
                         // matching gap between the header block and the rail is added at the rail's own
-                        // top padding below, so both gaps land at GapMedium).
+                        // top padding below, so both gaps land at Dimens.RailTopGap — shell-refinements
+                        // Task 3 tightened this from GapMedium/16dp to RailTopGap/8dp).
                         //
                         // railWidthPx/railHeightPx are 0 until the rail's onSizeChanged callback below
                         // reports its first idle measurement (cold start, or right after a LEFT<->TOP
@@ -611,7 +614,7 @@ fun OwnTVShell(
                             },
                             top = if (railPositionValue == RailPosition.TOP) {
                                 val h = if (railHeightPx == 0) Dimens.RailIdleNominal else with(density) { railHeightPx.toDp() }
-                                h + Dimens.GapMedium * 2
+                                h + Dimens.RailTopGap * 2
                             } else {
                                 0.dp
                             },
@@ -773,6 +776,22 @@ fun OwnTVShell(
                     }
                 }
             }
+            // LEFT edge drawer (shell-refinements Task 3): when the rail is active, its 30dp floating
+            // outer inset animates to 0 and it becomes an edge-pinned, full-height drawer instead of a
+            // centered floating pill. Lives HERE (not inside FloatingRail) because it's screen-level
+            // placement — the same "where does the rail sit in the Box" responsibility that already
+            // owns the 30dp/CenterStart values below — whereas the panel's own corner radius (28dp ->
+            // 0dp) animates inside FloatingRail itself, since that composable already threads a single
+            // `shape` value through its shadow/clip/glass/border chain. `railActive || railForceActive`
+            // is the same "is the rail active" union FloatingRail computes internally as `active`
+            // (forceActive param || its own focusWithin, which feeds railActive back up via
+            // onActiveChange below) — reusing it here keeps both halves of the animation in lockstep.
+            val leftRailActive = railPositionValue == RailPosition.LEFT && (railActive || railForceActive)
+            val leftRailInset by animateDpAsState(
+                targetValue = if (leftRailActive) 0.dp else 30.dp,
+                animationSpec = ownTvTween(),
+                label = "railLeftInset",
+            )
             FloatingRail(
                 position = railPositionValue,
                 selected = selectedSection,
@@ -792,13 +811,14 @@ fun OwnTVShell(
                 forceActive = railForceActive,
                 modifier = Modifier
                     .align(if (railPositionValue == RailPosition.LEFT) Alignment.CenterStart else Alignment.TopCenter)
+                    .then(if (leftRailActive) Modifier.fillMaxHeight() else Modifier)
                     .padding(
-                        start = if (railPositionValue == RailPosition.LEFT) 30.dp else 0.dp,
+                        start = if (railPositionValue == RailPosition.LEFT) leftRailInset else 0.dp,
                         // Docks below whichever of header/audio-row is actually on screen (topBlockHeightPx
-                        // measures both together, F2) — one GapMedium gap; the content Box below reserves
-                        // a second GapMedium past the rail's own measured height so both gaps match.
+                        // measures both together, F2) — one RailTopGap gap; the content Box below reserves
+                        // a second RailTopGap past the rail's own measured height so both gaps match.
                         top = if (railPositionValue == RailPosition.TOP) {
-                            with(density) { topBlockHeightPx.toDp() } + Dimens.GapMedium
+                            with(density) { topBlockHeightPx.toDp() } + Dimens.RailTopGap
                         } else {
                             0.dp
                         },

@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -79,7 +81,8 @@ private val RailPanelBorderColor = Color.White.copy(alpha = 0.12f)
 private const val RailPanelFillAlpha = 0.82f
 
 private val RailItemShape = RoundedCornerShape(50)
-private val RailPanelShapeLeft = RoundedCornerShape(28.dp)
+// LEFT's panel shape is no longer a constant (Task 3: corners animate 28dp -> 0dp when active via
+// leftCornerRadius below) — only TOP's stays fixed (always a pill, active or idle).
 private val RailPanelShapeTop = RoundedCornerShape(50)
 
 /**
@@ -132,7 +135,16 @@ fun FloatingRail(
         else -> MainSection.browseOrder.firstOrNull { it in visibleSections } ?: MainSection.SETTINGS
     }
 
-    val shape = if (position == RailPosition.LEFT) RailPanelShapeLeft else RailPanelShapeTop
+    // LEFT active drawer (shell-refinements Task 3): corners square off (28dp -> 0dp) as the panel
+    // becomes a full-height edge drawer — animated here (not in the shell) since this composable
+    // already owns `active` and already threads a single `shape` value through shadow/clip/glass/
+    // border below. TOP's pill shape never changes with `active`, so it stays the constant.
+    val leftCornerRadius by animateDpAsState(
+        targetValue = if (active) 0.dp else 28.dp,
+        animationSpec = ownTvTween(),
+        label = "railLeftCornerRadius",
+    )
+    val shape = if (position == RailPosition.LEFT) RoundedCornerShape(leftCornerRadius) else RailPanelShapeTop
 
     val panel = modifier
         .onFocusChanged { state ->
@@ -167,7 +179,7 @@ fun FloatingRail(
                         surface = GlassSurface.SIDEBAR,
                         baseFill = colors.surfaceContainer.copy(alpha = RailPanelFillAlpha),
                         shape = shape,
-                        cornerRadius = if (position == RailPosition.LEFT) 28.dp else 999.dp,
+                        cornerRadius = if (position == RailPosition.LEFT) leftCornerRadius else 999.dp,
                     )
                     .border(1.dp, RailPanelBorderColor, shape)
             } else {
@@ -176,15 +188,25 @@ fun FloatingRail(
         )
 
     if (position == RailPosition.LEFT) {
+        // Idle: narrow icon-only column, centered as before. Active edge drawer (Task 3): rows
+        // start-justify against a consistent ~20dp inset instead of each row centering independently
+        // within the (now content-width-driven, per-row-varying) column — see RailNavItem below,
+        // whose expanded rows are no longer all the same width once labels differ in length.
+        val columnPadding = if (active) {
+            PaddingValues(start = 20.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
+        } else {
+            PaddingValues(horizontal = 9.dp, vertical = 16.dp)
+        }
+        val columnAlignment = if (active) Alignment.Start else Alignment.CenterHorizontally
         Column(
-            modifier = panel.padding(horizontal = 9.dp, vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = panel.padding(columnPadding),
+            horizontalAlignment = columnAlignment,
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
             RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
             RailSeparator(position = position)
-            Box(modifier = Modifier.verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
-                Column(verticalArrangement = Arrangement.spacedBy(9.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(modifier = Modifier.verticalScroll(rememberScrollState()), contentAlignment = if (active) Alignment.CenterStart else Alignment.Center) {
+                Column(verticalArrangement = Arrangement.spacedBy(9.dp), horizontalAlignment = columnAlignment) {
                     MainSection.browseOrder.filter { it in visibleSections }.forEach { section ->
                         RailNavItem(
                             section = section,
@@ -367,7 +389,7 @@ private fun RailNavItem(
             Row(
                 modifier = Modifier.padding(horizontal = if (expanded) 14.dp else 10.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = if (expanded) Arrangement.spacedBy(12.dp) else Arrangement.Center,
+                horizontalArrangement = if (expanded) Arrangement.spacedBy(12.dp, Alignment.Start) else Arrangement.Center,
             ) {
                 Icon(
                     imageVector = navIcon(section = section, selected = selected),
@@ -467,10 +489,17 @@ private fun FloatingRailLeftIdlePreview() = OwnTVPreview {
     }
 }
 
+/**
+ * LEFT + forceActive renders the Task 3 edge drawer: full-height, flush to the start edge (no
+ * outer padding on the preview's own [Box], unlike the idle preview above), squared corners — the
+ * same geometry [tv.own.owntv.features.shell.OwnTVShell] produces by dropping its 30dp inset to
+ * 0dp and adding `fillMaxHeight()` once the rail is active (see OwnTVShell's FloatingRail call
+ * site).
+ */
 @TvPreview
 @Composable
 private fun FloatingRailLeftActivePreview() = OwnTVPreview {
-    Box(Modifier.fillMaxSize().padding(24.dp)) {
+    Box(Modifier.fillMaxSize()) {
         FloatingRail(
             position = RailPosition.LEFT,
             selected = MainSection.LIVE_TV,
@@ -484,7 +513,7 @@ private fun FloatingRailLeftActivePreview() = OwnTVPreview {
             onActiveChange = {},
             counts = PreviewCounts,
             forceActive = true,
-            modifier = Modifier.align(Alignment.CenterStart),
+            modifier = Modifier.align(Alignment.CenterStart).fillMaxHeight(),
         )
     }
 }

@@ -35,6 +35,12 @@ object Dimens {
     val GapMedium = 16.dp
     val GapLarge = 24.dp
 
+    // Floating shell rail, TOP position only (shell-refinements Task 3): the header→rail gap, and
+    // (doubled, matching the existing header/rail/content symmetric-gap arithmetic in
+    // OwnTVShell.kt) the rail→content gap. Deliberately tighter than GapMedium — the TOP rail sits
+    // right under the header pill and the old 16dp gap read as too loose.
+    val RailTopGap = 8.dp
+
     // Poster tiles (PosterCard) — values match the shipped look exactly; centralized for tuning.
     val PosterProgressHeight = 4.dp
 
