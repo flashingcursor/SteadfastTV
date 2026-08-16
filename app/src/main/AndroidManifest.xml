@@ -49,10 +49,10 @@
 
     <!-- android:icon points at tv_tile, a square tile designed for Fire TV: its launcher
          ignores android:banner for sideloaded apps and constrains android:icon to a square
-         inner box on the home tile (grey pillars either side — verified empirically; full-
-         bleed 16:9 tiles are reserved for Appstore-delivered artwork). A square navy tile
-         with the stacked lockup fills that box deliberately instead of letterboxing the
-         adaptive icon or shrinking the wide banner. Android TV/Google TV launchers use
+         inner box on the home tile, drawn over the launcher's own grey tile (verified
+         empirically; full-bleed 16:9 tiles only come with Amazon Appstore submission). The
+         tile is the stacked lockup on a TRANSPARENT background so it blends into that grey
+         instead of floating as a colored square. Android TV/Google TV launchers use
          android:banner (tv_banner, 16:9) and never read this. -->
     <application
         android:name=".OwnTVApp"
