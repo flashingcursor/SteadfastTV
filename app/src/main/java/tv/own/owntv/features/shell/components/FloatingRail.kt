@@ -211,20 +211,25 @@ fun FloatingRail(
         }
         val columnAlignment = Alignment.Start
         Column(
-            // Ease-open (user feedback): the drawer's bounds animate HERE — below the panel's
-            // shadow/clip/glass/border chain, so those visuals track the animated size — while the
-            // fillMaxHeight()/width(IntrinsicSize.Max) underneath snap the CONTENT to its final
-            // drawer layout immediately (focus targets exist at once; the clip(shape) above reveals
-            // it as the panel grows in step with the labels' own 220ms animateContentSize).
-            // width(IntrinsicSize.Max) keeps the C1 bound: fillMaxWidth separators report zero
-            // intrinsic width, so they can't balloon the drawer to screen width — the widest real
-            // row dictates it. The spec flips to snap() when collapsing: the node must stay
-            // resident through the transition to know its start size, but collapse stays instant —
-            // the panel/avatar/Settings decompose with `active` anyway, and animating the then-
+            // Ease-open (user feedback): the drawer's WIDTH animates — below the panel's
+            // shadow/clip/glass/border chain, so those visuals track the animated size — while its
+            // height snaps to full immediately. The axis split comes from the modifier ORDER:
+            // fillMaxHeight() sits ABOVE animateContentSize, so the animator runs under exact
+            // height constraints (animateContentSize clamps its animated size to incoming
+            // constraints — height is pinned to full from the first frame) while width, loosely
+            // constrained, eases 220ms in step with the labels' own animateContentSize. The
+            // width(IntrinsicSize.Max) underneath snaps the CONTENT to its final drawer layout
+            // immediately (focus targets exist at once; the clip(shape) above reveals it as the
+            // panel widens) and keeps the C1 bound: fillMaxWidth separators report zero intrinsic
+            // width, so they can't balloon the drawer to screen width — the widest real row
+            // dictates it. The spec flips to snap() when collapsing: the node must stay resident
+            // through the transition to know its start size, but collapse stays instant — the
+            // panel/avatar/Settings decompose with `active` anyway, and animating the then-
             // invisible wrapper would drag the idle icons across the screen.
             modifier = panel
+                .then(if (active) Modifier.fillMaxHeight() else Modifier)
                 .animateContentSize(animationSpec = if (active) ownTvTween(220) else snap())
-                .then(if (active) Modifier.fillMaxHeight().width(IntrinsicSize.Max) else Modifier)
+                .then(if (active) Modifier.width(IntrinsicSize.Max) else Modifier)
                 .padding(columnPadding),
             horizontalAlignment = columnAlignment,
             verticalArrangement = Arrangement.spacedBy(18.dp),
