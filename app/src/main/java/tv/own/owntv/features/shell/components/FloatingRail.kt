@@ -28,6 +28,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tv.own.owntv.R
 import tv.own.owntv.features.settings.data.RailPosition
@@ -132,6 +134,30 @@ fun FloatingRail(
     val scope = rememberCoroutineScope()
     val active = forceActive || focusWithin
 
+    // Collapse ease (user feedback): the mirror of the open. `active` drops the labels immediately
+    // (they shrink on their own animateContentSize), but the panel, avatar/Settings, full height
+    // and intrinsic-width bound must OUTLIVE it while the container width eases back down —
+    // `settling` covers that window, so `expandedVisuals` is what the geometry/chrome key off.
+    // Set synchronously on the active->idle transition (a LaunchedEffect would hand the visuals
+    // one decomposed frame first); cleared by the container animateContentSize's finishedListener
+    // when the width lands, with a timeout net in case an interrupted animation swallows the
+    // callback. Once it clears, the spec below is already snap(), so shedding fillMaxHeight and
+    // the drawer furniture doesn't animate — the panel is gone by then, and easing the invisible
+    // wrapper would drag the idle icons across the screen.
+    var settling by remember { mutableStateOf(false) }
+    var prevActive by remember { mutableStateOf(active) }
+    if (active != prevActive) {
+        prevActive = active
+        if (!active) settling = true
+    }
+    LaunchedEffect(settling) {
+        if (settling) {
+            delay(600)
+            settling = false
+        }
+    }
+    val expandedVisuals = active || settling
+
     // Carried over verbatim from Sidebar.kt: Search has no rail item (it lives in the top bar) so
     // BACK/left out of Search redirects to Home; a hidden selected section (Nav menu customization)
     // falls back to the first visible browse item, or Settings if every browse item is hidden.
@@ -160,7 +186,7 @@ fun FloatingRail(
         }
         .focusGroup()
         .then(
-            if (active) {
+            if (expandedVisuals) {
                 Modifier
                     .shadow(
                         elevation = 14.dp,
@@ -222,24 +248,28 @@ fun FloatingRail(
             // immediately (focus targets exist at once; the clip(shape) above reveals it as the
             // panel widens) and keeps the C1 bound: fillMaxWidth separators report zero intrinsic
             // width, so they can't balloon the drawer to screen width — the widest real row
-            // dictates it. The spec flips to snap() when collapsing: the node must stay resident
-            // through the transition to know its start size, but collapse stays instant — the
-            // panel/avatar/Settings decompose with `active` anyway, and animating the then-
-            // invisible wrapper would drag the idle icons across the screen.
+            // dictates it. Collapse mirrors this through `settling` (see its declaration): panel,
+            // furniture and full height persist while the labels shrink and the width eases back;
+            // only once the width lands does everything decompose — under a snap() spec by then,
+            // so shedding fillMaxHeight can't animate the invisible wrapper and drag the idle
+            // icons across the screen.
             modifier = panel
-                .then(if (active) Modifier.fillMaxHeight() else Modifier)
-                .animateContentSize(animationSpec = if (active) ownTvTween(220) else snap())
-                .then(if (active) Modifier.width(IntrinsicSize.Max) else Modifier)
+                .then(if (expandedVisuals) Modifier.fillMaxHeight() else Modifier)
+                .animateContentSize(
+                    animationSpec = if (expandedVisuals) ownTvTween(220) else snap(),
+                    finishedListener = { _, _ -> settling = false },
+                )
+                .then(if (expandedVisuals) Modifier.width(IntrinsicSize.Max) else Modifier)
                 .padding(columnPadding),
             horizontalAlignment = columnAlignment,
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
             // Profile + Settings (and their separators) are drawer furniture, not idle chrome —
-            // composed only while expanded (user feedback), so the idle rail is purely the browse
-            // destinations.
-            if (active) {
+            // composed only while expanded (user feedback; kept through `settling` so they don't
+            // vanish mid-collapse), so the idle rail is purely the browse destinations.
+            if (expandedVisuals) {
                 RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
-                RailSeparator(position = position, active = active)
+                RailSeparator(position = position, active = expandedVisuals)
             }
             // Review round 2 (M1): three-area drawer, matching the idle column's own distribution —
             // avatar pinned top, Settings pinned bottom (both outside this Box, unchanged below), and
@@ -249,7 +279,7 @@ fun FloatingRail(
             // upstream), and weighting a child there would force Compose to stretch the whole idle
             // pill to fill the screen — exactly the floating-pill geometry idle must NOT have.
             Box(
-                modifier = if (active) Modifier.weight(1f).verticalScroll(rememberScrollState()) else Modifier.verticalScroll(rememberScrollState()),
+                modifier = if (expandedVisuals) Modifier.weight(1f).verticalScroll(rememberScrollState()) else Modifier.verticalScroll(rememberScrollState()),
                 contentAlignment = Alignment.Center,
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(9.dp), horizontalAlignment = columnAlignment) {
@@ -270,8 +300,8 @@ fun FloatingRail(
                     }
                 }
             }
-            if (active) {
-                RailSeparator(position = position, active = active)
+            if (expandedVisuals) {
+                RailSeparator(position = position, active = expandedVisuals)
                 RailNavItem(
                     section = MainSection.SETTINGS,
                     selected = selected == MainSection.SETTINGS,
@@ -289,15 +319,18 @@ fun FloatingRail(
         }
     } else {
         Row(
-            // Same ease-open treatment as LEFT: avatar/Settings popping in on expand would
-            // otherwise widen the pill in one frame while the labels ease.
+            // Same ease treatment as LEFT, both directions: avatar/Settings popping in/out would
+            // otherwise jump the pill width in one frame while the labels ease.
             modifier = panel
-                .animateContentSize(animationSpec = if (active) ownTvTween(220) else snap())
+                .animateContentSize(
+                    animationSpec = if (expandedVisuals) ownTvTween(220) else snap(),
+                    finishedListener = { _, _ -> settling = false },
+                )
                 .padding(horizontal = 14.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(22.dp),
         ) {
-            if (active) {
+            if (expandedVisuals) {
                 RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
                 RailSeparator(position = position)
             }
@@ -320,7 +353,7 @@ fun FloatingRail(
                     }
                 }
             }
-            if (active) {
+            if (expandedVisuals) {
                 RailSeparator(position = position)
                 RailNavItem(
                     section = MainSection.SETTINGS,
