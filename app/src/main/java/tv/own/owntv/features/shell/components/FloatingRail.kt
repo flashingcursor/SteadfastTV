@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -140,7 +141,7 @@ fun FloatingRail(
     // already owns `active` and already threads a single `shape` value through shadow/clip/glass/
     // border below. TOP's pill shape never changes with `active`, so it stays the constant.
     val leftCornerRadius by animateDpAsState(
-        targetValue = if (active) 0.dp else 28.dp,
+        targetValue = if (position == RailPosition.LEFT && active) 0.dp else 28.dp,
         animationSpec = ownTvTween(),
         label = "railLeftCornerRadius",
     )
@@ -192,6 +193,13 @@ fun FloatingRail(
         // start-justify against a consistent ~20dp inset instead of each row centering independently
         // within the (now content-width-driven, per-row-varying) column — see RailNavItem below,
         // whose expanded rows are no longer all the same width once labels differ in length.
+        //
+        // Invariant (review round 2, min-convergence): this active horizontal inset (20dp start +
+        // 16dp end = 36dp total) must stay >= idle's 9dp+9dp=18dp total. OwnTVShell's idle-width
+        // capture (`railWidthPx = minOf(railWidthPx, it.width)`) assumes every transient frame
+        // between idle and active is >= the true idle width — narrowing the active padding below
+        // idle's would risk a collapse-animation frame measuring narrower than idle and corrupting
+        // that floor.
         val columnPadding = if (active) {
             PaddingValues(start = 20.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
         } else {
@@ -204,8 +212,18 @@ fun FloatingRail(
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
             RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
-            RailSeparator(position = position)
-            Box(modifier = Modifier.verticalScroll(rememberScrollState()), contentAlignment = if (active) Alignment.CenterStart else Alignment.Center) {
+            RailSeparator(position = position, active = active)
+            // Review round 2 (M1): three-area drawer, matching the idle column's own distribution —
+            // avatar pinned top, Settings pinned bottom (both outside this Box, unchanged below), and
+            // this destinations area as the ONE weighted middle region so the nav cluster stays
+            // vertically centered in the drawer instead of teleporting to the top on expand. `weight`
+            // is applied ONLY while active: the idle Column is wrap-content height (no fillMaxHeight
+            // upstream), and weighting a child there would force Compose to stretch the whole idle
+            // pill to fill the screen — exactly the floating-pill geometry idle must NOT have.
+            Box(
+                modifier = if (active) Modifier.weight(1f).verticalScroll(rememberScrollState()) else Modifier.verticalScroll(rememberScrollState()),
+                contentAlignment = Alignment.Center,
+            ) {
                 Column(verticalArrangement = Arrangement.spacedBy(9.dp), horizontalAlignment = columnAlignment) {
                     MainSection.browseOrder.filter { it in visibleSections }.forEach { section ->
                         RailNavItem(
@@ -224,7 +242,7 @@ fun FloatingRail(
                     }
                 }
             }
-            RailSeparator(position = position)
+            RailSeparator(position = position, active = active)
             RailNavItem(
                 section = MainSection.SETTINGS,
                 selected = selected == MainSection.SETTINGS,
@@ -318,13 +336,17 @@ private fun RailAvatar(
     }
 }
 
-/** Thin translucent divider between the rail's three areas — vertical bar for LEFT, horizontal for TOP. */
+/**
+ * Thin translucent divider between the rail's three areas — vertical bar for LEFT, horizontal for
+ * TOP. Review round 2 (M2): the LEFT active edge drawer spans the full drawer width, so its
+ * separators should too — `active` switches the fixed 28dp centered tick to `fillMaxWidth()`.
+ * Idle (and TOP, which never becomes a full-width drawer) keep the original fixed-length tick.
+ */
 @Composable
-private fun RailSeparator(position: RailPosition) {
+private fun RailSeparator(position: RailPosition, active: Boolean = false) {
     if (position == RailPosition.LEFT) {
         Box(
-            modifier = Modifier
-                .width(RailSeparatorLength)
+            modifier = (if (active) Modifier.fillMaxWidth() else Modifier.width(RailSeparatorLength))
                 .height(RailSeparatorThickness)
                 .background(RailSeparatorColor),
         )
@@ -387,9 +409,21 @@ private fun RailNavItem(
                 .animateContentSize(animationSpec = ownTvTween(220)),
         ) {
             Row(
-                modifier = Modifier.padding(horizontal = if (expanded) 14.dp else 10.dp, vertical = 10.dp),
+                // Review round 2 (L2): 12dp (not 14dp) start padding here is what makes this icon's
+                // center land on the same vertical line as the avatar's, once the active drawer
+                // start-justifies both instead of centering them independently. Both sit under the
+                // same outer Column start inset (20dp, see the LEFT branch above), so: avatar center
+                // = 20 + 24 (half of the 48dp avatar) = 44dp; icon center = 20 + 12 (this padding) +
+                // 12 (half of the 24dp icon) = 44dp. (Raising the outer 20dp inset instead — the
+                // drawer's other proposed fix — would NOT close this gap: both shift by the same
+                // amount, so the relative 2dp offset survives; only this row's own padding controls
+                // the icon's offset from the shared start inset.)
+                modifier = Modifier.padding(horizontal = if (expanded) 12.dp else 10.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = if (expanded) Arrangement.spacedBy(12.dp, Alignment.Start) else Arrangement.Center,
+                // `expanded` packs Icon/Text/badge with no extra space to distribute (the Row is
+                // wrap-content width, not fillMaxWidth), so they already sit flush at the row's own
+                // start regardless of Arrangement's alignment parameter — plain spacedBy(12.dp).
+                horizontalArrangement = if (expanded) Arrangement.spacedBy(12.dp) else Arrangement.Center,
             ) {
                 Icon(
                     imageVector = navIcon(section = section, selected = selected),

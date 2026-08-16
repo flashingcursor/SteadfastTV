@@ -608,7 +608,7 @@ fun OwnTVShell(
                         .padding(
                             start = if (railPositionValue == RailPosition.LEFT) {
                                 val w = if (railWidthPx == 0) Dimens.RailIdleNominal else with(density) { railWidthPx.toDp() }
-                                30.dp + w + Dimens.GapMedium
+                                Dimens.RailEdgeInset + w + Dimens.GapMedium
                             } else {
                                 0.dp
                             },
@@ -788,7 +788,7 @@ fun OwnTVShell(
             // onActiveChange below) — reusing it here keeps both halves of the animation in lockstep.
             val leftRailActive = railPositionValue == RailPosition.LEFT && (railActive || railForceActive)
             val leftRailInset by animateDpAsState(
-                targetValue = if (leftRailActive) 0.dp else 30.dp,
+                targetValue = if (leftRailActive) 0.dp else Dimens.RailEdgeInset,
                 animationSpec = ownTvTween(),
                 label = "railLeftInset",
             )

@@ -17,6 +17,12 @@ object Dimens {
     // idle measurement (cold start, or right after a runtime LEFT<->TOP switch resets the capture).
     val RailIdleNominal = 66.dp
 
+    // LEFT rail's floating outer margin from the screen edge (features/shell/OwnTVShell.kt). Shared
+    // by two sites that must never drift apart: the content-area start reservation (keyed to idle
+    // geometry only — overlay, not reflow) and the rail's own idle outer inset, which animates to
+    // 0dp when the rail becomes an edge-pinned active drawer (shell-refinements Task 3 review).
+    val RailEdgeInset = 30.dp
+
     // Layer 2 — category rail (expands to show full names when it holds focus)
     val RailWidth = 92.dp
     val RailWidthExpanded = 325.dp // expanded (focused overlay) width — fits long category names
