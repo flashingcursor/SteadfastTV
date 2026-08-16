@@ -2,13 +2,16 @@ package tv.own.owntv.features.shell.components
 
 import android.text.format.DateFormat
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -142,6 +145,9 @@ private fun ShellWeatherAndClock(weatherInfo: WeatherInfo?, weatherFahrenheit: B
                 }
                 Text(temp, style = MaterialTheme.typography.labelLarge.copy(color = Color.White, shadow = HeaderTextShadow))
             }
+            // Hairline separator between the weather block and the clock, only when weather is shown.
+            // The outer Row's spacedBy(16.dp) already gives it the same gap used elsewhere in this zone.
+            Box(Modifier.width(1.dp).height(16.dp).background(Color.White.copy(alpha = 0.25f)))
         }
         ShellClock()
     }
@@ -213,6 +219,7 @@ private fun WeatherConditionIcon(info: WeatherInfo, modifier: Modifier = Modifie
     }
 }
 
+// Exercises the weather/clock separator (only drawn when weatherInfo != null).
 @TvPreview
 @Composable
 private fun ShellHeaderWithWeatherPreview() = OwnTVPreview {

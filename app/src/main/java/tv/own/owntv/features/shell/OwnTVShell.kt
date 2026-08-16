@@ -798,7 +798,22 @@ fun OwnTVShell(
                 visibleSections = visibleSections,
                 // Rail activation clears on selection too (spec §4), not just on the focus-settles path
                 // above — belt-and-suspenders for the same click-without-a-focus-transition edge case.
-                onSelect = { section -> railForceActive = false; onSelectSection(section) },
+                //
+                // Task 4 (shell-refinements): SELECT also jumps focus into the new section's content —
+                // the same one-shot `restoreFocus` flag/`onRestored` contract already used when leaving
+                // the player (see exitPlayer/dockPlayer/toAudioMode above, and LiveScreen's consumption
+                // of it). Browse screens (Home/Live/Movies/Series/Downloads/EPG) each guard their
+                // restoreFocus LaunchedEffect on their data actually being loaded (itemCount/size == 0 ->
+                // early return without grabbing focus or calling onRestored), so a still-loading section
+                // simply leaves focus on the rail item just pressed (the safe fallback — no stranding)
+                // until data arrives, then focuses automatically; re-selecting the current section
+                // re-triggers the same effect and jumps back into its content. Search isn't wired to this
+                // flag at all — SearchScreen already self-focuses its search field on every entry via its
+                // own LaunchedEffect(Unit), independent of restoreFocus. Settings doesn't consume
+                // restoreFocus either (its onEnter-based focus-restore only fires for directional D-pad
+                // entry, not a programmatic flag) — selecting it also leaves focus on the rail, which is
+                // the documented safe fallback there too.
+                onSelect = { section -> railForceActive = false; restoreFocus = true; onSelectSection(section) },
                 avatarId = avatarId,
                 onPickAvatar = { showAvatarPicker = true },
                 onSwitchProfile = onSwitchProfile,
