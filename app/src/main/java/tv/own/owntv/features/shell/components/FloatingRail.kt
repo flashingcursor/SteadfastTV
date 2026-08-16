@@ -185,18 +185,23 @@ fun FloatingRail(
 
     if (position == RailPosition.LEFT) {
         // Idle: narrow icon-only column, centered as before. Active edge drawer (Task 3): rows
-        // start-justify against a consistent ~20dp inset instead of each row centering independently
+        // start-justify against a consistent inset instead of each row centering independently
         // within the (now content-width-driven, per-row-varying) column — see RailNavItem below,
         // whose expanded rows are no longer all the same width once labels differ in length.
         //
-        // Invariant (review round 2, min-convergence): this active horizontal inset (20dp start +
-        // 16dp end = 36dp total) must stay >= idle's 9dp+9dp=18dp total. OwnTVShell's idle-width
+        // The active start inset deliberately EQUALS idle's 9dp: with the outer edge inset gone,
+        // this is what keeps the avatar and icon centers on the same 33dp line in both states
+        // (idle centers items in the avatar-wide column: 9 + 48/2 = 33; active start-justifies:
+        // 9 + 12 item padding + 12 half-icon = 33) — so expanding shifts nothing horizontally.
+        //
+        // Invariant (review round 2, min-convergence): the active horizontal inset (9dp start +
+        // 16dp end = 25dp total) must stay >= idle's 9dp+9dp=18dp total. OwnTVShell's idle-width
         // capture (`railWidthPx = minOf(railWidthPx, it.width)`) assumes every transient frame
         // between idle and active is >= the true idle width — narrowing the active padding below
         // idle's would risk a collapse-animation frame measuring narrower than idle and corrupting
         // that floor.
         val columnPadding = if (active) {
-            PaddingValues(start = 20.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
+            PaddingValues(start = 9.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
         } else {
             PaddingValues(horizontal = 9.dp, vertical = 16.dp)
         }
@@ -407,9 +412,9 @@ private fun RailNavItem(
                 // Review round 2 (L2): 12dp (not 14dp) start padding here is what makes this icon's
                 // center land on the same vertical line as the avatar's, once the active drawer
                 // start-justifies both instead of centering them independently. Both sit under the
-                // same outer Column start inset (20dp, see the LEFT branch above), so: avatar center
-                // = 20 + 24 (half of the 48dp avatar) = 44dp; icon center = 20 + 12 (this padding) +
-                // 12 (half of the 24dp icon) = 44dp. (Raising the outer 20dp inset instead — the
+                // same outer Column start inset (9dp, see the LEFT branch above), so: avatar center
+                // = 9 + 24 (half of the 48dp avatar) = 33dp; icon center = 9 + 12 (this padding) +
+                // 12 (half of the 24dp icon) = 33dp. (Changing the shared outer inset instead — the
                 // drawer's other proposed fix — would NOT close this gap: both shift by the same
                 // amount, so the relative 2dp offset survives; only this row's own padding controls
                 // the icon's offset from the shared start inset.)
