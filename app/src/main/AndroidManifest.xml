@@ -47,18 +47,20 @@
         android:name="android.software.leanback"
         android:required="false" />
 
-    <!-- android:icon deliberately points at the 16:9 tv_banner, not a square launcher icon:
-         Fire TV ignores android:banner for sideloaded apps and draws android:icon on its
-         launcher tile, so a square icon renders as a letterboxed thumbnail there (the
-         SmartTube-style fix). Android TV/Google TV launchers use android:banner and never
-         read this; OwnTV is TV-only, so no phone launcher shows the stretched rectangle. -->
+    <!-- android:icon points at tv_tile, a square tile designed for Fire TV: its launcher
+         ignores android:banner for sideloaded apps and constrains android:icon to a square
+         inner box on the home tile (grey pillars either side — verified empirically; full-
+         bleed 16:9 tiles are reserved for Appstore-delivered artwork). A square navy tile
+         with the stacked lockup fills that box deliberately instead of letterboxing the
+         adaptive icon or shrinking the wide banner. Android TV/Google TV launchers use
+         android:banner (tv_banner, 16:9) and never read this. -->
     <application
         android:name=".OwnTVApp"
         android:allowBackup="true"
         android:banner="@drawable/tv_banner"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/tv_banner"
+        android:icon="@drawable/tv_tile"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
