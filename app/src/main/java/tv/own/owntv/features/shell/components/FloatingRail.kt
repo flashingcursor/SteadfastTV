@@ -184,15 +184,17 @@ fun FloatingRail(
         )
 
     if (position == RailPosition.LEFT) {
-        // Idle: narrow icon-only column, centered as before. Active edge drawer (Task 3): rows
-        // start-justify against a consistent inset instead of each row centering independently
-        // within the (now content-width-driven, per-row-varying) column — see RailNavItem below,
-        // whose expanded rows are no longer all the same width once labels differ in length.
+        // Narrow icon-only column when idle; full-height edge drawer when active (Task 3).
         //
-        // The active start inset deliberately EQUALS idle's 9dp: with the outer edge inset gone,
-        // this is what keeps the avatar and icon centers on the same 33dp line in both states
-        // (idle centers items in the avatar-wide column: 9 + 48/2 = 33; active start-justifies:
-        // 9 + 12 item padding + 12 half-icon = 33) — so expanding shifts nothing horizontally.
+        // Both states are START-justified with the SAME 9dp start inset and the same 12dp item
+        // padding (RailNavItem below), which pins the avatar and icon centers to one 33dp line
+        // (9 + 24 half-avatar = 9 + 12 + 12 half-icon = 33) through the whole expand/collapse
+        // cycle. Idle used to center items instead — visually identical (every idle row is the
+        // avatar's 48dp width), but on COLLAPSE the centering re-applied instantly while each
+        // label was still animating away (animateContentSize, 220ms), so the icon rows got
+        // re-centered against a column still as wide as the widest shrinking label and visibly
+        // slid sideways until the last label finished. Start justification makes intermediate
+        // widths irrelevant: icons never move, only the labels grow/shrink beside them.
         //
         // Invariant (review round 2, min-convergence): the active horizontal inset (9dp start +
         // 16dp end = 25dp total) must stay >= idle's 9dp+9dp=18dp total. OwnTVShell's idle-width
@@ -205,7 +207,7 @@ fun FloatingRail(
         } else {
             PaddingValues(horizontal = 9.dp, vertical = 16.dp)
         }
-        val columnAlignment = if (active) Alignment.Start else Alignment.CenterHorizontally
+        val columnAlignment = Alignment.Start
         Column(
             modifier = panel.padding(columnPadding),
             horizontalAlignment = columnAlignment,
@@ -410,15 +412,16 @@ private fun RailNavItem(
         ) {
             Row(
                 // Review round 2 (L2): 12dp (not 14dp) start padding here is what makes this icon's
-                // center land on the same vertical line as the avatar's, once the active drawer
+                // center land on the same vertical line as the avatar's, once the drawer
                 // start-justifies both instead of centering them independently. Both sit under the
                 // same outer Column start inset (9dp, see the LEFT branch above), so: avatar center
                 // = 9 + 24 (half of the 48dp avatar) = 33dp; icon center = 9 + 12 (this padding) +
-                // 12 (half of the 24dp icon) = 33dp. (Changing the shared outer inset instead — the
-                // drawer's other proposed fix — would NOT close this gap: both shift by the same
-                // amount, so the relative 2dp offset survives; only this row's own padding controls
-                // the icon's offset from the shared start inset.)
-                modifier = Modifier.padding(horizontal = if (expanded) 12.dp else 10.dp, vertical = 10.dp),
+                // 12 (half of the 24dp icon) = 33dp. The SAME 12dp applies collapsed (it used to be
+                // 10dp): LEFT idle is start-justified too, so a differing collapsed padding would
+                // shift the icons 2dp on every expand/collapse. (Changing the shared outer inset
+                // instead would NOT close an avatar/icon gap: both shift by the same amount; only
+                // this row's own padding controls the icon's offset from the shared start inset.)
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 // `expanded` packs Icon/Text/badge with no extra space to distribute (the Row is
                 // wrap-content width, not fillMaxWidth), so they already sit flush at the row's own
