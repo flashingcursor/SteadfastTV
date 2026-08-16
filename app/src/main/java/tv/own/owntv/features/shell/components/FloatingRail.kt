@@ -97,10 +97,10 @@ private val RailPanelShapeTop = RoundedCornerShape(50)
 /**
  * Floating shell nav rail (Task 2 of the floating-shell plan) — a self-positioning "pill" that
  * replaces the old fixed Sidebar (deleted; LEFT is this component's default orientation) and
- * introduces a horizontal TOP mode, per [RailPosition]. Unlike Sidebar, this composable does NOT
- * fill the screen: it wraps its own content, floats over the page, and the shell (Task 4) is
- * responsible for placement/inset (`Alignment.CenterStart` for LEFT, centered below the header for
- * TOP) via [modifier].
+ * introduces a horizontal TOP mode, per [RailPosition]. LEFT is a full-height edge strip in both
+ * states (invisible when idle — icons centered by its weighted middle region — so height never
+ * animates; only its width does); TOP wraps its content. The shell (Task 4) is responsible for
+ * placement (`Alignment.CenterStart` for LEFT, centered below the header for TOP) via [modifier].
  *
  * Three areas, start→end (top→bottom for LEFT, start→end for TOP): avatar / destinations /
  * Settings, separated by thin translucent dividers.
@@ -248,13 +248,20 @@ fun FloatingRail(
             // immediately (focus targets exist at once; the clip(shape) above reveals it as the
             // panel widens) and keeps the C1 bound: fillMaxWidth separators report zero intrinsic
             // width, so they can't balloon the drawer to screen width — the widest real row
-            // dictates it. Collapse mirrors this through `settling` (see its declaration): panel,
-            // furniture and full height persist while the labels shrink and the width eases back;
-            // only once the width lands does everything decompose — under a snap() spec by then,
-            // so shedding fillMaxHeight can't animate the invisible wrapper and drag the idle
-            // icons across the screen.
+            // dictates it. Collapse mirrors this through `settling` (see its declaration): panel
+            // and furniture persist while the labels shrink and the width eases back, and only
+            // once the width lands does the chrome decompose.
+            //
+            // fillMaxHeight is UNCONDITIONAL: the idle column is a full-height invisible strip
+            // (no panel, and the weighted middle Box below centers the icons exactly where the
+            // old wrap-content column's screen-centering put them). That pins the animator's
+            // height to a constant, so animateContentSize only ever animates WIDTH — crucial
+            // because its animated size runs one frame behind composition: when the height also
+            // changed, the teardown frame briefly reported the stale full height around the
+            // already-idle content (which it top-anchors), flashing the icons above their
+            // resting spot. With height constant, teardown is a layout no-op.
             modifier = panel
-                .then(if (expandedVisuals) Modifier.fillMaxHeight() else Modifier)
+                .fillMaxHeight()
                 .animateContentSize(
                     animationSpec = if (expandedVisuals) ownTvTween(220) else snap(),
                     finishedListener = { _, _ -> settling = false },
@@ -271,15 +278,14 @@ fun FloatingRail(
                 RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
                 RailSeparator(position = position, active = expandedVisuals)
             }
-            // Review round 2 (M1): three-area drawer, matching the idle column's own distribution —
-            // avatar pinned top, Settings pinned bottom (both outside this Box, unchanged below), and
-            // this destinations area as the ONE weighted middle region so the nav cluster stays
-            // vertically centered in the drawer instead of teleporting to the top on expand. `weight`
-            // is applied ONLY while active: the idle Column is wrap-content height (no fillMaxHeight
-            // upstream), and weighting a child there would force Compose to stretch the whole idle
-            // pill to fill the screen — exactly the floating-pill geometry idle must NOT have.
+            // Review round 2 (M1): three-area drawer — avatar pinned top, Settings pinned bottom
+            // (both outside this Box), and this destinations area as the ONE weighted middle
+            // region so the nav cluster stays vertically centered. The weight is unconditional
+            // now that the column is always full-height (see the modifier comment above): idle
+            // has no furniture, so the weighted region spans nearly the whole strip and centers
+            // the icons where the old wrap-content column's screen-centering did.
             Box(
-                modifier = if (expandedVisuals) Modifier.weight(1f).verticalScroll(rememberScrollState()) else Modifier.verticalScroll(rememberScrollState()),
+                modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()),
                 contentAlignment = Alignment.Center,
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(9.dp), horizontalAlignment = columnAlignment) {
