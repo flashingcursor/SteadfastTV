@@ -91,7 +91,9 @@ internal fun ProgrammeStripCanvas(
     val gapPx = with(density) { 4.dp.toPx() }
     val padPx = with(density) { 10.dp.toPx() }
     val borderPx = with(density) { Dimens.FocusBorderWidth.toPx() }
-    val corner = with(density) { CornerRadius(10.dp.toPx(), 10.dp.toPx()) }
+    // Guide cells are canvas-drawn, so the shared corner scale is applied via toPx rather than a
+    // RoundedCornerShape (2026-08-17 token consolidation; was a literal 10dp).
+    val corner = with(density) { CornerRadius(Dimens.CornerSmall.toPx(), Dimens.CornerSmall.toPx()) }
     val titleStyle = MaterialTheme.typography.titleSmall.copy(
         color = colors.onSurface,
         textDirection = TextDirection.Content,
