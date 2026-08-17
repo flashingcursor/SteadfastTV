@@ -389,7 +389,19 @@ fun OwnTVShell(
         Unit
     }
 
-    LaunchedEffect(Unit) { tv.own.owntv.Perf.stamp("shell-composed"); runCatching { sidebarFocus.requestFocus() } }
+    // Startup focus (user feedback): land in the CONTENT with the rail idle — not on the expanded
+    // rail, which the old unconditional sidebarFocus request produced. Arms the same one-shot
+    // restoreFocus contract the player-exit/rail-select paths use: the browse screen grabs focus
+    // once its data is ready. Sections outside browseOrder never consume the flag (M6), so those
+    // keep the old rail-focus default rather than leaving focus stranded nowhere.
+    LaunchedEffect(Unit) {
+        tv.own.owntv.Perf.stamp("shell-composed")
+        if (selectedSection in MainSection.browseOrder) {
+            restoreFocus = true
+        } else {
+            runCatching { sidebarFocus.requestFocus() }
+        }
+    }
 
     LaunchedEffect(pendingDeepLink, activeProfileId) {
         val deepLink = pendingDeepLink ?: return@LaunchedEffect
