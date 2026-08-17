@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * Material 3 tonal palette for OwnTV. Neutral palette is charcoal slate (design spec 2026-08-12,
- * re-pinned to hue 220 on 2026-08-17): dark background #090B10, neutrals identical under every
+ * re-pinned to hue 220 on 2026-08-17): dark background #090A0D, neutrals identical under every
  * accent. All accent color carried by the `primary` roles, seeded per [AccentColor] (default
  * teal); secondary/tertiary are theme-only.
  */
@@ -12,22 +12,23 @@ import androidx.compose.ui.graphics.Color
 // Brand mark color (the OwnTV play logo) — constant.
 val AccentCyan = Color(0xFF52DBC8)
 
-// ---------------- DARK (deep blue-slate) ----------------
-// 2026-08-17 (user request, two rounds): the original ramp sat at hue ~200-210 and read green
-// on real TV panels; a plain hue rotation to 220 was imperceptible at these saturations, so the
-// neutrals were re-pinned to hue 222 WITH a real blue lean (saturation ~0.30 on dark surfaces,
-// gentler on text/outlines) at unchanged lightness — same elevation ramp, decisively navy cast.
-val DarkBackground = Color(0xFF090B10)
-val DarkSurface = Color(0xFF0E121B)
-val DarkSurfaceContainerLowest = Color(0xFF0B0E16)
-val DarkSurfaceContainerLow = Color(0xFF111621)
-val DarkSurfaceContainer = Color(0xFF141A27)
-val DarkSurfaceContainerHigh = Color(0xFF1C2333)
-val DarkSurfaceContainerHighest = Color(0xFF222C42)
-val DarkOnSurface = Color(0xFFE5E8EE)
-val DarkOnSurfaceVariant = Color(0xFFA5ABB9)
-val DarkOutline = Color(0xFF7A8190)
-val DarkOutlineVariant = Color(0xFF303A50)
+// ---------------- DARK (near-black, cool hint) ----------------
+// 2026-08-17 (user-tuned over three rounds): the original ramp sat at hue ~200-210 and read
+// GREEN on real TV panels; a plain hue rotation was imperceptible, and a full navy lean
+// (s≈0.30) overshot. Final: hue 222, saturation capped ≈0.17 on the dark surfaces (≤0.10 on
+// text/outlines), surface lightness pulled ×0.90 toward black — black-first with a cool hint,
+// same elevation-ramp shape.
+val DarkBackground = Color(0xFF090A0D)
+val DarkSurface = Color(0xFF0F1116)
+val DarkSurfaceContainerLowest = Color(0xFF0C0E11)
+val DarkSurfaceContainerLow = Color(0xFF13151A)
+val DarkSurfaceContainer = Color(0xFF16191F)
+val DarkSurfaceContainerHigh = Color(0xFF1E212A)
+val DarkSurfaceContainerHighest = Color(0xFF252A35)
+val DarkOnSurface = Color(0xFFE7E9EC)
+val DarkOnSurfaceVariant = Color(0xFFA7ACB7)
+val DarkOutline = Color(0xFF7C818E)
+val DarkOutlineVariant = Color(0xFF323642)
 val DarkSecondary = Color(0xFFB6C1C9)
 val DarkOnSecondary = Color(0xFF212A31)
 val DarkSecondaryContainer = Color(0xFF39434B)
@@ -76,5 +77,5 @@ object HudPictorial {
     /** The LIVE badge fill — saturated broadcast red; white text/dot on it needs the depth. */
     val LiveBadge = Color(0xCCDC3232)
     /** Ink on the white circular transport button. Charcoal-neutral (was the old teal-tinted surface). */
-    val OnWhiteInk = Color(0xFF090B10)
+    val OnWhiteInk = Color(0xFF090A0D)
 }

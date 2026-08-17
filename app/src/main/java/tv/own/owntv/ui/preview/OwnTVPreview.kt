@@ -25,11 +25,11 @@ fun OwnTVPreview(light: Boolean = false, content: @Composable () -> Unit) {
 }
 
 /** Full-screen TV canvas (1080p at TV density) for tall/anchored surfaces. */
-@Preview(device = "spec:width=1920dp,height=1080dp,dpi=213", showBackground = true, backgroundColor = 0xFF090B10)
+@Preview(device = "spec:width=1920dp,height=1080dp,dpi=213", showBackground = true, backgroundColor = 0xFF090A0D)
 annotation class TvPreview
 
 /** Hugged canvas for small components — no device spec so the preview wraps its content. */
-@Preview(showBackground = true, backgroundColor = 0xFF090B10)
+@Preview(showBackground = true, backgroundColor = 0xFF090A0D)
 annotation class TvComponentPreview
 
 @TvComponentPreview
