@@ -65,6 +65,7 @@ import tv.own.owntv.ui.components.rememberNavLadderColors
 import tv.own.owntv.ui.format.localizedInteger
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvPreview
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.MotionAccentBarMs
@@ -86,7 +87,9 @@ private val RailSeparatorThickness = 1.dp
 // a thin white-14%-alpha divider, and the active panel's white-12%-alpha rim.
 private val RailSeparatorColor = Color.White.copy(alpha = 0.14f)
 private val RailPanelBorderColor = Color.White.copy(alpha = 0.12f)
-private const val RailPanelFillAlpha = 0.82f
+// Matches the app-wide fixed-width side-panel fill role (token-audit Family 3) — sourced from
+// AlphaTokens.AlphaPanelFill rather than a private literal so the two stay in lockstep.
+private const val RailPanelFillAlpha = AlphaTokens.AlphaPanelFill
 
 private val RailItemShape = RoundedCornerShape(50)
 // The panel (fill/border/shadow) only renders when active, and LEFT's active state is the squared

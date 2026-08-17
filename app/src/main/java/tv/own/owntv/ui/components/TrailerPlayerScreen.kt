@@ -50,6 +50,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -154,7 +155,7 @@ fun TrailerPlayerScreen(videoKey: String, onExit: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.7f))
+            .background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
             .onKeyEvent(onSeekKey)
             .trapAllFocusExit()
             .focusGroup(),

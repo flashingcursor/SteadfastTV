@@ -101,6 +101,7 @@ import tv.own.owntv.ui.components.ingestBackgroundImage
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.format.formatBestDateTime
 import tv.own.owntv.ui.theme.ALL_GLASS_SURFACES
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
@@ -1113,7 +1114,7 @@ private fun AccentPaletteDialog(
     // PopupFontTheme swaps in the Lora serif and applies the shared popup type scale.
     tv.own.owntv.ui.theme.PopupFontTheme {
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).imePadding().trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).imePadding().trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -1213,7 +1214,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     BackHandler { onDismiss() }
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -1298,7 +1299,7 @@ private fun PlaybackErrorLogDialog(onDismiss: () -> Unit) {
     BackHandler { onDismiss() }
     val dateContext = LocalContext.current
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         // scroll = false: the entries live in a LazyColumn, which manages its own scrolling. A plain
@@ -1420,7 +1421,7 @@ private fun AutoFrameRateWarningDialog(onEnable: () -> Unit, onDismiss: () -> Un
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     BackHandler { onDismiss() }
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(Modifier.dialogPanel(width = 500.dp, padding = 28.dp)) {
@@ -1463,7 +1464,7 @@ private fun LivePreviewPanelHiddenDialog(onDismiss: () -> Unit) {
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     BackHandler { onDismiss() }
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(Modifier.dialogPanel(width = 500.dp, padding = 28.dp)) {
@@ -1514,7 +1515,7 @@ private fun ClearHistoryDialog(
     LaunchedEffect(pending) { runCatching { firstFocus.requestFocus() } }
     BackHandler { if (pending != null) pending = null else onDismiss() }
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -1580,7 +1581,7 @@ private fun ZoomDialog(current: Int, onSet: (Int) -> Unit, onDismiss: () -> Unit
         }
         BackHandler { pendingLowZoom = null }
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.8f)).trapAllFocusExit().focusGroup(),
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
             Column(
@@ -1671,7 +1672,7 @@ private fun GlassEffectDialog(
     fun blurClamp(v: Int) = v.coerceIn(blurMin, blurMax)
     BackHandler { onDismiss() }
     if (!showSurfaces) Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         // Shared Lora popup font, matching the app's other dialogs.
@@ -1804,7 +1805,7 @@ private fun BrowsingListsDialog(
     LaunchedEffect(Unit) { runCatching { firstFocus.requestFocus() } }
     BackHandler { onDismiss() }
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         tv.own.owntv.ui.theme.PopupFontTheme {
@@ -1902,7 +1903,7 @@ private fun GlassSurfacesDialog(
     BackHandler { onDismiss() }
     fun toggled(s: GlassSurface): Int = GlassConfig(if (s in scope) scope - s else scope + s).toBitmask()
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         tv.own.owntv.ui.theme.PopupFontTheme {
@@ -1972,7 +1973,7 @@ private fun CatchupTimeDialog(
     BackHandler { onDismiss() }
     val manual = mode == SettingsRepository.CatchupTimezone.MANUAL
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(

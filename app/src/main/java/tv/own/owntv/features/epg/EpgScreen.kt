@@ -93,6 +93,7 @@ import tv.own.owntv.features.epg.ProgrammeDetailDialog
 import tv.own.owntv.features.epg.ProgrammeStripCanvas
 import tv.own.owntv.ui.format.rememberBestDateFormatter
 import tv.own.owntv.ui.format.rememberSystemTimeFormatter
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
@@ -586,7 +587,7 @@ private fun EpgMatchReviewDialog(
     tv.own.owntv.ui.components.OwnTVPopup(onDismissRequest = onDone) {
     tv.own.owntv.ui.theme.PopupFontTheme(fontScale = 0.75f) {
     Box(
-        Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)),
+        Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)),
         contentAlignment = Alignment.Center,
     ) {
         Column(Modifier.dialogPanel(width = 576.dp, corner = 18.dp, padding = 18.dp)) {
@@ -671,7 +672,7 @@ private fun EpgMatchChooserDialog(
     LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstFocus.requestFocus() } }
 
     Box(
-        Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup()
+        Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup()
             .longPressMenuGuard(), // long-press OK is still held — don't auto-click the first option
         contentAlignment = Alignment.Center,
     ) {

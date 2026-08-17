@@ -36,6 +36,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -71,7 +72,7 @@ fun MoveToCategoryDialog(
     BackHandler { onDismiss() }
     PopupFontTheme {
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
             Column(

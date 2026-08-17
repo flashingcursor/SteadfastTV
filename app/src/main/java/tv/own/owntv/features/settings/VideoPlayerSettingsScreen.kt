@@ -58,6 +58,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
@@ -534,7 +535,7 @@ private fun LiveLatencyWarningDialog(onConfirm: () -> Unit, onCancel: () -> Unit
     LaunchedEffect(Unit) { runCatching { firstFocus.requestFocus() } }
     BackHandler { onCancel() }
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(modifier = Modifier.dialogPanel(width = 500.dp, padding = 28.dp)) {
@@ -685,7 +686,7 @@ internal fun PickerDialog(
     BackHandler { onDismiss() }
     tv.own.owntv.ui.components.OwnTVPopup(onDismissRequest = onDismiss) {
         tv.own.owntv.ui.theme.PopupFontTheme {
-            Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
+            Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
                 Column(
                     modifier = Modifier.dialogPanel(width = 280.dp, corner = 16.dp, padding = 14.dp, scroll = false),
                 ) {
@@ -756,7 +757,7 @@ private fun ExternalPlayerDialog(
         Triple(tv.own.owntv.features.settings.data.SettingsRepository.ExternalPlayerSection.SERIES, stringResource(R.string.common_nav_series), series),
     )
     tv.own.owntv.ui.theme.PopupFontTheme {
-        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
             Column(modifier = Modifier.dialogPanel(width = 300.dp, corner = 16.dp, padding = 14.dp, scroll = false)) {
                 Text(stringResource(R.string.settings_external_player), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapTiny))
@@ -901,7 +902,7 @@ private fun SubtitleAppearanceDialog(
     BackHandler { onDismiss() }
     tv.own.owntv.ui.theme.PopupFontTheme {
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f))
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
                 .trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
@@ -1018,7 +1019,7 @@ private fun SubtitleColorDialog(color: String, onColor: (String) -> Unit, onDism
 
     tv.own.owntv.ui.theme.PopupFontTheme {
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f))
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
                 .imePadding().trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
@@ -1115,7 +1116,7 @@ private fun SubtitlePositionDialog(
     BackHandler { onDismiss() }
     tv.own.owntv.ui.theme.PopupFontTheme {
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f))
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
                 .trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
@@ -1241,7 +1242,7 @@ private fun SubtitleTransparencyDialog(
     BackHandler { onDismiss() }
     tv.own.owntv.ui.theme.PopupFontTheme {
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f))
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
                 .trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {

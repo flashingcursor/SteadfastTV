@@ -26,6 +26,7 @@ import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvPreview
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -54,7 +55,7 @@ fun MediaContextMenu(
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     BackHandler { onDismiss() }
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f))
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
             .trapAllFocusExit().focusGroup()
             .longPressMenuGuard(),
         contentAlignment = Alignment.Center,

@@ -36,6 +36,7 @@ import tv.own.owntv.ui.components.ProfileIcon
 import tv.own.owntv.ui.components.OwnTVAvatars
 import tv.own.owntv.ui.components.longPressMenuGuard
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -54,7 +55,7 @@ fun AvatarPickerDialog(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.65f))
+            .background(Color.Black.copy(alpha = AlphaTokens.AlphaScrimLight))
             // Opened by a long-press of OK — without this guard the still-held release would instantly
             // confirm the focused avatar (the "auto-selects first, no pause" bug). longPressMenuGuard
             // swallows OK/Enter until the key is released once, so the user navigates + OK to pick.

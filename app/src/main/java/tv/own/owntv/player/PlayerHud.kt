@@ -84,6 +84,7 @@ import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.displayText
 import tv.own.owntv.ui.components.displayLabel
 import tv.own.owntv.ui.components.dialogPanel
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
 import tv.own.owntv.ui.theme.GlassSurface
@@ -1090,7 +1091,7 @@ private fun SpeedButton(label: String, active: Boolean, onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier.heightIn(min = 44.dp),
         shape = RoundedCornerShape(Dimens.CornerSmall),
-        focusedContainerColor = Color.White.copy(alpha = 0.16f),
+        focusedContainerColor = Color.White.copy(alpha = AlphaTokens.AlphaHudFocusFill),
         unfocusedContainerColor = Color.Transparent,
         selectedContainerColor = Color.Transparent,
         contentAlignment = Alignment.Center,
@@ -1170,7 +1171,7 @@ private fun EngineToggle(label: String, active: Boolean, onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier.heightIn(min = 44.dp),
         shape = RoundedCornerShape(Dimens.CornerSmall),
-        focusedContainerColor = Color.White.copy(alpha = 0.16f),
+        focusedContainerColor = Color.White.copy(alpha = AlphaTokens.AlphaHudFocusFill),
         unfocusedContainerColor = Color.Transparent,
         selectedContainerColor = Color.Transparent,
         contentAlignment = Alignment.Center,
@@ -1193,7 +1194,7 @@ private fun CtrlButton(icon: OwnTVIcon, badge: Int? = null, active: Boolean = fa
         onClick = onClick,
         modifier = Modifier.size(44.dp),
         shape = RoundedCornerShape(Dimens.CornerSmall),
-        focusedContainerColor = Color.White.copy(alpha = 0.16f),
+        focusedContainerColor = Color.White.copy(alpha = AlphaTokens.AlphaHudFocusFill),
         unfocusedContainerColor = Color.Transparent,
         selectedContainerColor = Color.Transparent,
         contentAlignment = Alignment.Center,

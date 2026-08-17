@@ -59,6 +59,7 @@ import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.components.trapVerticalFocusExit
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
@@ -390,7 +391,7 @@ private fun ItemsRangeHideDialog(count: Int, onHide: () -> Unit, onShow: () -> U
     BackHandler { onDismiss() }
     PopupFontTheme {
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(

@@ -49,6 +49,7 @@ import kotlinx.coroutines.withContext
 import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.core.storage.StorageAccess
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -124,7 +125,7 @@ private fun StorageBrowserContent(
         runCatching { firstFocus.requestFocus() }
     }
 
-    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).focusGroup(), contentAlignment = Alignment.Center) {
+    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.width(270.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(Dimens.HeroGap)) {
             Text(title, style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapTiny))
@@ -206,7 +207,7 @@ private fun NewFolderDialog(onCreate: (String) -> Unit, onDismiss: () -> Unit) {
     val focus = remember { FocusRequester() }
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     BackHandler { onDismiss() }
-    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.8f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
+    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = 420.dp, corner = 18.dp, fill = colors.surfaceContainerHighest)) {
             Text(stringResource(R.string.setup_new_folder), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.HeroGap))

@@ -40,6 +40,7 @@ import tv.own.owntv.core.i18n.horizontalDirection
 import tv.own.owntv.core.database.entity.CategoryEntity
 import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -79,7 +80,7 @@ fun CategoryBrowserOverlay(
                 .align(Alignment.CenterStart)
                 .fillMaxHeight()
                 .width(380.dp)
-                .background(Color.Black.copy(alpha = 0.82f))
+                .background(Color.Black.copy(alpha = AlphaTokens.AlphaPanelFill))
                 .onPreviewKeyEvent { e ->
                     // Pushing outward from logical Start returns to the channel list.
                     if (e.type == KeyEventType.KeyDown &&

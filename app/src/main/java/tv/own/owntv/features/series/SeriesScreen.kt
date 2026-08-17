@@ -106,6 +106,7 @@ import tv.own.owntv.ui.components.PreviewPanelFill
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.gridFocusTarget
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
@@ -1460,7 +1461,7 @@ private fun SeriesSortingDialog(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.75f))
+            .background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
             .trapAllFocusExit()
             .focusGroup(),
         contentAlignment = Alignment.Center,

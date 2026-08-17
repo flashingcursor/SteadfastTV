@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import java.io.File
@@ -61,7 +62,7 @@ fun BackgroundImageChooserDialog(
 
     Box(
         Modifier.fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.7f))
+            .background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
             .trapAllFocusExit()
             .focusGroup(),
         contentAlignment = Alignment.Center,
@@ -115,7 +116,7 @@ fun RemoteBackgroundDialog(
 
     Box(
         Modifier.fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.7f))
+            .background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
             .trapAllFocusExit()
             .focusGroup(),
         contentAlignment = Alignment.Center,

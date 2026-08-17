@@ -93,6 +93,7 @@ import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.gridFocusTarget
 import tv.own.owntv.ui.format.rememberBestDateFormatter
 import tv.own.owntv.ui.format.rememberSystemTimeFormatter
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
@@ -1013,7 +1014,7 @@ private fun CatchupDialog(
     tv.own.owntv.ui.theme.PopupFontTheme(fontScale = 0.75f) {
         Box(
             Modifier.fillMaxSize()
-                .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.7f))
+                .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
                 .trapAllFocusExit()
                 .focusGroup(),
             contentAlignment = Alignment.Center,
@@ -1097,7 +1098,7 @@ internal fun EpgMatchDialog(
     tv.own.owntv.ui.components.OwnTVPopup(onDismissRequest = onDismiss) {
     tv.own.owntv.ui.theme.PopupFontTheme(fontScale = 0.75f) {
     androidx.compose.foundation.layout.Box(
-        Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.7f)).focusGroup(),
+        Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         // Same small-screen cap as CatchupDialog: search bar + buttons must stay reachable.
@@ -1181,7 +1182,7 @@ internal fun EpgOffsetDialog(
     androidx.compose.foundation.layout.Box(
         // trapAllFocusExit, like every other dialog here: a D-pad press at the edge of a row must not
         // walk out of the popup onto the screen behind the scrim.
-        Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.7f))
+        Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Color.Black.copy(alpha = AlphaTokens.AlphaScrim))
             .trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {

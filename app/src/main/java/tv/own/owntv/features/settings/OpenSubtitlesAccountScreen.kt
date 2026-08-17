@@ -41,6 +41,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
@@ -342,7 +343,7 @@ internal fun OpenSubtitlesSignInDialog(onSubmit: (String, String, Boolean) -> Un
     BackHandler { onDismiss() }
     PopupFontTheme {
         Box(
-            Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+            Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
             Column(Modifier.dialogPanel(width = 480.dp, padding = 28.dp)) {
@@ -388,7 +389,7 @@ private fun ErrorDialog(message: String, onDismiss: () -> Unit) {
     BackHandler { onDismiss() }
     PopupFontTheme {
         Box(
-            Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+            Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
             Column(Modifier.dialogPanel(width = 420.dp, padding = 24.dp)) {

@@ -90,6 +90,7 @@ import tv.own.owntv.ui.components.PosterCard
 import tv.own.owntv.ui.components.ContentPanelFill
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.format.formatSystemTime
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
@@ -639,7 +640,7 @@ private fun HeroRowSection(
                                                 contentDescription = null,
                                                 modifier = Modifier.fillMaxSize().blur(20.dp),
                                                 contentScale = ContentScale.Crop,
-                                                alpha = 0.5f,
+                                                alpha = AlphaTokens.AlphaBlurredBackdrop,
                                             )
                                             AsyncImage(
                                                 model = cardImageUrl,
@@ -688,7 +689,7 @@ private fun HeroRowSection(
                                                     contentDescription = null,
                                                     modifier = Modifier.fillMaxSize().blur(20.dp),
                                                     contentScale = ContentScale.Crop,
-                                                    alpha = 0.5f,
+                                                    alpha = AlphaTokens.AlphaBlurredBackdrop,
                                                 )
                                                 AsyncImage(
                                                     model = imageUrl,
@@ -793,7 +794,7 @@ private fun HeroRowSection(
                                             contentDescription = null,
                                             modifier = Modifier.fillMaxSize().blur(20.dp),
                                             contentScale = ContentScale.Crop,
-                                            alpha = 0.5f,
+                                            alpha = AlphaTokens.AlphaBlurredBackdrop,
                                         )
                                         AsyncImage(
                                             model = artUrl,

@@ -33,6 +33,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import kotlin.math.roundToInt
 
@@ -91,7 +92,7 @@ fun AutoFrameRatePrompt(
     BackHandler { onDismiss() }
     val colors = OwnTVTheme.colors
     Box(
-        Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).trapAllFocusExit().focusGroup(),
+        Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
         Column(Modifier.dialogPanel(width = 520.dp, padding = 28.dp)) {

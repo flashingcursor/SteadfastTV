@@ -47,6 +47,7 @@ import tv.own.owntv.ui.components.OwnTVAvatars
 import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVTextField
+import tv.own.owntv.ui.theme.AlphaTokens
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -65,7 +66,7 @@ internal fun ProfileScrim(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.75f)),
+                .background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)),
             contentAlignment = Alignment.Center,
         ) {
             // Scrollable so small/low-res screens can still reach the lower controls (Kids
