@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import java.io.File
 
@@ -149,7 +150,7 @@ fun RemoteBackgroundDialog(
                             bitmap = qr,
                             contentDescription = stringResource(R.string.common_qr_code_companion_url),
                             // White backing panel like the backup screens — a QR on a dark/glass panel may not scan.
-                            modifier = Modifier.size(160.dp).clip(RoundedCornerShape(12.dp)).background(Color.White).padding(8.dp),
+                            modifier = Modifier.size(160.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(Color.White).padding(8.dp),
                             contentScale = androidx.compose.ui.layout.ContentScale.Fit,
                         )
                         Spacer(Modifier.height(10.dp))

@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.compactCount
 import tv.own.owntv.ui.components.displayText
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.glass
@@ -107,7 +108,7 @@ fun SyncStatusPill(modifier: Modifier = Modifier) {
 
     // A tall stack under a 50% corner radius reads as a lozenge, not a pill — soften to a rounded
     // card as soon as there's more than one line.
-    val radius = if (lineCount > 1) 18.dp else 50.dp
+    val radius = if (lineCount > 1) Dimens.CornerMedium else 50.dp
     val shape = RoundedCornerShape(radius)
 
     Column(

@@ -337,7 +337,7 @@ fun EpgScreen(
     ) {
         // Header: back + title + date + refresh
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            FocusableSurface(onClick = onBack, modifier = Modifier.size(44.dp), shape = RoundedCornerShape(14.dp), contentAlignment = Alignment.Center, surface = GlassSurface.CARDS) { _ ->
+            FocusableSurface(onClick = onBack, modifier = Modifier.size(44.dp), shape = RoundedCornerShape(Dimens.CornerMedium), contentAlignment = Alignment.Center, surface = GlassSurface.CARDS) { _ ->
                 OwnTVIcon(OwnTVIcon.BACK, tint = colors.onSurface, modifier = Modifier.size(20.dp))
             }
             Text(stringResource(R.string.content_epg_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
@@ -388,7 +388,7 @@ fun EpgScreen(
         matchSummary?.let { summary ->
             if (review.isEmpty()) {
                 Spacer(Modifier.height(6.dp))
-                FocusableSurface(onClick = vm::clearReview, shape = RoundedCornerShape(10.dp), unfocusedContainerColor = colors.surfaceContainerHigh, contentAlignment = Alignment.CenterStart, surface = GlassSurface.CARDS) { _ ->
+                FocusableSurface(onClick = vm::clearReview, shape = RoundedCornerShape(Dimens.CornerSmall), unfocusedContainerColor = colors.surfaceContainerHigh, contentAlignment = Alignment.CenterStart, surface = GlassSurface.CARDS) { _ ->
                     Text(epgMatchSummaryText(summary), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
                 }
             }
@@ -603,7 +603,7 @@ private fun EpgMatchReviewDialog(
             LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 itemsIndexed(suggestions, key = { _, s -> s.channel.id }) { index, s ->
                     Row(
-                        Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(colors.surface).padding(horizontal = 12.dp, vertical = 8.dp),
+                        Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = 12.dp, vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
@@ -617,14 +617,14 @@ private fun EpgMatchReviewDialog(
                         FocusableSurface(
                             onClick = { onAccept(s) },
                             modifier = if (index == 0) Modifier.focusRequester(firstFocus) else Modifier,
-                            shape = RoundedCornerShape(10.dp),
+                            shape = RoundedCornerShape(Dimens.CornerSmall),
                             unfocusedContainerColor = colors.primaryContainer,
                             contentAlignment = Alignment.Center,
                             surface = GlassSurface.DIALOGS,
                         ) { _ -> Text(stringResource(R.string.content_epg_accept), style = MaterialTheme.typography.labelLarge, color = colors.onPrimaryContainer, modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)) }
                         FocusableSurface(
                             onClick = { onSkip(s) },
-                            shape = RoundedCornerShape(10.dp),
+                            shape = RoundedCornerShape(Dimens.CornerSmall),
                             unfocusedContainerColor = colors.surfaceContainerHigh,
                             contentAlignment = Alignment.Center,
                             surface = GlassSurface.DIALOGS,
@@ -748,7 +748,7 @@ private fun GuideChannelRow(
                 // Physical by design: the guide is an LTR timeline, so the strip is always right.
                 .focusProperties { right = stripFR }
                 .onFocusChanged { if (it.isFocused) onExitToChannels() }, // back on a label ⇒ leave CELL stage
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(Dimens.CornerSmall),
             unfocusedContainerColor = colors.surfaceContainerHigh,
             contentAlignment = Alignment.CenterStart,
             surface = GlassSurface.CARDS,
@@ -797,8 +797,8 @@ private fun GuideChannelRow(
                     }
                 }
                 .focusable()
-                .clip(RoundedCornerShape(10.dp))
-                .then(if (rowSelected) Modifier.border(Dimens.FocusBorderWidth, colors.focusBorder, RoundedCornerShape(10.dp)) else Modifier),
+                .clip(RoundedCornerShape(Dimens.CornerSmall))
+                .then(if (rowSelected) Modifier.border(Dimens.FocusBorderWidth, colors.focusBorder, RoundedCornerShape(Dimens.CornerSmall)) else Modifier),
         ) {
             programmes?.let { progs ->
                 // Catch-up-eligible programmes for this row — precomputed once per render (not per frame).
@@ -873,7 +873,7 @@ private fun GuideInfoStrip(
     }
     Row(
         modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
-            .clip(RoundedCornerShape(10.dp)).background(colors.surfaceContainerHigh)
+            .clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh)
             .padding(horizontal = 14.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),

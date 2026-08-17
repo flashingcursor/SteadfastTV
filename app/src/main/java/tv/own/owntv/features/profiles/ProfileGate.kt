@@ -38,6 +38,7 @@ import tv.own.owntv.core.database.entity.ProfileEntity
 import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVAvatar
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -111,7 +112,7 @@ private fun ProfileTile(profile: ProfileEntity, modifier: Modifier = Modifier, o
         FocusableSurface(
             onClick = onClick,
             modifier = modifier.size(132.dp),
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(Dimens.CornerLarge),
             contentAlignment = Alignment.Center,
         ) { _ ->
             Box(contentAlignment = Alignment.TopEnd) {
@@ -138,7 +139,7 @@ private fun AddTile(onClick: () -> Unit) {
         FocusableSurface(
             onClick = onClick,
             modifier = Modifier.size(132.dp),
-            shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(Dimens.CornerLarge),
             contentAlignment = Alignment.Center,
         ) { _ ->
             Box(

@@ -32,6 +32,7 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -72,9 +73,9 @@ fun HueBar(hue: Float, modifier: Modifier = Modifier, onHue: (Float) -> Unit) {
             modifier = modifier
                 .fillMaxWidth()
                 .height(30.dp)
-                .clip(RoundedCornerShape(15.dp))
+                .clip(RoundedCornerShape(Dimens.CornerMedium))
                 .background(Brush.horizontalGradient(HueSpectrum))
-                .border(if (editing || focused) 3.dp else 1.dp, ring, RoundedCornerShape(15.dp))
+                .border(if (editing || focused) 3.dp else 1.dp, ring, RoundedCornerShape(Dimens.CornerMedium))
                 .onFocusChanged { focused = it.isFocused; if (!it.isFocused) editing = false }
                 .focusable()
                 .onKeyEvent { e ->
@@ -99,9 +100,9 @@ fun HueBar(hue: Float, modifier: Modifier = Modifier, onHue: (Float) -> Unit) {
                         .offset(x = x)
                         .width(12.dp)
                         .height(38.dp)
-                        .clip(RoundedCornerShape(6.dp))
+                        .clip(RoundedCornerShape(Dimens.CornerXSmall))
                         .background(Color.White)
-                        .border(2.dp, Color(0x99000000), RoundedCornerShape(6.dp)),
+                        .border(2.dp, Color(0x99000000), RoundedCornerShape(Dimens.CornerXSmall)),
                 )
             }
         }
@@ -136,8 +137,8 @@ fun SatValSquare(
             modifier = modifier
                 .fillMaxWidth()
                 .height(190.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .border(if (editing || focused) 3.dp else 1.dp, ring, RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(Dimens.CornerMedium))
+                .border(if (editing || focused) 3.dp else 1.dp, ring, RoundedCornerShape(Dimens.CornerMedium))
                 .onFocusChanged { focused = it.isFocused; if (!it.isFocused) editing = false }
                 .focusable()
                 .onKeyEvent { e ->

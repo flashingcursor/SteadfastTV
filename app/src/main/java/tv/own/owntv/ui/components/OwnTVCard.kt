@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -25,7 +26,7 @@ fun OwnTVCard(
         onClick = onClick,
         modifier = modifier,
         selected = selected,
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         focusedScale = 1.06f,
         glowElevation = 14,
         focusedContainerColor = OwnTVTheme.colors.card,

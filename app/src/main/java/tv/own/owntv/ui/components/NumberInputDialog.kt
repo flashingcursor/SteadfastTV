@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -136,7 +137,7 @@ fun NumberInputDialog(
                     Spacer(Modifier.height(10.dp))
                     Box(
                         Modifier
-                            .clip(RoundedCornerShape(10.dp))
+                            .clip(RoundedCornerShape(Dimens.CornerSmall))
                             .background(colors.tertiaryContainer.copy(alpha = 0.55f))
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     ) {
@@ -172,7 +173,7 @@ private fun StepBtn(label: String, enabled: Boolean, modifier: Modifier = Modifi
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.size(40.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         contentAlignment = Alignment.Center,
         surface = GlassSurface.DIALOGS,
     ) { _ ->

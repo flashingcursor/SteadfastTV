@@ -59,6 +59,7 @@ import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.components.trapVerticalFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalActionSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -222,7 +223,7 @@ fun CustomizeItemsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.primaryContainer)
                     .padding(horizontal = 16.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -441,7 +442,7 @@ private fun ItemRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             // Tint every row in the span while a range is in progress, so the selected block is obvious.
             .background(if (isInSpan) colors.primaryContainer else colors.surfaceContainerHigh)
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -461,7 +462,7 @@ private fun ItemRow(
                     if (upFocusRequester != null) Modifier.focusProperties { up = upFocusRequester }
                     else Modifier,
                 ),
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(Dimens.CornerSmall),
             surface = GlassSurface.CARDS,
             contentAlignment = Alignment.CenterStart,
         ) { focused ->

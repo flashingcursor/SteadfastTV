@@ -924,7 +924,7 @@ fun OwnTVShell(
                 // scales with the panel + UI zoom (unlike the old fixed 340×191 dp box).
                 Modifier.align(miniPos.alignment).padding(24.dp)
                     .fillMaxWidth(tv.own.owntv.player.MiniPlayerSize.fraction(miniSizePct)).aspectRatio(16f / 9f)
-                    .clip(RoundedCornerShape(14.dp)).background(Color.Black)
+                    .clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black)
             },
         ) {
             // "Promote Preview": a Live channel playing on ExoPlayer renders the ExoPlayer surface — in BOTH

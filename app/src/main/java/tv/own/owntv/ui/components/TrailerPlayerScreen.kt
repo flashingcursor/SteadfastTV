@@ -50,6 +50,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -163,7 +164,7 @@ fun TrailerPlayerScreen(videoKey: String, onExit: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth(0.82f)
                 .fillMaxHeight(0.82f)
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(Dimens.CardCorner))
                 .background(Color.Black),
         ) {
             AndroidView(factory = { playerView }, modifier = Modifier.fillMaxSize())

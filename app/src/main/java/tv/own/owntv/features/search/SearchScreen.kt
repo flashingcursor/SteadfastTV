@@ -341,13 +341,13 @@ private fun DetailPane(
 
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(colors.surfaceContainerLowest)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth().height(180.dp).clip(RoundedCornerShape(12.dp)).background(colors.surfaceContainerHigh),
+            modifier = Modifier.fillMaxWidth().height(180.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh),
             contentAlignment = Alignment.Center,
         ) {
             if (!posterUrl.isNullOrBlank()) {
@@ -367,14 +367,14 @@ private fun DetailPane(
         FocusableSurface(
             onClick = action,
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(Dimens.CornerSmall),
             contentAlignment = Alignment.Center,
             surface = GlassSurface.CARDS,
         ) { _ ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colors.primary, RoundedCornerShape(12.dp))
+                    .background(colors.primary, RoundedCornerShape(Dimens.CornerSmall))
                     .padding(vertical = 12.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
@@ -411,7 +411,7 @@ private fun ResultRow(
             .fillMaxWidth()
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
             .onFocusChanged { if (it.isFocused) onFocused() },
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { _ ->
@@ -421,7 +421,7 @@ private fun ResultRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Box(
-                modifier = Modifier.size(44.dp).clip(RoundedCornerShape(8.dp)).background(colors.surfaceContainerLowest),
+                modifier = Modifier.size(44.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
                 contentAlignment = Alignment.Center,
             ) {
                 if (!thumbUrl.isNullOrBlank()) {

@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -96,7 +97,7 @@ fun MoveOrderOverlay(
         Column(
             modifier = Modifier
                 .width(480.dp)
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(Dimens.CardCorner))
                 .background(colors.surfaceContainerHigh)
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -118,7 +119,7 @@ fun MoveOrderOverlay(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(Dimens.CornerXSmall))
                             .background(if (isActive) colors.primary else colors.surfaceContainerLowest)
                             .padding(horizontal = 14.dp, vertical = 10.dp),
                     ) {

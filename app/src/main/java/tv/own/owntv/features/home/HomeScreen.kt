@@ -1139,7 +1139,7 @@ private fun LandscapeContinuationCard(
     FocusableSurface(
         onClick = onClick,
         modifier = modifier.onFocusChanged { if (it.hasFocus) onFocus() },
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         focusedScale = 1.04f,
         glowElevation = 14,
         focusedContainerColor = colors.surfaceContainerHigh,
@@ -1153,7 +1153,7 @@ private fun LandscapeContinuationCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
-                    .clip(RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.surfaceContainerLowest),
             ) {
                 if (!imageUrl.isNullOrBlank()) {
@@ -1228,7 +1228,7 @@ private fun HeroFallbackPane(
             .focusRequester(focusRequester)
             .focusable()
             .onFocusChanged { if (it.hasFocus) onChildFocused() }
-            .clip(RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(Dimens.CardCorner))
             .background(colors.panel)
             .padding(24.dp),
         contentAlignment = Alignment.Center,
@@ -1378,7 +1378,7 @@ private fun SkeletonRowPlaceholder(
                     modifier = Modifier
                         .width(cardWidth)
                         .height(cardHeight)
-                        .clip(RoundedCornerShape(14.dp))
+                        .clip(RoundedCornerShape(Dimens.CornerMedium))
                         .background(placeholder),
                 )
             }

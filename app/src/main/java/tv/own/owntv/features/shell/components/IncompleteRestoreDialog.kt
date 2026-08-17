@@ -31,6 +31,7 @@ import tv.own.owntv.R
 import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -62,7 +63,7 @@ fun IncompleteRestoreDialog(
         Column(
             modifier = Modifier
                 .widthIn(max = 520.dp)
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(Dimens.CardCorner))
                 .background(colors.panel)
                 .verticalScroll(rememberScrollState())
                 .padding(32.dp),

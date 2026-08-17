@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.glass
@@ -32,7 +33,7 @@ import tv.own.owntv.ui.theme.glass
 @Composable
 fun Modifier.dialogPanel(
     width: Dp = 440.dp,
-    corner: Dp = 20.dp,
+    corner: Dp = Dimens.CardCorner,
     padding: Dp = 24.dp,
     fill: Color? = null,
     scroll: Boolean = true,

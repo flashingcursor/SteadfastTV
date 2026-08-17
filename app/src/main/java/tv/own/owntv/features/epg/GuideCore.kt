@@ -229,7 +229,7 @@ internal fun ProgrammeDetailDialog(
             // Scrollable: long XMLTV descriptions can exceed a small screen's height. widthIn (not a
             // fixed width) keeps it responsive on narrow screens, so this uses .glass() directly rather
             // than dialogPanel (which sets a fixed width) — same DIALOGS surface + fill hook.
-            val corner = if (compact) 16.dp else 20.dp
+            val corner = if (compact) Dimens.CornerMedium else Dimens.CardCorner
             Column(
                 Modifier.widthIn(max = if (compact) 400.dp else 560.dp).clip(RoundedCornerShape(corner))
                     .glass(surface = GlassSurface.DIALOGS, baseFill = colors.surfaceContainerHigh, shape = RoundedCornerShape(corner), cornerRadius = corner)
@@ -302,7 +302,7 @@ private fun CatchupPlayerChooser(
                     .trapAllFocusExit().focusGroup(),
                 contentAlignment = Alignment.Center,
             ) {
-                Column(Modifier.dialogPanel(width = 340.dp, corner = 16.dp, padding = 18.dp, scroll = false)) {
+                Column(Modifier.dialogPanel(width = 340.dp, corner = Dimens.CornerMedium, padding = 18.dp, scroll = false)) {
                     Text(stringResource(R.string.settings_catchup_player), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                     Spacer(Modifier.height(4.dp))
                     Text(

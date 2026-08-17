@@ -49,6 +49,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Phase 13 — create / edit / delete viewer profiles. */
@@ -189,7 +190,7 @@ fun ManageProfilesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
 private fun ProfileRow(profile: ProfileEntity, canDelete: Boolean, rowModifier: Modifier, onEdit: () -> Unit, onDelete: () -> Unit) {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(colors.surfaceContainerHigh).padding(14.dp),
+        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         OwnTVAvatar(avatarId = profile.avatarId, modifier = Modifier.size(48.dp))

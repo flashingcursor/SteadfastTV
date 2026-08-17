@@ -30,6 +30,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import kotlinx.coroutines.delay
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -52,7 +53,7 @@ fun StreamInfoOverlay(player: PlaybackEngine, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .widthIn(min = 300.dp, max = 460.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(Color.Black.copy(alpha = 0.78f))
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {

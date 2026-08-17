@@ -69,6 +69,7 @@ import tv.own.owntv.ui.components.SearchBar
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -107,7 +108,7 @@ fun FirstRunLanguageSelector(modifier: Modifier = Modifier) {
             .width(284.dp)
             .height(61.dp)
             .focusRequester(triggerFocus),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(Dimens.CardCorner),
         focusedContainerColor = colors.primaryContainer,
         unfocusedContainerColor = colors.surfaceContainerHigh,
         focusedScale = 1.03f,
@@ -442,7 +443,7 @@ private fun TranslationContributionDialog(onDismiss: () -> Unit) {
             if (qr != null) {
                 Box(
                     Modifier
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(RoundedCornerShape(Dimens.CornerSmall))
                         .background(Color.White)
                         .padding(8.dp),
                 ) {
@@ -532,7 +533,7 @@ private fun LanguageRow(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         selected = selected,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         selectedContainerColor = colors.primaryContainer,
         surface = GlassSurface.CARDS,
         contentAlignment = Alignment.CenterStart,
@@ -573,7 +574,7 @@ private fun LanguageRow(
                     color = if (selected) colors.onPrimaryContainer else colors.onSecondaryContainer,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(Dimens.CornerXSmall))
                         .background(if (selected) colors.primary.copy(alpha = 0.25f) else colors.secondaryContainer)
                         .padding(horizontal = 12.dp, vertical = 6.dp),
                 )

@@ -526,7 +526,7 @@ private fun RailNavItem(
                     if (count > 0) {
                         Box(
                             modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(RoundedCornerShape(Dimens.CornerXSmall))
                                 .background(colors.primaryContainer)
                                 .padding(horizontal = 8.dp, vertical = 2.dp),
                         ) {

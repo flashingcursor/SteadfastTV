@@ -60,6 +60,7 @@ import tv.own.owntv.ui.components.primaryText
 import tv.own.owntv.ui.components.remainderText
 import tv.own.owntv.ui.components.summaryText
 import tv.own.owntv.ui.components.warningText
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 private enum class Step { WELCOME, DISCLAIMER, SETUP_CHOICE, CREATE_PROFILE, ADD_CONTENT, ADD_SOURCE_CHOOSER, ADD_SOURCE_REMOTE, ADD_SOURCE, IMPORTING, EXISTING, IMPORT_BACKUP_CHOOSER, IMPORT_BACKUP_REMOTE, IMPORT_BACKUP }
@@ -296,7 +297,7 @@ private fun ExistingSourcesScreen(sources: List<SourceEntity>, onAdd: (Set<Long>
                     onClick = { selected = if (checked) selected - src.id else selected + src.id },
                     modifier = if (src.id == sources.firstOrNull()?.id) Modifier.fillMaxWidth().focusRequester(fr) else Modifier.fillMaxWidth(),
                     selected = checked,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(Dimens.CornerSmall),
                     selectedContainerColor = colors.primaryContainer,
                     contentAlignment = Alignment.CenterStart,
                 ) { _ ->
@@ -411,14 +412,14 @@ private fun ChoiceCard(icon: OwnTVIcon, title: String, desc: String, modifier: M
     FocusableSurface(
         onClick = onClick,
         modifier = modifier.size(width = 220.dp, height = 170.dp),
-        shape = RoundedCornerShape(22.dp),
+        shape = RoundedCornerShape(Dimens.PanelCorner),
         focusedContainerColor = colors.surfaceContainerHighest,
         unfocusedContainerColor = colors.surfaceContainerHigh,
         selectedContainerColor = colors.surfaceContainerHigh,
         contentAlignment = Alignment.Center,
     ) { _ ->
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Box(modifier = Modifier.size(56.dp).clip(RoundedCornerShape(16.dp)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.size(56.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
                 OwnTVIcon(icon, tint = colors.onPrimaryContainer, modifier = Modifier.size(28.dp))
             }
             Spacer(Modifier.height(14.dp))

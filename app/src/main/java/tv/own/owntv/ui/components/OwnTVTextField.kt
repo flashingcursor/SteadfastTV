@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -91,7 +92,7 @@ fun OwnTVTextField(
     val keyboard = LocalSoftwareKeyboardController.current
     val tvImeWatcher = LocalTvImeWatcher.current
     val tvImeMetrics = LocalTvImeMetrics.current
-    val shape = RoundedCornerShape(12.dp)
+    val shape = RoundedCornerShape(Dimens.CornerSmall)
     val focused = fieldFocused || editing
     var showPassword by remember { mutableStateOf(false) }
     val eyeInteraction = remember { MutableInteractionSource() }

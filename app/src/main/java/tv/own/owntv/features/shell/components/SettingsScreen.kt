@@ -1246,7 +1246,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                         style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
                     )
                 }
-                Box(Modifier.clip(RoundedCornerShape(10.dp)).background(Color.White).padding(6.dp)) {
+                Box(Modifier.clip(RoundedCornerShape(Dimens.CornerSmall)).background(Color.White).padding(6.dp)) {
                     Image(
                         painter = androidx.compose.ui.res.painterResource(tv.own.owntv.R.drawable.telegram_qr),
                         contentDescription = stringResource(R.string.settings_telegram_qr),
@@ -1325,7 +1325,7 @@ private fun PlaybackErrorLogDialog(onDismiss: () -> Unit) {
                         FocusableSurface(
                             onClick = {},
                             modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(Dimens.CornerSmall),
                             contentAlignment = Alignment.CenterStart,
                             surface = GlassSurface.DIALOGS,
                         ) { _ ->
@@ -2083,7 +2083,7 @@ private fun StepButton(
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.size(64.dp),
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         contentAlignment = Alignment.Center,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
@@ -2130,7 +2130,7 @@ private fun SettingsRow(
     FocusableSurface(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         surface = GlassSurface.CARDS,
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
@@ -2184,9 +2184,9 @@ private fun SoonChip() {
         color = colors.onSurfaceVariant,
         fontWeight = FontWeight.SemiBold,
         modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(Dimens.CornerXSmall))
             .background(colors.surfaceContainerHighest)
-            .border(1.dp, colors.outlineVariant, RoundedCornerShape(8.dp))
+            .border(1.dp, colors.outlineVariant, RoundedCornerShape(Dimens.CornerXSmall))
             .padding(horizontal = 10.dp, vertical = 4.dp),
     )
 }

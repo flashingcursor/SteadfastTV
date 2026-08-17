@@ -52,6 +52,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -249,7 +250,7 @@ private fun PanelWidthDialog(
                 FocusableSurface(
                     onClick = { enabled = !enabled },
                     modifier = Modifier.fillMaxWidth().focusRequester(toggleFocus),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(Dimens.CornerSmall),
                     surface = GlassSurface.DIALOGS,
                     contentAlignment = Alignment.CenterStart,
                 ) { _ ->
@@ -269,7 +270,7 @@ private fun PanelWidthDialog(
                             color = if (enabled) colors.onPrimaryContainer else colors.onSecondaryContainer,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(RoundedCornerShape(Dimens.CornerXSmall))
                                 .background(if (enabled) colors.primaryContainer else colors.secondaryContainer)
                                 .padding(horizontal = 12.dp, vertical = 6.dp),
                         )
@@ -317,7 +318,7 @@ private fun PanelWidthDialog(
                         Box(
                             Modifier
                                 .fillMaxWidth()
-                                .clip(RoundedCornerShape(10.dp))
+                                .clip(RoundedCornerShape(Dimens.CornerSmall))
                                 .background(colors.favorite.copy(alpha = 0.18f))
                                 .padding(horizontal = 12.dp, vertical = 8.dp),
                         ) {
@@ -403,7 +404,7 @@ private fun StepBtn(label: String, atLimit: Boolean, onClick: () -> Unit) {
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier.size(40.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         contentAlignment = Alignment.Center,
         surface = GlassSurface.DIALOGS,
     ) { _ ->

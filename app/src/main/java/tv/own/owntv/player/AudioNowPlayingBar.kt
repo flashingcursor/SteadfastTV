@@ -62,6 +62,7 @@ import tv.own.owntv.core.i18n.HorizontalDirection
 import tv.own.owntv.core.i18n.horizontalDirection
 import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontFamily
 
@@ -174,14 +175,14 @@ fun AudioNowPlayingBar(
         // cue. Stage 2 (active) shows the accent outline; the focused button carries its accent ring/icon.
         Row(
             modifier = Modifier
-                .clip(RoundedCornerShape(18.dp))
+                .clip(RoundedCornerShape(Dimens.CornerMedium))
                 // AMOLED-dark card (owner spec) in dark; the same "extreme" in light = a crisp pure-white
                 // card. Never a glassy tint in either theme.
                 .background(if (colors.isDark) Color(0xFF0C0C0C) else Color(0xFFFFFFFF))
                 .border(
                     width = if (active) 2.dp else 1.dp,
                     color = if (active) colors.primary else colors.onSurfaceVariant.copy(alpha = 0.18f),
-                    shape = RoundedCornerShape(18.dp),
+                    shape = RoundedCornerShape(Dimens.CornerMedium),
                 )
                 .padding(horizontal = 14.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -254,7 +255,7 @@ fun AudioNowPlayingBar(
                 .matchParentSize()
                 .focusRequester(pillFocus)
                 .focusProperties { canFocus = focusable && !active },
-            shape = RoundedCornerShape(18.dp),
+            shape = RoundedCornerShape(Dimens.CornerMedium),
             focusedScale = 1.03f,
             glowElevation = 0,
             // Fully invisible catcher: stage-1 focus is drawn by the card itself (top/bottom accent

@@ -250,10 +250,10 @@ private fun DownloadRow(
 ) {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(colors.surfaceContainerHigh).padding(14.dp),
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(Modifier.size(56.dp, 78.dp).clip(RoundedCornerShape(8.dp)).background(colors.surfaceContainerLowest), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(56.dp, 78.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest), contentAlignment = Alignment.Center) {
             if (!download.posterUrl.isNullOrBlank()) AsyncImage(model = download.posterUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
             else OwnTVIcon(OwnTVIcon.MOVIES, tint = colors.onSurfaceVariant, modifier = Modifier.size(24.dp))
         }

@@ -44,6 +44,7 @@ import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
@@ -191,7 +192,7 @@ private fun ResultsList(
                     onClick = { onSelect(r) },
                     enabled = applyingFileId == null,
                     modifier = if (r == results.first()) Modifier.fillMaxWidth().focusRequester(firstFocus) else Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(Dimens.CornerSmall),
                     contentAlignment = Alignment.CenterStart,
                     surface = GlassSurface.DIALOGS,
                 ) { _ ->

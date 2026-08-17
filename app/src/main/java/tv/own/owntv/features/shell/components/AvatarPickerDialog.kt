@@ -36,6 +36,7 @@ import tv.own.owntv.ui.components.ProfileIcon
 import tv.own.owntv.ui.components.OwnTVAvatars
 import tv.own.owntv.ui.components.longPressMenuGuard
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -65,7 +66,7 @@ fun AvatarPickerDialog(
         Column(
             modifier = Modifier
                 .widthIn(max = 640.dp)
-                .clip(RoundedCornerShape(28.dp))
+                .clip(RoundedCornerShape(Dimens.CornerLarge))
                 .background(colors.surfaceContainerHigh)
                 // Scrollable: the avatar grid is taller than small/low-res screens.
                 .verticalScroll(rememberScrollState())
@@ -88,7 +89,7 @@ fun AvatarPickerDialog(
                     modifier = (if (noneSelected) Modifier.focusRequester(selectedFocus) else Modifier)
                         .size(88.dp),
                     selected = noneSelected,
-                    shape = RoundedCornerShape(22.dp),
+                    shape = RoundedCornerShape(Dimens.PanelCorner),
                     focusedScale = 1.08f,
                     focusedContainerColor = colors.surfaceContainerHighest,
                     unfocusedContainerColor = colors.surfaceContainer,
@@ -111,7 +112,7 @@ fun AvatarPickerDialog(
                             modifier = (if (isSelected) Modifier.focusRequester(selectedFocus) else Modifier)
                                 .size(88.dp),
                             selected = isSelected,
-                            shape = RoundedCornerShape(22.dp),
+                            shape = RoundedCornerShape(Dimens.PanelCorner),
                             focusedScale = 1.08f,
                             focusedContainerColor = colors.surfaceContainerHighest,
                             unfocusedContainerColor = colors.surfaceContainer,

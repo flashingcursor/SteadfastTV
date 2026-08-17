@@ -31,6 +31,7 @@ import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvPreview
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
@@ -133,7 +134,7 @@ private fun StepBtn(label: String, enabled: Boolean, modifier: Modifier = Modifi
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.size(40.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         contentAlignment = Alignment.Center,
         surface = GlassSurface.DIALOGS,
     ) { _ -> Text(label, style = MaterialTheme.typography.titleMedium, color = if (enabled) colors.onSurface else colors.outline) }

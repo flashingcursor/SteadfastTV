@@ -65,6 +65,7 @@ import tv.own.owntv.ui.components.TextInputDialog
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.components.trapVerticalFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalActionSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -307,7 +308,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.primaryContainer)
                     .padding(horizontal = 16.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -385,7 +386,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     key = { _, entry -> "hid:${entry.key}" },
                 ) { hiddenIndex, (key, label) ->
                     Row(
-                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(colors.surfaceContainerHigh).padding(horizontal = 16.dp, vertical = 10.dp),
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh).padding(horizontal = 16.dp, vertical = 10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -692,7 +693,7 @@ private fun CategoryRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             // Tint every row in the span while a range is in progress, so the selected block is obvious.
             .background(if (isInSpan) colors.primaryContainer else colors.surfaceContainerHigh)
             .padding(horizontal = 16.dp, vertical = 8.dp)

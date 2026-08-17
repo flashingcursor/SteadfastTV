@@ -49,6 +49,7 @@ import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.StorageBrowser
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import java.io.File
@@ -629,7 +630,7 @@ private fun CheckRow(
     FocusableSurface(
         onClick = onToggle,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
@@ -637,9 +638,9 @@ private fun CheckRow(
             Box(
                 modifier = Modifier
                     .size(22.dp)
-                    .clip(RoundedCornerShape(6.dp))
+                    .clip(RoundedCornerShape(Dimens.CornerXSmall))
                     .background(if (checked) colors.primary else Color.Transparent)
-                    .border(2.dp, if (checked) colors.primary else colors.outline, RoundedCornerShape(6.dp)),
+                    .border(2.dp, if (checked) colors.primary else colors.outline, RoundedCornerShape(Dimens.CornerXSmall)),
                 contentAlignment = Alignment.Center,
             ) {
                 if (checked) Box(Modifier.size(9.dp).clip(RoundedCornerShape(2.dp)).background(colors.onPrimary))

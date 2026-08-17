@@ -40,6 +40,7 @@ import tv.own.owntv.ui.components.displayText
 import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import java.io.File
 
@@ -105,7 +106,7 @@ fun RemoteBackupRestoreScreen(
                             Image(
                                 bitmap = qr,
                                 contentDescription = stringResource(R.string.settings_companion_qr),
-                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(14.dp)).background(Color.White).padding(9.dp),
+                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(9.dp),
                                 contentScale = ContentScale.Fit,
                             )
                             Spacer(Modifier.height(12.dp))
@@ -192,7 +193,7 @@ fun RemoteBackupExportScreen(
                             Image(
                                 bitmap = qr,
                                 contentDescription = stringResource(R.string.settings_companion_qr),
-                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(14.dp)).background(Color.White).padding(9.dp),
+                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(9.dp),
                                 contentScale = ContentScale.Fit,
                             )
                             Spacer(Modifier.height(12.dp))

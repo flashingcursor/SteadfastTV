@@ -38,6 +38,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
@@ -78,7 +79,7 @@ fun SubtitleDeletePopup(
                         FocusableSurface(
                             onClick = { onDelete(item) },
                             modifier = if (item == items.first()) Modifier.fillMaxWidth().focusRequester(firstFocus) else Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(Dimens.CornerSmall),
                             contentAlignment = Alignment.CenterStart,
                             surface = GlassSurface.DIALOGS,
                         ) { _ ->

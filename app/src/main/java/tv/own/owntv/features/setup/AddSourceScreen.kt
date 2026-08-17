@@ -71,6 +71,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.StorageBrowser
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -663,7 +664,7 @@ private fun AutoRefreshRow(selected: PlaylistAutoRefresh, onClick: () -> Unit) {
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { _ ->
@@ -691,7 +692,7 @@ private fun ToggleRow(label: String, desc: String, checked: Boolean, onToggle: (
     FocusableSurface(
         onClick = { onToggle(!checked) },
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { _ ->
@@ -748,7 +749,7 @@ private fun SyncScopeRow(
                     null -> false
                 }
             },
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { _ ->
@@ -773,7 +774,7 @@ private fun KindChip(label: String, selected: Boolean, modifier: Modifier, onCli
         onClick = onClick,
         modifier = modifier,
         selected = selected,
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         focusedContainerColor = colors.surfaceContainerHighest,
         unfocusedContainerColor = colors.surfaceContainerHigh,
         selectedContainerColor = colors.primaryContainer,

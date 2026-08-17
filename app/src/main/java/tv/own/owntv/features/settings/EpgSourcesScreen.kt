@@ -55,6 +55,7 @@ import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.core.sync.work.EpgSyncState
@@ -254,7 +255,7 @@ private fun EpgRow(
         }
     }
     Row(
-        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(colors.surfaceContainerHigh).padding(16.dp),
+        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f)) {
@@ -266,7 +267,7 @@ private fun EpgRow(
                         stringResource(R.string.settings_epg_sources_deleting),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -277,7 +278,7 @@ private fun EpgRow(
                         syncPercent?.let { stringResource(R.string.settings_epg_sources_syncing_percent, it) } ?: stringResource(R.string.settings_epg_sources_syncing_label),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -288,7 +289,7 @@ private fun EpgRow(
                         stringResource(R.string.settings_sources_auto_refresh, epgAutoRefreshLabel(autoRefresh)),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(colors.surfaceContainerHighest).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerHighest).padding(horizontal = 8.dp, vertical = 2.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -433,7 +434,7 @@ private fun EpgUseLogosRow(enabled: Boolean, onClick: () -> Unit) {
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth().widthIn(max = 680.dp),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         surface = GlassSurface.CARDS,
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
@@ -458,7 +459,7 @@ private fun EpgAutoRefreshRow(selected: EpgAutoRefresh, onClick: () -> Unit) {
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth().widthIn(max = 680.dp),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         surface = GlassSurface.CARDS,
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
@@ -505,7 +506,7 @@ private fun PlaylistEpgPicker(
                         FocusableSurface(
                             onClick = { onPick(opt) },
                             modifier = if (opt == opts.first()) Modifier.fillMaxWidth().focusRequester(firstFocus) else Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(Dimens.CornerSmall),
                             contentAlignment = Alignment.CenterStart,
                             surface = GlassSurface.DIALOGS,
                         ) { _ ->

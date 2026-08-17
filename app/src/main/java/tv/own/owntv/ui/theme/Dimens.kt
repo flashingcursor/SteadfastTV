@@ -45,10 +45,14 @@ object Dimens {
     val PosterProgressHeight = 4.dp
 
     // M3 expressive shape scale (larger, rounder than the defaults).
+    // App-wide corner scale (2026-08-17 consolidation): components must round their corners
+    // with these tokens, never dp literals, so the app's border radius stays centrally tunable.
+    val CornerXSmall = 8.dp    // small chips/badges/inputs
     val CornerSmall = 12.dp
-    val CornerMedium = 18.dp
+    val CornerMedium = 16.dp
     val CornerLarge = 24.dp
     val CardCorner = 20.dp
+    val PanelCorner = 22.dp    // the large RoundedPanel browse containers
 
     val FocusBorderWidth = 2.5.dp
 

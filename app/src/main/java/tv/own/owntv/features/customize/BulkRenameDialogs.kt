@@ -59,6 +59,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.TextInputDialog
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
@@ -566,7 +567,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                 ) {
                     itemsIndexed(rows, key = { _, r -> r.key }) { index, r ->
                         Row(
-                            Modifier.fillMaxWidth().clip(RoundedCornerShape(9.dp)).background(colors.surface).padding(horizontal = 8.dp, vertical = 5.dp),
+                            Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = 8.dp, vertical = 5.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(6.dp),
                         ) {
@@ -604,14 +605,14 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                                 FocusableSurface(
                                     onClick = { session.applyRows(setOf(r.key)) },
                                     modifier = if (index == firstChanged) Modifier.focusRequester(firstApplyFocus) else Modifier,
-                                    shape = RoundedCornerShape(8.dp),
+                                    shape = RoundedCornerShape(Dimens.CornerXSmall),
                                     unfocusedContainerColor = colors.primaryContainer,
                                     contentAlignment = Alignment.Center,
                                     surface = GlassSurface.DIALOGS,
                                 ) { _ -> Text(stringResource(R.string.settings_bulk_rename_apply), style = MaterialTheme.typography.labelMedium, color = colors.onPrimaryContainer, modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp)) }
                                 FocusableSurface(
                                     onClick = { session.declineRows(setOf(r.key)) },
-                                    shape = RoundedCornerShape(8.dp),
+                                    shape = RoundedCornerShape(Dimens.CornerXSmall),
                                     unfocusedContainerColor = colors.surfaceContainerHigh,
                                     contentAlignment = Alignment.Center,
                                     surface = GlassSurface.DIALOGS,

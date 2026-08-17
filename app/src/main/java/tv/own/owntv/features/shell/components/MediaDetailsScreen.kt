@@ -49,6 +49,7 @@ import kotlinx.coroutines.launch
 import tv.own.owntv.R
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -109,7 +110,7 @@ fun MediaDetailsScreen(details: MediaDetailsUi, onExit: () -> Unit, modifier: Mo
             modifier = Modifier
                 .fillMaxWidth(0.82f)
                 .fillMaxHeight(0.82f)
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(Dimens.CardCorner))
                 .background(colors.surfaceContainerHigh)
                 .focusRequester(focus)
                 .onKeyEvent(onKey)
@@ -138,7 +139,7 @@ fun MediaDetailsScreen(details: MediaDetailsUi, onExit: () -> Unit, modifier: Mo
                     modifier = Modifier
                         .width(120.dp)
                         .aspectRatio(2f / 3f)
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(RoundedCornerShape(Dimens.CornerSmall))
                         .background(colors.surfaceContainerLowest),
                     contentAlignment = Alignment.Center,
                 ) {

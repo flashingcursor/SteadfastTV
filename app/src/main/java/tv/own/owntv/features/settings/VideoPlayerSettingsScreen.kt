@@ -577,7 +577,7 @@ internal fun Header(title: String, onBack: () -> Unit) {
         FocusableSurface(
             onClick = onBack,
             modifier = Modifier.size(44.dp),
-            shape = RoundedCornerShape(14.dp),
+            shape = RoundedCornerShape(Dimens.CornerMedium),
             surface = GlassSurface.CARDS,
             contentAlignment = Alignment.Center,
         ) { _ -> OwnTVIcon(OwnTVIcon.BACK, tint = OwnTVTheme.colors.onSurface, modifier = Modifier.size(20.dp)) }
@@ -623,7 +623,7 @@ internal fun Row2(
     FocusableSurface(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         surface = GlassSurface.CARDS,
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
@@ -645,7 +645,7 @@ internal fun Row2(
                 val on = if (primaryChip) colors.onPrimaryContainer else colors.onSecondaryContainer
                 Text(
                     chip, style = MaterialTheme.typography.labelMedium, color = on, fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(bg).padding(horizontal = 12.dp, vertical = 6.dp),
+                    modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(bg).padding(horizontal = 12.dp, vertical = 6.dp),
                 )
             }
             if (chevron) OwnTVIcon(OwnTVIcon.CHEVRON, tint = colors.onSurfaceVariant, modifier = Modifier.size(18.dp))
@@ -708,7 +708,7 @@ internal fun PickerDialog(
                         onClick = { onSelect(value) },
                         modifier = if (index == selIndex) Modifier.fillMaxWidth().focusRequester(fr) else Modifier.fillMaxWidth(),
                         selected = isSel,
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(Dimens.CornerSmall),
                         selectedContainerColor = colors.primaryContainer,
                         contentAlignment = Alignment.CenterStart,
                         surface = GlassSurface.DIALOGS,
@@ -768,7 +768,7 @@ private fun ExternalPlayerDialog(
                     FocusableSurface(
                         onClick = { onToggle(section, !enabled) },
                         modifier = if (index == 0) Modifier.fillMaxWidth().focusRequester(fr) else Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(Dimens.CornerSmall),
                         contentAlignment = Alignment.CenterStart,
                         surface = GlassSurface.DIALOGS,
                     ) { _ ->
@@ -1171,7 +1171,7 @@ private fun PositionCell(
         onClick = onClick,
         modifier = modifier.height(if (isDefault) 40.dp else 64.dp),
         selected = selected,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         selectedContainerColor = colors.primaryContainer,
         surface = GlassSurface.DIALOGS,
         contentAlignment = Alignment.Center,
@@ -1316,7 +1316,7 @@ private fun SubtitlePreview(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             // A busy-ish backdrop: a flat panel would make even a solid box look harmless.
             .background(
                 androidx.compose.ui.graphics.Brush.linearGradient(
@@ -1340,7 +1340,7 @@ private fun SubtitlePreview(
             color = textColor,
             modifier = Modifier
                 .padding(10.dp)
-                .clip(RoundedCornerShape(6.dp))
+                .clip(RoundedCornerShape(Dimens.CornerXSmall))
                 .background(boxColor)
                 .padding(horizontal = 10.dp, vertical = 3.dp),
         )
@@ -1361,7 +1361,7 @@ private fun StepBtn(label: String, enabled: Boolean, modifier: Modifier = Modifi
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.size(40.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         contentAlignment = Alignment.Center,
         surface = GlassSurface.DIALOGS,
     ) { _ -> Text(label, style = MaterialTheme.typography.titleMedium, color = if (enabled) colors.onSurface else colors.outline) }

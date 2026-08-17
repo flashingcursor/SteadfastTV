@@ -123,7 +123,7 @@ private fun ChannelCardsRow(
                             firstItemFocusRequester != null && index == 0 -> Modifier.focusRequester(firstItemFocusRequester)
                             else -> Modifier
                         }.onFocusChanged { if (it.hasFocus) onFocus() },
-                        shape = RoundedCornerShape(14.dp),
+                        shape = RoundedCornerShape(Dimens.CornerMedium),
                         focusedScale = 1f,
                         focusedContainerColor = OwnTVTheme.colors.surfaceContainerHigh,
                         unfocusedContainerColor = OwnTVTheme.colors.surfaceContainerHigh,
@@ -165,7 +165,7 @@ private fun OnNowRow(
 ) {
     val colors = OwnTVTheme.colors
     val rows = guide.channels
-    val sectionShape = RoundedCornerShape(10.dp)
+    val sectionShape = RoundedCornerShape(Dimens.CornerSmall)
     var activeRowIndex by remember { mutableIntStateOf(-1) }
     var visibleStartIndex by remember { mutableIntStateOf(0) }
 
@@ -303,7 +303,7 @@ private fun OnNowChannelItem(
     focused: Boolean,
 ) {
     val colors = OwnTVTheme.colors
-    val rowShape = RoundedCornerShape(8.dp)
+    val rowShape = RoundedCornerShape(Dimens.CornerXSmall)
     val formatTime = rememberSystemTimeFormatter()
     val noProgrammeDetails = stringResource(R.string.home_no_programme_details)
     val guideUnavailable = stringResource(R.string.home_guide_unavailable)
@@ -444,7 +444,7 @@ private fun ChannelTextBadge(
     Box(
         modifier = Modifier
             .size(46.dp)
-            .clip(RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(colors.surfaceContainerLowest),
         contentAlignment = Alignment.Center,
     ) {
@@ -467,7 +467,7 @@ private fun ChannelLogoBadge(
     Box(
         modifier = Modifier
             .size(46.dp)
-            .clip(RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(colors.surfaceContainerLowest),
         contentAlignment = Alignment.Center,
     ) {
@@ -492,7 +492,7 @@ private fun ChannelLogo(
     Box(
         modifier = Modifier
             .size(size.dp)
-            .clip(RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(OwnTVTheme.colors.surfaceContainerLowest),
         contentAlignment = Alignment.Center,
     ) {

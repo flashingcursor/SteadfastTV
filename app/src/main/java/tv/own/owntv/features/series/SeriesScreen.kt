@@ -823,7 +823,7 @@ private fun EpisodeDetailPane(
         // caught up) or when it's the same episode already focused (OK plays it anyway).
         nextUpEpisode?.takeIf { it.id != episode.id }?.let { nup ->
             Column(
-                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp))
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.primaryContainer.copy(alpha = 0.22f)).padding(12.dp),
             ) {
                 Text(stringResource(R.string.content_next_up), style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant)
@@ -839,7 +839,7 @@ private fun EpisodeDetailPane(
             Spacer(Modifier.height(14.dp))
         }
         Box(
-            modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f).clip(RoundedCornerShape(12.dp)).background(colors.surfaceContainerLowest),
+            modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerLowest),
             contentAlignment = Alignment.Center,
         ) {
             if (!still.isNullOrBlank()) {
@@ -1350,7 +1350,7 @@ private fun EpisodeRow(
         onClick = onClick,
         onLongClick = onLongClick,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { focused ->
@@ -1358,7 +1358,7 @@ private fun EpisodeRow(
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                 Box(
-                    modifier = Modifier.size(34.dp).clip(RoundedCornerShape(8.dp)).background(if (completed) colors.primaryContainer else colors.surfaceContainerLowest),
+                    modifier = Modifier.size(34.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(if (completed) colors.primaryContainer else colors.surfaceContainerLowest),
                     contentAlignment = Alignment.Center,
                 ) {
                     if (completed) {
@@ -1383,7 +1383,7 @@ private fun EpisodeRow(
                         stringResource(R.string.content_last_watched),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 3.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 3.dp),
                     )
                 }
             }
@@ -1419,7 +1419,7 @@ private fun SeriesListRow(
         modifier = modifier.onFocusChanged { if (it.hasFocus) onFocus() },
         leading = {
             Box(
-                modifier = Modifier.size(width = 44.dp, height = 62.dp).clip(RoundedCornerShape(6.dp)).background(colors.surfaceContainerLowest),
+                modifier = Modifier.size(width = 44.dp, height = 62.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
                 contentAlignment = Alignment.Center,
             ) {
                 if (!series.posterUrl.isNullOrBlank()) {

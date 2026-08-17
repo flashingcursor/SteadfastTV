@@ -147,7 +147,7 @@ private fun NavMenuRow(
     FocusableSurface(
         onClick = onToggle,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         surface = GlassSurface.CARDS,
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
@@ -186,7 +186,7 @@ private fun NavMenuRow(
                 color = fg,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(Dimens.CornerXSmall))
                     .background(bg)
                     .padding(horizontal = 12.dp, vertical = 6.dp),
             )

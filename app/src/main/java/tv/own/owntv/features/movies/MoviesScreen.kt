@@ -910,7 +910,7 @@ private fun MovieListRow(
         dimmed = completed,
         leading = {
             Box(
-                modifier = Modifier.size(width = 44.dp, height = 62.dp).clip(RoundedCornerShape(6.dp)).background(colors.surfaceContainerLowest),
+                modifier = Modifier.size(width = 44.dp, height = 62.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
                 contentAlignment = Alignment.Center,
             ) {
                 if (!movie.posterUrl.isNullOrBlank()) {

@@ -27,6 +27,7 @@ import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.core.database.entity.DownloadEntity
 import tv.own.owntv.core.model.DownloadStatus
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Display-only download state for the poster-panel strip (no actions — mirrors the Downloads screen). */
@@ -85,7 +86,7 @@ fun DownloadStatusStrip(state: DownloadStripState, modifier: Modifier = Modifier
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(colors.surfaceContainerHigh)
             .padding(horizontal = 12.dp, vertical = 9.dp),
         verticalArrangement = Arrangement.spacedBy(7.dp),

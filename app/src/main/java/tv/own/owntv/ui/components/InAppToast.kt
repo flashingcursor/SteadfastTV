@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import kotlinx.coroutines.delay
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -65,7 +66,7 @@ fun InAppToast(state: InAppToastState) {
         Text(
             msg,
             modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(Dimens.CornerMedium))
                 .background(OwnTVTheme.colors.surfaceContainerHigh)
                 .padding(horizontal = 22.dp, vertical = 12.dp),
             style = MaterialTheme.typography.titleMedium,

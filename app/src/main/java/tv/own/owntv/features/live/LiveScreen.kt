@@ -647,7 +647,7 @@ private fun ChannelRow(
         leading = {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                 Box(
-                    modifier = Modifier.size(48.dp).clip(RoundedCornerShape(8.dp)).background(colors.surfaceContainerLowest),
+                    modifier = Modifier.size(48.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
                     contentAlignment = Alignment.Center,
                 ) {
                     if (!channel.displayLogoUrl.isNullOrBlank()) {
@@ -888,7 +888,7 @@ private fun MetaChipBadge(chip: MetaChip) {
     Row(
         modifier = Modifier
             .height(26.dp)                  // uniform chip height — long category names can't wrap to 2 lines and make one chip taller than the others
-            .clip(RoundedCornerShape(7.dp))
+            .clip(RoundedCornerShape(Dimens.CornerXSmall))
             .background(colors.surfaceContainerLow)
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -1038,7 +1038,7 @@ private fun CatchupDialog(
                             FocusableSurface(
                                 onClick = { onPick(p) },
                                 modifier = if (p == progs.first()) Modifier.fillMaxWidth().focusRequester(firstFocus) else Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(12.dp),
+                                shape = RoundedCornerShape(Dimens.CornerSmall),
                                 contentAlignment = Alignment.CenterStart,
                                 surface = GlassSurface.DIALOGS,
                             ) { _ ->
@@ -1131,7 +1131,7 @@ internal fun EpgMatchDialog(
                                 FocusableSurface(
                                     onClick = { onPick(epg.epgChannelId) },
                                     modifier = if (epg == list.first()) Modifier.fillMaxWidth().focusRequester(firstItemFocus) else Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(12.dp),
+                                    shape = RoundedCornerShape(Dimens.CornerSmall),
                                     contentAlignment = Alignment.CenterStart,
                                     surface = GlassSurface.DIALOGS,
                                 ) { _ ->

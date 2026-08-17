@@ -40,6 +40,7 @@ import tv.own.owntv.core.i18n.horizontalDirection
 import tv.own.owntv.core.database.entity.CategoryEntity
 import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -142,7 +143,7 @@ private fun CategoryRow(
             Box(
                 modifier = Modifier
                     .size(36.dp)
-                    .clip(androidx.compose.foundation.shape.RoundedCornerShape(8.dp))
+                    .clip(androidx.compose.foundation.shape.RoundedCornerShape(Dimens.CornerXSmall))
                     .background(colors.surfaceContainerLowest),
                 contentAlignment = Alignment.Center,
             ) {

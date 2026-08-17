@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -50,14 +51,14 @@ val PreviewPanelFill: Color
  * keep their identity. Pass [surface] to tag this panel as something else (e.g. SIDEBAR/PREVIEW).
  *
  * @param fillColor the panel surface colour, or null for the theme default.
- * @param radius corner radius (≈24px on the mockup; 22dp reads well at TV distance).
+ * @param radius corner radius (≈24px on the mockup; Dimens.PanelCorner reads well at TV distance).
  * @param innerPadding inset between the rounded edge and the content.
  * @param surface which glass surface this panel represents (default PANELS).
  */
 @Composable
 fun RoundedPanel(
     modifier: Modifier = Modifier,
-    radius: Dp = 22.dp,
+    radius: Dp = Dimens.PanelCorner,
     fillColor: Color? = null,
     innerPadding: PaddingValues = PaddingValues(0.dp),
     surface: GlassSurface = GlassSurface.PANELS,
@@ -84,7 +85,7 @@ fun RoundedPanel(
  */
 @Composable
 fun Modifier.roundedPanel(
-    radius: Dp = 22.dp,
+    radius: Dp = Dimens.PanelCorner,
     fillColor: Color? = null,
     surface: GlassSurface = GlassSurface.PANELS,
 ): Modifier {

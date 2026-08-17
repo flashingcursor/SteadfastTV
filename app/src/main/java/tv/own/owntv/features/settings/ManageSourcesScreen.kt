@@ -63,6 +63,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Phase 13 — list / add / re-sync / delete the active profile's IPTV sources. */
@@ -408,7 +409,7 @@ private fun SourceRow(
     val activeSync = syncState as? CatalogSyncState.Syncing
     val activeCounts = activeSync?.countsLabel(source.type, counts)
     Row(
-        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(colors.surfaceContainerHigh).padding(16.dp),
+        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f)) {
@@ -420,7 +421,7 @@ private fun SourceRow(
                         stringResource(R.string.settings_sources_default),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
                     )
                 }
                 if (isDeleting) {
@@ -429,7 +430,7 @@ private fun SourceRow(
                         stringResource(R.string.settings_sources_deleting),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
                     )
                 }
                 activeSync?.let {
@@ -439,7 +440,7 @@ private fun SourceRow(
                             ?: stringResource(R.string.sync_progress_syncing),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
                     )
                 }
             }

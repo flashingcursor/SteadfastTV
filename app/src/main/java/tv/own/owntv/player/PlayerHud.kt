@@ -84,6 +84,7 @@ import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.displayText
 import tv.own.owntv.ui.components.displayLabel
 import tv.own.owntv.ui.components.dialogPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.HudPictorial
 import tv.own.owntv.ui.theme.LocalActionSurface
@@ -98,7 +99,7 @@ private val SPEEDS = listOf(0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0)
  *  Radius matches the zap/tune OSD cards' (ChannelOsdCard/ChannelNumberCard, 14.dp), not the
  *  generic 12.dp, so scrimmed text reads as the same surface family as those cards. */
 private fun Modifier.hudTextScrim(): Modifier = this
-    .clip(RoundedCornerShape(14.dp))
+    .clip(RoundedCornerShape(Dimens.CornerMedium))
     .background(Color.Black.copy(alpha = 0.45f))
     .padding(horizontal = 16.dp, vertical = 10.dp)
 
@@ -634,7 +635,7 @@ fun PlayerHud(
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
+                        .clip(RoundedCornerShape(Dimens.CardCorner))
                         .background(Color.Black.copy(alpha = 0.55f))
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                 )
@@ -826,7 +827,7 @@ private fun TopBar(
 private fun ChannelLogo(logoUrl: String?, title: String?, size: Int, modifier: Modifier = Modifier) {
     val colors = OwnTVTheme.colors
     Box(
-        modifier.size(size.dp).clip(RoundedCornerShape(10.dp)).background(colors.primaryContainer),
+        modifier.size(size.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.primaryContainer),
         contentAlignment = Alignment.Center,
     ) {
         if (!logoUrl.isNullOrBlank()) AsyncImage(model = logoUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
@@ -838,7 +839,7 @@ private fun ChannelLogo(logoUrl: String?, title: String?, size: Int, modifier: M
 private fun LiveBadge() {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(HudPictorial.LiveBadge).padding(horizontal = 8.dp, vertical = 2.dp),
+        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(HudPictorial.LiveBadge).padding(horizontal = 8.dp, vertical = 2.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Box(Modifier.size(6.dp).clip(CircleShape).background(Color.White))
@@ -856,10 +857,10 @@ private fun ChannelOsdCard(
 ) {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = modifier.widthIn(max = 340.dp).clip(RoundedCornerShape(14.dp)).background(Color.Black.copy(alpha = 0.55f)).padding(14.dp),
+        modifier = modifier.widthIn(max = 340.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black.copy(alpha = 0.55f)).padding(14.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Box(Modifier.size(44.dp).clip(RoundedCornerShape(10.dp)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(44.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
             if (!logoUrl.isNullOrBlank()) AsyncImage(model = logoUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
             else Text((title ?: "?").take(3).uppercase(), style = MaterialTheme.typography.labelMedium, color = colors.onPrimaryContainer, fontWeight = FontWeight.Bold)
         }
@@ -902,7 +903,7 @@ private fun ChannelNumberCard(digits: String, error: String? = null, modifier: M
         countdown.animateTo(0f, tween(DIRECT_TUNE_TIMEOUT_MS.toInt(), easing = LinearEasing))
     }
     Column(
-        modifier.widthIn(min = 148.dp, max = 340.dp).clip(RoundedCornerShape(14.dp)).background(Color.Black.copy(alpha = 0.55f))
+        modifier.widthIn(min = 148.dp, max = 340.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black.copy(alpha = 0.55f))
             // Painted, not laid out: a real bar would fillMaxWidth and stretch the card to its max width.
             .drawWithContent {
                 drawContent()
@@ -1087,7 +1088,7 @@ private fun SpeedButton(label: String, active: Boolean, onClick: () -> Unit) {
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier.heightIn(min = 44.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         focusedContainerColor = Color.White.copy(alpha = 0.16f),
         unfocusedContainerColor = Color.Transparent,
         selectedContainerColor = Color.Transparent,
@@ -1123,7 +1124,7 @@ private fun NextEpisodeCard(
     Column(
         modifier = modifier
             .widthIn(max = 360.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(Color.Black.copy(alpha = 0.82f))
             .padding(horizontal = 18.dp, vertical = 14.dp),
     ) {
@@ -1167,7 +1168,7 @@ private fun EngineToggle(label: String, active: Boolean, onClick: () -> Unit) {
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier.heightIn(min = 44.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         focusedContainerColor = Color.White.copy(alpha = 0.16f),
         unfocusedContainerColor = Color.Transparent,
         selectedContainerColor = Color.Transparent,
@@ -1190,7 +1191,7 @@ private fun CtrlButton(icon: OwnTVIcon, badge: Int? = null, active: Boolean = fa
     FocusableSurface(
         onClick = onClick,
         modifier = Modifier.size(44.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Dimens.CornerSmall),
         focusedContainerColor = Color.White.copy(alpha = 0.16f),
         unfocusedContainerColor = Color.Transparent,
         selectedContainerColor = Color.Transparent,
@@ -1279,7 +1280,7 @@ private fun SeekBar(positionMs: Long, durationMs: Long, onSeek: (Long) -> Unit) 
             // so the bubble shows what's LEFT: "-12:34"). Uses a negative offset (not bottom padding) so it
             // floats clear above the 24dp-tall bar — padding can't lift it out of the height-constrained parent.
             Box(
-                Modifier.offset(y = (-32).dp).clip(RoundedCornerShape(8.dp)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = 8.dp, vertical = 3.dp),
+                Modifier.offset(y = (-32).dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = 8.dp, vertical = 3.dp),
             ) {
                 Text(
                     stringResource(R.string.player_time_remaining, formatTime((durationMs - positionMs).coerceAtLeast(0))),
@@ -1312,7 +1313,7 @@ private fun LiveTimelineBar(offsetSec: Int, onScrub: (Int) -> Unit) {
             // negative offset: this bar's parent isn't height-constrained the way the VOD bar's is, so padding
             // is enough to clear the thumb. The two placements land ~2dp apart historically — deliberately
             // preserved rather than unified, since re-deriving one from the other risks nudging either bar.
-            Box(Modifier.padding(bottom = 30.dp).clip(RoundedCornerShape(8.dp)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = 8.dp, vertical = 3.dp)) {
+            Box(Modifier.padding(bottom = 30.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = 8.dp, vertical = 3.dp)) {
                 Text(
                     if (offsetSec <= 1) stringResource(R.string.player_live) else stringResource(R.string.player_live_offset, mmss(offsetSec)),
                     style = MaterialTheme.typography.labelMedium.copy(textDirection = TextDirection.Content),
@@ -1578,7 +1579,7 @@ private fun formatSubDelay(ms: Int): String = when {
 
 @Composable
 private fun StepButton(label: String, enabled: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    FocusableSurface(onClick = onClick, enabled = enabled, modifier = modifier.size(64.dp), shape = RoundedCornerShape(18.dp), contentAlignment = Alignment.Center, surface = GlassSurface.DIALOGS) { _ ->
+    FocusableSurface(onClick = onClick, enabled = enabled, modifier = modifier.size(64.dp), shape = RoundedCornerShape(Dimens.CornerMedium), contentAlignment = Alignment.Center, surface = GlassSurface.DIALOGS) { _ ->
         Text(label, style = MaterialTheme.typography.headlineMedium, color = if (enabled) OwnTVTheme.colors.onSurface else OwnTVTheme.colors.outline)
     }
 }
@@ -1617,7 +1618,7 @@ private fun DialogScaffold(
 private fun OptionRow(label: String, selected: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val colors = OwnTVTheme.colors
     FocusableSurface(
-        onClick = onClick, modifier = modifier.fillMaxWidth(), selected = selected, shape = RoundedCornerShape(12.dp),
+        onClick = onClick, modifier = modifier.fillMaxWidth(), selected = selected, shape = RoundedCornerShape(Dimens.CornerSmall),
         selectedContainerColor = colors.primaryContainer, contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->

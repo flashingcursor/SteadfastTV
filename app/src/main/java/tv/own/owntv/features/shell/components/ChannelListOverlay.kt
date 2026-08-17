@@ -43,6 +43,7 @@ import tv.own.owntv.core.i18n.horizontalDirection
 import tv.own.owntv.core.database.entity.ChannelEntity
 import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -145,7 +146,7 @@ private fun ChannelRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Box(
-                modifier = Modifier.size(40.dp).clip(androidx.compose.foundation.shape.RoundedCornerShape(8.dp)).background(colors.surfaceContainerLowest),
+                modifier = Modifier.size(40.dp).clip(androidx.compose.foundation.shape.RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
                 contentAlignment = Alignment.Center,
             ) {
                 if (!channel.displayLogoUrl.isNullOrBlank()) {

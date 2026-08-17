@@ -47,6 +47,7 @@ import tv.own.owntv.ui.components.OwnTVAvatars
 import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVTextField
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -215,7 +216,7 @@ private fun ToggleRow(label: String, desc: String, checked: Boolean, onToggle: (
     FocusableSurface(
         onClick = { onToggle(!checked) },
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(Dimens.CornerMedium),
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->

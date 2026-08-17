@@ -33,6 +33,7 @@ import tv.own.owntv.core.update.UpdateManager
 import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVSpinner
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -63,7 +64,7 @@ fun UpdateStatusToast(onDone: () -> Unit, onViewChangelog: () -> Unit, modifier:
         modifier = modifier
             .padding(top = 20.dp, end = 20.dp)
             .widthIn(min = 260.dp, max = 380.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(colors.surfaceContainerHigh.copy(alpha = 0.90f))
             .padding(horizontal = 18.dp, vertical = 14.dp)
             .focusGroup(),

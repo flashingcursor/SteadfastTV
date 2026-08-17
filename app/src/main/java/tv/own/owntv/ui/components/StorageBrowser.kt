@@ -49,6 +49,7 @@ import kotlinx.coroutines.withContext
 import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.core.storage.StorageAccess
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import java.io.File
@@ -124,7 +125,7 @@ private fun StorageBrowserContent(
     }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.width(270.dp).clip(RoundedCornerShape(16.dp)).background(colors.surfaceContainerHigh).padding(14.dp)) {
+        Column(Modifier.width(270.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(14.dp)) {
             Text(title, style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
             Spacer(Modifier.height(4.dp))
             Text(current?.absolutePath ?: stringResource(R.string.setup_pick_location), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -230,7 +231,7 @@ private fun StorageAccess.StorageRoot.displayLabel(): String = when (kind) {
 @Composable
 private fun BrowserRow(icon: OwnTVIcon, label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val colors = OwnTVTheme.colors
-    FocusableSurface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp), contentAlignment = Alignment.CenterStart, surface = GlassSurface.DIALOGS) { focused ->
+    FocusableSurface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(Dimens.CornerSmall), contentAlignment = Alignment.CenterStart, surface = GlassSurface.DIALOGS) { focused ->
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OwnTVIcon(icon, tint = if (focused) colors.primary else colors.onSurfaceVariant, modifier = Modifier.size(16.dp))
             Text(

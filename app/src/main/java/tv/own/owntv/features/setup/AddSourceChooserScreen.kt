@@ -27,6 +27,7 @@ import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -85,7 +86,7 @@ private fun ChooserCard(
     FocusableSurface(
         onClick = onClick,
         modifier = modifier.size(width = 224.dp, height = 174.dp),
-        shape = RoundedCornerShape(22.dp),
+        shape = RoundedCornerShape(Dimens.PanelCorner),
         focusedContainerColor = colors.surfaceContainerHighest,
         unfocusedContainerColor = colors.surfaceContainerHigh,
         contentAlignment = Alignment.Center,
@@ -93,7 +94,7 @@ private fun ChooserCard(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
-                Modifier.size(56.dp).clip(RoundedCornerShape(16.dp)).background(colors.primaryContainer),
+                Modifier.size(56.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.primaryContainer),
                 contentAlignment = Alignment.Center,
             ) {
                 OwnTVIcon(icon, tint = colors.onPrimaryContainer, modifier = Modifier.size(28.dp))

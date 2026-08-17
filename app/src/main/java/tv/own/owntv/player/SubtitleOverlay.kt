@@ -24,6 +24,7 @@ import androidx.tv.material3.Text
 import org.koin.compose.koinInject
 import tv.own.owntv.features.settings.data.SettingsRepository
 import tv.own.owntv.features.settings.data.SubtitleStyle
+import tv.own.owntv.ui.theme.Dimens
 
 /**
  * App-drawn subtitles for the direct render path: the decoder owns the video surface there, so mpv
@@ -97,7 +98,7 @@ fun SubtitleOverlay(
             ),
             modifier = Modifier
                 .widthIn(max = 1100.dp * sizeScale)
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(Dimens.CornerXSmall))
                 .background(boxColor)
                 .padding(horizontal = 16.dp * sizeScale, vertical = 6.dp * sizeScale),
         )
