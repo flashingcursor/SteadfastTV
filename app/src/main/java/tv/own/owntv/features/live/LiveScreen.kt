@@ -649,7 +649,7 @@ private fun ChannelRow(
         leading = {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                 Box(
-                    modifier = Modifier.size(48.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
+                    modifier = Modifier.size(Dimens.TouchTargetSize).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
                     contentAlignment = Alignment.Center,
                 ) {
                     if (!channel.displayLogoUrl.isNullOrBlank()) {
@@ -672,7 +672,7 @@ private fun ChannelRow(
         // exactly as before — single line.
         meta = nowTitle?.let { title -> { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) } },
         trailing = if (isFavorite) {
-            { OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.favorite, filled = true, modifier = Modifier.size(20.dp)) }
+            { OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.favorite, filled = true, modifier = Modifier.size(Dimens.IconSizeLarge)) }
         } else null,
     )
 }
@@ -897,7 +897,7 @@ private fun MetaChipBadge(chip: MetaChip) {
         horizontalArrangement = Arrangement.spacedBy(5.dp),
     ) {
         chip.dot?.let {
-            Box(Modifier.size(8.dp).clip(androidx.compose.foundation.shape.CircleShape).background(it))
+            Box(Modifier.size(Dimens.StatusDotSize).clip(androidx.compose.foundation.shape.CircleShape).background(it))
         }
         Text(
             chip.text,
@@ -934,9 +934,9 @@ private fun EpgSection(nowNext: EpgNowNext?) {
             val span = (now.stopMs - now.startMs).coerceAtLeast(1)
             val progress = ((System.currentTimeMillis() - now.startMs).toFloat() / span).coerceIn(0f, 1f)
             Box(
-                modifier = Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.surfaceContainerLowest),
+                modifier = Modifier.fillMaxWidth().height(Dimens.PosterProgressHeight).clip(RoundedCornerShape(2.dp)).background(colors.surfaceContainerLowest),
             ) {
-                Box(Modifier.fillMaxWidth(progress).height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.primary))
+                Box(Modifier.fillMaxWidth(progress).height(Dimens.PosterProgressHeight).clip(RoundedCornerShape(2.dp)).background(colors.primary))
             }
             Text(
                 stringResource(R.string.content_live_time_range_plain, formatTime(now.startMs), formatTime(now.stopMs)),
@@ -1022,7 +1022,7 @@ private fun CatchupDialog(
         // Inner list is height-capped to the screen (minus the dialog chrome) so the Close button
         // stays reachable on small/low-res screens; the outer column can't verticalScroll (LazyColumn).
         val listHeight = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 220.dp).coerceIn(140.dp, 300.dp)
-        Column(Modifier.dialogPanel(width = 460.dp, corner = 16.dp, padding = 18.dp, scroll = false)) {
+        Column(Modifier.dialogPanel(width = 460.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact, scroll = false)) {
             Text(stringResource(R.string.content_catchup_title, channelName), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(2.dp))
             Text(stringResource(R.string.content_catchup_prompt), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
@@ -1103,7 +1103,7 @@ internal fun EpgMatchDialog(
     ) {
         // Same small-screen cap as CatchupDialog: search bar + buttons must stay reachable.
         val listHeight = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 260.dp).coerceIn(140.dp, 240.dp)
-        Column(Modifier.dialogPanel(width = 384.dp, corner = 16.dp, padding = 14.dp)) {
+        Column(Modifier.dialogPanel(width = 384.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact)) {
             Text(stringResource(R.string.content_match_epg), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(2.dp))
             Text(
@@ -1187,7 +1187,7 @@ internal fun EpgOffsetDialog(
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            Modifier.dialogPanel(width = 420.dp, corner = 16.dp, padding = 18.dp),
+            Modifier.dialogPanel(width = 420.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(stringResource(R.string.content_epg_time_offset), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)

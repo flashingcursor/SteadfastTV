@@ -395,7 +395,7 @@ private fun ItemsRangeHideDialog(count: Int, onHide: () -> Unit, onShow: () -> U
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            Modifier.dialogPanel(width = 480.dp, padding = 28.dp),
+            Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
         ) {
             Text(stringResource(R.string.settings_customize_hide_show_items), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))

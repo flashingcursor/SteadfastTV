@@ -210,7 +210,7 @@ fun FloatingRail(
                         shape = shape,
                         cornerRadius = if (position == RailPosition.LEFT) 0.dp else 999.dp,
                     )
-                    .border(1.dp, RailPanelBorderColor, shape)
+                    .border(Dimens.HairlineWidth, RailPanelBorderColor, shape)
             } else {
                 Modifier
             },

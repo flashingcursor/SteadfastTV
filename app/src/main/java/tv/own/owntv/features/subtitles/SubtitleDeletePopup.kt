@@ -70,7 +70,7 @@ fun SubtitleDeletePopup(
             Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
-            Column(Modifier.dialogPanel(width = 480.dp, padding = 24.dp)) {
+            Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding)) {
                 Text(stringResource(R.string.player_subtitles_delete_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(contentTitle, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)

@@ -553,7 +553,7 @@ internal fun ConfirmDialog(title: String, message: String, onConfirm: () -> Unit
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     BackHandler { onDismiss() }
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 460.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = 460.dp, padding = Dimens.DialogPanelPadding)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(10.dp))
             Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -591,7 +591,7 @@ private fun ResyncChoiceDialog(
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     BackHandler { onDismiss() }
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 520.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = 520.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_sources_resync_title_full, sourceName), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(10.dp))
             Text(

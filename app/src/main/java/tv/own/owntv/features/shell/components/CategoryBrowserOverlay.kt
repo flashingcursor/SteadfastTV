@@ -151,7 +151,7 @@ private fun CategoryRow(
                 OwnTVIcon(
                     OwnTVIcon.LIVE_TV,
                     tint = if (isCurrent) colors.primary else colors.onSurfaceVariant,
-                    modifier = Modifier.size(18.dp),
+                    modifier = Modifier.size(Dimens.IconSizeMedium),
                 )
             }
             Text(

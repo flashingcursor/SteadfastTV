@@ -31,6 +31,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.ui.theme.AlphaTokens
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -73,7 +74,7 @@ fun TextInputDialog(
             contentAlignment = Alignment.Center,
         ) {
             Column(
-                Modifier.dialogPanel(width = 480.dp, padding = 28.dp),
+                Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
             ) {
                 Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 if (hint != null) {

@@ -862,7 +862,7 @@ private fun ChannelOsdCard(
         modifier = modifier.widthIn(max = 340.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black.copy(alpha = 0.55f)).padding(Dimens.HeroGap),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Box(Modifier.size(44.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(Dimens.TouchTargetSizeCompact).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
             if (!logoUrl.isNullOrBlank()) AsyncImage(model = logoUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
             else Text((title ?: "?").take(3).uppercase(), style = MaterialTheme.typography.labelMedium, color = colors.onPrimaryContainer, fontWeight = FontWeight.Bold)
         }
@@ -1089,7 +1089,7 @@ private fun SpeedButton(label: String, active: Boolean, onClick: () -> Unit) {
     val colors = OwnTVTheme.colors
     FocusableSurface(
         onClick = onClick,
-        modifier = Modifier.heightIn(min = 44.dp),
+        modifier = Modifier.heightIn(min = Dimens.TouchTargetSizeCompact),
         shape = RoundedCornerShape(Dimens.CornerSmall),
         focusedContainerColor = Color.White.copy(alpha = AlphaTokens.AlphaHudFocusFill),
         unfocusedContainerColor = Color.Transparent,
@@ -1169,7 +1169,7 @@ private fun EngineToggle(label: String, active: Boolean, onClick: () -> Unit) {
     val colors = OwnTVTheme.colors
     FocusableSurface(
         onClick = onClick,
-        modifier = Modifier.heightIn(min = 44.dp),
+        modifier = Modifier.heightIn(min = Dimens.TouchTargetSizeCompact),
         shape = RoundedCornerShape(Dimens.CornerSmall),
         focusedContainerColor = Color.White.copy(alpha = AlphaTokens.AlphaHudFocusFill),
         unfocusedContainerColor = Color.Transparent,
@@ -1181,7 +1181,7 @@ private fun EngineToggle(label: String, active: Boolean, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            OwnTVIcon(OwnTVIcon.SWAP, tint = hudTint(active, focused, colors), filled = true, modifier = Modifier.size(16.dp))
+            OwnTVIcon(OwnTVIcon.SWAP, tint = hudTint(active, focused, colors), filled = true, modifier = Modifier.size(Dimens.IconSizeMedium))
             Text(label, style = MaterialTheme.typography.labelLarge, color = hudTint(active, focused, colors), fontWeight = FontWeight.SemiBold)
         }
     }
@@ -1192,7 +1192,7 @@ private fun CtrlButton(icon: OwnTVIcon, badge: Int? = null, active: Boolean = fa
     val colors = OwnTVTheme.colors
     FocusableSurface(
         onClick = onClick,
-        modifier = Modifier.size(44.dp),
+        modifier = Modifier.size(Dimens.TouchTargetSizeCompact),
         shape = RoundedCornerShape(Dimens.CornerSmall),
         focusedContainerColor = Color.White.copy(alpha = AlphaTokens.AlphaHudFocusFill),
         unfocusedContainerColor = Color.Transparent,
@@ -1200,7 +1200,7 @@ private fun CtrlButton(icon: OwnTVIcon, badge: Int? = null, active: Boolean = fa
         contentAlignment = Alignment.Center,
     ) { focused ->
         Box(contentAlignment = Alignment.Center) {
-            OwnTVIcon(icon, tint = hudTint(active, focused, colors), filled = true, modifier = Modifier.size(22.dp))
+            OwnTVIcon(icon, tint = hudTint(active, focused, colors), filled = true, modifier = Modifier.size(Dimens.IconSizeLarge))
             if (badge != null) {
                 Box(
                     Modifier.align(Alignment.TopEnd).size(15.dp).clip(CircleShape).background(colors.surfaceContainerHigh),
@@ -1252,7 +1252,7 @@ private fun TimelineBar(
         if (liveMarker) {
             // Live-edge marker (red dot) at the far right.
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                Box(Modifier.size(8.dp).clip(CircleShape).background(colors.favorite))
+                Box(Modifier.size(Dimens.StatusDotSize).clip(CircleShape).background(colors.favorite))
             }
         }
         if (focused) {
@@ -1512,7 +1512,7 @@ private fun VolumeDialog(player: PlaybackEngine, onDismiss: () -> Unit) {
     // Real dialog window for the same focus isolation as DialogScaffold (see there).
     tv.own.owntv.ui.components.OwnTVPopup(onDismissRequest = onDismiss) {
         Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)), contentAlignment = Alignment.Center) {
-            Column(Modifier.dialogPanel(padding = 28.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(Modifier.dialogPanel(padding = Dimens.DialogPanelPadding), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.player_volume), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 Spacer(Modifier.height(20.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(20.dp)) {
@@ -1545,7 +1545,7 @@ private fun SubtitleTimingDialog(player: PlaybackEngine, onDismiss: () -> Unit) 
     tv.own.owntv.ui.components.OwnTVPopup(onDismissRequest = onDismiss) {
         tv.own.owntv.ui.theme.PopupFontTheme {
             Box(Modifier.fillMaxSize().padding(bottom = 56.dp), contentAlignment = Alignment.BottomCenter) {
-                Column(Modifier.dialogPanel(width = 560.dp, padding = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(R.string.player_subtitle_timing), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                     Spacer(Modifier.height(10.dp))
                     Text(formatSubDelay(delay), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
@@ -1604,7 +1604,7 @@ private fun DialogScaffold(
             Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)), contentAlignment = Alignment.Center) {
                 // Liquid glass panel (same translucent chrome as the volume/timing dialogs) — the
                 // inner LazyColumn manages its own scroll, so scroll = false.
-                Column(modifier = Modifier.dialogPanel(width = 260.dp, corner = 16.dp, padding = 14.dp, scroll = false)) {
+                Column(modifier = Modifier.dialogPanel(width = 260.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact, scroll = false)) {
                     Text(title, style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
                     Spacer(Modifier.height(Dimens.GapSmall))
                     // Cap to the screen (minus dialog chrome) so all rows stay reachable on small screens.

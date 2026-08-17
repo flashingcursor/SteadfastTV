@@ -575,7 +575,7 @@ private fun SeriesGrid(
                             if (!art.isNullOrBlank()) {
                                 AsyncImage(model = art, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                             } else {
-                                OwnTVIcon(OwnTVIcon.SERIES, tint = OwnTVTheme.colors.onSurfaceVariant, modifier = Modifier.height(48.dp))
+                                OwnTVIcon(OwnTVIcon.SERIES, tint = OwnTVTheme.colors.onSurfaceVariant, modifier = Modifier.height(Dimens.TouchTargetSize))
                             }
                         }
                     }
@@ -1392,8 +1392,8 @@ private fun EpisodeRow(
             }
             // Part-watched: a thin progress bar hugging the row's bottom edge (track + fill).
             if (progressFraction != null) {
-                Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(colors.surfaceContainerLowest)) {
-                    Box(modifier = Modifier.fillMaxWidth(progressFraction).height(2.dp).background(colors.primary))
+                Box(modifier = Modifier.fillMaxWidth().height(Dimens.ThinProgressHeight).background(colors.surfaceContainerLowest)) {
+                    Box(modifier = Modifier.fillMaxWidth(progressFraction).height(Dimens.ThinProgressHeight).background(colors.primary))
                 }
             }
         }
@@ -1428,7 +1428,7 @@ private fun SeriesListRow(
                 if (!series.posterUrl.isNullOrBlank()) {
                     AsyncImage(model = series.posterUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
                 } else {
-                    OwnTVIcon(OwnTVIcon.SERIES, tint = colors.onSurfaceVariant, modifier = Modifier.size(22.dp))
+                    OwnTVIcon(OwnTVIcon.SERIES, tint = colors.onSurfaceVariant, modifier = Modifier.size(Dimens.IconSizeLarge))
                 }
             }
         },
@@ -1436,7 +1436,7 @@ private fun SeriesListRow(
             { Text(meta, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         } else null,
         trailing = if (isFavorite) {
-            { OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.favorite, modifier = Modifier.size(18.dp)) }
+            { OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.favorite, modifier = Modifier.size(Dimens.IconSizeMedium)) }
         } else null,
     )
 }
@@ -1466,7 +1466,7 @@ private fun SeriesSortingDialog(
             .focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 680.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = 680.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.content_sorting), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(20.dp))
             SortingRow(

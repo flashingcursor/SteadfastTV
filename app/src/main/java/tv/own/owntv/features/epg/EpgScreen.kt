@@ -340,8 +340,8 @@ fun EpgScreen(
     ) {
         // Header: back + title + date + refresh
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            FocusableSurface(onClick = onBack, modifier = Modifier.size(44.dp), shape = RoundedCornerShape(Dimens.CornerMedium), contentAlignment = Alignment.Center, surface = GlassSurface.CARDS) { _ ->
-                OwnTVIcon(OwnTVIcon.BACK, tint = colors.onSurface, modifier = Modifier.size(20.dp))
+            FocusableSurface(onClick = onBack, modifier = Modifier.size(Dimens.TouchTargetSizeCompact), shape = RoundedCornerShape(Dimens.CornerMedium), contentAlignment = Alignment.Center, surface = GlassSurface.CARDS) { _ ->
+                OwnTVIcon(OwnTVIcon.BACK, tint = colors.onSurface, modifier = Modifier.size(Dimens.IconSizeLarge))
             }
             Text(stringResource(R.string.content_epg_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
             val formatHeaderDate = rememberBestDateFormatter("EEEdMMM")
@@ -590,7 +590,7 @@ private fun EpgMatchReviewDialog(
         Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 576.dp, corner = 18.dp, padding = 18.dp)) {
+        Column(Modifier.dialogPanel(width = 576.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact)) {
             Text(stringResource(R.string.content_epg_review_matches), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(2.dp))
             Text(
@@ -764,7 +764,7 @@ private fun GuideChannelRow(
                 // Genre colour dot — best-effort keyword match on the channel's category name; no dot when
                 // the category is unknown (no wrong colour rather than a misleading one).
                 if (categoryColor != null) {
-                    Box(Modifier.size(8.dp).clip(RoundedCornerShape(4.dp)).background(categoryColor))
+                    Box(Modifier.size(Dimens.StatusDotSize).clip(RoundedCornerShape(4.dp)).background(categoryColor))
                 }
                 Text(
                     channel.number?.let { stringResource(R.string.content_epg_channel_number, it, channel.name) } ?: channel.name,

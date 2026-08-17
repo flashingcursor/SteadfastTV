@@ -66,7 +66,7 @@ fun AvatarPickerDialog(
     ) {
         Column(
             modifier = Modifier
-                .widthIn(max = 640.dp)
+                .widthIn(max = Dimens.ContentColumnMaxWidth)
                 .clip(RoundedCornerShape(Dimens.CornerLarge))
                 .background(colors.surfaceContainerHigh)
                 // Scrollable: the avatar grid is taller than small/low-res screens.

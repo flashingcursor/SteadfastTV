@@ -153,7 +153,7 @@ private fun ChannelRow(
                 if (!channel.displayLogoUrl.isNullOrBlank()) {
                     AsyncImage(model = channel.displayLogoUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
                 } else {
-                    OwnTVIcon(OwnTVIcon.LIVE_TV, tint = colors.onSurfaceVariant, modifier = Modifier.size(20.dp))
+                    OwnTVIcon(OwnTVIcon.LIVE_TV, tint = colors.onSurfaceVariant, modifier = Modifier.size(Dimens.IconSizeLarge))
                 }
             }
             // Fixed-width number strip, so names stay aligned whatever the digit count (see LiveScreen).

@@ -102,7 +102,7 @@ fun HueBar(hue: Float, modifier: Modifier = Modifier, onHue: (Float) -> Unit) {
                         .height(38.dp)
                         .clip(RoundedCornerShape(Dimens.CornerXSmall))
                         .background(Color.White)
-                        .border(2.dp, Color(0x99000000), RoundedCornerShape(Dimens.CornerXSmall)),
+                        .border(Dimens.SelectionBorderWidth, Color(0x99000000), RoundedCornerShape(Dimens.CornerXSmall)),
                 )
             }
         }

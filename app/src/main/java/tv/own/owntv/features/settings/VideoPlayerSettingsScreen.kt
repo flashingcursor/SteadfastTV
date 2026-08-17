@@ -538,7 +538,7 @@ private fun LiveLatencyWarningDialog(onConfirm: () -> Unit, onCancel: () -> Unit
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(modifier = Modifier.dialogPanel(width = 500.dp, padding = 28.dp)) {
+        Column(modifier = Modifier.dialogPanel(width = 500.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_low_latency_warning), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(12.dp))
             Text(
@@ -579,11 +579,11 @@ internal fun Header(title: String, onBack: () -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         FocusableSurface(
             onClick = onBack,
-            modifier = Modifier.size(44.dp),
+            modifier = Modifier.size(Dimens.TouchTargetSizeCompact),
             shape = RoundedCornerShape(Dimens.CornerMedium),
             surface = GlassSurface.CARDS,
             contentAlignment = Alignment.Center,
-        ) { _ -> OwnTVIcon(OwnTVIcon.BACK, tint = OwnTVTheme.colors.onSurface, modifier = Modifier.size(20.dp)) }
+        ) { _ -> OwnTVIcon(OwnTVIcon.BACK, tint = OwnTVTheme.colors.onSurface, modifier = Modifier.size(Dimens.IconSizeLarge)) }
         Text(title, style = MaterialTheme.typography.headlineLarge, color = OwnTVTheme.colors.onSurface)
     }
 }
@@ -605,7 +605,7 @@ internal fun Divider() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall)
-            .height(1.dp)
+            .height(Dimens.HairlineWidth)
             .background(OwnTVTheme.colors.outlineVariant),
     )
 }
@@ -638,7 +638,7 @@ internal fun Row2(
             Box(
                 modifier = Modifier.size(Dimens.IconTileSize).clip(RoundedCornerShape(Dimens.IconTileCorner)).background(colors.primaryContainer),
                 contentAlignment = Alignment.Center,
-            ) { OwnTVIcon(icon = icon, tint = colors.onPrimaryContainer, modifier = Modifier.size(22.dp)) }
+            ) { OwnTVIcon(icon = icon, tint = colors.onPrimaryContainer, modifier = Modifier.size(Dimens.IconSizeLarge)) }
             Column(Modifier.weight(1f)) {
                 Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 if (desc != null) Text(desc, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -651,7 +651,7 @@ internal fun Row2(
                     modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(bg).padding(horizontal = 12.dp, vertical = 6.dp),
                 )
             }
-            if (chevron) OwnTVIcon(OwnTVIcon.CHEVRON, tint = colors.onSurfaceVariant, modifier = Modifier.size(18.dp))
+            if (chevron) OwnTVIcon(OwnTVIcon.CHEVRON, tint = colors.onSurfaceVariant, modifier = Modifier.size(Dimens.IconSizeMedium))
         }
     }
 }
@@ -688,7 +688,7 @@ internal fun PickerDialog(
         tv.own.owntv.ui.theme.PopupFontTheme {
             Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
                 Column(
-                    modifier = Modifier.dialogPanel(width = 280.dp, corner = 16.dp, padding = 14.dp, scroll = false),
+                    modifier = Modifier.dialogPanel(width = 280.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact, scroll = false),
                 ) {
             Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(10.dp))
@@ -758,7 +758,7 @@ private fun ExternalPlayerDialog(
     )
     tv.own.owntv.ui.theme.PopupFontTheme {
         Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-            Column(modifier = Modifier.dialogPanel(width = 300.dp, corner = 16.dp, padding = 14.dp, scroll = false)) {
+            Column(modifier = Modifier.dialogPanel(width = 300.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact, scroll = false)) {
                 Text(stringResource(R.string.settings_external_player), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
@@ -906,7 +906,7 @@ private fun SubtitleAppearanceDialog(
                 .trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
-            Column(modifier = Modifier.dialogPanel(width = 640.dp, padding = 28.dp)) {
+            Column(modifier = Modifier.dialogPanel(width = 640.dp, padding = Dimens.DialogPanelPadding)) {
                 Text(stringResource(R.string.settings_subtitle_appearance), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 Spacer(Modifier.height(6.dp))
                 Text(
@@ -1023,7 +1023,7 @@ private fun SubtitleColorDialog(color: String, onColor: (String) -> Unit, onDism
                 .imePadding().trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
-            Column(modifier = Modifier.dialogPanel(width = 440.dp, corner = 16.dp, padding = 18.dp)) {
+            Column(modifier = Modifier.dialogPanel(width = 440.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact)) {
                 Text(stringResource(R.string.settings_subtitle_color), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
@@ -1120,7 +1120,7 @@ private fun SubtitlePositionDialog(
                 .trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
-            Column(modifier = Modifier.dialogPanel(width = 430.dp, corner = 16.dp, padding = 18.dp, scroll = false)) {
+            Column(modifier = Modifier.dialogPanel(width = 430.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact, scroll = false)) {
                 Text(stringResource(R.string.settings_subtitle_position), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
@@ -1247,7 +1247,7 @@ private fun SubtitleTransparencyDialog(
             contentAlignment = Alignment.Center,
         ) {
             Column(
-                modifier = Modifier.dialogPanel(width = 380.dp, corner = 16.dp, padding = 18.dp, scroll = false),
+                modifier = Modifier.dialogPanel(width = 380.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact, scroll = false),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(stringResource(R.string.settings_subtitle_background_transparency), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)

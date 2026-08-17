@@ -1236,7 +1236,7 @@ private fun ShellWatermark(modifier: Modifier = Modifier) {
                 .size(markSize)
                 .clip(markShape)
                 .background(colors.card)
-                .border(2.dp, colors.primary, markShape),
+                .border(Dimens.SelectionBorderWidth, colors.primary, markShape),
             contentAlignment = Alignment.Center,
         ) {
             OwnTVIcon(icon = OwnTVIcon.PLAY, tint = colors.primary, filled = true, modifier = Modifier.size(markSize * 0.5f))

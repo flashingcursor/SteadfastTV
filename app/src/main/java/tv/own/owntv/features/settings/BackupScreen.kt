@@ -375,7 +375,7 @@ private fun RemoteLocalChooserDialog(
     BackHandler { onDismiss() }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapSmall))
             Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -409,7 +409,7 @@ private fun BackupPasswordDialog(
     BackHandler { onDismiss() }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(12.dp))
             Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -453,7 +453,7 @@ private fun ProfilePickerDialog(
     BackHandler { if (pinFor != null) pinFor = null else onDismiss() }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_backup_which_profiles), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))
             Text(
@@ -520,7 +520,7 @@ private fun ProfilePinDialog(
     BackHandler { onDismiss() }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 480.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_backup_profile_locked, profileName), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapSmall))
             Text(
@@ -590,7 +590,7 @@ private fun SectionPickerDialog(
     BackHandler { onDismiss() }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapMedium))
 
@@ -643,7 +643,7 @@ private fun CheckRow(
                     .size(22.dp)
                     .clip(RoundedCornerShape(Dimens.CornerXSmall))
                     .background(if (checked) colors.primary else Color.Transparent)
-                    .border(2.dp, if (checked) colors.primary else colors.outline, RoundedCornerShape(Dimens.CornerXSmall)),
+                    .border(Dimens.SelectionBorderWidth, if (checked) colors.primary else colors.outline, RoundedCornerShape(Dimens.CornerXSmall)),
                 contentAlignment = Alignment.Center,
             ) {
                 if (checked) Box(Modifier.size(9.dp).clip(RoundedCornerShape(2.dp)).background(colors.onPrimary))

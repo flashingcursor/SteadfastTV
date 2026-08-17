@@ -160,7 +160,7 @@ fun FirstRunLanguageSelector(modifier: Modifier = Modifier) {
             OwnTVIcon(
                 icon = OwnTVIcon.CHEVRON,
                 tint = foreground.copy(alpha = 0.8f),
-                modifier = Modifier.size(18.dp).rotate(90f),
+                modifier = Modifier.size(Dimens.IconSizeMedium).rotate(90f),
             )
         }
     }
@@ -210,8 +210,8 @@ private fun FirstRunLanguagePopup(
             Column(
                 modifier = Modifier.dialogPanel(
                     width = 330.dp,
-                    corner = 18.dp,
-                    padding = 18.dp,
+                    corner = Dimens.DialogPanelCorner,
+                    padding = Dimens.DialogPanelPaddingCompact,
                     scroll = false,
                 ),
             ) {
@@ -421,7 +421,7 @@ private fun TranslationContributionDialog(onDismiss: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = Modifier.dialogPanel(width = 760.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = 760.dp, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -595,7 +595,7 @@ private fun RadioIndicator(selected: Boolean) {
                 if (selected) {
                     Modifier.background(colors.primary, CircleShape)
                 } else {
-                    Modifier.border(2.dp, colors.outline, CircleShape)
+                    Modifier.border(Dimens.SelectionBorderWidth, colors.outline, CircleShape)
                 },
             ),
         contentAlignment = Alignment.Center,

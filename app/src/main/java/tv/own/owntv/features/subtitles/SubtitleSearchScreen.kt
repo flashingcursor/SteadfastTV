@@ -81,7 +81,7 @@ fun SubtitleSearchScreen(
                 .focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
-            Column(Modifier.dialogPanel(width = 620.dp, padding = 24.dp)) {
+            Column(Modifier.dialogPanel(width = 620.dp, padding = Dimens.DialogPanelPadding)) {
                 Text(stringResource(tv.own.owntv.R.string.player_subtitles_search_title), style = MaterialTheme.typography.titleLarge, color = OwnTVTheme.colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapTiny))
                 quotaNote?.let { quota ->

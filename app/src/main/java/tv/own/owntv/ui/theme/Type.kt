@@ -19,6 +19,11 @@ private fun figtreeStyle(size: Int, line: Int, weight: FontWeight, trackingPerce
     letterSpacing = (trackingPercent / 100f).em,
 )
 
+// PIN-style letter spacing (2026-08-17 token audit, §5 Part A): the exact-duplicate
+// `letterSpacing = 8.sp` used on the 3 PIN/code display sites (Remote Backup/Restore,
+// Remote Setup) — outside the typography scale, so it isn't a figtreeStyle() variant.
+val PinCodeLetterSpacing = 8.sp
+
 val OwnTVTypography = Typography(
     displayLarge = figtreeStyle(44, 52, FontWeight.ExtraBold, -2f),
     displayMedium = figtreeStyle(36, 44, FontWeight.Bold, -1.5f),

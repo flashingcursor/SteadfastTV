@@ -353,7 +353,7 @@ private fun DetailPane(
             if (!posterUrl.isNullOrBlank()) {
                 AsyncImage(model = posterUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
             } else {
-                OwnTVIcon(icon, tint = colors.onSurfaceVariant, modifier = Modifier.size(48.dp))
+                OwnTVIcon(icon, tint = colors.onSurfaceVariant, modifier = Modifier.size(Dimens.TouchTargetSize))
             }
         }
         Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface, maxLines = 2, overflow = TextOverflow.Ellipsis)
@@ -379,7 +379,7 @@ private fun DetailPane(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                OwnTVIcon(OwnTVIcon.PLAY, tint = colors.onPrimary, modifier = Modifier.size(20.dp))
+                OwnTVIcon(OwnTVIcon.PLAY, tint = colors.onPrimary, modifier = Modifier.size(Dimens.IconSizeLarge))
                 Spacer(Modifier.width(Dimens.GapSmall))
                 Text(
                     actionLabel,
@@ -427,7 +427,7 @@ private fun ResultRow(
                 if (!thumbUrl.isNullOrBlank()) {
                     AsyncImage(model = thumbUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
                 } else {
-                    OwnTVIcon(fallbackIcon, tint = colors.onSurfaceVariant, modifier = Modifier.size(22.dp))
+                    OwnTVIcon(fallbackIcon, tint = colors.onSurfaceVariant, modifier = Modifier.size(Dimens.IconSizeLarge))
                 }
             }
             Column(modifier = Modifier.weight(1f)) {
@@ -443,7 +443,7 @@ private fun ResultRow(
                 }
             }
             if (isFavorite) {
-                OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.primary, modifier = Modifier.size(18.dp))
+                OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.primary, modifier = Modifier.size(Dimens.IconSizeMedium))
             }
         }
     }

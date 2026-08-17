@@ -1120,7 +1120,7 @@ private fun AccentPaletteDialog(
         Column(
             // dialogPanel already applies verticalScroll; imePadding on the parent Box lifts the
             // whole panel above the on-screen keyboard so the hex field stays visible.
-            modifier = Modifier.dialogPanel(width = 640.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = 640.dp, padding = Dimens.DialogPanelPadding),
         ) {
             Text(stringResource(R.string.settings_accent_dialog), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapMedium))
@@ -1182,7 +1182,7 @@ private fun AccentPaletteDialog(
                         .size(56.dp)
                         .clip(androidx.compose.foundation.shape.CircleShape)
                         .background(Color(android.graphics.Color.HSVToColor(floatArrayOf(hue, sat, value))))
-                        .border(2.dp, colors.outline, androidx.compose.foundation.shape.CircleShape),
+                        .border(Dimens.SelectionBorderWidth, colors.outline, androidx.compose.foundation.shape.CircleShape),
                 )
             }
             Spacer(Modifier.height(Dimens.HeroGap))
@@ -1218,7 +1218,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = Modifier.dialogPanel(width = 520.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = 520.dp, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             BrandLockup(markSize = 48, textSize = 30)
@@ -1306,7 +1306,7 @@ private fun PlaybackErrorLogDialog(onDismiss: () -> Unit) {
         // verticalScroll column can't work here — with 25 entries and nothing focusable inside them the
         // panel grew past the screen and the D-pad had no way to move the scroll, so the oldest entries
         // were simply unreachable.
-        Column(modifier = Modifier.dialogPanel(width = 640.dp, padding = 28.dp, scroll = false)) {
+        Column(modifier = Modifier.dialogPanel(width = 640.dp, padding = Dimens.DialogPanelPadding, scroll = false)) {
             Text(stringResource(R.string.settings_playback_error_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))
             Text(
@@ -1424,7 +1424,7 @@ private fun AutoFrameRateWarningDialog(onEnable: () -> Unit, onDismiss: () -> Un
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 500.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = 500.dp, padding = Dimens.DialogPanelPadding)) {
             Text(
                 stringResource(R.string.settings_auto_frame_rate_warning_title),
                 style = MaterialTheme.typography.titleLarge,
@@ -1467,7 +1467,7 @@ private fun LivePreviewPanelHiddenDialog(onDismiss: () -> Unit) {
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 500.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = 500.dp, padding = Dimens.DialogPanelPadding)) {
             Text(
                 stringResource(R.string.settings_live_preview_panel_hidden_title),
                 style = MaterialTheme.typography.titleLarge,
@@ -1519,7 +1519,7 @@ private fun ClearHistoryDialog(
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = Modifier.dialogPanel(width = 460.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = 460.dp, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val p = pending
@@ -1585,7 +1585,7 @@ private fun ZoomDialog(current: Int, onSet: (Int) -> Unit, onDismiss: () -> Unit
             contentAlignment = Alignment.Center,
         ) {
             Column(
-                modifier = Modifier.dialogPanel(width = 460.dp, padding = 28.dp),
+                modifier = Modifier.dialogPanel(width = 460.dp, padding = Dimens.DialogPanelPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(stringResource(R.string.settings_low_zoom_warning_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
@@ -1678,7 +1678,7 @@ private fun GlassEffectDialog(
         // Shared Lora popup font, matching the app's other dialogs.
         tv.own.owntv.ui.theme.PopupFontTheme {
         Column(
-            modifier = Modifier.dialogPanel(width = 480.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(stringResource(R.string.settings_glass_effect_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
@@ -1812,7 +1812,7 @@ private fun BrowsingListsDialog(
         // Six toggles + two group headers overflow a 720p panel — dialogPanel already scrolls the body
         // (scroll = true by default), so do NOT add another verticalScroll here.
         Column(
-            modifier = Modifier.dialogPanel(width = 520.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = 520.dp, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(stringResource(R.string.settings_browsing_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
@@ -1908,7 +1908,7 @@ private fun GlassSurfacesDialog(
     ) {
         tv.own.owntv.ui.theme.PopupFontTheme {
         Column(
-            modifier = Modifier.dialogPanel(width = 440.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = 440.dp, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(stringResource(R.string.settings_glass_surfaces), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
@@ -1977,7 +1977,7 @@ private fun CatchupTimeDialog(
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = Modifier.dialogPanel(width = 480.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(stringResource(R.string.settings_catchup), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
@@ -2111,7 +2111,7 @@ private fun SectionDivider() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall)
-            .height(1.dp)
+            .height(Dimens.HairlineWidth)
             .background(OwnTVTheme.colors.outlineVariant),
     )
 }
@@ -2153,7 +2153,7 @@ private fun SettingsRow(
                     .background(tileBg),
                 contentAlignment = Alignment.Center,
             ) {
-                OwnTVIcon(icon = icon, tint = tileOn, modifier = Modifier.size(22.dp))
+                OwnTVIcon(icon = icon, tint = tileOn, modifier = Modifier.size(Dimens.IconSizeLarge))
             }
 
             Column(modifier = Modifier.weight(1f)) {
@@ -2171,7 +2171,7 @@ private fun SettingsRow(
                     ValueChip(chip, chipTone)
                 }
                 if (showChevron) {
-                    OwnTVIcon(icon = OwnTVIcon.CHEVRON, tint = colors.onSurfaceVariant, modifier = Modifier.size(18.dp))
+                    OwnTVIcon(icon = OwnTVIcon.CHEVRON, tint = colors.onSurfaceVariant, modifier = Modifier.size(Dimens.IconSizeMedium))
                 }
             }
         }
@@ -2189,7 +2189,7 @@ private fun SoonChip() {
         modifier = Modifier
             .clip(RoundedCornerShape(Dimens.CornerXSmall))
             .background(colors.surfaceContainerHighest)
-            .border(1.dp, colors.outlineVariant, RoundedCornerShape(Dimens.CornerXSmall))
+            .border(Dimens.HairlineWidth, colors.outlineVariant, RoundedCornerShape(Dimens.CornerXSmall))
             .padding(horizontal = 10.dp, vertical = Dimens.GapTiny),
     )
 }
@@ -2238,12 +2238,12 @@ private fun QuickToggleChip(
         Row(
             modifier = Modifier
                 .background(bg, RoundedCornerShape(Dimens.CornerSmall))
-                .then(if (glassy) Modifier.border(1.dp, Color.White.copy(alpha = 0.18f), RoundedCornerShape(Dimens.CornerSmall)) else Modifier)
+                .then(if (glassy) Modifier.border(Dimens.HairlineWidth, Color.White.copy(alpha = 0.18f), RoundedCornerShape(Dimens.CornerSmall)) else Modifier)
                 .padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
-            OwnTVIcon(icon = icon, tint = fg, modifier = Modifier.size(18.dp))
+            OwnTVIcon(icon = icon, tint = fg, modifier = Modifier.size(Dimens.IconSizeMedium))
             Text(label, style = MaterialTheme.typography.labelLarge, color = fg)
             Text(
                 text = if (on) stringResource(R.string.common_on) else stringResource(R.string.common_off),

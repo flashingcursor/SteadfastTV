@@ -112,7 +112,7 @@ fun FocusableSurface(
                     showBorder -> Modifier.border(Dimens.FocusBorderWidth, ringColor, shape)
                     // Always-on glass edge for opt-in controls (e.g. buttons) when unfocused.
                     glassy && glassIdleRimAlpha > 0f ->
-                        Modifier.border(1.dp, Color.White.copy(alpha = glassIdleRimAlpha), shape)
+                        Modifier.border(Dimens.HairlineWidth, Color.White.copy(alpha = glassIdleRimAlpha), shape)
                     else -> Modifier
                 }
             )

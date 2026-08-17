@@ -301,8 +301,8 @@ private fun StatusLine(d: DownloadEntity) {
         else -> { // RUNNING / PAUSED
             val frac = if (d.totalBytes > 0) (d.downloadedBytes.toFloat() / d.totalBytes).coerceIn(0f, 1f) else 0f
             Column {
-                Box(Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.surfaceContainerLowest)) {
-                    Box(Modifier.fillMaxWidth(frac).height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.primary))
+                Box(Modifier.fillMaxWidth().height(Dimens.PosterProgressHeight).clip(RoundedCornerShape(2.dp)).background(colors.surfaceContainerLowest)) {
+                    Box(Modifier.fillMaxWidth(frac).height(Dimens.PosterProgressHeight).clip(RoundedCornerShape(2.dp)).background(colors.primary))
                 }
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(

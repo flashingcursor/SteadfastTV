@@ -67,7 +67,7 @@ fun BackgroundImageChooserDialog(
             .focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.setup_background_image), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapSmall))
             Text(
@@ -121,7 +121,7 @@ fun RemoteBackgroundDialog(
             .focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(stringResource(R.string.setup_send_from_phone), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapSmall))
             Text(

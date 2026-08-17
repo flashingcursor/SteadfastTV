@@ -93,7 +93,7 @@ fun DownloadStatusStrip(state: DownloadStripState, modifier: Modifier = Modifier
         verticalArrangement = Arrangement.spacedBy(7.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
-            OwnTVIcon(OwnTVIcon.DOWNLOADS, tint = accent, modifier = Modifier.size(16.dp))
+            OwnTVIcon(OwnTVIcon.DOWNLOADS, tint = accent, modifier = Modifier.size(Dimens.IconSizeMedium))
             Text(label, style = MaterialTheme.typography.labelLarge, color = accent, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.weight(1f))
             state.progress?.let {
@@ -101,10 +101,10 @@ fun DownloadStatusStrip(state: DownloadStripState, modifier: Modifier = Modifier
             }
         }
         if (!state.isError) {
-            Box(Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.surfaceContainerLowest)) {
+            Box(Modifier.fillMaxWidth().height(Dimens.PosterProgressHeight).clip(RoundedCornerShape(2.dp)).background(colors.surfaceContainerLowest)) {
                 // Determinate when a size is known; otherwise a modest fixed sliver so the user still
                 // sees an active bar for a queued item.
-                Box(Modifier.fillMaxWidth(state.progress ?: 0.15f).height(4.dp).clip(RoundedCornerShape(2.dp)).background(accent))
+                Box(Modifier.fillMaxWidth(state.progress ?: 0.15f).height(Dimens.PosterProgressHeight).clip(RoundedCornerShape(2.dp)).background(accent))
             }
         }
     }

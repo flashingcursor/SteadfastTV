@@ -625,7 +625,7 @@ private fun RangeHideDialog(count: Int, onHide: () -> Unit, onShow: () -> Unit, 
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            Modifier.dialogPanel(width = 480.dp, padding = 28.dp),
+            Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
         ) {
             Text(stringResource(R.string.settings_customize_hide_show_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))
@@ -809,7 +809,7 @@ private fun PinConfirmDialog(
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            Modifier.dialogPanel(width = 290.dp, corner = 16.dp, padding = 16.dp),
+            Modifier.dialogPanel(width = 290.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact),
         ) {
             Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))

@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import kotlinx.coroutines.flow.Flow
@@ -38,6 +37,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
+import tv.own.owntv.ui.theme.PinCodeLetterSpacing
 
 /**
  * The Remote add-source screen: opens a small LAN web server and shows the PIN, a QR of the URL, and
@@ -73,7 +73,7 @@ fun RemoteSetupScreen(
         showLogoBadge = !embedded,
         showBackdrop = !embedded,
     ) {
-        Column(modifier = Modifier.widthIn(max = 640.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.widthIn(max = Dimens.ContentColumnMaxWidth), horizontalAlignment = Alignment.CenterHorizontally) {
             when (state) {
                 CompanionServerState.Idle, CompanionServerState.Starting -> {
                     val starting = state == CompanionServerState.Starting
@@ -92,7 +92,7 @@ fun RemoteSetupScreen(
                         style = MaterialTheme.typography.headlineLarge,
                         fontWeight = FontWeight.Bold,
                         color = colors.onSurface,
-                        letterSpacing = 8.sp,
+                        letterSpacing = PinCodeLetterSpacing,
                     )
                     Spacer(Modifier.height(Dimens.HeroGap))
                     state.qr?.let { qr ->

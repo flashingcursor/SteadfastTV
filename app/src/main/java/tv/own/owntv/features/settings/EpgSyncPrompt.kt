@@ -85,7 +85,7 @@ fun EpgSyncDialog(
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = Modifier.dialogPanel(width = 480.dp, padding = 28.dp),
+            modifier = Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             when (state) {

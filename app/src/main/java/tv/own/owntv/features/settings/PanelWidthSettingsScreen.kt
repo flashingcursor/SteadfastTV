@@ -211,7 +211,7 @@ private fun PanelWidthDialog(
             contentAlignment = Alignment.Center,
         ) {
             if (showPreviewDisableConfirmation) {
-                Column(modifier = Modifier.dialogPanel(width = 500.dp, corner = 16.dp, padding = 24.dp)) {
+                Column(modifier = Modifier.dialogPanel(width = 500.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPadding)) {
                     Text(
                         stringResource(R.string.settings_panel_width_disable_preview_title),
                         style = MaterialTheme.typography.titleLarge,
@@ -242,7 +242,7 @@ private fun PanelWidthDialog(
                     }
                 }
             } else {
-            Column(modifier = Modifier.dialogPanel(width = 440.dp, corner = 16.dp, padding = 16.dp)) {
+            Column(modifier = Modifier.dialogPanel(width = 440.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact)) {
                 Text(
                     stringResource(R.string.settings_panel_width_dialog_title, sectionTitle(section)),
                     style = MaterialTheme.typography.titleMedium,

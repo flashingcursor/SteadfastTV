@@ -71,7 +71,7 @@ fun RoundedPanel(
         modifier = modifier
             .clip(shape)
             .glass(surface = surface, baseFill = bg, shape = shape, cornerRadius = radius)
-            .border(width = 1.dp, color = colors.outlineVariant, shape = shape)
+            .border(width = Dimens.HairlineWidth, color = colors.outlineVariant, shape = shape)
             .padding(innerPadding),
     ) {
         content()
@@ -95,5 +95,5 @@ fun Modifier.roundedPanel(
     return this
         .clip(shape)
         .glass(surface = surface, baseFill = bg, shape = shape, cornerRadius = radius)
-        .border(width = 1.dp, color = colors.outlineVariant, shape = shape)
+        .border(width = Dimens.HairlineWidth, color = colors.outlineVariant, shape = shape)
 }

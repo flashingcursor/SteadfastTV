@@ -34,6 +34,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.AlphaTokens
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import kotlin.math.roundToInt
 
@@ -95,7 +96,7 @@ fun AutoFrameRatePrompt(
         Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 520.dp, padding = 28.dp)) {
+        Column(Modifier.dialogPanel(width = 520.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.player_frame_rate_prompt_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(10.dp))
             Text(

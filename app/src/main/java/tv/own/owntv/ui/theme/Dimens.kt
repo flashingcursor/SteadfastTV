@@ -55,6 +55,26 @@ object Dimens {
     val CardCorner = 10.dp
     val PanelCorner = 11.dp    // the large RoundedPanel browse containers
 
+    // Size tokens from the 2026-08-17 token audit (docs/superpowers/reports/2026-08-17-token-audit.md,
+    // §5 "Sizes, Elevation, Text"). DialogPanelCorner (16dp) deliberately sits outside the halved
+    // corner scale above — every dialogPanel(corner=...) override site converges on 16/18/20dp, all
+    // far from the coded default (CardCorner, 10dp), so the override population gets its own token
+    // rather than being forced onto the general corner ladder.
+    val DialogPanelPadding = 28.dp
+    val DialogPanelPaddingCompact = 18.dp
+    val DialogPanelCorner = 16.dp
+    val DialogPanelWidth = 480.dp
+    val DialogPanelWidthWide = 560.dp
+    val HairlineWidth = 1.dp
+    val ThinProgressHeight = 2.dp
+    val SelectionBorderWidth = 2.dp
+    val IconSizeMedium = 18.dp
+    val IconSizeLarge = 20.dp
+    val TouchTargetSize = 48.dp
+    val TouchTargetSizeCompact = 44.dp
+    val ContentColumnMaxWidth = 640.dp
+    val StatusDotSize = 8.dp
+
     val FocusBorderWidth = 2.5.dp
 
     val HomeRowPaddingH = 20.dp

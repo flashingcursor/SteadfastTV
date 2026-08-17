@@ -92,11 +92,11 @@ fun LiveEpgCard(epg: EpgNowNext?, modifier: Modifier = Modifier) {
                     val progress = ((nowMs - entry.startMs) / span).coerceIn(0f, 1f)
                     Spacer(Modifier.height(5.dp))
                     Box(
-                        Modifier.fillMaxWidth().height(2.dp).clip(RoundedCornerShape(1.dp))
+                        Modifier.fillMaxWidth().height(Dimens.ThinProgressHeight).clip(RoundedCornerShape(1.dp))
                             .background(Color.White.copy(alpha = 0.18f)),
                     ) {
                         Box(
-                            Modifier.fillMaxWidth(progress).height(2.dp)
+                            Modifier.fillMaxWidth(progress).height(Dimens.ThinProgressHeight)
                                 .clip(RoundedCornerShape(1.dp)).background(colors.primary),
                         )
                     }

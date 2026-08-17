@@ -346,7 +346,7 @@ internal fun OpenSubtitlesSignInDialog(onSubmit: (String, String, Boolean) -> Un
             Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
-            Column(Modifier.dialogPanel(width = 480.dp, padding = 28.dp)) {
+            Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding)) {
                 Text(stringResource(R.string.player_subtitles_sign_in_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 Spacer(Modifier.height(6.dp))
                 Text(
@@ -392,7 +392,7 @@ private fun ErrorDialog(message: String, onDismiss: () -> Unit) {
             Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
             contentAlignment = Alignment.Center,
         ) {
-            Column(Modifier.dialogPanel(width = 420.dp, padding = 24.dp)) {
+            Column(Modifier.dialogPanel(width = 420.dp, padding = Dimens.DialogPanelPadding)) {
                 Text(stringResource(R.string.settings_open_subtitles), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 Spacer(Modifier.height(10.dp))
                 Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)

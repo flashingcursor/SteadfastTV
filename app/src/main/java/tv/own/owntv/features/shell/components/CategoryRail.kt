@@ -279,13 +279,13 @@ private fun RailPill(
                 // category read as outlined-while-selected-but-unfocused here yet filled-while-selected on
                 // the rail — the two nav surfaces this shared ladder exists to keep identical (#47) had
                 // diverged on this one visual.
-                OwnTVIcon(icon = category.icon, tint = ladder.icon, filled = selected, modifier = Modifier.size(if (expanded) 20.dp else Dimens.RailPillSize / 2))
+                OwnTVIcon(icon = category.icon, tint = ladder.icon, filled = selected, modifier = Modifier.size(if (expanded) Dimens.IconSizeLarge else Dimens.RailPillSize / 2))
                 if (expanded) Spacer(Modifier.width(Dimens.GapSmall))
             } else if (expanded && category.showGenreDot) {
                 // Genre hint dot (Sport/News/Movies/Action/…); unknown categories show the grey
                 // "Other" dot rather than an empty slot, so every row has a consistent marker.
                 val genreDot = ChannelGenre.fromCategory(category.fullName).dot
-                Box(Modifier.size(8.dp).clip(CircleShape).background(genreDot))
+                Box(Modifier.size(Dimens.StatusDotSize).clip(CircleShape).background(genreDot))
                 Spacer(Modifier.width(10.dp))
             }
             if (expanded) {

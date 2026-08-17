@@ -127,7 +127,7 @@ private fun ShellSearchPill(onClick: () -> Unit, focusable: Boolean) {
         modifier = Modifier
             .widthIn(max = 220.dp)
             .focusProperties { canFocus = focusable }
-            .then(if (!glassy) Modifier.border(1.dp, Color.White.copy(alpha = 0.13f), SearchPillShape) else Modifier),
+            .then(if (!glassy) Modifier.border(Dimens.HairlineWidth, Color.White.copy(alpha = 0.13f), SearchPillShape) else Modifier),
         shape = SearchPillShape,
         surface = GlassSurface.TOPBAR,
         unfocusedContainerColor = Color.White.copy(alpha = 0.09f),
@@ -138,7 +138,7 @@ private fun ShellSearchPill(onClick: () -> Unit, focusable: Boolean) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
-            OwnTVIcon(icon = OwnTVIcon.SEARCH, tint = Color.White, modifier = Modifier.size(16.dp))
+            OwnTVIcon(icon = OwnTVIcon.SEARCH, tint = Color.White, modifier = Modifier.size(Dimens.IconSizeMedium))
             Text(
                 stringResource(R.string.common_search),
                 style = MaterialTheme.typography.labelLarge,
@@ -155,7 +155,7 @@ private fun ShellWeatherAndClock(weatherInfo: WeatherInfo?, weatherFahrenheit: B
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
         if (weatherInfo != null) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                WeatherConditionIcon(info = weatherInfo, modifier = Modifier.size(18.dp))
+                WeatherConditionIcon(info = weatherInfo, modifier = Modifier.size(Dimens.IconSizeMedium))
                 val temp = if (weatherFahrenheit) {
                     stringResource(R.string.common_weather_fahrenheit, (weatherInfo.temperatureC * 9 / 5 + 32).toInt())
                 } else {
@@ -165,7 +165,7 @@ private fun ShellWeatherAndClock(weatherInfo: WeatherInfo?, weatherFahrenheit: B
             }
             // Hairline separator between the weather block and the clock, only when weather is shown.
             // The outer Row's spacedBy(16.dp) already gives it the same gap used elsewhere in this zone.
-            Box(Modifier.width(1.dp).height(16.dp).background(Color.White.copy(alpha = 0.25f)))
+            Box(Modifier.width(Dimens.HairlineWidth).height(16.dp).background(Color.White.copy(alpha = 0.25f)))
         }
         ShellClock()
     }

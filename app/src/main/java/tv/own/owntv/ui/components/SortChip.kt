@@ -37,7 +37,7 @@ fun SortChip(
     FocusableSurface(
         onClick = onToggle,
         // Same height + pill shape as SearchBar so the two read as one row of controls.
-        modifier = modifier.height(48.dp),
+        modifier = modifier.height(Dimens.TouchTargetSize),
         shape = RoundedCornerShape(50),
         focusedContainerColor = colors.surfaceContainerHighest,
         unfocusedContainerColor = colors.surfaceContainerHigh,
@@ -52,7 +52,7 @@ fun SortChip(
             OwnTVIcon(
                 OwnTVIcon.SORT,
                 tint = if (focused) colors.primary else colors.onSurfaceVariant,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(Dimens.IconSizeMedium),
             )
             Spacer(Modifier.width(Dimens.GapSmall))
             Text(

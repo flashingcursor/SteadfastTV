@@ -194,7 +194,7 @@ private fun ProfileRow(profile: ProfileEntity, canDelete: Boolean, rowModifier: 
         modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(Dimens.HeroGap),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        OwnTVAvatar(avatarId = profile.avatarId, modifier = Modifier.size(48.dp))
+        OwnTVAvatar(avatarId = profile.avatarId, modifier = Modifier.size(Dimens.TouchTargetSize))
         Spacer(Modifier.width(Dimens.HeroGap))
         Column(Modifier.weight(1f)) {
             Text(profile.name, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)

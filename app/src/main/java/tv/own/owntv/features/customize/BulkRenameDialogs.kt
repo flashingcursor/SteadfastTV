@@ -268,7 +268,7 @@ private fun BulkRenameChoicePopup(session: BulkRenameSession) {
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            Modifier.dialogPanel(width = 480.dp, padding = 28.dp),
+            Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Text(stringResource(R.string.settings_bulk_rename_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
@@ -362,7 +362,7 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 760.dp, padding = 24.dp)) {
+        Column(Modifier.dialogPanel(width = 760.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_bulk_rename_rules_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapTiny))
             Text(
@@ -551,7 +551,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
         contentAlignment = Alignment.Center,
     ) {
         // scroll = false: this column holds a LazyColumn, which manages its own scrolling.
-                Column(Modifier.dialogPanel(width = 680.dp, corner = 16.dp, padding = 12.dp, scroll = false)) {
+                Column(Modifier.dialogPanel(width = 680.dp, corner = Dimens.DialogPanelCorner, padding = 12.dp, scroll = false)) {
             Text(stringResource(R.string.settings_bulk_rename_review), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(2.dp))
             Text(
@@ -698,7 +698,7 @@ private fun BulkRestoreConfirmDialog(session: BulkRenameSession) {
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 420.dp, padding = 24.dp)) {
+        Column(Modifier.dialogPanel(width = 420.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_bulk_rename_restore_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))
             Text(
@@ -729,7 +729,7 @@ private fun BulkRefusedDialog(session: BulkRenameSession) {
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(width = 420.dp, padding = 24.dp)) {
+        Column(Modifier.dialogPanel(width = 420.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_bulk_rename_too_many_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))
             Text(stringResource(R.string.settings_bulk_rename_too_many_description), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)

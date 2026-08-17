@@ -793,7 +793,7 @@ private fun MovieDetailsPane(
                         modifier = Modifier.fillMaxSize(),
                     )
                 } else {
-                    OwnTVIcon(OwnTVIcon.MOVIES, tint = colors.onSurfaceVariant, modifier = Modifier.height(48.dp))
+                    OwnTVIcon(OwnTVIcon.MOVIES, tint = colors.onSurfaceVariant, modifier = Modifier.height(Dimens.TouchTargetSize))
                 }
             }
         }
@@ -917,7 +917,7 @@ private fun MovieListRow(
                 if (!movie.posterUrl.isNullOrBlank()) {
                     AsyncImage(model = movie.posterUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
                 } else {
-                    OwnTVIcon(OwnTVIcon.MOVIES, tint = colors.onSurfaceVariant, modifier = Modifier.size(22.dp))
+                    OwnTVIcon(OwnTVIcon.MOVIES, tint = colors.onSurfaceVariant, modifier = Modifier.size(Dimens.IconSizeLarge))
                 }
             }
         },
@@ -936,7 +936,7 @@ private fun MovieListRow(
                         }
                     }
                     if (isFavorite) {
-                        OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.favorite, modifier = Modifier.size(18.dp))
+                        OwnTVIcon(OwnTVIcon.FAVORITE, tint = colors.favorite, modifier = Modifier.size(Dimens.IconSizeMedium))
                     }
                 }
             }

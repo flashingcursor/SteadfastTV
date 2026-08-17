@@ -735,14 +735,14 @@ private fun HeroRowSection(
                                         Box(
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .height(4.dp)
+                                                .height(Dimens.PosterProgressHeight)
                                                 .clip(RoundedCornerShape(100))
                                                 .background(Color.Black.copy(alpha = 0.25f)),
                                         ) {
                                             Box(
                                                 modifier = Modifier
                                                     .fillMaxWidth(fraction)
-                                                    .height(4.dp)
+                                                    .height(Dimens.PosterProgressHeight)
                                                     .background(colors.primary),
                                             )
                                         }
@@ -1192,13 +1192,13 @@ private fun LandscapeContinuationCard(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
                             .fillMaxWidth()
-                            .height(4.dp)
+                            .height(Dimens.PosterProgressHeight)
                             .background(Color.Black.copy(alpha = 0.4f)),
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth(progressFraction.coerceIn(0f, 1f))
-                                .height(4.dp)
+                                .height(Dimens.PosterProgressHeight)
                                 .background(colors.primary),
                         )
                     }

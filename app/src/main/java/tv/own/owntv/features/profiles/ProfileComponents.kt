@@ -174,7 +174,7 @@ internal fun ProfileEditorDialog(
                     contentAlignment = Alignment.Center,
                     surface = GlassSurface.DIALOGS,
                 ) { _ ->
-                    OwnTVAvatar(avatarId = id, modifier = Modifier.size(48.dp))
+                    OwnTVAvatar(avatarId = id, modifier = Modifier.size(Dimens.TouchTargetSize))
                 }
             }
         }

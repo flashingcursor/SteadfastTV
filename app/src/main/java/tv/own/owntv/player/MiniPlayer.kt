@@ -125,6 +125,6 @@ private fun MiniBtn(icon: OwnTVIcon, onClick: () -> Unit) {
         selectedContainerColor = Color.White.copy(alpha = 0.12f),
         contentAlignment = Alignment.Center,
     ) { _ ->
-        OwnTVIcon(icon, tint = Color.White, filled = true, modifier = Modifier.size(18.dp))
+        OwnTVIcon(icon, tint = Color.White, filled = true, modifier = Modifier.size(Dimens.IconSizeMedium))
     }
 }

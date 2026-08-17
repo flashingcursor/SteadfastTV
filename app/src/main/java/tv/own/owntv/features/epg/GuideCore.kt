@@ -305,7 +305,7 @@ private fun CatchupPlayerChooser(
                     .trapAllFocusExit().focusGroup(),
                 contentAlignment = Alignment.Center,
             ) {
-                Column(Modifier.dialogPanel(width = 340.dp, corner = Dimens.CornerMedium, padding = 18.dp, scroll = false)) {
+                Column(Modifier.dialogPanel(width = 340.dp, corner = Dimens.CornerMedium, padding = Dimens.DialogPanelPaddingCompact, scroll = false)) {
                     Text(stringResource(R.string.settings_catchup_player), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                     Spacer(Modifier.height(Dimens.GapTiny))
                     Text(

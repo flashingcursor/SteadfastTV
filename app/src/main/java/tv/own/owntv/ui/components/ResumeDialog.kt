@@ -51,7 +51,7 @@ fun ResumeDialog(
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.45f)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.dialogPanel(padding = 28.dp, fill = colors.surfaceContainerHigh.copy(alpha = 0.88f))) {
+        Column(Modifier.dialogPanel(padding = Dimens.DialogPanelPadding, fill = colors.surfaceContainerHigh.copy(alpha = 0.88f))) {
             Text(stringResource(R.string.common_resume_prompt), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapSmall))
             Text(

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.LocalContentColor
 import androidx.tv.material3.ProvideTextStyle
 import tv.own.owntv.ui.components.BrandLockup
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.OwnTVTypography
 
@@ -81,7 +82,7 @@ internal fun SetupAmbientBackdrop() {
             color = primary.copy(alpha = 0.09f),
             radius = size.minDimension * 0.28f,
             center = center,
-            style = Stroke(width = 1.dp.toPx()),
+            style = Stroke(width = Dimens.HairlineWidth.toPx()),
         )
     }
 }

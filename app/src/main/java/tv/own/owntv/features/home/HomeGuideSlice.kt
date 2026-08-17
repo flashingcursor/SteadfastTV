@@ -244,7 +244,7 @@ private fun OnNowRow(
                 .fillMaxWidth()
                 .padding(1.dp)
                 .border(
-                    width = 1.dp,
+                    width = Dimens.HairlineWidth,
                     color = if (focused) colors.focusBorder else Color.Transparent,
                     shape = sectionShape,
                 )
@@ -521,14 +521,14 @@ private fun ProgrammeProgressBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(2.dp)
+            .height(Dimens.ThinProgressHeight)
             .clip(RoundedCornerShape(50))
             .background(colors.surfaceContainerLowest),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth(progress.coerceIn(0f, 1f))
-                .height(2.dp)
+                .height(Dimens.ThinProgressHeight)
                 .clip(RoundedCornerShape(50))
                 .background(colors.primary),
         )

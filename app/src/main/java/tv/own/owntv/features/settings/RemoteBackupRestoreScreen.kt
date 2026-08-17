@@ -27,7 +27,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +41,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
+import tv.own.owntv.ui.theme.PinCodeLetterSpacing
 import java.io.File
 
 /**
@@ -76,7 +76,7 @@ fun RemoteBackupRestoreScreen(
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 48.dp, vertical = 28.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(modifier = Modifier.widthIn(max = 640.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(modifier = Modifier.widthIn(max = Dimens.ContentColumnMaxWidth), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.settings_restore_remote_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
                 Spacer(Modifier.height(6.dp))
                 Text(
@@ -99,7 +99,7 @@ fun RemoteBackupRestoreScreen(
                             style = MaterialTheme.typography.headlineLarge,
                             fontWeight = FontWeight.Bold,
                             color = colors.primary,
-                            letterSpacing = 8.sp,
+                            letterSpacing = PinCodeLetterSpacing,
                         )
                         Spacer(Modifier.height(Dimens.HeroGap))
                         state.qr?.let { qr ->
@@ -162,7 +162,7 @@ fun RemoteBackupExportScreen(
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 48.dp, vertical = 28.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(modifier = Modifier.widthIn(max = 640.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(modifier = Modifier.widthIn(max = Dimens.ContentColumnMaxWidth), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.settings_download_remote_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
                 Spacer(Modifier.height(6.dp))
                 Text(
@@ -186,7 +186,7 @@ fun RemoteBackupExportScreen(
                             style = MaterialTheme.typography.headlineLarge,
                             fontWeight = FontWeight.Bold,
                             color = colors.primary,
-                            letterSpacing = 8.sp,
+                            letterSpacing = PinCodeLetterSpacing,
                         )
                         Spacer(Modifier.height(Dimens.HeroGap))
                         listening.qr?.let { qr ->

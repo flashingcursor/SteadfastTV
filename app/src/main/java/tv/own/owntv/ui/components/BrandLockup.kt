@@ -62,7 +62,7 @@ fun BrandLockup(
                 .size(markSize.dp)
                 .clip(markShape)
                 .background(colors.card)
-                .border(2.dp, AccentCyan, markShape),
+                .border(Dimens.SelectionBorderWidth, AccentCyan, markShape),
             contentAlignment = Alignment.Center,
         ) {
             OwnTVIcon(

@@ -93,7 +93,7 @@ private fun MediaListRowPreview() = OwnTVPreview {
             title = "Tears of Steel",
             onClick = {},
             trailing = {
-                OwnTVIcon(icon = OwnTVIcon.FAVORITE, tint = OwnTVTheme.colors.primary, modifier = Modifier.size(20.dp))
+                OwnTVIcon(icon = OwnTVIcon.FAVORITE, tint = OwnTVTheme.colors.primary, modifier = Modifier.size(Dimens.IconSizeLarge))
             },
         )
     }

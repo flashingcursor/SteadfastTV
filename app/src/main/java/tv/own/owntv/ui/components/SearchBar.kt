@@ -118,7 +118,7 @@ fun SearchBar(
 
     Box(
         modifier = modifier
-            .height(48.dp)
+            .height(Dimens.TouchTargetSize)
             .clip(shape)
             .then(
                 // Frosted glass pill when this surface is glassy; plain tonal fill otherwise. glass()
@@ -142,7 +142,7 @@ fun SearchBar(
             OwnTVIcon(
                 icon = OwnTVIcon.SEARCH,
                 tint = if (focused) colors.primary else colors.onSurfaceVariant,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(Dimens.IconSizeLarge),
             )
             Spacer(Modifier.width(10.dp))
             Box(modifier = Modifier.weight(1f)) {

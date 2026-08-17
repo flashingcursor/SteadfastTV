@@ -497,7 +497,7 @@ private fun PlaylistEpgPicker(
     BackHandler { onDismiss() }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.dialogPanel(width = 560.dp, corner = 20.dp, padding = 24.dp, scroll = false)) {
+        Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, corner = 20.dp, padding = Dimens.DialogPanelPadding, scroll = false)) {
             Text(stringResource(R.string.settings_epg_sources_fill_playlist), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.HeroGap))
             val opts = options

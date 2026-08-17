@@ -76,7 +76,7 @@ fun MoveToCategoryDialog(
             contentAlignment = Alignment.Center,
         ) {
             Column(
-                Modifier.dialogPanel(width = 560.dp, padding = 28.dp),
+                Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding),
             ) {
                 Text(stringResource(R.string.settings_move_category_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 Spacer(Modifier.height(6.dp))
