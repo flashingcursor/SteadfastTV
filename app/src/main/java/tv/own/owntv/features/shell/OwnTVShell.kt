@@ -491,8 +491,8 @@ fun OwnTVShell(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    // Phase 6 — unified panel surface: panels and content area share #102520 so the
-                    // rounded borders define regions on one continuous dark-green surface.
+                    // Phase 6 — unified panel surface: panels and content area share the theme base
+                    // so the rounded borders define regions on one continuous dark surface.
                     // Liquid Glass: transparent here (shellBase) when a background image is active, so
                     // the image shows through the gaps between the content panels.
                     .background(shellBase),

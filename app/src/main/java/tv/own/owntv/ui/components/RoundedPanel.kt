@@ -18,21 +18,23 @@ import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.glass
 
-// Phase 6 — per-region panel fill colours (owner-specified, 2026-06-27).
-// Each returns a dark-green tint in dark mode, and a light-grey-green tint in light mode,
-// so the theme toggle actually changes the panels.
-// Option A — Clean + Premium (owntv_panel_color_concepts_vertical.html)
+// Phase 6 — per-region panel fills. Originally hardcoded dark-green hexes (owner-specified,
+// 2026-06-27, "Option A — Clean + Premium"); re-based onto the theme's surface-container ramp
+// on 2026-08-17 when the palette moved to the near-black cool-slate neutrals — the hardcoded
+// greens were silently overriding every palette change on the browse screens. The relative
+// ordering is preserved in both themes (content darkest region in dark / brightest in light,
+// rail mid, preview most raised), and the fills now track any future palette change for free.
 val RailPanelFill: Color
     @Composable @ReadOnlyComposable get() =
-        if (OwnTVTheme.colors.isDark) Color(0xFF141B19) else Color(0xFFE4ECE8)
+        if (OwnTVTheme.colors.isDark) OwnTVTheme.colors.surfaceContainerLow else OwnTVTheme.colors.surfaceContainerHigh
 
 val ContentPanelFill: Color
     @Composable @ReadOnlyComposable get() =
-        if (OwnTVTheme.colors.isDark) Color(0xFF0C1312) else Color(0xFFF0F6F3)
+        if (OwnTVTheme.colors.isDark) OwnTVTheme.colors.surfaceContainerLowest else OwnTVTheme.colors.surfaceContainerLow
 
 val PreviewPanelFill: Color
     @Composable @ReadOnlyComposable get() =
-        if (OwnTVTheme.colors.isDark) Color(0xFF1B2320) else Color(0xFFDDE7E2)
+        if (OwnTVTheme.colors.isDark) OwnTVTheme.colors.surfaceContainerHigh else OwnTVTheme.colors.surfaceContainerHighest
 
 /**
  * Phase 6 — a rounded visual container matching the new-shell mockup's "panel 2/3/4" look: large rounded

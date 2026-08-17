@@ -56,7 +56,7 @@ private fun DrawScope.drawAvatar(i: Int) {
     val s = size.minDimension
     fun p(x: Float, y: Float) = Offset(x * s, y * s)
     val w = Color.White
-    val ink = Color(0xFF10181C)
+    val ink = Color(0xFF101420) // cool slate (was #10181C, a teal-leaning ink from the old palette)
     val bg = BG[i]
 
     drawRoundRect(bg, size = Size(s, s), cornerRadius = CornerRadius(s * 0.30f))
