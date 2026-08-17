@@ -32,6 +32,7 @@ import tv.own.owntv.ui.components.NumberInputDialog
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.format.localizedInteger
 
@@ -72,7 +73,7 @@ fun ChNavSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     LaunchedEffect(dialog) {
         if (dialog != ChNavDialog.NONE) return@LaunchedEffect
         dialogReturn?.let { opener ->
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { opener.requestFocus() }
         }
         dialogReturn = null

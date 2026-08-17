@@ -50,6 +50,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Phase 13 — create / edit / delete viewer profiles. */
@@ -78,7 +79,7 @@ fun ManageProfilesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
 
     LaunchedEffect(editing, creating, confirmDelete) {
         if (editing != null || creating || confirmDelete != null) return@LaunchedEffect
-        kotlinx.coroutines.delay(50) // let the screen lay out after the tab swap before grabbing focus
+        kotlinx.coroutines.delay(FocusSettleDelayShortMs) // let the screen lay out after the tab swap before grabbing focus
         val targetId = contextId
         if (targetId != null && profiles.any { it.id == targetId }) {
             runCatching { contextFocus.requestFocus() }

@@ -91,6 +91,8 @@ import tv.own.owntv.ui.components.ContentPanelFill
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.format.formatSystemTime
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
+import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.format.localizedInteger
@@ -208,7 +210,7 @@ fun HomeScreen(
         // when a tab switch lands on Home. Only a genuine cold start (restoreFocus still false on first
         // composition) leaves focus on the rail's Home item so the nav is immediately navigable.
         if (restoreFocus) {
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             val focusTarget = when {
                 heroVisible && state.heroItems.isNotEmpty() -> heroFocus
                 showHeroFallback -> fallbackFocus
@@ -264,7 +266,7 @@ fun HomeScreen(
                         val targetIsVisible = listState.layoutInfo.visibleItemsInfo.any { it.index == targetIndex }
                         if (!targetIsVisible) {
                             listState.scrollToItem(targetIndex)
-                            kotlinx.coroutines.delay(50)
+                            kotlinx.coroutines.delay(FocusSettleDelayShortMs)
                         }
                         runCatching { targetFocusRequester.requestFocus() }
                     }

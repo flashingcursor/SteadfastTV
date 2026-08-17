@@ -60,6 +60,7 @@ import tv.own.owntv.ui.components.TextInputDialog
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
@@ -237,7 +238,7 @@ fun BulkRenameFlow(session: BulkRenameSession, returnFocus: FocusRequester? = nu
         } else if (wasOpen) {
             wasOpen = false
             currentReturnFocus?.let { opener ->
-                kotlinx.coroutines.delay(60)
+                kotlinx.coroutines.delay(FocusSettleDelayMs)
                 runCatching { opener.requestFocus() }
             }
         }
@@ -258,7 +259,7 @@ private fun BulkRenameChoicePopup(session: BulkRenameSession) {
     val colors = OwnTVTheme.colors
     val count = session.entries.collectAsStateWithLifecycle().value.size
     val addFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { addFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { addFocus.requestFocus() } }
     BackHandler { session.close() }
     PopupFontTheme {
     Box(
@@ -303,14 +304,14 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
     val addRuleFocus = remember { FocusRequester() }
     val rowFocusers = remember(draft.size) { List(draft.size) { FocusRequester() } }
     LaunchedEffect(Unit) {
-        kotlinx.coroutines.delay(60)
+        kotlinx.coroutines.delay(FocusSettleDelayMs)
         runCatching { (rowFocusers.firstOrNull() ?: addRuleFocus).requestFocus() }
     }
     // Adding/deleting a rule disposes and rebuilds row focus nodes. Hand focus to the new row or the
     // Add button explicitly instead of relying on spatial fallback through a full-screen scrim.
     LaunchedEffect(draft.size, pendingRowFocus) {
         if (pendingRowFocus != Int.MIN_VALUE) {
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             val target = rowFocusers.getOrNull(pendingRowFocus) ?: addRuleFocus
             runCatching { target.requestFocus() }
             pendingRowFocus = Int.MIN_VALUE
@@ -322,7 +323,7 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
         if (editing == null && pickerRow >= 0) {
             val row = pickerRow
             pickerRow = -1
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { rowFocusers.getOrNull(row)?.requestFocus() }
         } else if (editing != null) {
             pickerRow = editing!!.first
@@ -536,7 +537,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
     // can be applied, it lands on "Apply all" instead. Mirrors EpgMatchReviewDialog's first-row focus.
     val firstChanged = rows.indexOfFirst { !it.unchanged }
     val firstApplyFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { firstApplyFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstApplyFocus.requestFocus() } }
 
     // Popup(focusable=true) creates a hard focus boundary — applying/declining removes rows from the
     // LazyColumn, but focus stays inside instead of escaping to the screen behind (same pattern and
@@ -689,7 +690,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
 private fun BulkRestoreConfirmDialog(session: BulkRenameSession) {
     val colors = OwnTVTheme.colors
     val restoreFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { restoreFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { restoreFocus.requestFocus() } }
     BackHandler { session.backToChoice() }
     PopupFontTheme {
     Box(
@@ -720,7 +721,7 @@ private fun BulkRestoreConfirmDialog(session: BulkRenameSession) {
 private fun BulkRefusedDialog(session: BulkRenameSession) {
     val colors = OwnTVTheme.colors
     val okFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { okFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { okFocus.requestFocus() } }
     BackHandler { session.dismissRefused() }
     PopupFontTheme {
     Box(

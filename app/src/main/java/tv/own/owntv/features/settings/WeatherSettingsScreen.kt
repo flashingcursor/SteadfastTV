@@ -28,6 +28,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.TextInputDialog
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 
 /**
  * Weather settings — the top-bar weather chip: show/hide, manual location override, and °C/°F.
@@ -55,7 +56,7 @@ fun WeatherSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             dialogReturn = locationRowFocus
         } else {
             dialogReturn?.let { row ->
-                kotlinx.coroutines.delay(80)
+                kotlinx.coroutines.delay(FocusSettleDelayLongMs)
                 runCatching { row.requestFocus() }
             }
             dialogReturn = null

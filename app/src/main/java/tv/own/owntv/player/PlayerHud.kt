@@ -85,6 +85,7 @@ import tv.own.owntv.ui.components.displayText
 import tv.own.owntv.ui.components.displayLabel
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.HudPictorial
 import tv.own.owntv.ui.theme.LocalActionSurface
@@ -1367,7 +1368,7 @@ private fun TrackDialog(
             androidx.compose.runtime.withFrameNanos { }
             if (selectedIndex >= 0) runCatching { listState.scrollToItem(target) }
             if (runCatching { focus.requestFocus() }.isSuccess) return@LaunchedEffect
-            delay(50)
+            delay(FocusSettleDelayShortMs)
         }
     }
     DialogScaffold(title = title, onDismiss = onDismiss, state = listState) {
@@ -1456,7 +1457,7 @@ private suspend fun requestFocusRetrying(focus: FocusRequester) {
     repeat(10) {
         androidx.compose.runtime.withFrameNanos {}
         if (runCatching { focus.requestFocus() }.isSuccess) return
-        delay(50)
+        delay(FocusSettleDelayShortMs)
     }
 }
 

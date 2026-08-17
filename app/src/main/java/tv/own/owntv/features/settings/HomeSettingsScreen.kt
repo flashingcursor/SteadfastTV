@@ -44,6 +44,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapVerticalFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 @Composable
@@ -59,7 +60,7 @@ fun HomeSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     // onEnter alone can miss when entering this screen: the first row lives inside a LazyColumn and may
     // not be composed/attached the instant focus crosses in, so focus falls back to the sidebar. Request
     // it once after first layout (matches VideoPlayerSettingsScreen); onEnter still covers dialog returns.
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { firstFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstFocus.requestFocus() } }
 
     BackHandler { onBack() }
 

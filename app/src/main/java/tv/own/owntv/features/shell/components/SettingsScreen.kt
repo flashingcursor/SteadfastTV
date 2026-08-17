@@ -102,6 +102,8 @@ import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.format.formatBestDateTime
 import tv.own.owntv.ui.theme.ALL_GLASS_SURFACES
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassConfig
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
@@ -239,7 +241,7 @@ fun SettingsScreen(
             withFrameNanos { }
             runCatching { scrollState.scrollTo(savedScroll) }
             dialogReturn?.let { row ->
-                kotlinx.coroutines.delay(80)
+                kotlinx.coroutines.delay(FocusSettleDelayLongMs)
                 runCatching { row.requestFocus() }
             }
             dialogReturn = null
@@ -337,7 +339,7 @@ fun SettingsScreen(
     // own initial focus, and Settings stays consistent with them.
     LaunchedEffect(tab) {
         if (tab == SettingsTab.ROOT && lastTab != null) {
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { rowFocus[lastTab]?.requestFocus() }
         }
     }

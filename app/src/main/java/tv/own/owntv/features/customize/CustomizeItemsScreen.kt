@@ -60,6 +60,7 @@ import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.components.trapVerticalFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalActionSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -140,19 +141,19 @@ fun CustomizeItemsScreen(
     LaunchedEffect(items.itemCount) {
         if (firstLanding && items.itemCount > 0) {
             firstLanding = false
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { rowFocusers.firstOrNull()?.requestFocus() }
         } else if (firstLanding && items.itemCount == 0) {
             // Empty custom categories are valid. Their screen still needs a deterministic focus
             // owner while Paging is empty (and the first row takes over later if data arrives).
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { backFocus.requestFocus() }
         }
     }
     LaunchedEffect(renaming, rangeEnd, movingItem, creatingCategory) {
         if (renaming == null && rangeEnd == null && movingItem == null && !creatingCategory) {
             dialogReturn?.let { opener ->
-                kotlinx.coroutines.delay(60)
+                kotlinx.coroutines.delay(FocusSettleDelayMs)
                 runCatching { opener.requestFocus() }
             }
             dialogReturn = null

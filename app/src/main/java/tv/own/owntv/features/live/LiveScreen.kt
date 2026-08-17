@@ -94,6 +94,7 @@ import tv.own.owntv.ui.components.gridFocusTarget
 import tv.own.owntv.ui.format.rememberBestDateFormatter
 import tv.own.owntv.ui.format.rememberSystemTimeFormatter
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontFamily
@@ -294,10 +295,10 @@ fun LiveScreen(
         val idx = if (ch != null) channels.itemSnapshotList.items.indexOfFirst { it.id == ch.id } else -1
         if (idx >= 0) {
             runCatching { effectiveListState.scrollToItem(idx) }
-            delay(60)
+            delay(FocusSettleDelayMs)
             runCatching { selFocus.requestFocus() }
         } else {
-            delay(60)
+            delay(FocusSettleDelayMs)
             runCatching { firstItemFocus.requestFocus() }
         }
         onRestored()
@@ -1001,7 +1002,7 @@ private fun CatchupDialog(
     val firstFocus = remember { FocusRequester() }
     LaunchedEffect(list) {
         if (list.isNullOrEmpty()) return@LaunchedEffect
-        kotlinx.coroutines.delay(60); runCatching { firstFocus.requestFocus() }
+        kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstFocus.requestFocus() }
     }
     // Popup(focusable = true) is a hard focus boundary: a stray D-pad press or the Live screen's own
     // LaunchedEffect focus requests can no longer drop focus onto the channel grid behind the scrim
@@ -1086,7 +1087,7 @@ internal fun EpgMatchDialog(
     LaunchedEffect(results) {
         if (didInitialFocus || results == null) return@LaunchedEffect
         didInitialFocus = true
-        kotlinx.coroutines.delay(60)
+        kotlinx.coroutines.delay(FocusSettleDelayMs)
         if (results!!.isNotEmpty()) runCatching { firstItemFocus.requestFocus() }
         else runCatching { searchFocus.requestFocus() }
     }

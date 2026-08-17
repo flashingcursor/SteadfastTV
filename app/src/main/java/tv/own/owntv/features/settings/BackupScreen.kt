@@ -50,6 +50,8 @@ import tv.own.owntv.ui.components.StorageBrowser
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import java.io.File
@@ -90,7 +92,7 @@ fun BackupScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     var exportFolder by remember { mutableStateOf<File?>(null) }
     val firstFocus = remember { FocusRequester() }
     val restoreBtnFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(50); runCatching { firstFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayShortMs); runCatching { firstFocus.requestFocus() } }
 
     // Restore: first pick Remote (phone upload) or Local (file picker). Remote opens a full-screen
     // companion panel; an uploaded file drops back into the same inspect → section-picker flow.
@@ -122,7 +124,7 @@ fun BackupScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     LaunchedEffect(anyDialogOpen) {
         if (!anyDialogOpen) {
             dialogReturn?.let { btn ->
-                kotlinx.coroutines.delay(80)
+                kotlinx.coroutines.delay(FocusSettleDelayLongMs)
                 runCatching { btn.requestFocus() }
             }
         }

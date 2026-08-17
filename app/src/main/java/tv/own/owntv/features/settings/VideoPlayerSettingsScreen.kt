@@ -59,6 +59,8 @@ import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.StepperDialog
@@ -202,7 +204,7 @@ fun VideoPlayerSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier)
             withFrameNanos { }
             runCatching { scrollState.scrollTo(savedScroll) }
             dialogReturn?.let { row ->
-                kotlinx.coroutines.delay(80)
+                kotlinx.coroutines.delay(FocusSettleDelayLongMs)
                 runCatching { row.requestFocus() }
             }
         }
@@ -677,7 +679,7 @@ internal fun PickerDialog(
     LaunchedEffect(shown, selected, searchable) {
         // Nested pickers attach in the same frame their opener loses focus. Wait until this popup's
         // focus window exists, otherwise focus remains on the Add/Remove or Prefix/Suffix button.
-        kotlinx.coroutines.delay(80)
+        kotlinx.coroutines.delay(FocusSettleDelayLongMs)
         runCatching { (if (searchable) searchFr else fr).requestFocus() }
     }
     BackHandler { onDismiss() }
@@ -866,7 +868,7 @@ private fun SubtitleAppearanceDialog(
     LaunchedEffect(child) {
         if (child == SubDialog.NONE) {
             withFrameNanos { }
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching {
                 (if (lastChild == SubDialog.NONE) toggleFocus else rowFocus.getValue(lastChild)).requestFocus()
             }

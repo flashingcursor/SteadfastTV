@@ -56,6 +56,8 @@ import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.core.sync.work.EpgSyncState
@@ -95,7 +97,7 @@ fun EpgSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier, startOnA
     // Grab focus inside the list (not on "Add EPG") whenever the list view is showing.
     LaunchedEffect(adding, editing, confirmDelete) {
         if (adding || editing != null || confirmDelete != null) return@LaunchedEffect
-        kotlinx.coroutines.delay(80)
+        kotlinx.coroutines.delay(FocusSettleDelayLongMs)
         val targetId = contextId
         if (targetId != null && sources.any { it.id == targetId }) {
             runCatching { contextFocus.requestFocus() }
@@ -372,7 +374,7 @@ internal fun EpgSourceForm(
     var showPlaylistPicker by remember { mutableStateOf(false) }
     var showAutoRefreshPicker by remember { mutableStateOf(false) }
     val firstFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { firstFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstFocus.requestFocus() } }
     BackHandler { onCancel() }
 
     Column(

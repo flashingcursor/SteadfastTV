@@ -67,6 +67,8 @@ import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvPreview
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
+import tv.own.owntv.ui.theme.MotionAccentBarMs
+import tv.own.owntv.ui.theme.MotionRailMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.glass
 import tv.own.owntv.ui.theme.ownTvTween
@@ -263,7 +265,7 @@ fun FloatingRail(
             modifier = panel
                 .fillMaxHeight()
                 .animateContentSize(
-                    animationSpec = if (expandedVisuals) ownTvTween(220) else snap(),
+                    animationSpec = if (expandedVisuals) ownTvTween(MotionRailMs) else snap(),
                     finishedListener = { _, _ -> settling = false },
                 )
                 .then(if (expandedVisuals) Modifier.width(IntrinsicSize.Max) else Modifier)
@@ -329,7 +331,7 @@ fun FloatingRail(
             // otherwise jump the pill width in one frame while the labels ease.
             modifier = panel
                 .animateContentSize(
-                    animationSpec = if (expandedVisuals) ownTvTween(220) else snap(),
+                    animationSpec = if (expandedVisuals) ownTvTween(MotionRailMs) else snap(),
                     finishedListener = { _, _ -> settling = false },
                 )
                 .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall),
@@ -486,7 +488,7 @@ private fun RailNavItem(
                         Modifier
                     },
                 )
-                .animateContentSize(animationSpec = ownTvTween(220)),
+                .animateContentSize(animationSpec = ownTvTween(MotionRailMs)),
         ) {
             Row(
                 // Review round 2 (L2): 12dp (not 14dp) start padding here is what makes this icon's
@@ -564,7 +566,7 @@ private fun BoxScope.HorizontalNavAccentBar(visible: Boolean, modifier: Modifier
     val colors = OwnTVTheme.colors
     val thickness by animateDpAsState(
         if (visible) 3.dp else 0.dp,
-        animationSpec = ownTvTween(160),
+        animationSpec = ownTvTween(MotionAccentBarMs),
         label = "navAccentBarTop",
     )
     if (thickness > 0.dp) {

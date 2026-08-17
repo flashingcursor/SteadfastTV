@@ -53,6 +53,8 @@ import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -80,7 +82,7 @@ fun PanelWidthSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) 
     LaunchedEffect(open) {
         if (open != null) return@LaunchedEffect
         dialogReturn?.let { opener ->
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { opener.requestFocus() }
         }
         dialogReturn = null
@@ -192,7 +194,7 @@ private fun PanelWidthDialog(
     val toggleFocus = remember { FocusRequester() }
     val confirmationFocus = remember { FocusRequester() }
     LaunchedEffect(showPreviewDisableConfirmation) {
-        kotlinx.coroutines.delay(80)
+        kotlinx.coroutines.delay(FocusSettleDelayLongMs)
         runCatching {
             if (showPreviewDisableConfirmation) confirmationFocus.requestFocus() else toggleFocus.requestFocus()
         }

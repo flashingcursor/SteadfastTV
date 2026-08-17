@@ -64,6 +64,7 @@ import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Phase 13 — list / add / re-sync / delete the active profile's IPTV sources. */
@@ -140,7 +141,7 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     // A failed import/re-sync swaps the form for an error screen — move focus onto its action button.
     LaunchedEffect(importState) {
         if (importState is SettingsViewModel.ImportState.Failed) {
-            kotlinx.coroutines.delay(50); runCatching { errorFocus.requestFocus() }
+            kotlinx.coroutines.delay(FocusSettleDelayShortMs); runCatching { errorFocus.requestFocus() }
         }
     }
 

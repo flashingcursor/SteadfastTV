@@ -42,6 +42,8 @@ import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
 import tv.own.owntv.ui.components.roundedPanel
@@ -123,7 +125,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
         // fall back to deleteFocus (the always-composed "Delete subtitles" row) so focus doesn't
         // escape to the sidebar while the screen is contacting OpenSubtitles.
         val target = if (state is OpenSubtitlesViewModel.UiState.Busy) deleteFocus else firstFocus
-        kotlinx.coroutines.delay(60)
+        kotlinx.coroutines.delay(FocusSettleDelayMs)
         runCatching { target.requestFocus() }
     }
     // Returning from Delete-subtitles lands back on the row that opened it. Decoupled from `state`
@@ -132,7 +134,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
     LaunchedEffect(showDeleteSubs) {
         if (!showDeleteSubs && returnedFromDelete) {
             returnedFromDelete = false
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { deleteFocus.requestFocus() }
         }
     }
@@ -300,7 +302,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
             langPickerWasOpen = true
         } else if (langPickerWasOpen) {
             langPickerWasOpen = false
-            kotlinx.coroutines.delay(80)
+            kotlinx.coroutines.delay(FocusSettleDelayLongMs)
             runCatching { langRowFocus.requestFocus() }
         }
     }

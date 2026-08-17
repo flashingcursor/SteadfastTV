@@ -94,6 +94,8 @@ import tv.own.owntv.features.epg.ProgrammeStripCanvas
 import tv.own.owntv.ui.format.rememberBestDateFormatter
 import tv.own.owntv.ui.format.rememberSystemTimeFormatter
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -230,7 +232,7 @@ fun EpgScreen(
     LaunchedEffect(state.loading, state.channels.isNotEmpty()) {
         // Only auto-focus when a restore is pending (returning from playback to a specific channel).
         if (!state.loading && state.channels.isNotEmpty() && restoreFocus) {
-            kotlinx.coroutines.delay(80)
+            kotlinx.coroutines.delay(FocusSettleDelayLongMs)
             if (runCatching { firstCell.requestFocus() }.isFailure) runCatching { tunedCell.requestFocus() }
         }
     }
@@ -244,7 +246,7 @@ fun EpgScreen(
         val target = if (idx >= 0) tunedCell else firstCell
         if (idx >= 0) runCatching { rowListState.scrollToItem(idx) }
         pendingEnter = target
-        kotlinx.coroutines.delay(80)
+        kotlinx.coroutines.delay(FocusSettleDelayLongMs)
         runCatching { target.requestFocus() }
         onRestored()
     }
@@ -308,7 +310,7 @@ fun EpgScreen(
         val target = if (idx >= 0) restoreCell else firstCell
         if (idx >= 0) runCatching { rowListState.scrollToItem(idx) }
         pendingEnter = target
-        kotlinx.coroutines.delay(80)
+        kotlinx.coroutines.delay(FocusSettleDelayLongMs)
         if (runCatching { target.requestFocus() }.isFailure) runCatching { firstCell.requestFocus() }
         restoreChannelId = null // focus is set; release the row so playback-restore can reuse it
     }
@@ -577,7 +579,7 @@ private fun EpgMatchReviewDialog(
     val colors = OwnTVTheme.colors
     BackHandler { onDone() }
     val firstFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { firstFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstFocus.requestFocus() } }
 
     // Popup(focusable=true) creates a hard focus boundary — clicking Accept/Skip removes an item
     // from the LazyColumn, but focus stays inside instead of escaping to the main nav bar.
@@ -666,7 +668,7 @@ private fun EpgMatchChooserDialog(
     val colors = OwnTVTheme.colors
     BackHandler { onDismiss() }
     val firstFocus = remember { FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { firstFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstFocus.requestFocus() } }
 
     Box(
         Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup()

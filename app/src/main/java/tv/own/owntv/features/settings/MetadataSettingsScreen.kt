@@ -37,6 +37,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -310,7 +311,7 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             langPickerWasOpen = true
         } else if (langPickerWasOpen) {
             langPickerWasOpen = false
-            kotlinx.coroutines.delay(80)
+            kotlinx.coroutines.delay(FocusSettleDelayLongMs)
             runCatching { langRowFocus.requestFocus() }
         }
     }

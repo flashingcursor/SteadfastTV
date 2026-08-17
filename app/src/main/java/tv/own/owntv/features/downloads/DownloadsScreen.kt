@@ -50,6 +50,7 @@ import tv.own.owntv.ui.components.ContentPanelFill
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapVerticalFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Phase 12 — the Downloads section: offline movies & episodes with progress and playback. */
@@ -113,7 +114,7 @@ fun DownloadsScreen(
         val idx = lastPlayedId?.let { id -> rows.indexOfFirst { it is DownloadListRow.Item && it.download.id == id } } ?: -1
         if (idx >= 0) {
             runCatching { listState.scrollToItem(idx) }
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { selFocus.requestFocus() }
         }
         onRestored()

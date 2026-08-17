@@ -66,6 +66,8 @@ import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.components.trapVerticalFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalActionSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -169,7 +171,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         return
     }
 
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(60); runCatching { firstFocus.requestFocus() } }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(FocusSettleDelayMs); runCatching { firstFocus.requestFocus() } }
     // Restore focus to the row that opened a dialog (new-category picker / rename / new-category
     // prompt / delete confirm) when it closes — previously closing either always landed on the Live
     // TV section chip (firstFocus).
@@ -178,7 +180,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             deletingCategory != null || rangeEnd != null || editingPin != null
         ) return@LaunchedEffect
         dialogReturn?.let { opener ->
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { opener.requestFocus() }
         }
         dialogReturn = null
@@ -191,7 +193,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             val index = rows.indexOfFirst { it.key == key }
             if (index >= 0) {
                 listState.scrollToItem(headerOffset + index)
-                kotlinx.coroutines.delay(80)
+                kotlinx.coroutines.delay(FocusSettleDelayLongMs)
                 runCatching { rowFocusers.getOrNull(index)?.requestFocus() }
             } else {
                 runCatching { firstFocus.requestFocus() }

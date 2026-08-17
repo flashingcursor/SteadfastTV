@@ -101,6 +101,7 @@ import tv.own.owntv.ui.components.MediaContextMenu
 import tv.own.owntv.ui.components.MediaListRow
 import tv.own.owntv.ui.components.MenuEntry
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.format.localizedInteger
 
@@ -216,7 +217,7 @@ fun MoviesScreen(
         val idx = if (sel != null) movies.itemSnapshotList.items.indexOfFirst { it.id == sel.id } else -1
         if (idx >= 0) {
             runCatching { effectiveGridState.scrollToItem(idx) }
-            delay(60)
+            delay(FocusSettleDelayMs)
             runCatching { selFocus.requestFocus() }
         }
         onRestored()

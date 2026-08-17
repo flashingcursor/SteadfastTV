@@ -50,3 +50,26 @@ fun <T> ownTvTween(durationMs: Int = 200, easing: Easing = FastOutSlowInEasing):
 fun ownTvFocusSpring(): AnimationSpec<Float> =
     if (LocalAnimationLevel.current == AnimationLevel.OFF) snap()
     else spring(dampingRatio = 0.7f, stiffness = Spring.StiffnessMediumLow)
+
+/** Duration for focus/selection color cross-fades (`FocusableSurface`'s focus container, `NavLadder`'s bg/fg/icon). */
+const val MotionColorMs = 140
+
+/** Duration for the nav accent bar's reveal/hide (`NavLadder`, `FloatingRail`). */
+const val MotionAccentBarMs = 160
+
+/** Duration for `FloatingRail`'s expand/collapse `animateContentSize` calls. */
+const val MotionRailMs = 220
+
+// The three FocusSettleDelay* constants gate `delay(N); runCatching { requestFocus() }` calls that let
+// layout settle before grabbing D-pad focus. TIMING-SENSITIVE: these three magnitudes are independently
+// tuned per call site and are NOT interchangeable snap targets — LiveScreen.kt documents a real focus-
+// restore regression from an earlier racy delay. Do not consolidate or "clean up" these values.
+
+/** Focus-settle delay for lighter transitions (tab swaps, inline error focus, player-dialog retries). */
+const val FocusSettleDelayShortMs = 50L
+
+/** Focus-settle delay, the dominant magnitude across dialogs, settings screens, and list restores. */
+const val FocusSettleDelayMs = 60L
+
+/** Focus-settle delay for heavier layouts (grids/lists, IME-adjacent dialogs). */
+const val FocusSettleDelayLongMs = 80L

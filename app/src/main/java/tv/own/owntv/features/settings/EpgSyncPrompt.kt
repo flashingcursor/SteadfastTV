@@ -41,6 +41,7 @@ import tv.own.owntv.ui.components.formatCount
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayShortMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Semi-automatic EPG flow after a playlist import: ask → sync with a live programme count → done. */
@@ -71,7 +72,7 @@ fun EpgSyncDialog(
     val focus = remember { FocusRequester() }
     LaunchedEffect(state::class) {
         if (state !is EpgSyncUi.Syncing || onBackground != null) {
-            delay(50)
+            delay(FocusSettleDelayShortMs)
             runCatching { focus.requestFocus() }
         }
     }

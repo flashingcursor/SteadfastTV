@@ -17,6 +17,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import tv.own.owntv.ui.theme.MotionAccentBarMs
+import tv.own.owntv.ui.theme.MotionColorMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.ownTvTween
 
@@ -66,7 +68,7 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
             selected -> colors.secondaryContainer.copy(alpha = 0.45f)
             else -> Color.Transparent
         },
-        animationSpec = ownTvTween(140),
+        animationSpec = ownTvTween(MotionColorMs),
         label = "navLadderBg",
     )
     val content by animateColorAsState(
@@ -76,7 +78,7 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
             selected -> colors.accent         // accent cyan = "this is active"
             else -> colors.onSurfaceVariant
         },
-        animationSpec = ownTvTween(140),
+        animationSpec = ownTvTween(MotionColorMs),
         label = "navLadderFg",
     )
     val icon by animateColorAsState(
@@ -86,7 +88,7 @@ fun rememberNavLadderColors(selected: Boolean, focused: Boolean): NavLadderColor
             selected -> colors.accent
             else -> colors.onSurfaceVariant
         },
-        animationSpec = ownTvTween(140),
+        animationSpec = ownTvTween(MotionColorMs),
         label = "navLadderIcon",
     )
 
@@ -114,7 +116,7 @@ fun BoxScope.NavAccentBar(visible: Boolean, height: Dp = 22.dp, modifier: Modifi
     val colors = OwnTVTheme.colors
     val width by animateDpAsState(
         if (visible) 3.dp else 0.dp,
-        animationSpec = ownTvTween(160),
+        animationSpec = ownTvTween(MotionAccentBarMs),
         label = "navAccentBar",
     )
     if (width > 0.dp) {

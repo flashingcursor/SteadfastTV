@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
+import tv.own.owntv.ui.theme.MotionColorMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.glass
 import tv.own.owntv.ui.theme.ownTvFocusSpring
@@ -76,7 +77,7 @@ fun FocusableSurface(
             selected -> selectedContainerColor
             else -> unfocusedContainerColor
         },
-        animationSpec = ownTvTween(140),
+        animationSpec = ownTvTween(MotionColorMs),
         label = "focusContainer",
     )
     // Glassy only when a surface is given and it's in the active glass scope; feeds the idle-rim

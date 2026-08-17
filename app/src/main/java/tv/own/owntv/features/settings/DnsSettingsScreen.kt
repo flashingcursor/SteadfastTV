@@ -37,6 +37,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 @Composable
@@ -104,7 +105,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     // When toggle turns ON, move focus to the first preset button after layout.
     // When toggle turns OFF, return focus to the toggle row.
     LaunchedEffect(toggleOn) {
-        kotlinx.coroutines.delay(60)
+        kotlinx.coroutines.delay(FocusSettleDelayMs)
         if (toggleOn) {
             runCatching { firstPresetFocus.requestFocus() }
         } else {

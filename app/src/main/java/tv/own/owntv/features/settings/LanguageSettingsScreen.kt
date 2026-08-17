@@ -70,6 +70,7 @@ import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -88,12 +89,12 @@ fun FirstRunLanguageSelector(modifier: Modifier = Modifier) {
     val colors = OwnTVTheme.colors
 
     LaunchedEffect(Unit) {
-        kotlinx.coroutines.delay(80)
+        kotlinx.coroutines.delay(FocusSettleDelayLongMs)
         runCatching { triggerFocus.requestFocus() }
     }
     LaunchedEffect(showPicker) {
         if (!showPicker && restoreFocus) {
-            kotlinx.coroutines.delay(80)
+            kotlinx.coroutines.delay(FocusSettleDelayLongMs)
             runCatching { triggerFocus.requestFocus() }
             restoreFocus = false
         }
@@ -191,7 +192,7 @@ private fun FirstRunLanguagePopup(
     }
 
     LaunchedEffect(Unit) {
-        kotlinx.coroutines.delay(80)
+        kotlinx.coroutines.delay(FocusSettleDelayLongMs)
         runCatching { selectedFocus.requestFocus() }
     }
     BackHandler { onDismiss() }

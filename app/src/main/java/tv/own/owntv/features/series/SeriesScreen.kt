@@ -107,6 +107,8 @@ import tv.own.owntv.ui.components.roundedPanel
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.gridFocusTarget
 import tv.own.owntv.ui.theme.Dimens
+import tv.own.owntv.ui.theme.FocusSettleDelayLongMs
+import tv.own.owntv.ui.theme.FocusSettleDelayMs
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.format.localizedInteger
@@ -291,7 +293,7 @@ private fun SeriesGrid(
             val idx = if (sel != null) series.itemSnapshotList.items.indexOfFirst { it.id == sel.id } else -1
             if (idx >= 0) {
                 runCatching { effectiveGridState.scrollToItem(idx) }
-                kotlinx.coroutines.delay(60)
+                kotlinx.coroutines.delay(FocusSettleDelayMs)
                 runCatching { gridSelFocus.requestFocus() }
             } else {
                 runCatching { firstItemFocus.requestFocus() }
@@ -1000,7 +1002,7 @@ private fun EpisodeView(
         if (!loading && visibleEpisodes.isNotEmpty()) {
             initialFocused = true
             val idx = lastPlayedId?.let { id -> visibleEpisodes.indexOfFirst { it.id == id } } ?: -1
-            kotlinx.coroutines.delay(80)
+            kotlinx.coroutines.delay(FocusSettleDelayLongMs)
             if (idx >= 0) {
                 runCatching { epListState.scrollToItem(idx) }
                 kotlinx.coroutines.delay(40)
@@ -1042,7 +1044,7 @@ private fun EpisodeView(
         val idx = lastPlayedId?.let { id -> visibleEpisodes.indexOfFirst { it.id == id } } ?: -1
         if (idx >= 0) {
             runCatching { epListState.scrollToItem(idx) }
-            kotlinx.coroutines.delay(60)
+            kotlinx.coroutines.delay(FocusSettleDelayMs)
             runCatching { selFocus.requestFocus() }
         }
         onRestored()
