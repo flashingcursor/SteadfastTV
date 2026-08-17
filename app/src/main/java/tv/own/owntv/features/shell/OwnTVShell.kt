@@ -780,18 +780,21 @@ fun OwnTVShell(
                             }
                         }
                     }
-                    // Active-rail scrim: dims the content area only (not the header/rail) while the rail
-                    // holds D-pad focus or is BACK-forced active (Task 5's unified BACK floor sets
-                    // railForceActive true). Content stays visible underneath — focus lives in the rail.
-                    val scrimAlpha by animateFloatAsState(
-                        targetValue = if (railActive || railForceActive) 0.45f else 0f,
-                        animationSpec = ownTvTween(),
-                        label = "railScrim",
-                    )
-                    if (scrimAlpha > 0f) {
-                        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = scrimAlpha)))
-                    }
                 }
+            }
+            // Active-rail scrim: dims the header AND content (user feedback — it used to sit inside
+            // the content Box and left the header at full brightness) while the rail holds D-pad
+            // focus or is BACK-forced active (Task 5's unified BACK floor sets railForceActive
+            // true). Lives at this Box level so it covers the whole header+content column yet still
+            // composes BEFORE FloatingRail below — the rail stays undimmed on top. Content stays
+            // visible underneath — focus lives in the rail.
+            val scrimAlpha by animateFloatAsState(
+                targetValue = if (railActive || railForceActive) 0.45f else 0f,
+                animationSpec = ownTvTween(),
+                label = "railScrim",
+            )
+            if (scrimAlpha > 0f) {
+                Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = scrimAlpha)))
             }
             // LEFT sits flush at the start edge in BOTH states (the 30dp floating inset — and its
             // active->0 animation — was removed along with the vestigial corner radius: expanding is
