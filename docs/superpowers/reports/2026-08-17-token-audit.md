@@ -121,8 +121,8 @@ construction (the extractor matches only literal `N.dp` tokens, which can't over
 | 18 | 31 | 0 | 1 | 17 | 1 |
 | 24 | 29 | 11 | 1 | | |
 
-**Total: 1309 rows.** Top 10 values (12, 8, 16, 10, 6, 14, 4, 20, 2, 28) account for 1172 rows
-(89.5%).
+**Total: 1309 rows.** Top 10 values (12, 8, 16, 10, 6, 14, 4, 20, 2, 28) account for 1136 rows
+(86.8%).
 
 ### Classification summary
 
@@ -299,6 +299,16 @@ get explicit `file:line`.
 - **value 32 — 6 rows, → `Dimens.ScreenPaddingH`:** `EpgScreen.kt:336`, `OwnTVShell.kt:539`,
   `AvatarPickerDialog.kt:73`, `ExitDialog.kt:64`, `IncompleteRestoreDialog.kt:69`,
   `ShellHeader.kt:89`.
+- **value 24 — 29 rows, → `Dimens.GapLarge` — 20 files:** `CustomizeScreen.kt:424`,
+  `EpgScreen.kt:336` (pairs with the `horizontal = 32.dp` = `ScreenPaddingH` row above, same
+  line), `GuideCore.kt:249` (the `else` branch of `if (compact) 16.dp else 24.dp`),
+  `HomeScreen.kt:1233`, `BackupScreen.kt:153`, `EpgSourcesScreen.kt:402`,
+  `MetadataSettingsScreen.kt:276`, `RemoteBackupRestoreScreen.kt:135,214`,
+  `AddSourceChooserScreen.kt:72`, `RemoteSetupScreen.kt:129`, `SetupWizard.kt:269,404,470`,
+  `OwnTVShell.kt:925,1198`, `ExitDialog.kt:80`, `FloatingRail.kt:641,663`,
+  `IncompleteRestoreDialog.kt:88`, `SettingsScreen.kt:1191,1544,1760,2022,2039`,
+  `SubtitleSearchScreen.kt:276`, `PlayerHud.kt:963`, `MoveOrderOverlay.kt:102`,
+  `TrailerPlayerScreen.kt:178`.
 - **value 1 — 2 rows, → `GapHairline` (Δ+1):** `HomeGuideSlice.kt:245`, `LiveEpgCard.kt:142`.
 - **value 56 — 2 rows, `INTENTIONAL`:** `PlayerHud.kt:1545`, `InAppToast.kt:63`.
 - **values 0/11/13/17/30/36/44/64/92/96/104/112/120 — 1 row each, `INTENTIONAL`:**
@@ -405,7 +415,21 @@ sub-perceptual visual delta.
 | 1800 | 2 | `EpgSyncPrompt.kt:78`, `PlayerHud.kt:300` — auto-dismiss role, part of a wider toast-dismiss family (1000/1800/2000/2200/2500), each tuned to its own message's reading time. |
 | 150 | 2 | `AddSourceScreen.kt:317` (4th focus-settle magnitude, single-site), `HomeScreen.kt:546` (responsive pair with 500). |
 | 500 | 1 | `HomeScreen.kt:546` — paired with 150 above, one coupled unit. |
-| 900/90/60000/6000/520/4500/420/2500/250/2200/20000/2000/200/15000/1200 | 1 each | Single-purpose, component-specific (spinner rotation, equalizer stagger, poll intervals, toast dismiss, retry cadence) — see `section-motion.md` in the audit workspace for full site attribution. |
+| 900 | 1 | `StateViews.kt:44` — loading-spinner rotation duration (`infiniteRepeatable`), single component. |
+| 90 | 1 | `AudioNowPlayingBar.kt:294` — `tween(420 + i * 90)`, per-bar stagger increment for the 5-bar equalizer animation (derived arithmetic, paired with 420 below). |
+| 60000 | 1 | `LiveScreen.kt:144` — "Now playing" EPG refresh poll interval (every 60s while the list is open). |
+| 6000 | 1 | `SetupScaffold.kt:50` — onboarding background ring pulse (`infiniteRepeatable`), single decorative component. |
+| 520 | 1 | `HomeScreen.kt:386` — hero-preview-engine stop-then-verify delay, component-specific race guard. |
+| 4500 | 1 | `PlayerHud.kt:418` — HUD auto-hide-controls timer. |
+| 420 | 1 | `AudioNowPlayingBar.kt:294` — equalizer stagger base value (paired with the 90 increment above). |
+| 2500 | 1 | `UpdateStatusToast.kt:56` — toast auto-dismiss (Failed state), part of the toast-dismiss family. |
+| 250 | 1 | `LiveScreen.kt:1076` — search-as-you-type debounce before loading channels. |
+| 2200 | 1 | `InAppToast.kt:59` — toast auto-dismiss, toast-dismiss family. |
+| 20000 | 1 | `LiveEpgCard.kt:51` — "Now" time refresh poll interval. |
+| 2000 | 1 | `UpdateStatusToast.kt:55` — toast auto-dismiss (UpToDate state), toast-dismiss family. |
+| 200 | 1 | `LiveScreen.kt:276` — `repeat(5) { delay(200); ... }` retry-loop cadence, component-specific. |
+| 15000 | 1 | `ShellHeader.kt:177` — header clock refresh poll interval. |
+| 1200 | 1 | `OwnTVShell.kt:318` — EPG background pre-warm delay after shell renders. |
 
 **Total `INTENTIONAL`: 43 rows.**
 
@@ -538,8 +562,8 @@ clusters were either already file-scoped or too thin/singular to mint.
 | value | rows | target token | Δ | basis |
 |---|---|---|---|---|
 | 0.7 | 30 (of 38; 2 sanctioned + 6 other-role excluded) | `AlphaScrim` (0.75) | −0.05 | same modal-scrim shape at every site |
-| 0.8 | 2 | `AlphaScrim` (0.75) | +0.05 | same modal-scrim shape |
-| 0.78 | 1 | `AlphaScrim` (0.75) | +0.03 | same modal-scrim shape |
+| 0.8 | 2 (`SettingsScreen.kt:1581`, `StorageBrowser.kt:209`) | `AlphaScrim` (0.75) | +0.05 | same modal-scrim shape |
+| 0.78 | 1 (`EpgSyncPrompt.kt:81`) | `AlphaScrim` (0.75) | +0.03 | same modal-scrim shape |
 
 ### `INTENTIONAL` values — grouped by role
 
@@ -591,10 +615,82 @@ clusters were either already file-scoped or too thin/singular to mint.
   (`LiveScreen.kt:774`); 3 → INTENTIONAL chrome (`PlayerHud.kt:655,1010,1012`); 1 →
   INTENTIONAL focus ring (`NavLadder.kt:102`); 1 → INTENTIONAL gradient (`MiniPlayer.kt:101`).
 
-**<30-row populations — see `section-alpha.md` in the audit workspace for full per-value
-`file:line` breakdowns** (0.55, 0.45, 0.5, 0.78, 0.22, 0.18, 0.8, 0.72, 0.4, 0.16, 0.25, 0.82,
-0.65, 0.6, 0.35, 0.3, 0.12, 0.9, 0.88, 0.14, 0.13, 0.10, 0.09, 0.62, 0.68, 0.74, and the 11
-single-row values — every one classified and attributed to a specific file:line).
+**<30-row populations (`file:line`):**
+
+- **value 0.55 — 11 rows, split:** `PlayerHud.kt:639` (SANCTIONED), `PlayerHud.kt:860`
+  (SANCTIONED), `PlayerHud.kt:906` (SANCTIONED), `ShellHeader.kt:204` (SANCTIONED,
+  WeatherGlyph), `PlayerHud.kt:666` (INTENTIONAL, chrome), `NumberInputDialog.kt:141`
+  (INTENTIONAL, container), `TrailerPlayerScreen.kt:177` (INTENTIONAL, panel bg),
+  `HomeScreen.kt:836,840` (INTENTIONAL, gradient ×2), `PosterCard.kt:93` (INTENTIONAL, badge),
+  `ShellHeader.kt:58` (INTENTIONAL, text shadow).
+- **value 0.45 — 11 rows, split:** `PlayerHud.kt:103` (SANCTIONED); `PosterCard.kt:106`,
+  `ResumeDialog.kt:50` (INTENTIONAL, scrim outliers); `LiveEpgCard.kt:111` (INTENTIONAL,
+  text); `OwnTVShell.kt:804` (INTENTIONAL, rail dim); `VideoPlayerSettingsScreen.kt:1311`
+  (INTENTIONAL, subtitle bg); `PlayerHud.kt:798,809` (INTENTIONAL, chrome); `NavLadder.kt:66`
+  (INTENTIONAL, container); `SubtitleOverlay.kt:58` (INTENTIONAL, subtitle bg);
+  `OwnTVColors.kt:153` (INTENTIONAL, token definition).
+- **value 0.5 — 8 rows, split:** `HomeScreen.kt:640,689,794` (→ new `AlphaBlurredBackdrop`);
+  `LiveEpgCard.kt:85` (INTENTIONAL, text); `PlayerHud.kt:768,870` (INTENTIONAL, chrome);
+  `OwnTVTextField.kt:105`, `SearchBar.kt:93` (INTENTIONAL, glassy pair).
+- **value 0.78 — 6 rows, split:** `PlayerHud.kt:559` (SANCTIONED); `EpgSyncPrompt.kt:81` (snap
+  → `AlphaScrim`); `HomeScreen.kt:828` (INTENTIONAL, gradient);
+  `LanguageSettingsScreen.kt:154` (INTENTIONAL, text); `PlayerHud.kt:1065` (INTENTIONAL,
+  chrome); `StreamInfoOverlay.kt:57` (INTENTIONAL, panel bg).
+- **value 0.22 — 5 rows, split:** `OwnTVColors.kt:183` (INTENTIONAL, token definition);
+  `SeriesScreen.kt:827` (INTENTIONAL, container); `OwnTVTextField.kt:106`, `SearchBar.kt:94`
+  (INTENTIONAL, glassy pair); `PlayerHud.kt:1076` (INTENTIONAL, chrome).
+- **value 0.18 — 5 rows, split:** `PanelWidthSettingsScreen.kt:322` (INTENTIONAL, container);
+  `LiveEpgCard.kt:95` (INTENTIONAL, track); `SettingsScreen.kt:2238` (INTENTIONAL, border);
+  `LiveEpgCard.kt:107` (INTENTIONAL, divider); `AudioNowPlayingBar.kt:184` (INTENTIONAL, text).
+- **value 0.8 — 4 rows, split:** `SettingsScreen.kt:1581`, `StorageBrowser.kt:209` (snap →
+  `AlphaScrim`); `LanguageSettingsScreen.kt:160,566` (INTENTIONAL, icon/text tint).
+- **value 0.72 — 4 rows, split:** `PlayerHud.kt:551` (SANCTIONED); `ShellHeader.kt:230`
+  (SANCTIONED, WeatherGlyph); `LiveEpgCard.kt:115` (INTENTIONAL, text); `SyncStatusPill.kt:124`
+  (INTENTIONAL, container).
+- **value 0.4 — 4 rows, all INTENTIONAL:** `HomeScreen.kt:1193` (track), `PosterCard.kt:135`
+  (track), `NavMenuSettingsScreen.kt:169` (icon), `LiveEpgCard.kt:126` (text).
+- **value 0.16 — 4 rows, split:** `PlayerHud.kt:1092,1172,1195` (→ new `AlphaHudFocusFill`,
+  exact-duplicate `focusedContainerColor` across `SpeedButton`/`EngineToggle`/`CtrlButton`);
+  `CountBadge.kt:30` (INTENTIONAL, container).
+- **value 0.25 — 4 rows, all INTENTIONAL:** `HomeScreen.kt:737` (track),
+  `LanguageSettingsScreen.kt:578` (container), `ShellHeader.kt:167` (divider),
+  `TrailerPlayerScreen.kt:195` (track).
+- **value 0.82 — 3 rows, split:** `CategoryBrowserOverlay.kt:82`, `ChannelListOverlay.kt:89`
+  (→ new `AlphaPanelFill`); `PlayerHud.kt:1128` (SANCTIONED).
+- **value 0.65 — 3 rows, all → new `AlphaScrimLight`:** `AvatarPickerDialog.kt:57`,
+  `ExitDialog.kt:53`, `IncompleteRestoreDialog.kt:58`.
+- **value 0.6 — 3 rows, all INTENTIONAL:** `LiveScreen.kt:796` (badge), `MiniPlayer.kt:65`
+  (gradient), `PlayerHud.kt:670` (chrome).
+- **value 0.35 — 3 rows, all INTENTIONAL:** `HomeScreen.kt:941` (track),
+  `AudioNowPlayingBar.kt:334` (dim), `CategoryRail.kt:248` (border).
+- **value 0.3 — 3 rows, all INTENTIONAL:** `PlayerHud.kt:767,771` (chrome), `HomeScreen.kt:958`
+  (dim).
+- **value 0.12 — 3 rows, all INTENTIONAL:** `FloatingRail.kt:86` (rail rim, already
+  file-tokenized), `MiniPlayer.kt:123,124` (container).
+- **value 0.9 — 3 rows, split:** `PlayerHud.kt:1283,1316` (SANCTIONED); `UpdateStatusToast.kt:68`
+  (INTENTIONAL, panel fill).
+- **value 0.88 — 2 rows, all INTENTIONAL:** `MoveOrderOverlay.kt:83` (scrim outlier),
+  `ResumeDialog.kt:53` (panel fill).
+- **value 0.14 — 2 rows, all INTENTIONAL:** `FloatingRail.kt:85` (rail rim, already
+  file-tokenized), `SetupScaffold.kt:61` (decorative gradient).
+- **value 0.13 — 2 rows, all INTENTIONAL:** `ShellHeader.kt:129` (border), `OwnTVShell.kt:1229`
+  (dim).
+- **value 0.10 — 2 rows, both INTENTIONAL:** `PlayerHud.kt:1077,1078` (chrome).
+- **value 0.09 — 2 rows, both INTENTIONAL:** `ShellHeader.kt:132` (container),
+  `SetupScaffold.kt:81` (decorative).
+- **value 0.62 — 2 rows, both INTENTIONAL:** `HomeScreen.kt:1182` (badge),
+  `HomeGuideSlice.kt:383` (text).
+- **value 0.68 — 2 rows, both SANCTIONED:** `PlayerHud.kt:552,558`.
+- **value 0.74 — 1 row, SANCTIONED:** `ShellHeader.kt:219` (WeatherGlyph pictorial canvas
+  art).
+- **values 0.95, 0.92, 0.85, 0.58, 0.52, 0.44, 0.43, 0.28, 0.20, 0.08, 0.05 — 1 row each, all
+  INTENTIONAL:** `PlayerHud.kt:1077` (0.95, chrome — a second row at line 1077, distinct from
+  the 0.10 row at the same line number cited above, which is a different literal on that
+  line), `PlayerHud.kt:662` (0.92, chrome), `HomeScreen.kt:914` (0.85, text),
+  `HomeGuideSlice.kt:346` (0.58, container), `HomeGuideSlice.kt:399` (0.52, text),
+  `HomeGuideSlice.kt:405` (0.44, text), `NavDuotoneIcon.kt:25` (0.43, icon),
+  `MiniPlayer.kt:122` (0.28, container), `SetupScaffold.kt:75` (0.20, decorative),
+  `PlayerHud.kt:912` (0.08, chrome), `SetupScaffold.kt:62` (0.05, decorative).
 
 ### Reconciliation
 
@@ -632,44 +728,203 @@ metrics — is a computed expression, not a literal, so it was never extracted.
 
 **Existing-token collision sweep:** all 27 distinct `Dimens.kt` values were checked; only one
 produced a shape-congruent match — `PosterProgressHeight`(4dp, `.height()` progress
-track/fill) → **`MIGRATE-EXACT`**, 10 sites. Every other Dimens value that numerically
-coincided with a size-population value (`HeroProgressHeight`(3), `IconTileSize`(42),
-`RailPillSize`(56), `ChannelListWidth`(460), `GapMedium`(16), `HeroBaseWidth`(180),
-`HeroMinCardHeight`(200), the `Gap*`/`ScreenPadding*`/corner-family tokens at 24dp) was
-rejected as shape-mismatched or scope-mismatched (single-screen entanglement, cross-family
-coincidence, or a `Dp`-named-argument shape vs. the token's own `spacedBy`/`Spacer` shape).
+track/fill) → **`MIGRATE-EXACT`**, 10 sites: `DownloadsScreen.kt:303,304`,
+`HomeScreen.kt:735,742,1192,1198`, `LiveScreen.kt:935,937`, `DownloadStatusStrip.kt:103,106`.
+Every other Dimens value that numerically coincided with a size-population value
+(`HeroProgressHeight`(3), `IconTileSize`(42), `RailPillSize`(56), `ChannelListWidth`(460),
+`GapMedium`(16), `HeroBaseWidth`(180), `HeroMinCardHeight`(200), the
+`Gap*`/`ScreenPadding*`/corner-family tokens at 24dp) was rejected as shape-mismatched or
+scope-mismatched (single-screen entanglement, cross-family coincidence, or a
+`Dp`-named-argument shape vs. the token's own `spacedBy`/`Spacer` shape).
 
-**Six clusters were identified within the `.dp` population:**
+#### Cluster 1 — `Modifier.dialogPanel(...)` named arguments (143 rows; 140 are genuine
+`dialogPanel(...)` call sites — 61 `padding=` + 19 `corner=` + 60 of the 63 `width=` rows; the
+remaining 3 `width=` rows belong to other composables and are itemized separately below)
 
-1. **`Modifier.dialogPanel(...)` named arguments (138 rows).** `padding=` (61 rows: 28dp→35
-   sites new token, 24dp→9 snapped Δ−4, 18dp→8 sites new token, 16dp→4 snapped Δ−2, 14dp→4
-   snapped Δ−4, 12dp→1 `INTENTIONAL`); `corner=` (19 rows: 16dp→15 sites new token, 18dp→3
-   snapped Δ−2, 20dp→1 `INTENTIONAL`); `width=` (63 rows: 480dp→11 sites new token, 560dp→9
-   sites new token, 40 rows across 21 magnitudes `INTENTIONAL` — content-driven one-off widths,
-   too visually significant to snap).
-2. **Hairline border/divider stroke (14 rows, all 1dp)** → new `HairlineWidth = 1.dp`, 10
-   files.
-3. **Progress-bar/selection-ring 2dp split (12 rows)** — 6 rows `.height(2.dp)` progress
-   pairs → new `ThinProgressHeight = 2.dp`; 6 rows `.border(2.dp,…)` selection rings → new
-   `SelectionBorderWidth = 2.dp` (kept separate from `FocusBorderWidth`=2.5dp deliberately —
-   different semantic role, aliasing would create hidden coupling).
-4. **Status/genre dot (4 rows, value 8dp)** → new `StatusDotSize = 8.dp`, 4 files
-   (byte-identical `Box(Modifier.size(8.dp).clip(CircleShape)...)`).
-5. **Touch-target sizes (14 rows: 8 at 48dp + 6 at 44dp)** — two real, distinct clusters, not
-   one scale → new `TouchTargetSize = 48.dp` (general UI) and
-   `TouchTargetSizeCompact = 44.dp` (player HUD).
-6. **Icon-size scale (30 rows across 4 magnitudes)** — dominant magnitudes are **18dp and
-   20dp**, not the brief's illustrative 24dp (2 sites only) → new `IconSizeMedium = 18.dp`
-   (11 sites) and `IconSizeLarge = 20.dp` (8 sites, snapping 22dp Δ−2 and 16dp Δ+2 onto them).
+`ui/components/DialogPanel.kt` is a shared modifier factory (`fun Modifier.dialogPanel(width:
+Dp = 440.dp, corner: Dp = Dimens.CardCorner, padding: Dp = 24.dp, ...)`) used by every centered
+popup dialog in the app; its own coded defaults are excluded from the inventory, so every row
+below is a call site **overriding** one of `width`/`corner`/`padding`.
 
-Plus a `widthIn`/`heightIn` `max=`/`min=` cluster (44 rows): one real cross-file cluster
-found, `Dimens.ContentColumnMaxWidth = 640.dp` (4 sites, byte-near-identical
-`Column(widthIn(max=640.dp), CenterHorizontally)`); every other ≥2-site magnitude in the
-bucket (680, 560, 460, 420, 360, 300, 620, 520) was individually checked for a shared call
-shape and correctly held `INTENTIONAL` — none clears the 3-site same-shape floor (a
-cross-shape merge candidate at 680dp, `ProseMaxWidth`, was minted in an earlier drafting pass
-and reverted on review for contradicting this section's own reasoning about the 680dp
-sub-groups).
+**`padding=` (61 rows) — new `Dimens.DialogPanelPadding = 28.dp` + `DialogPanelPaddingCompact = 18.dp`:**
+
+| value | rows | verdict | sites |
+|---|---|---|---|
+| 28 | 35 | `MIGRATE-NEW` — new token, dominant pattern (more sites than the coded default of 24dp) — **18 files, per-file counts:** SettingsScreen.kt 11, BackupScreen.kt 5, ManageSourcesScreen.kt 2, VideoPlayerSettingsScreen.kt 2, BackgroundImageChooserDialog.kt 2, +13 files with 1 each (BulkRenameDialogs.kt, CustomizeItemsScreen.kt, CustomizeScreen.kt, MoveToCategoryDialog.kt, SeriesScreen.kt, EpgSyncPrompt.kt, LanguageSettingsScreen.kt, OpenSubtitlesAccountScreen.kt, AutoFrameRatePrompt.kt, PlayerHud.kt, ResumeDialog.kt, SetTmdbNameDialog.kt, TextInputDialog.kt) |
+| 24 | 9 | `MIGRATE-NEW` (snap) → `DialogPanelPadding`, Δ−4 (also `dialogPanel`'s own coded default — see Notable findings) | `BulkRenameDialogs.kt:363,699,730`, `EpgSourcesScreen.kt:497` (shares its line with a `corner=20.dp` `INTENTIONAL` row below), `OpenSubtitlesAccountScreen.kt:391`, `PanelWidthSettingsScreen.kt:211` (shares its line with a `corner=16.dp` mint row below), `SubtitleDeletePopup.kt:72`, `SubtitleSearchScreen.kt:83`, `PlayerHud.kt:1546` |
+| 18 | 8 | `MIGRATE-NEW` — new token `DialogPanelPaddingCompact` | `GuideCore.kt:307`, `LiveScreen.kt:1023,1188`, `LanguageSettingsScreen.kt:212`, `VideoPlayerSettingsScreen.kt:1023,1120,1247`, `EpgScreen.kt:590` |
+| 16 | 4 | `MIGRATE-NEW` (snap) → `DialogPanelPaddingCompact`, Δ−2 | `CustomizeScreen.kt:809`, `PanelWidthSettingsScreen.kt:242`, `NumberInputDialog.kt:99`, `StepperDialog.kt:85` |
+| 14 | 4 | `MIGRATE-NEW` (snap) → `DialogPanelPaddingCompact`, Δ−4 | `LiveScreen.kt:1104`, `VideoPlayerSettingsScreen.kt:688,758`, `PlayerHud.kt:1605` |
+| 12 | 1 | `INTENTIONAL` — single site, too far from either padding token | `BulkRenameDialogs.kt:552` |
+
+**`corner=` (19 rows) — new `Dimens.DialogPanelCorner = 16.dp`:**
+
+| value | rows | verdict | sites |
+|---|---|---|---|
+| 16 | 15 | `MIGRATE-NEW` — new token, diverges from the coded default `Dimens.CardCorner`(10dp) | `BulkRenameDialogs.kt:552`, `CustomizeScreen.kt:809`, `LiveScreen.kt:1023,1104,1188`, `PanelWidthSettingsScreen.kt:211,242`, `VideoPlayerSettingsScreen.kt:688,758,1023,1120,1247`, `PlayerHud.kt:1605`, `NumberInputDialog.kt:99`, `StepperDialog.kt:85` |
+| 18 | 3 | `MIGRATE-NEW` (snap) → `DialogPanelCorner`, Δ−2 | `EpgScreen.kt:590`, `LanguageSettingsScreen.kt:211`, `StorageBrowser.kt:210` |
+| 20 | 1 | `INTENTIONAL` — single site | `EpgSourcesScreen.kt:497` |
+
+**`width=` (63 rows; 60 genuine `dialogPanel(width=...)`, 3 unrelated) — new `Dimens.DialogPanelWidth = 480.dp` + `DialogPanelWidthWide = 560.dp`:**
+
+| value | rows | verdict | sites |
+|---|---|---|---|
+| 480 | 11 | `MIGRATE-NEW` — new token `DialogPanelWidth` | `BulkRenameDialogs.kt:269`, `CustomizeItemsScreen.kt:396`, `CustomizeScreen.kt:625`, `BackupScreen.kt:520`, `EpgSyncPrompt.kt:85`, `OpenSubtitlesAccountScreen.kt:345`, `SettingsScreen.kt:1678,1977`, `SubtitleDeletePopup.kt:72`, `SetTmdbNameDialog.kt:66`, `TextInputDialog.kt:74` |
+| 560 | 9 | `MIGRATE-NEW` — new token `DialogPanelWidthWide` | `MoveToCategoryDialog.kt:77`, `BackupScreen.kt:375,409,453,590`, `EpgSourcesScreen.kt:497`, `PlayerHud.kt:1546`, `BackgroundImageChooserDialog.kt:69,123` |
+| 420, 460, 520, 500, 440, 640, 760, 680, 290, 576, 340, 384, 330, 280, 300, 430, 380, 620, 260, 320, 360 | 43 (across 21 magnitudes) | `INTENTIONAL` — content-driven one-off widths (mostly `dialogPanel(width=...)`, ~3 of the 43 rows on other composables sharing the `width=` parameter name, e.g. `LanguageSettingsScreen.kt:210`); a dialog-width delta of 20–80dp visibly reflows content, so no snap is offered, only exact reuse or literal | descriptive per-magnitude breakdown, matching the treatment already applied to Cluster 7 below; not exhaustively itemized to `file:line` here (mirrors `section-size.md`'s own level of detail for this specific sub-bucket) |
+
+#### Cluster 2 — hairline border/divider stroke width (14 rows: 12 migrating + 2 `INTENTIONAL`,
+across 8 files for the migrating dozen)
+
+`MIGRATE-NEW` — new token `Dimens.HairlineWidth = 1.dp`, **12 sites, 8 files**:
+`VideoPlayerSettingsScreen.kt:605`, `FloatingRail.kt:208`, `SettingsScreen.kt:2111,2189,2238`,
+`ShellHeader.kt:129,167`, `FocusableSurface.kt:114`, `RoundedPanel.kt:74,98`,
+`HomeGuideSlice.kt:247` (`.border(width = 1.dp, …)`), `SetupScaffold.kt:84`
+(`Stroke(width = 1.dp.toPx())`).
+
+Not included: `ColorPicker.kt:78,141` — `.border(if (editing || focused) 3.dp else 1.dp, …)`,
+judged as one coupled responsive pair (Task 2 precedent), `INTENTIONAL`, not part of the
+hairline cluster. (An earlier draft of this section miscounted this cluster as "14 rows, all
+1dp, 10 files" — corrected here; the token table and Phase 4 backlog already carried the
+correct 12/8 figures.)
+
+#### Cluster 3 — progress-bar/selection-ring 2dp split (12 rows)
+
+- **6 rows** `.height(2.dp)` progress track/fill pairs → new `Dimens.ThinProgressHeight = 2.dp`:
+  `HomeGuideSlice.kt:524,531`, `SeriesScreen.kt:1392,1393`, `LiveEpgCard.kt:94,98`.
+- **6 rows** `.border(2.dp, …)` selection-state emphasis rings → new
+  `Dimens.SelectionBorderWidth = 2.dp` (kept separate from `FocusBorderWidth`=2.5dp — different
+  semantic role, aliasing would create hidden coupling): `BackupScreen.kt:643`,
+  `LanguageSettingsScreen.kt:596`, `OwnTVShell.kt:1238`, `SettingsScreen.kt:1182`,
+  `BrandLockup.kt:58`, `ColorPicker.kt:105`.
+
+#### Cluster 4 — status/genre dot (4 rows, value 8dp)
+
+`MIGRATE-NEW` — new token `Dimens.StatusDotSize = 8.dp`, 4 files, byte-identical
+`Box(Modifier.size(8.dp).clip(CircleShape)...)`: `EpgScreen.kt:764`, `LiveScreen.kt:898`,
+`CategoryRail.kt:288`, `PlayerHud.kt:1253`.
+
+#### Cluster 5 — touch-target sizes (14 rows: 8 at 48dp + 6 at 44dp)
+
+- **48dp (8 sites) → new `Dimens.TouchTargetSize = 48.dp`:** `LiveScreen.kt:650`,
+  `MoviesScreen.kt:795`, `ProfileComponents.kt:176`, `SearchScreen.kt:356`,
+  `SeriesScreen.kt:575`, `ManageProfilesScreen.kt:196`, `SearchBar.kt:120`, `SortChip.kt:39`.
+- **44dp (6 sites) → new `Dimens.TouchTargetSizeCompact = 44.dp`:** `EpgScreen.kt:340`,
+  `VideoPlayerSettingsScreen.kt:579`, `PlayerHud.kt:863,1193` (`.size(44.dp)`),
+  `PlayerHud.kt:1090,1170` (`.heightIn(min = 44.dp)`, `size-namedarg`).
+
+Not included (3 more 44dp rows, `INTENTIONAL`, aspect-ratio-derived poster-thumbnail
+placeholders, not a touch target): `MoviesScreen.kt:913`, `SearchScreen.kt:424`,
+`SeriesScreen.kt:1422` — all `.size(width = 44.dp, height = 62.dp)`.
+
+#### Cluster 6 — icon-size scale (35 rows across 4 magnitudes: 11 new-token + 8 new-token +
+6 snap + 5 snap + 5 responsive-pair note, off the 24-row non-minted tail)
+
+| value | rows | verdict | sites |
+|---|---|---|---|
+| 18 | 11 | `MIGRATE-NEW` — new token `IconSizeMedium` | `MoviesScreen.kt:938`, `SearchScreen.kt:446`, `SeriesScreen.kt:1436`, `LanguageSettingsScreen.kt:161`, `VideoPlayerSettingsScreen.kt:651`, `SetupWizard.kt:309`, `CategoryBrowserOverlay.kt:153`, `SettingsScreen.kt:2171,2243`, `ShellHeader.kt:157`, `MiniPlayer.kt:127` |
+| 20 | 8 | `MIGRATE-NEW` — new token `IconSizeLarge` | `EpgScreen.kt:341`, `LiveScreen.kt:673`, `SearchScreen.kt:382`, `VideoPlayerSettingsScreen.kt:583`, `CategoryRail.kt:282`, `ChannelListOverlay.kt:155`, `MediaListRow.kt:95`, `SearchBar.kt:144` |
+| 22 | 6 | `MIGRATE-NEW` (snap) → `IconSizeLarge`, Δ−2 | `MoviesScreen.kt:919`, `SearchScreen.kt:430`, `SeriesScreen.kt:1428`, `VideoPlayerSettingsScreen.kt:638`, `SettingsScreen.kt:2153`, `PlayerHud.kt:1201` |
+| 16 | 5 | `MIGRATE-NEW` (snap) → `IconSizeMedium`, Δ+2 | `ShellHeader.kt:140`, `PlayerHud.kt:1182`, `DownloadStatusStrip.kt:95`, `SortChip.kt:54`, `StorageBrowser.kt:236` |
+
+Contrary to the brief's illustrative "24dp icons" example, 24dp icons exist at only 2 sites
+(`DownloadsScreen.kt:258`, `LiveScreen.kt:656` — in the non-minted tail below).
+
+**Responsive-pair exclusion:** `OwnTVButton.kt:80` —
+`Modifier.size(if (compact) 14.dp else 20.dp)` — is judged one coupled `INTENTIONAL` unit
+(Task 2/`ColorPicker.kt:78,141` precedent), not split into `IconSizeLarge`'s 20dp count; both
+branches sit in the non-minted tail below.
+
+**Non-minted icon-context tail — 24 rows across 11 magnitudes, all `INTENTIONAL` (no
+cluster reaches the 3-site same-shape floor):**
+
+| value | rows | sites |
+|---|---|---|
+| 40 | 4 | `AvatarPickerDialog.kt:100` (`ProfileIcon`), `EpgSyncPrompt.kt:123`, `ProfileGate.kt:149`, `SeriesScreen.kt:848` (`.height(40.dp)`) |
+| 14 | 4 | `ProfileGate.kt:122`, `VideoPlayerSettingsScreen.kt:718`, `PlayerHud.kt:1629`, `OwnTVButton.kt:80` (`if (compact)` branch) |
+| 36 | 3 | `HomeScreen.kt:1168`, `PosterCard.kt:83`, `MediaDetailsScreen.kt:154` (`.height(36.dp)`) |
+| 28 | 3 | `AddSourceChooserScreen.kt:100`, `LanguageSettingsScreen.kt:131`, `SetupWizard.kt:423` |
+| 24 | 2 | `DownloadsScreen.kt:258`, `LiveScreen.kt:656` |
+| 56 | 2 | `LiveScreen.kt:760`, `StateViews.kt:133` |
+| 64 | 2 | `HomeScreen.kt:668`, `HomeScreen.kt:816` |
+| 20 | 1 | `OwnTVButton.kt:80` (`else` branch — the exceptional tail member of an otherwise-minted magnitude) |
+| 12 | 1 | `PosterCard.kt:97` |
+| 15 | 1 | `SearchScreen.kt:474` |
+| 42 | 1 | `HomeScreen.kt:711` |
+
+Excluded from this tail (already counted under Cluster 5's `TouchTargetSize`, not
+double-listed): `MoviesScreen.kt:795`, `SearchScreen.kt:356`, `SeriesScreen.kt:575`.
+
+#### Elevation (1 row)
+
+`FloatingRail.kt:192` — `.shadow(elevation = 14.dp, …)`, split across lines so it landed in
+`size-namedarg`. `INTENTIONAL` — single site, no other `shadow(elevation=...)` call anywhere
+in the app to cluster with.
+
+#### Cluster 7 — `widthIn`/`heightIn` `max=`/`min=` content-width caps (37 + 7 = 44 rows)
+
+| value | rows | verdict | sites/reason |
+|---|---|---|---|
+| 640 | 4 | `MIGRATE-NEW` — new token `Dimens.ContentColumnMaxWidth` | `RemoteBackupRestoreScreen.kt:79,165`, `RemoteSetupScreen.kt:76`, `AvatarPickerDialog.kt:68` — byte-near-identical `Column(widthIn(max=640.dp), CenterHorizontally)` |
+| 680 | 6 | `INTENTIONAL` — 3 sub-groups, none clears the floor | `FocusableSurface` row-width cap (2, `EpgSourcesScreen.kt:436,461`); `OwnTVTextField` form-field cap (3, `EpgSourcesScreen.kt:385,388,392` — real but single-screen); caption cap (1, `BackupScreen.kt:151` — different shape, numeric coincidence only) |
+| 460 | 4 | `INTENTIONAL` | `ExitDialog.kt:60`, `StreamInfoOverlay.kt:55`, `StateViews.kt:108` (bare `widthIn(max=460.dp)`, unrelated components); `LanguageSettingsScreen.kt:226` (`heightIn`, different shape) |
+| 560 | 4 | `INTENTIONAL` | `AddSourceScreen.kt:350`, `PlayerHud.kt:651` (same shape as the 640dp cluster, only 2 sites); `SetupWizard.kt:488,491` (same-screen caption pair) |
+| 360 | 3 | `INTENTIONAL` | `MoviesScreen.kt:821`, `SeriesScreen.kt:592` (near-identical plot-caption pattern, 2 sites); `PlayerHud.kt:1126` (unrelated) |
+| 420 | 3 | `INTENTIONAL` | `SetupWizard.kt:360`, `StateViews.kt:147` (bare `widthIn`, 2 sites); `SettingsScreen.kt:1321` (`heightIn`, different shape) |
+| 300, 620, 520 | 2 each | `INTENTIONAL` | no shared call shape within any pair |
+| 180, 700, 240, 220, 380, 140 | 1 each | `INTENTIONAL` | single sites |
+| 1100 | 1 | `SANCTIONED` | `SubtitleOverlay.kt:100` — `.widthIn(max = 1100.dp * sizeScale)`, the sanctioned `sizeScale`-hand-tuned-metric clause (sibling of `SubtitleOverlay.kt:103` in the spacing family) |
+| 42, 110, 260, 78, 300 (`min=`) | 1 each | `INTENTIONAL` | single sites (the `min=44.dp` pair is handled under Cluster 5, not here) |
+
+#### Remaining `size-namedarg` odds and ends (14 rows, `INTENTIONAL` unless noted)
+
+- `SkeletonRowPlaceholder(cardWidth=, cardHeight=)` (4 rows, `HomeScreen.kt:1347,1348`) —
+  placeholder dimensions matching real card sizes elsewhere.
+- `GridCells.Adaptive(minSize = 130.dp)` (2 rows, `MoviesScreen.kt:432`, `SeriesScreen.kt:494`)
+  — exact-duplicate poster-grid cell minimum, only 2 sites, below the 3-site floor.
+- **M4 — 3 rows are an extraction false positive, not call sites:** `ProfileComponents.kt:59`
+  (`width: androidx.compose.ui.unit.Dp = 480.dp,`), `ProfileComponents.kt:60`
+  (`padding: androidx.compose.ui.unit.Dp = 28.dp,`), `VideoPlayerSettingsScreen.kt:1304`
+  (`height: androidx.compose.ui.unit.Dp = 120.dp,`) — these are function **default-parameter
+  declarations**, not call sites; the extractor's `val/var`- and typed-default exclusion checks
+  for a bare `:` immediately before the matched identifier, and a fully-qualified type name
+  (`androidx.compose.ui.unit.Dp`) puts a `.` there instead, so the check doesn't fire. There is
+  no call-site literal to migrate at any of the 3 — classified `INTENTIONAL`, but they
+  inflate the family's 473-row total by 3 (see §7).
+- `CategoryBrowserOverlay.kt:103`'s `horizontal =`/`vertical =` pair (2 rows) and
+  `OwnTVShell.kt:650,651`'s `end =`/`bottom =` pair (2 rows) — single-site component-internal
+  insets.
+- `VideoPlayerSettingsScreen.kt:1259`'s `height = 92.dp` (1 row, subtitle-preview-panel
+  height) — single site.
+- **`SANCTIONED`, not `INTENTIONAL`:** `SubtitleOverlay.kt:81`'s `horizontal = 40.dp *
+  sizeScale` — the same `sizeScale`-hand-tuned-metric clause sanctioned at `:100`/`:103`.
+
+### `SANCTIONED` values (2 rows)
+
+| site | value | reason |
+|---|---|---|
+| `SubtitleOverlay.kt:81` | `horizontal = 40.dp * sizeScale` | Sanctioned "SubtitleOverlay hand-tuned 24/30/Medium metrics" exception — user-adjustable subtitle rendering, scaled by `sizeScale`. |
+| `SubtitleOverlay.kt:100` | `.widthIn(max = 1100.dp * sizeScale)` | Same sanctioned clause — sibling expression to `:81` and to the spacing family's already-sanctioned `SubtitleOverlay.kt:103`. |
+
+### `INTENTIONAL` values — grouped, one-line reasons
+
+| group | rows | reason |
+|---|---|---|
+| sp: pre-theme fallback screen | 4 | `DatabaseRecoveryScreen.kt:53,56,60,67` — cannot reference `MaterialTheme.typography`, renders before DI/theme init. |
+| sp: wordmark, tracking nudges | 4 | `OwnTVShell.kt:1248` (custom `buildAnnotatedString`), `LiveEpgCard.kt:139`, `PlayerHud.kt:921,927` — one-off, hand-tuned per site. |
+| dialogPanel `padding=`/`corner=` singles | 2 | `BulkRenameDialogs.kt:552` (12dp), `EpgSourcesScreen.kt:497` (corner 20dp) — too far from any token, single site each. |
+| dialogPanel `width=` one-offs (incl. 3 non-`dialogPanel` `width=` rows) | 43 | Content-driven dialog/component widths across ~22 magnitudes; a 20–80dp delta visibly reflows content, so no snap is offered — see Cluster 1's `width=` table. |
+| hairline responsive pair | 2 | `ColorPicker.kt:78,141` — `if (editing \|\| focused) 3.dp else 1.dp`, one coupled unit (Task 2 precedent). |
+| icon-context tail | 24 | 11 magnitudes, none reaching the 3-site same-shape floor — see Cluster 6's tail table. |
+| touch-target-shaped, not touch targets | 3 | `MoviesScreen.kt:913`, `SearchScreen.kt:424`, `SeriesScreen.kt:1422` — aspect-ratio-derived poster-thumbnail placeholders at 44dp, unrelated to the `TouchTargetSizeCompact` role. |
+| elevation | 1 | `FloatingRail.kt:192` — single `shadow(elevation=...)` call in the whole app. |
+| `widthIn`/`heightIn` non-minted | 37 | See Cluster 7's full breakdown — every ≥2-site magnitude individually checked for a shared call shape; none clears the floor. |
+| `size-namedarg` odds and ends | 11 | `SkeletonRowPlaceholder` pair (4), `GridCells.Adaptive` pair (2), `CategoryBrowserOverlay.kt:103` pair (2), `OwnTVShell.kt:650,651` pair (2), `VideoPlayerSettingsScreen.kt:1259` (1); see the odds-and-ends list above for exact sites. |
+| extraction false positives (M4) | 3 | `ProfileComponents.kt:59,60`, `VideoPlayerSettingsScreen.kt:1304` — `Dp`-typed default-parameter declarations, not call sites; see the odds-and-ends note above and §7. |
+| **size-tag component dims (remainder)** | **150** | The bulk of the family's `INTENTIONAL` population: ordinary one-off `.size()`/`.height()`/`.width()` component dimensions scattered across the long tail of `inventory-size.tsv`'s histogram (dozens of magnitudes at 1–3 rows each — badge sizes, panel widths, card heights, dialog-internal spacing, etc.), each hand-tuned to its own component and never repeating enough to clear the 3-site same-shape floor used everywhere else in this audit. Not itemized value-by-value in `section-size.md` or here — this is the family-level reason the size family runs 60% `INTENTIONAL` (far higher than spacing's 2.5%): component dimensions are inherently more heterogeneous than a shared gap scale. |
+
+Row counts: 8 (sp) + 2 + 43 + 2 + 24 + 3 + 1 + 37 + 11 + 3 + 150 (dp) = 284, matching the
+family's `INTENTIONAL` total exactly.
 
 ### Classification summary
 
@@ -741,6 +996,18 @@ literal here is either **SANCTIONED** (theme home or documented exception) or a 
 
 ### 5a. Color — 137 rows (`Color(0x........)` literals)
 
+**Deviation from the spec's per-family distinct-value histogram, noted explicitly (matching
+the same-spirit deviation the bucket-based color/corner treatment already takes from the
+four-bucket rubric, per the intro to this section):** color's 137 rows span ~120 distinct hex
+values, the overwhelming majority appearing exactly once (each theme swatch or pictorial-palette
+entry is, by construction, a unique color) — a full per-value histogram would be a near-verbatim
+reproduction of `inventory-color.tsv` with little analytical value. The per-file/per-category
+table below is the substantive structure for this family. The few values that do repeat:
+`0xFFFFFFFF` (white) 9×, `0xFFEF4444` (the error-red finding below) 4×, `0xFF0C0C0C` 3×,
+and ten values (`0xFF191C1E`, `0xFF52DBC8`, `0xFF6FF8E4`, `0xFF8A8A94`, `0xFFC5E7FF`,
+`0xFFDDF8FF`, `0xFFFAFBFC`, `0xFFFFC24A`, `0xFFFFD166`, `0xFFFFDDB3`) 2× each — all traced to
+theme/pictorial files except `0xFFEF4444` and `0xFF0C0C0C` (see findings below).
+
 | file | rows | verdict |
 |---|---|---|
 | `ui/theme/Color.kt` | 50 | SANCTIONED — theme file, the token home itself |
@@ -780,6 +1047,20 @@ literal here is either **SANCTIONED** (theme home or documented exception) or a 
 None of the 15 residual rows are chromatic-and-unjustified except finding #1.
 
 ### 5b. Corner — 57 rows (`RoundedCornerShape(...)`/`CornerRadius(...)` literals)
+
+**Distinct-value histogram (16 values):**
+
+| value | rows | value | rows | value | rows |
+|---|---|---|---|---|---|
+| 50 | 21 | 1.dp | 2 | 0.07 | 1 |
+| 2.dp | 9 | 100 | 2 | 0.10 | 1 |
+| 0.01 | 4 | 2 | 2 | 0.11 | 1 |
+| 0.02 | 4 | 28 | 2 | 0.30 | 1 |
+| 3.dp | 3 | 999.dp | 2 | 4.dp | 1 |
+| 0.05 | 1 | | | | |
+
+(The fractional 0.01–0.30 values are `OwnTVAvatar.kt`'s `CornerRadius(s * 0.NNf)` canvas-art
+scale factors, not dp literals — see the sanctioned-pictorial row below.)
 
 | category | rows | verdict |
 |---|---|---|
@@ -822,9 +1103,9 @@ diagnostic instrumentation confirming nothing vanished silently. Per family:
 | spacing | 1309 | 1931 | 622 | By design: the broad pattern counts **every** `N.dp` literal in scope, unfiltered — so this residual is dominated by literals that legitimately belong to the size/corner/shadow/border families (captured separately in their own inventories), not misses within spacing itself. Not further decomposed line-by-line beyond this documented explanation — **uninvestigated at the individual-line level**. |
 | motion | 114 | 162 | 48 | The broad pattern matches any `tween(`/`delay(`/`animationSpec =` occurrence; the narrow extractor deliberately excludes `delay(...)`/`delayMillis=` calls in `*ViewModel.kt` files (a filename heuristic approximating "outside composables") and requires the specific call shapes documented in `inventory-summary.txt`. The residual is expected to be dominated by ViewModel-side delays and non-duration `animationSpec` arguments (e.g. spring specs without a literal `durationMillis`) — **uninvestigated at the individual-line level**; no re-audit of this residual was performed since Task 1's exclusions were reviewed and confirmed intentional. |
 | alpha | 183 | 201 | 18 | Explained: the broad pattern searches for the bare text `alpha =`, while the narrow extractor requires a decimal `0.N`-prefixed literal (plus the `.alpha(N)`/`targetValue` variants documented in §Method). The 18-row gap is non-decimal `alpha =` assignments (e.g. `alpha = 1f`, or a bare variable reference) — deliberately excluded because they are not hardcoded literals to migrate, not a miss. |
-| size | 473 | 1568 | 1095 | Same shape as spacing's residual, and the largest in the audit: the broad pattern counts every trigger-keyword occurrence unfiltered, including the same spacing/corner/shadow cross-family overlap described above (viewed from the size side of the boundary instead of the spacing side). The two families' broad counts double-count each other's legitimately-excluded literals by construction. **Uninvestigated at the individual-line level** beyond this documented boundary explanation; Task 1's round-3 fix (span-scoped, per-occurrence extraction) already eliminated the one confirmed *bug* in this area (19 lines that had been double-tagged across both TSVs — now verified zero overlap). |
+| size | 473 | 1568 | 1095 | Same shape as spacing's residual, and the largest in the audit: the broad pattern counts every trigger-keyword occurrence unfiltered, including the same spacing/corner/shadow cross-family overlap described above (viewed from the size side of the boundary instead of the spacing side). The two families' broad counts double-count each other's legitimately-excluded literals by construction. **Uninvestigated at the individual-line level** beyond this documented boundary explanation; Task 1's round-3 fix (span-scoped, per-occurrence extraction) already eliminated the one confirmed *bug* in this area (19 lines that had been double-tagged across both TSVs — now verified zero overlap). **A separate, smaller false positive is fully explained (not residual, but disclosed here for completeness):** 3 of the 473 extracted rows (`ProfileComponents.kt:59,60`, `VideoPlayerSettingsScreen.kt:1304`) are `Dp`-typed function default-parameter declarations (`paramName: androidx.compose.ui.unit.Dp = N.dp`), not call sites — the extractor's default-parameter exclusion checks for a bare `:` immediately before the matched identifier, and the fully-qualified type name interposes a `.` instead, so the check doesn't fire. These 3 rows inflate the family's 473-row total by 3; they carry no migratable literal and are classified `INTENTIONAL` in §5 (see the `size-namedarg` odds-and-ends note there). |
 | color | 137 | 137 | 0 | Fully explained — every `Color(0x...)` literal in scope is already 8-digit ARGB, so the broad (any-hex-length) and narrow (8-digit-only) patterns coincide exactly. No residual. |
-| corner | 57 | 239 | 182 | Explained as a **counting-unit artifact, not missed literals**: the broad count is call-site *occurrences*, while the classified 57 is a *literal* count — a single `RoundedCornerShape(topStart=…, topEnd=…)` call site with multiple corner arguments contributes 1 to the broad count but multiple literals to the classified 57, which is why the naive "broad − narrow" arithmetic doesn't map to missed defects here. No additional unclassified corner literals were found; §6 accounts for all 57 already-extracted rows exactly. |
+| corner | 57 | 239 | 182 | **Positive evidence the 2026-08-17 corner consolidation landed, not a gap.** The broad count (239) is `RoundedCornerShape(`/`CornerRadius(` call-site *occurrences*; the classified 57 is a *literal* count. Of the 239 call sites, 183 yield zero raw literals at all — 175 of those already pass a `Dimens.*` corner token as their argument (already tokenized, exactly what the consolidation intended), and the remaining 8 yield no literal for other reasons (e.g. a component default with no explicit corner argument). The other 56 call sites each yield at least one raw literal, totaling the 57 classified rows — one site (`AudioNowPlayingBar.kt:308`'s `CornerRadius(barW / 2f, barW / 2f)`) contributes 2 literals from a single call, which is the entire source of the 56-sites-vs-57-literals difference. So: 175/239 (73%) of all corner call sites already reference a named token, corroborating §6's "already substantially consolidated" framing directly, rather than the residual being an unexplained gap. |
 
 **Total residual-unexplained across all families: 622 + 48 + 18 + 1095 + 0 + 182 = 1965.**
 None of this total represents literals known to exist and left unclassified within a family's
@@ -877,19 +1158,25 @@ largest, lowest-risk win in the whole audit.
 
 Gate: a build + lint pass is sufficient (Δ0 by construction); no screenshot diff required.
 
-### Phase 2 — Motion tokens (69 rows, zero visual change)
+### Phase 2 — Motion tokens (68 code sites, zero visual change)
 
 Mint the 6 named constants in `Animations.kt`, then mechanically replace each literal at its
 sites. Every replacement is Δ0 — same literal value, just named.
 
 | literal (call shape) | replacement | rows |
 |---|---|---|
-| `60` (`delay(...)`) | new `Animations.FocusSettleDelayMs` | 35 |
+| `60` (`delay(...)`) | new `Animations.FocusSettleDelayMs` | 34 |
 | `80` (`delay(...)`) | new `Animations.FocusSettleDelayLongMs` | 18 |
 | `50` (`delay(...)`, excl. `MoveOrderOverlay.kt:66`) | new `Animations.FocusSettleDelayShortMs` | 7 |
 | `140` (`ownTvTween(...)`) | new `Animations.MotionColorMs` | 4 |
 | `160` (`ownTvTween(...)`) | new `Animations.MotionAccentBarMs` | 2 |
 | `220` (`ownTvTween(...)`) | new `Animations.MotionRailMs` | 3 |
+
+(68 real code sites. The `FocusSettleDelayMs` population is 35 rows in the inventory, but one
+of them — `LiveScreen.kt:214` — is a comment referencing `delay(60)`, not code; it needs no
+edit, so it's excluded from this execution table. The family's 69-row `MIGRATE-NEW`
+classification total in §3 still counts it, since that total is an inventory-row count, not an
+edit count.)
 
 Gate: build pass; optionally spot-check the 3 `FocusSettleDelay*` sites for behavioral
 regression given the delay values gate real focus-restore timing, not just visuals.
@@ -972,7 +1259,10 @@ dedicated screenshot/visual-diff gate given the site count, the largest of any p
 backlog.
 
 **Total rows addressed across all phases:** 5 (Phase 0) + 546 (Phase 1) + 69 (Phase 2) + 76
-(Phase 3) + 187 (Phase 4) + 728 (Phase 5) = 1611 of 2273 audited literals (70.9%). The
+(Phase 3) + 187 (Phase 4) + 728 (Phase 5) = 1611 of 2273 audited literals (70.9%), counting by
+inventory row (matching each family's reconciliation total in §§2–6). Phase 2's own execution
+table shows 68 real code edits, since 1 of the 69 `MIGRATE-NEW` motion rows is a comment
+reference (`LiveScreen.kt:214`) with no code to change — see the note under Phase 2. The
 remaining 662 rows stay as literals by design, each carrying a documented one-line reason in
 §§2–6:
 
