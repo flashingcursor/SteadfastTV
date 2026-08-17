@@ -19,7 +19,6 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
@@ -76,7 +75,9 @@ fun downloadStripFor(rows: List<DownloadEntity>): DownloadStripState? {
 @Composable
 fun DownloadStatusStrip(state: DownloadStripState, modifier: Modifier = Modifier) {
     val colors = OwnTVTheme.colors
-    val accent = if (state.isError) Color(0xFFEF4444) else colors.primary
+    // Theme error role, not a hardcoded red (token-audit Phase 0): favorite is wired to
+    // DarkError/LightError in OwnTVColors.
+    val accent = if (state.isError) colors.favorite else colors.primary
     val label = when (state.kind) {
         DownloadStripKind.DOWNLOADING -> pluralStringResource(R.plurals.content_downloading_items, state.count, state.count)
         DownloadStripKind.QUEUED -> pluralStringResource(R.plurals.content_queued_items, state.count, state.count)

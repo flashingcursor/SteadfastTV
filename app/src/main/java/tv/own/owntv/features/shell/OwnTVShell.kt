@@ -82,6 +82,7 @@ import tv.own.owntv.features.shell.components.ShellHeader
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.compose.ui.res.stringResource
+import tv.own.owntv.ui.components.BrandMarkShape
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
@@ -1221,7 +1222,7 @@ private fun ShellWatermark(modifier: Modifier = Modifier) {
     val colors = OwnTVTheme.colors
     val own = stringResource(R.string.brand_own)
     val tv = stringResource(R.string.brand_tv)
-    val markShape = RoundedCornerShape(percent = 28)
+    val markShape = BrandMarkShape
     val markSize = 28.dp
     Row(
         modifier = modifier

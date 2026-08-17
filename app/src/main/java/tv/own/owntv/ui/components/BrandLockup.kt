@@ -25,6 +25,12 @@ import tv.own.owntv.ui.theme.AccentCyan
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
+ * The OwnTV squircle play-mark's shape — shared by [BrandLockup] and the shell watermark
+ * (token-audit Phase 0: the percent value was previously duplicated in both files).
+ */
+val BrandMarkShape = RoundedCornerShape(percent = 28)
+
+/**
  * Theme-adaptive "OwnTV" wordmark. The provided logo asset has a near-white "Own" that vanishes on
  * AMOLED black, so the in-app lockup is drawn from brand tokens instead and stays legible on both
  * themes. The cyan play-mark and the "TV" accent are constant brand colors.
@@ -49,7 +55,7 @@ fun BrandLockup(
     val tv = stringResource(R.string.brand_tv)
 
     val mark: @Composable () -> Unit = {
-        val markShape = RoundedCornerShape(percent = 28)
+        val markShape = BrandMarkShape
         androidx.compose.foundation.layout.Box(
             modifier = Modifier
                 .size(markSize.dp)
