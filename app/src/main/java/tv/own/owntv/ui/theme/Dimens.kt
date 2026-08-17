@@ -28,7 +28,7 @@ object Dimens {
 
     // MD3 settings tonal icon tile
     val IconTileSize = 42.dp
-    val IconTileCorner = 12.dp
+    val IconTileCorner = 6.dp  // halved with the corner scale (2026-08-17)
 
     val GapTiny = 4.dp
     val GapSmall = 8.dp
@@ -44,15 +44,16 @@ object Dimens {
     // Poster tiles (PosterCard) — values match the shipped look exactly; centralized for tuning.
     val PosterProgressHeight = 4.dp
 
-    // M3 expressive shape scale (larger, rounder than the defaults).
     // App-wide corner scale (2026-08-17 consolidation): components must round their corners
     // with these tokens, never dp literals, so the app's border radius stays centrally tunable.
-    val CornerXSmall = 8.dp    // small chips/badges/inputs
-    val CornerSmall = 12.dp
-    val CornerMedium = 16.dp
-    val CornerLarge = 24.dp
-    val CardCorner = 20.dp
-    val PanelCorner = 22.dp    // the large RoundedPanel browse containers
+    // Halved from the original M3-expressive values (8/12/16/24/20/22) on user direction the
+    // same day — the app now reads noticeably squarer.
+    val CornerXSmall = 4.dp    // small chips/badges/inputs
+    val CornerSmall = 6.dp
+    val CornerMedium = 8.dp
+    val CornerLarge = 12.dp
+    val CardCorner = 10.dp
+    val PanelCorner = 11.dp    // the large RoundedPanel browse containers
 
     val FocusBorderWidth = 2.5.dp
 
@@ -62,8 +63,8 @@ object Dimens {
     val HeroBaseWidth = 180.dp
     val HeroMetaHeight = 84.dp
     val HeroGap = 14.dp
-    val HeroCardCorner = 24.dp
-    val HeroPosterCorner = 14.dp
+    val HeroCardCorner = 12.dp // halved with the corner scale (2026-08-17)
+    val HeroPosterCorner = 7.dp
     val HeroMaxCardHeight = 354.dp
     val HeroMinCardHeight = 200.dp
     val HeroOverlayMaxWidth = 400.dp
