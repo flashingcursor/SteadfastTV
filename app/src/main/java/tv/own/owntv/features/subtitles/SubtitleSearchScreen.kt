@@ -82,7 +82,7 @@ fun SubtitleSearchScreen(
         ) {
             Column(Modifier.dialogPanel(width = 620.dp, padding = 24.dp)) {
                 Text(stringResource(tv.own.owntv.R.string.player_subtitles_search_title), style = MaterialTheme.typography.titleLarge, color = OwnTVTheme.colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 quotaNote?.let { quota ->
                     Text(
                         if (quota.reset != null) {
@@ -146,7 +146,7 @@ fun SubtitleSearchScreen(
                             onClose = onDismiss,
                         )
                     }
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(Dimens.GapMedium))
                     OpenSubtitlesAttribution()
                 }
             }
@@ -196,7 +196,7 @@ private fun ResultsList(
                     contentAlignment = Alignment.CenterStart,
                     surface = GlassSurface.DIALOGS,
                 ) { _ ->
-                    Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
                                 r.languageName ?: r.language ?: stringResource(tv.own.owntv.R.string.player_subtitles_subtitle),
@@ -218,7 +218,7 @@ private fun ResultsList(
                 }
             }
         }
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             OwnTVButton(stringResource(tv.own.owntv.R.string.player_subtitles_edit_search), onClick = onEdit, style = OwnTVButtonStyle.SECONDARY)
             onShowAll?.let { OwnTVButton(stringResource(tv.own.owntv.R.string.player_subtitles_all_languages), onClick = it, style = OwnTVButtonStyle.SECONDARY) }
@@ -237,7 +237,7 @@ private fun EditSearchField(initial: String, onSubmit: (String) -> Unit, onCance
         Text(stringResource(tv.own.owntv.R.string.player_subtitles_edit_search), style = MaterialTheme.typography.titleSmall, color = OwnTVTheme.colors.onSurface)
         Spacer(Modifier.height(10.dp))
         OwnTVTextField(value = value, onValueChange = { value = it }, label = stringResource(tv.own.owntv.R.string.player_subtitles_title_label), modifier = Modifier.fillMaxWidth(), focusRequester = fieldFocus)
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             OwnTVButton(stringResource(tv.own.owntv.R.string.common_cancel), onClick = onCancel, style = OwnTVButtonStyle.SECONDARY)
             Spacer(Modifier.weight(1f))
@@ -273,7 +273,7 @@ private fun Message(
 @Composable
 private fun Centered(content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit) {
     Column(
-        Modifier.fillMaxWidth().padding(vertical = 24.dp),
+        Modifier.fillMaxWidth().padding(vertical = Dimens.GapLarge),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = content,
     )

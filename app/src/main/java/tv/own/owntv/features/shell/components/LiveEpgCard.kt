@@ -33,6 +33,7 @@ import tv.own.owntv.R
 import tv.own.owntv.core.parser.XtEpgEntry
 import tv.own.owntv.features.live.EpgNowNext
 import tv.own.owntv.ui.format.rememberSystemTimeFormatter
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -53,7 +54,7 @@ fun LiveEpgCard(epg: EpgNowNext?, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
     ) {
         epg.now?.let { entry ->
             Column(Modifier.widthIn(max = 300.dp)) {

@@ -119,7 +119,7 @@ fun SearchScreen(
             .padding(horizontal = Dimens.ScreenPaddingH, vertical = Dimens.ScreenPaddingV),
     ) {
         Text(stringResource(R.string.search_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         SearchBar(
             query = query,
             onQueryChange = vm::setQuery,
@@ -191,7 +191,7 @@ private fun LauncherEmptyState(
                 SectionLabel(stringResource(R.string.search_recent))
                 PillChip(label = stringResource(R.string.search_clear), onClick = onClearRecent)
             }
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+            Column(verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall), modifier = Modifier.fillMaxWidth()) {
                 recent.chunked(4).forEach { rowTerms ->
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         rowTerms.forEach { term ->
@@ -241,7 +241,7 @@ private fun ResultsWithDetail(
     Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
         LazyColumn(
             modifier = Modifier.weight(1f).fillMaxHeight().focusGroup(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             if (heading != null) {
                 item(key = "heading") { SectionLabel(heading) }
@@ -343,7 +343,7 @@ private fun DetailPane(
         modifier = modifier
             .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(colors.surfaceContainerLowest)
-            .padding(16.dp),
+            .padding(Dimens.GapMedium),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Box(
@@ -380,7 +380,7 @@ private fun DetailPane(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 OwnTVIcon(OwnTVIcon.PLAY, tint = colors.onPrimary, modifier = Modifier.size(20.dp))
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(Dimens.GapSmall))
                 Text(
                     actionLabel,
                     style = MaterialTheme.typography.titleSmall,
@@ -466,7 +466,7 @@ private fun PillChip(
         Row(
             modifier = Modifier
                 .background(colors.surfaceContainerHigh, RoundedCornerShape(999.dp))
-                .padding(horizontal = 16.dp, vertical = 9.dp),
+                .padding(horizontal = Dimens.GapMedium, vertical = 9.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(7.dp),
         ) {

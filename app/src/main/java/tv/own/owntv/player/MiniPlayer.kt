@@ -33,6 +33,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVIcon
+import tv.own.owntv.ui.theme.Dimens
 
 /**
  * The docked mini-player (dock-to-corner model). The mpv surface is rendered behind this by the shell;
@@ -99,7 +100,7 @@ fun MiniPlayer(
         Row(
             modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().alpha(controlsAlpha)
                 .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.7f))))
-                .padding(8.dp).horizontalScroll(rememberScrollState()).focusGroup(),
+                .padding(Dimens.GapSmall).horizontalScroll(rememberScrollState()).focusGroup(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {

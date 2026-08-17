@@ -350,9 +350,9 @@ private fun OnNowChannelItem(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 14.dp, end = 12.dp, top = 9.dp, bottom = 9.dp),
+                .padding(start = Dimens.HeroGap, end = 12.dp, top = 9.dp, bottom = 9.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap),
         ) {
             ChannelLogoBadge(channel = channel)
 

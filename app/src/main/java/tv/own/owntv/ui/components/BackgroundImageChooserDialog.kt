@@ -68,7 +68,7 @@ fun BackgroundImageChooserDialog(
     ) {
         Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
             Text(stringResource(R.string.setup_background_image), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.setup_background_image_description),
                 style = MaterialTheme.typography.bodyMedium,
@@ -122,21 +122,21 @@ fun RemoteBackgroundDialog(
     ) {
         Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(stringResource(R.string.setup_send_from_phone), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.setup_phone_background_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             when (state) {
                 tv.own.owntv.core.companion.CompanionServerState.Idle,
                 tv.own.owntv.core.companion.CompanionServerState.Starting,
                 -> Text(stringResource(R.string.setup_opening_server), style = MaterialTheme.typography.bodyLarge, color = colors.onSurfaceVariant)
                 is tv.own.owntv.core.companion.CompanionServerState.Listening -> {
                     Text(stringResource(R.string.setup_enter_pin_browser), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     Text(
                         state.pin,
                         style = MaterialTheme.typography.headlineLarge,
@@ -150,7 +150,7 @@ fun RemoteBackgroundDialog(
                             bitmap = qr,
                             contentDescription = stringResource(R.string.common_qr_code_companion_url),
                             // White backing panel like the backup screens — a QR on a dark/glass panel may not scan.
-                            modifier = Modifier.size(160.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(Color.White).padding(8.dp),
+                            modifier = Modifier.size(160.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(Color.White).padding(Dimens.GapSmall),
                             contentScale = androidx.compose.ui.layout.ContentScale.Fit,
                         )
                         Spacer(Modifier.height(10.dp))

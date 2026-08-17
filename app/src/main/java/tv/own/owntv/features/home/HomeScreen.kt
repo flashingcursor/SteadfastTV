@@ -670,7 +670,7 @@ private fun HeroRowSection(
                                     }
                                 }
                             } else {
-                                Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+                                Column(modifier = Modifier.fillMaxSize().padding(Dimens.GapSmall)) {
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -712,7 +712,7 @@ private fun HeroRowSection(
                                         }
                                     }
 
-                                    Spacer(Modifier.height(8.dp))
+                                    Spacer(Modifier.height(Dimens.GapSmall))
                                     val title = when (item) {
                                         is HeroItem.MovieHero -> item.item.title
                                         is HeroItem.SeriesHero -> item.item.title
@@ -847,7 +847,7 @@ private fun HeroRowSection(
                         Column(
                             modifier = Modifier
                                 .align(Alignment.BottomStart)
-                                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                                .padding(start = Dimens.GapMedium, end = Dimens.GapMedium, bottom = Dimens.GapMedium)
                                 .widthIn(max = Dimens.HeroOverlayMaxWidth),
                         ) {
                             val expandedMeta = heroMetadata[expandedItem.heroKey()]
@@ -883,7 +883,7 @@ private fun HeroRowSection(
                                 is HeroItem.LiveHero -> stringResource(R.string.home_recent_live)
                             }
                             if (subtitle.isNotBlank()) {
-                                Spacer(Modifier.height(4.dp))
+                                Spacer(Modifier.height(Dimens.GapTiny))
                                 Text(
                                     text = subtitle,
                                     style = MaterialTheme.typography.bodySmall,
@@ -895,7 +895,7 @@ private fun HeroRowSection(
 
                             val statText = heroStatLabel(expandedItem, System.currentTimeMillis())
                             if (statText != null) {
-                                Spacer(Modifier.height(4.dp))
+                                Spacer(Modifier.height(Dimens.GapTiny))
                                 Text(
                                     text = statText,
                                     style = MaterialTheme.typography.bodySmall,
@@ -954,7 +954,7 @@ private fun HeroRowSection(
                                 sizeDp = 18,
                                 modifier = Modifier
                                     .align(Alignment.BottomEnd)
-                                    .padding(end = 16.dp, bottom = 16.dp)
+                                    .padding(end = Dimens.GapMedium, bottom = Dimens.GapMedium)
                                     .alpha(0.3f),
                             )
                         }
@@ -1177,10 +1177,10 @@ private fun LandscapeContinuationCard(
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .align(Alignment.TopStart)
-                            .padding(8.dp)
+                            .padding(Dimens.GapSmall)
                             .clip(RoundedCornerShape(50))
                             .background(Color.Black.copy(alpha = 0.62f))
-                            .padding(horizontal = 8.dp, vertical = 3.dp),
+                            .padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
                     )
                 }
 
@@ -1230,12 +1230,12 @@ private fun HeroFallbackPane(
             .onFocusChanged { if (it.hasFocus) onChildFocused() }
             .clip(RoundedCornerShape(Dimens.CardCorner))
             .background(colors.panel)
-            .padding(24.dp),
+            .padding(Dimens.GapLarge),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             BrandLockup(markSize = 72, textSize = 42)
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Text(
                 text = stringResource(R.string.home_no_preview),
                 style = MaterialTheme.typography.bodyLarge,
@@ -1243,7 +1243,7 @@ private fun HeroFallbackPane(
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 text = stringResource(R.string.home_continue_empty),
                 style = MaterialTheme.typography.bodyMedium,
@@ -1268,7 +1268,7 @@ private fun EmptyHomeState(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             BrandLockup(markSize = 84, textSize = 48)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             Text(
                 text = stringResource(R.string.home_start_watching),
                 style = MaterialTheme.typography.titleLarge,
@@ -1276,7 +1276,7 @@ private fun EmptyHomeState(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 text = stringResource(R.string.home_continue_empty),
                 style = MaterialTheme.typography.bodyLarge,
@@ -1301,7 +1301,7 @@ private fun AllRowsHiddenState(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             BrandLockup(markSize = 84, textSize = 48)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             Text(
                 text = stringResource(R.string.home_no_rows),
                 style = MaterialTheme.typography.titleLarge,
@@ -1309,7 +1309,7 @@ private fun AllRowsHiddenState(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 text = stringResource(R.string.home_enable_rows),
                 style = MaterialTheme.typography.bodyLarge,

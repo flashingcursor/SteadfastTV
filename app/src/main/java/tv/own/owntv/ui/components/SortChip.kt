@@ -17,6 +17,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.features.settings.data.SettingsRepository.SortMode
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 
@@ -45,7 +46,7 @@ fun SortChip(
         surface = GlassSurface.CARDS,
     ) { focused ->
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             OwnTVIcon(
@@ -53,7 +54,7 @@ fun SortChip(
                 tint = if (focused) colors.primary else colors.onSurfaceVariant,
                 modifier = Modifier.size(16.dp),
             )
-            Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(Dimens.GapSmall))
             Text(
                 text = when (mode) {
                     SortMode.PLAYLIST -> resolvedPlaylistLabel

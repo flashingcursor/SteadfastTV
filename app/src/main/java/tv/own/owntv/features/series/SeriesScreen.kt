@@ -353,7 +353,7 @@ private fun SeriesGrid(
     val panelShares = rememberPanelShares(PanelSection.SERIES, settingsVm)
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
     val panels = panelShares?.let { computePanelWidths(it, maxWidth) }
-    Row(modifier = Modifier.fillMaxSize().onFocusChanged { if (it.hasFocus) onChildFocused() }, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+    Row(modifier = Modifier.fillMaxSize().onFocusChanged { if (it.hasFocus) onChildFocused() }, horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
         CategoryRail(
             width = panels?.category ?: Dimens.RailWidthFixed,
             categories = railItems.map { RailCategory(it.displayLabel(R.string.content_category_all_series), it.icon, showGenreDot = it.key is LiveKey.Folder) },
@@ -438,7 +438,7 @@ private fun SeriesGrid(
                 title = stringResource(R.string.content_section_category, stringResource(R.string.common_nav_series), selectedLabel),
                 subtitle = pluralStringResource(R.plurals.content_count_series, count, selectedLabel, count),
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SearchBar(query = searchQuery, onQueryChange = vm::setSearchQuery, placeholder = stringResource(R.string.content_search_series, selectedLabel), modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(10.dp))
@@ -451,7 +451,7 @@ private fun SeriesGrid(
                     style = tv.own.owntv.ui.components.OwnTVButtonStyle.SECONDARY,
                 )
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
 
             if (series.itemCount == 0) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -463,7 +463,7 @@ private fun SeriesGrid(
             } else if (viewMode == SettingsRepository.VodViewMode.LIST) {
                 LazyColumn(
                     state = effectiveListState,
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                 ) {
                     items(
                         count = series.itemCount,
@@ -576,11 +576,11 @@ private fun SeriesGrid(
                             }
                         }
                     }
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     Text(s.name, style = MaterialTheme.typography.headlineMedium, color = OwnTVTheme.colors.onSurface)
                     val metaBits = listOfNotNull(year?.let { localizedInteger(it, grouping = false) }, rating?.let { stringResource(R.string.content_rating, it) })
                     if (metaBits.isNotEmpty()) {
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(Dimens.GapTiny))
                         Text(metaBits.joinToString(stringResource(R.string.content_metadata_separator)), style = MaterialTheme.typography.labelMedium.copy(fontFeatureSettings = "tnum"), color = OwnTVTheme.colors.onSurfaceVariant)
                     }
                     if (genres.isNotEmpty()) {
@@ -597,7 +597,7 @@ private fun SeriesGrid(
                         Spacer(Modifier.height(2.dp))
                         Text(cast.take(6).joinToString(", "), style = MaterialTheme.typography.bodySmall, color = OwnTVTheme.colors.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     }
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(Dimens.GapMedium))
                     Text(stringResource(R.string.content_press_ok_episodes), style = MaterialTheme.typography.labelMedium, color = OwnTVTheme.colors.onSurfaceVariant)
                 }
                 }
@@ -817,7 +817,7 @@ private fun EpisodeDetailPane(
         // Non-focusable status strip — the focused episode's own download, else the series' aggregate.
         if (downloadStrip != null) {
             tv.own.owntv.ui.components.DownloadStatusStrip(downloadStrip)
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
         }
         // "Next up" Play card — the series' resume/continue target. Hidden when there's no next-up (all
         // caught up) or when it's the same episode already focused (OK plays it anyway).
@@ -827,7 +827,7 @@ private fun EpisodeDetailPane(
                     .background(colors.primaryContainer.copy(alpha = 0.22f)).padding(12.dp),
             ) {
                 Text(stringResource(R.string.content_next_up), style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(stringResource(R.string.content_season_episode_title, nup.seasonNumber, nup.episodeNumber, episodeDisplayTitle(nup)), style = MaterialTheme.typography.titleMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 if (nextUpPositionMs > 0) {
                     Spacer(Modifier.height(2.dp))
@@ -836,7 +836,7 @@ private fun EpisodeDetailPane(
                 Spacer(Modifier.height(10.dp))
                 OwnTVButton(label = stringResource(R.string.content_play), onClick = onPlayNextUp, icon = OwnTVIcon.PLAY, modifier = Modifier.fillMaxWidth())
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
         }
         Box(
             modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerLowest),
@@ -848,15 +848,15 @@ private fun EpisodeDetailPane(
                 OwnTVIcon(OwnTVIcon.SERIES, tint = colors.onSurfaceVariant, modifier = Modifier.height(40.dp))
             }
         }
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(bits.joinToString(stringResource(R.string.content_metadata_separator)), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         if (!plot.isNullOrBlank()) {
             Spacer(Modifier.height(12.dp))
             Text(plot, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         }
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         Text(stringResource(R.string.content_ok_play_options), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
     }
 }
@@ -1064,7 +1064,7 @@ private fun EpisodeView(
             .roundedPanel(fillColor = ContentPanelFill)
             .padding(horizontal = Dimens.ScreenPaddingH, vertical = Dimens.ScreenPaddingV),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             OwnTVButton(label = stringResource(R.string.common_back), onClick = { vm.closeSeries() }, style = OwnTVButtonStyle.SECONDARY, icon = OwnTVIcon.BACK)
             Text(series.name, style = MaterialTheme.typography.headlineLarge, color = OwnTVTheme.colors.onSurface)
             Spacer(Modifier.weight(1f))
@@ -1092,7 +1092,7 @@ private fun EpisodeView(
                 icon = OwnTVIcon.SORT,
             )
         }
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         when {
             loading && episodes.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -1103,7 +1103,7 @@ private fun EpisodeView(
             }
             else -> {
                 // Option B (§11.1): episode list on the left, focused-episode detail pane on the right.
-                Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
                     Column(modifier = Modifier
                         .weight(1.4f)
                         .fillMaxHeight()
@@ -1135,7 +1135,7 @@ private fun EpisodeView(
                         if (seasons.size > 1) {
                             LazyRow(
                                 state = seasonRowState,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                             ) {
                                 items(seasons, key = { it }) { season ->
                                     val seasonEps = episodes.filter { it.seasonNumber == season }
@@ -1148,7 +1148,7 @@ private fun EpisodeView(
                                     )
                                 }
                             }
-                            Spacer(Modifier.height(14.dp))
+                            Spacer(Modifier.height(Dimens.HeroGap))
                         }
                         LazyColumn(state = epListState, verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             // Keyed by episode id, not index: on a season switch the item at a
@@ -1325,7 +1325,7 @@ private fun SeasonChip(season: Int, selected: Boolean, completedCount: Int, tota
             label,
             style = MaterialTheme.typography.labelLarge,
             color = if (selected) colors.onPrimaryContainer else colors.onSurface,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
         )
     }
 }
@@ -1356,7 +1356,7 @@ private fun EpisodeRow(
     ) { focused ->
         LaunchedEffect(focused) { if (focused) onFocus() }
         Column(modifier = Modifier.fillMaxWidth()) {
-            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                 Box(
                     modifier = Modifier.size(34.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(if (completed) colors.primaryContainer else colors.surfaceContainerLowest),
                     contentAlignment = Alignment.Center,
@@ -1383,7 +1383,7 @@ private fun EpisodeRow(
                         stringResource(R.string.content_last_watched),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 3.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
                     )
                 }
             }

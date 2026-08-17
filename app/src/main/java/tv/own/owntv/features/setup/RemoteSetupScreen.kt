@@ -86,7 +86,7 @@ fun RemoteSetupScreen(
                 }
                 is CompanionServerState.Listening -> {
                     Text(stringResource(R.string.setup_enter_pin_browser), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     Text(
                         state.pin,
                         style = MaterialTheme.typography.headlineLarge,
@@ -94,7 +94,7 @@ fun RemoteSetupScreen(
                         color = colors.onSurface,
                         letterSpacing = 8.sp,
                     )
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     state.qr?.let { qr ->
                         Image(
                             bitmap = qr,
@@ -105,7 +105,7 @@ fun RemoteSetupScreen(
                         Spacer(Modifier.height(12.dp))
                     }
                     Text(stringResource(R.string.setup_open_url), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     state.urls.forEach { url ->
                         Text(url, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, textAlign = TextAlign.Center)
                     }
@@ -124,9 +124,9 @@ fun RemoteSetupScreen(
                     OwnTVButton(stringResource(R.string.setup_start_again_new_pin), onClick = { onStartListener(CompanionLink.DEFAULT_PORT) }, modifier = Modifier.focusRequester(actionFocus))
                 }
             }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             OwnTVButton(stringResource(R.string.common_back), onClick = onBack, style = OwnTVButtonStyle.SECONDARY)
-            Spacer(Modifier.height(24.dp)) // breathing room so Back never sits flush to the screen edge
+            Spacer(Modifier.height(Dimens.GapLarge)) // breathing room so Back never sits flush to the screen edge
         }
     }
 }

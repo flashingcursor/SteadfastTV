@@ -45,6 +45,7 @@ import tv.own.owntv.ui.components.FocusableSurface
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvPreview
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.LocalGlass
 import tv.own.owntv.ui.theme.WeatherGlyph
@@ -86,7 +87,7 @@ fun ShellHeader(
     titleVisible: Boolean = true,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 32.dp, vertical = 20.dp),
+        modifier = modifier.fillMaxWidth().padding(horizontal = Dimens.ScreenPaddingH, vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
@@ -133,9 +134,9 @@ private fun ShellSearchPill(onClick: () -> Unit, focusable: Boolean) {
         contentAlignment = Alignment.Center,
     ) { _ ->
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 9.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 9.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             OwnTVIcon(icon = OwnTVIcon.SEARCH, tint = Color.White, modifier = Modifier.size(16.dp))
             Text(
@@ -151,7 +152,7 @@ private fun ShellSearchPill(onClick: () -> Unit, focusable: Boolean) {
 
 @Composable
 private fun ShellWeatherAndClock(weatherInfo: WeatherInfo?, weatherFahrenheit: Boolean) {
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
         if (weatherInfo != null) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 WeatherConditionIcon(info = weatherInfo, modifier = Modifier.size(18.dp))

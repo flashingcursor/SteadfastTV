@@ -19,6 +19,7 @@ import androidx.tv.material3.ProvideTextStyle
 import androidx.tv.material3.Text
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvComponentPreview
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -57,7 +58,7 @@ fun MediaListRow(
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {

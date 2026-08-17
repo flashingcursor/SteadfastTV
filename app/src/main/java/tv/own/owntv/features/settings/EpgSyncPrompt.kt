@@ -40,6 +40,7 @@ import tv.own.owntv.ui.components.OwnTVSpinner
 import tv.own.owntv.ui.components.formatCount
 import tv.own.owntv.ui.components.trapAllFocusExit
 import tv.own.owntv.ui.components.dialogPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Semi-automatic EPG flow after a playlist import: ask → sync with a live programme count → done. */
@@ -94,7 +95,7 @@ fun EpgSyncDialog(
                         style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center,
                     )
                     Spacer(Modifier.height(22.dp))
-                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
                         OwnTVButton(stringResource(R.string.settings_not_now), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                         OwnTVButton(stringResource(R.string.settings_sync_now), onClick = onSync, modifier = Modifier.focusRequester(focus))
                     }
@@ -103,7 +104,7 @@ fun EpgSyncDialog(
                     OwnTVSpinner(sizeDp = 48)
                     Spacer(Modifier.height(18.dp))
                     Text(stringResource(R.string.settings_syncing_guide), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     Text(
                         if (state.count > 0) formatCount(state.count) else stringResource(R.string.settings_connecting),
                         style = MaterialTheme.typography.headlineLarge, color = colors.primary,
@@ -121,7 +122,7 @@ fun EpgSyncDialog(
                 }
                 is EpgSyncUi.Done -> {
                     OwnTVIcon(OwnTVIcon.EPG, tint = colors.primary, modifier = Modifier.size(40.dp))
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     Text(stringResource(R.string.settings_guide_synced), style = MaterialTheme.typography.titleLarge, color = colors.onSurface, textAlign = TextAlign.Center)
                     Spacer(Modifier.height(20.dp))
                     OwnTVButton(stringResource(R.string.common_done), onClick = onDismiss, modifier = Modifier.focusRequester(focus))

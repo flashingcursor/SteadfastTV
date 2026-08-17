@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -80,7 +81,7 @@ fun SetTmdbNameDialog(
                 modifier = Modifier.fillMaxWidth(),
                 focusRequester = titleFocus,
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             OwnTVTextField(
                 value = year,
                 onValueChange = { s -> year = s.filter { it.isDigit() }.take(4) },

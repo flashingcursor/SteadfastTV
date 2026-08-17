@@ -36,6 +36,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 @Composable
@@ -121,10 +122,10 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusGroup()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         Header(stringResource(R.string.settings_dns), onBack)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
 
         GroupLabel(stringResource(R.string.settings_dns_custom))
         Row2(
@@ -141,7 +142,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
 
         // Red warning: toggle is on but no server configured
         if (toggleOn && !serverConfigured) {
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.settings_dns_server_missing),
                 style = MaterialTheme.typography.bodyMedium,
@@ -203,7 +204,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 Spacer(Modifier.height(20.dp))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
                     modifier = Modifier.focusProperties { up = serverFieldFocus },
                 ) {
                     OwnTVButton(stringResource(R.string.common_save), onClick = { applySave() }, modifier = Modifier.focusRequester(saveFocus))
@@ -230,7 +231,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             stringResource(R.string.settings_dns_limitations),
             style = MaterialTheme.typography.bodySmall,

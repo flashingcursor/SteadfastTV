@@ -113,7 +113,7 @@ fun SyncStatusPill(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .padding(bottom = 14.dp)
+            .padding(bottom = Dimens.HeroGap)
             .widthIn(max = 620.dp)
             .clip(shape)
             // Liquid Glass: the pill is small chrome like the top-bar chips, so it frosts with
@@ -126,13 +126,13 @@ fun SyncStatusPill(modifier: Modifier = Modifier) {
                 cornerRadius = radius,
                 frostScale = 0.8f,
             )
-            .padding(horizontal = 14.dp, vertical = 7.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+            .padding(horizontal = Dimens.HeroGap, vertical = 7.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         shown.forEach { line ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             ) {
                 OwnTVSpinner(sizeDp = 14)
                 Text(

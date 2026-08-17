@@ -79,13 +79,13 @@ fun NavMenuSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         Header(title = stringResource(R.string.settings_sidebar_customization), onBack = onBack)
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(
             stringResource(R.string.settings_sidebar_description),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         Row2(
             icon = OwnTVIcon.THEME,
@@ -152,9 +152,9 @@ private fun NavMenuRow(
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
         ) {
             Box(
                 modifier = Modifier

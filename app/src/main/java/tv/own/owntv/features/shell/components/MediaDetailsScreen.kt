@@ -155,14 +155,14 @@ fun MediaDetailsScreen(details: MediaDetailsUi, onExit: () -> Unit, modifier: Mo
                     }
                 }
                 Spacer(Modifier.width(20.dp))
-                Column(modifier = Modifier.weight(1f).padding(top = 8.dp)) {
+                Column(modifier = Modifier.weight(1f).padding(top = Dimens.GapSmall)) {
                     Text(details.title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface, fontWeight = FontWeight.Bold)
                     if (!details.subtitle.isNullOrBlank()) {
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(Dimens.GapTiny))
                         Text(details.subtitle, style = MaterialTheme.typography.titleSmall, color = colors.onSurfaceVariant)
                     }
                     if (details.metaLine.isNotBlank()) {
-                        Spacer(Modifier.height(8.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(details.metaLine, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     }
                     if (details.genres.isNotEmpty()) {
@@ -172,7 +172,7 @@ fun MediaDetailsScreen(details: MediaDetailsUi, onExit: () -> Unit, modifier: Mo
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                 if (!details.plot.isNullOrBlank()) {
                     Column {
                         Text(stringResource(R.string.content_media_overview), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)

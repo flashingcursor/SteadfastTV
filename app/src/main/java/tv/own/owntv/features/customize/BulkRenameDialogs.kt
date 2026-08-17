@@ -275,7 +275,7 @@ private fun BulkRenameChoicePopup(session: BulkRenameSession) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             OwnTVButton(stringResource(R.string.settings_bulk_rename_add_rule), onClick = { session.openBuilder() }, modifier = Modifier.fillMaxWidth().focusRequester(addFocus))
             OwnTVButton(stringResource(R.string.settings_bulk_rename_auto_cleanup), onClick = { session.autoCleanup() }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
             OwnTVButton(stringResource(R.string.settings_bulk_rename_restore_original), onClick = { session.requestRestore() }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
@@ -362,17 +362,17 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
     ) {
         Column(Modifier.dialogPanel(width = 760.dp, padding = 24.dp)) {
             Text(stringResource(R.string.settings_bulk_rename_rules_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(
                 stringResource(R.string.settings_bulk_rename_rules_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
 
             Column(
                 Modifier.heightIn(max = 300.dp).verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             ) {
                 draft.forEachIndexed { i, rule ->
                     Row(
@@ -462,7 +462,7 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
                 Spacer(Modifier.height(6.dp))
                 Text(stringResource(it), style = MaterialTheme.typography.bodySmall, color = colors.favorite)
             }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = { session.backToChoice() }, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
@@ -567,7 +567,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                 ) {
                     itemsIndexed(rows, key = { _, r -> r.key }) { index, r ->
                         Row(
-                            Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = 8.dp, vertical = 5.dp),
+                            Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = Dimens.GapSmall, vertical = 5.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(6.dp),
                         ) {
@@ -621,7 +621,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                         }
                     }
                 }
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(Dimens.GapSmall))
                 // Right: bulk actions, VERTICALLY CENTRED so D-pad right from any middle row lands
                 // here without scrolling (owner requirement for this dialog).
                 Column(
@@ -664,7 +664,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     OwnTVButton(
                         stringResource(R.string.settings_bulk_rename_apply_all), onClick = { session.applyAll() }, icon = OwnTVIcon.PLAY,
                         modifier = Modifier.fillMaxWidth().then(if (firstChanged == -1) Modifier.focusRequester(firstApplyFocus) else Modifier),

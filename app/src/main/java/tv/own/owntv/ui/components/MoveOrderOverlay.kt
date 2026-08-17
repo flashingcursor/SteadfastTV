@@ -99,8 +99,8 @@ fun MoveOrderOverlay(
                 .width(480.dp)
                 .clip(RoundedCornerShape(Dimens.CardCorner))
                 .background(colors.surfaceContainerHigh)
-                .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(Dimens.GapLarge),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Text(
@@ -108,11 +108,11 @@ fun MoveOrderOverlay(
                 style = MaterialTheme.typography.bodySmall,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             LazyColumn(
                 state = listState,
                 modifier = Modifier.weight(1f, fill = false).fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
             ) {
                 itemsIndexed(itemNames) { idx, name ->
                     val isActive = idx == activeIndex
@@ -121,7 +121,7 @@ fun MoveOrderOverlay(
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(Dimens.CornerXSmall))
                             .background(if (isActive) colors.primary else colors.surfaceContainerLowest)
-                            .padding(horizontal = 14.dp, vertical = 10.dp),
+                            .padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             if (isActive) {
@@ -138,7 +138,7 @@ fun MoveOrderOverlay(
                     }
                 }
             }
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
                 // Save gets the focus: TV focus lands here on overlay open, so onKeyEvent fires.
                 OwnTVButton(stringResource(R.string.common_save), onClick = onCommit, modifier = Modifier.weight(1f).focusRequester(focus))

@@ -93,7 +93,7 @@ private fun PinDialogBody(title: String, onSubmit: (String) -> Unit, onDismiss: 
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     ProfileScrim(onDismiss, width = if (compact) 290.dp else 480.dp, padding = if (compact) 16.dp else 28.dp) {
         Text(title, style = if (compact) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleLarge, color = colors.onSurface)
-        Spacer(Modifier.height(if (compact) 10.dp else 16.dp))
+        Spacer(Modifier.height(if (compact) 10.dp else Dimens.GapMedium))
         OwnTVTextField(
             value = pin,
             onValueChange = { if (it.length <= 6 && it.all(Char::isDigit)) pin = it },
@@ -149,7 +149,7 @@ internal fun ProfileEditorDialog(
 
     ProfileScrim(onDismiss) {
         Text(stringResource(if (initial == null) R.string.profiles_new else R.string.profiles_edit), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         OwnTVTextField(name, { name = it }, label = stringResource(R.string.profiles_name), placeholder = stringResource(R.string.profiles_name_hint), modifier = Modifier.fillMaxWidth().focusRequester(focus))
         if (nameTaken) {
             Spacer(Modifier.height(6.dp))
@@ -158,10 +158,10 @@ internal fun ProfileEditorDialog(
                 style = MaterialTheme.typography.bodyMedium, color = colors.favorite,
             )
         }
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         Text(stringResource(R.string.profiles_avatar), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             items((-1 until OwnTVAvatars.COUNT).toList()) { id -> // Phase 7 — includes "no avatar" (-1)
                 FocusableSurface(
@@ -177,7 +177,7 @@ internal fun ProfileEditorDialog(
                 }
             }
         }
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         ToggleRow(label = stringResource(R.string.profiles_kids), desc = stringResource(R.string.profiles_kids_description), checked = isKids) { isKids = it }
         Spacer(Modifier.height(12.dp))
@@ -220,7 +220,7 @@ private fun ToggleRow(label: String, desc: String, checked: Boolean, onToggle: (
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(label, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Text(desc, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)

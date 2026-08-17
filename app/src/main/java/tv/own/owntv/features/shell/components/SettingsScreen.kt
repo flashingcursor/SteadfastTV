@@ -401,9 +401,9 @@ fun SettingsScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 4.dp)
+                .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapTiny)
                 .horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             QuickToggleChip(
@@ -418,7 +418,7 @@ fun SettingsScreen(
             QuickToggleChip(stringResource(R.string.settings_quick_autoplay), autoPlayNext, OwnTVIcon.SKIP_NEXT) { settingsVm.setAutoPlayNext(!autoPlayNext) }
             QuickToggleChip(stringResource(R.string.settings_quick_check_update), updateCheckOnStart, OwnTVIcon.DOWNLOADS) { settingsVm.setUpdateCheckOnStart(!updateCheckOnStart) }
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
 
         // --- Batch 4: settings search ---
         OwnTVTextField(
@@ -429,7 +429,7 @@ fun SettingsScreen(
             focusRequester = searchFieldFocus,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = Dimens.GapMedium),
         )
         Spacer(Modifier.height(12.dp))
 
@@ -824,7 +824,7 @@ fun SettingsScreen(
                     text = stringResource(R.string.settings_no_settings_match, searchQuery.trim()),
                     style = MaterialTheme.typography.bodyLarge,
                     color = colors.onSurfaceVariant,
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(Dimens.GapMedium),
                 )
             } else {
                 results.forEach { e ->
@@ -1120,10 +1120,10 @@ private fun AccentPaletteDialog(
             modifier = Modifier.dialogPanel(width = 640.dp, padding = 28.dp),
         ) {
             Text(stringResource(R.string.settings_accent_dialog), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
 
             Text(stringResource(R.string.settings_presets), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 AccentPresetChoices.forEachIndexed { i, ac ->
                     val isSel = customAccent.isBlank() && ac == accent
@@ -1138,7 +1138,7 @@ private fun AccentPaletteDialog(
 
             Spacer(Modifier.height(20.dp))
             Text(stringResource(R.string.settings_hex_code), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             // Kept above the picker on purpose: the on-screen keyboard covers the lower half of the
             // screen, so the hex field must sit high enough to stay visible while the user types.
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -1161,12 +1161,12 @@ private fun AccentPaletteDialog(
                 })
             }
             if (hexError) {
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(R.string.settings_hex_error), style = MaterialTheme.typography.bodySmall, color = colors.favorite)
             }
 
             Spacer(Modifier.height(20.dp))
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(R.string.settings_color_picker), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant)
                     Spacer(Modifier.height(10.dp))
@@ -1182,13 +1182,13 @@ private fun AccentPaletteDialog(
                         .border(2.dp, colors.outline, androidx.compose.foundation.shape.CircleShape),
                 )
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             // Saturation / Brightness square: OK to enter, D-pad to move the dot, OK/Back to exit.
             tv.own.owntv.ui.components.SatValSquare(hue = hue, sat = sat, value = value) { s, v ->
                 sat = s; value = v; syncHexFromPicker(); hexError = false
             }
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(Dimens.GapLarge))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OwnTVButton(stringResource(R.string.settings_close), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
@@ -1221,21 +1221,21 @@ private fun AboutDialog(onDismiss: () -> Unit) {
             BrandLockup(markSize = 48, textSize = 30)
             Spacer(Modifier.height(6.dp))
             Text(stringResource(R.string.settings_about_version, tv.own.owntv.BuildConfig.VERSION_NAME), style = MaterialTheme.typography.titleMedium, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Text(
                 stringResource(R.string.settings_about_description_full),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Text(stringResource(R.string.settings_about_license), style = MaterialTheme.typography.bodyMedium, color = colors.onSurface)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(GITHUB_REPO, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             // Community: Telegram link + a QR, side-by-side to keep the dialog compact, so TV users can
             // join from their phone — no TV browser needed.
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(R.string.settings_join_telegram), style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
                     Spacer(Modifier.height(2.dp))
@@ -1254,7 +1254,7 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                     )
                 }
             }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             Text(
                 stringResource(R.string.settings_contributions),
                 style = MaterialTheme.typography.bodySmall,
@@ -1310,7 +1310,7 @@ private fun PlaybackErrorLogDialog(onDismiss: () -> Unit) {
                 stringResource(R.string.settings_playback_error_description_full),
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             val list = entries
             when {
                 list == null -> Text(stringResource(R.string.settings_loading), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -1319,7 +1319,7 @@ private fun PlaybackErrorLogDialog(onDismiss: () -> Unit) {
                 // only thing that makes a list scroll. Up from the buttons walks back through the history.
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxWidth().heightIn(max = 420.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                 ) {
                     items(list) { e ->
                         FocusableSurface(
@@ -1329,7 +1329,7 @@ private fun PlaybackErrorLogDialog(onDismiss: () -> Unit) {
                             contentAlignment = Alignment.CenterStart,
                             surface = GlassSurface.DIALOGS,
                         ) { _ ->
-                            Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp)) {
+                            Column(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp)) {
                                 // The kind matters at a glance now: a log full of "Event" lines next to one
                                 // "Error" tells a very different story from ten failures in a row.
                                 val kindLabel = when (e.kind) {
@@ -1522,7 +1522,7 @@ private fun ClearHistoryDialog(
             val p = pending
             if (p == null) {
                 Text(stringResource(R.string.settings_clear_history), style = MaterialTheme.typography.titleLarge, color = colors.onSurface, textAlign = TextAlign.Center)
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     stringResource(R.string.settings_choose_history),
                     style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center,
@@ -1531,18 +1531,18 @@ private fun ClearHistoryDialog(
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth().focusRequester(firstFocus))
                 Spacer(Modifier.height(10.dp))
                 OwnTVButton(stringResource(R.string.settings_history_live), onClick = { pending = HistoryScope.LIVE }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 OwnTVButton(stringResource(R.string.settings_history_movies), onClick = { pending = HistoryScope.MOVIES }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 OwnTVButton(stringResource(R.string.settings_history_series), onClick = { pending = HistoryScope.SERIES }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 OwnTVButton(stringResource(R.string.settings_all_history), onClick = { pending = HistoryScope.ALL }, modifier = Modifier.fillMaxWidth())
             } else {
                 Text(stringResource(R.string.settings_clear_history_confirm, stringResource(p.labelRes)), style = MaterialTheme.typography.titleLarge, color = colors.onSurface, textAlign = TextAlign.Center)
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(R.string.settings_cannot_undo), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center)
-                Spacer(Modifier.height(24.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                Spacer(Modifier.height(Dimens.GapLarge))
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
                     OwnTVButton(stringResource(R.string.settings_no), onClick = { pending = null }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.focusRequester(firstFocus))
                     OwnTVButton(stringResource(R.string.settings_yes_clear), onClick = { onClear(p.type) })
                 }
@@ -1706,7 +1706,7 @@ private fun GlassEffectDialog(
             if (glassOn) {
                 Spacer(Modifier.height(22.dp))
                 Text(stringResource(R.string.settings_transparency_title), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(R.string.settings_transparency_description, min, max),
                     style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
@@ -1728,7 +1728,7 @@ private fun GlassEffectDialog(
                 // Backdrop blur — the real "frost" behind the panels (needs a background image; API 31+).
                 Spacer(Modifier.height(20.dp))
                 Text(stringResource(R.string.settings_blur_title), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(if (bgOn) R.string.settings_blur_description_enabled else R.string.settings_blur_description_disabled, blurMin, blurMax),
                     style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
@@ -1748,7 +1748,7 @@ private fun GlassEffectDialog(
                     StepButton(stringResource(R.string.settings_increase), dimmed = blurPercent >= blurMax) { onSetBlur(blurClamp(blurPercent + blurStep)) }
                 }
                 // Advanced: choose exactly which surfaces render as glass.
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 OwnTVButton(
                     if (scope == ALL_GLASS_SURFACES) stringResource(R.string.settings_surface_count_all)
                     else pluralStringResource(R.plurals.settings_surface_count, scope.size, scope.size, ALL_GLASS_SURFACES.size),
@@ -1757,7 +1757,7 @@ private fun GlassEffectDialog(
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(Dimens.GapLarge))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 if (glassOn) OwnTVButton(stringResource(R.string.settings_reset), onClick = { onSetAlpha(default); onSetBlur(blurDefault); onSetScope(GlassConfig(ALL_GLASS_SURFACES).toBitmask()) }, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
@@ -1830,10 +1830,10 @@ private fun BrowsingListsDialog(
                 style = OwnTVButtonStyle.SECONDARY,
                 modifier = Modifier.fillMaxWidth().focusRequester(firstFocus),
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             OwnTVButton(stringResource(R.string.settings_section_toggle, stringResource(R.string.settings_history_movies), stringResource(if (catMovies) R.string.common_on else R.string.common_off)), onClick = onToggleCatMovies,
                 style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             OwnTVButton(stringResource(R.string.settings_section_toggle, stringResource(R.string.settings_history_series), stringResource(if (catSeries) R.string.common_on else R.string.common_off)), onClick = onToggleCatSeries,
                 style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
 
@@ -1844,10 +1844,10 @@ private fun BrowsingListsDialog(
             )
             OwnTVButton(stringResource(R.string.settings_section_toggle, stringResource(R.string.settings_history_live), stringResource(if (itemLive) R.string.common_on else R.string.common_off)), onClick = onToggleItemLive,
                 style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             OwnTVButton(stringResource(R.string.settings_section_toggle, stringResource(R.string.settings_history_movies), stringResource(if (itemMovies) R.string.common_on else R.string.common_off)), onClick = onToggleItemMovies,
                 style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             OwnTVButton(stringResource(R.string.settings_section_toggle, stringResource(R.string.settings_history_series), stringResource(if (itemSeries) R.string.common_on else R.string.common_off)), onClick = onToggleItemSeries,
                 style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
 
@@ -1915,7 +1915,7 @@ private fun GlassSurfacesDialog(
                 style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             // All rows use the SECONDARY chrome: with the accent (PRIMARY) fill on every "On" row the
             // focused row was indistinguishable on TV. State lives in the ": On/Off" text; focus in the
             // button's own focus highlight.
@@ -1936,7 +1936,7 @@ private fun GlassSurfacesDialog(
                     style = OwnTVButtonStyle.SECONDARY,
                     modifier = Modifier.fillMaxWidth(),
                 )
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
             }
             Spacer(Modifier.height(12.dp))
             OwnTVButton(stringResource(R.string.settings_done), onClick = onDismiss, modifier = Modifier.fillMaxWidth())
@@ -2019,7 +2019,7 @@ private fun CatchupTimeDialog(
             // Which player takes an archive programme. Archives are the streams the in-app engines
             // struggle with most, so an external app is a useful fallback — "Ask" puts the choice on
             // the "Watch from start" action itself instead of forcing one answer forever.
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(Dimens.GapLarge))
             Text(stringResource(R.string.settings_catchup_player), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(10.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -2036,7 +2036,7 @@ private fun CatchupTimeDialog(
                     )
                 }
             }
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(Dimens.GapLarge))
             OwnTVButton(stringResource(R.string.settings_done), onClick = onDismiss, modifier = Modifier.fillMaxWidth())
         }
     }
@@ -2098,7 +2098,7 @@ private fun GroupLabel(text: String) {
         style = MaterialTheme.typography.labelMedium,
         color = OwnTVTheme.colors.onSurfaceVariant,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 4.dp),
+        modifier = Modifier.padding(start = Dimens.GapMedium, top = Dimens.GapSmall, bottom = Dimens.GapTiny),
     )
 }
 
@@ -2107,7 +2107,7 @@ private fun SectionDivider() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall)
             .height(1.dp)
             .background(OwnTVTheme.colors.outlineVariant),
     )
@@ -2137,9 +2137,9 @@ private fun SettingsRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
         ) {
             // Tonal icon tile
             val (tileBg, tileOn) = tone.colors()
@@ -2160,7 +2160,7 @@ private fun SettingsRow(
                 }
             }
 
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 if (soon) {
                     SoonChip()
                 }
@@ -2187,7 +2187,7 @@ private fun SoonChip() {
             .clip(RoundedCornerShape(Dimens.CornerXSmall))
             .background(colors.surfaceContainerHighest)
             .border(1.dp, colors.outlineVariant, RoundedCornerShape(Dimens.CornerXSmall))
-            .padding(horizontal = 10.dp, vertical = 4.dp),
+            .padding(horizontal = 10.dp, vertical = Dimens.GapTiny),
     )
 }
 
@@ -2236,9 +2236,9 @@ private fun QuickToggleChip(
             modifier = Modifier
                 .background(bg, RoundedCornerShape(Dimens.CornerSmall))
                 .then(if (glassy) Modifier.border(1.dp, Color.White.copy(alpha = 0.18f), RoundedCornerShape(Dimens.CornerSmall)) else Modifier)
-                .padding(horizontal = 14.dp, vertical = 10.dp),
+                .padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             OwnTVIcon(icon = icon, tint = fg, modifier = Modifier.size(18.dp))
             Text(label, style = MaterialTheme.typography.labelLarge, color = fg)

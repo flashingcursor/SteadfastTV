@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -52,7 +53,7 @@ fun ResumeDialog(
     ) {
         Column(Modifier.dialogPanel(padding = 28.dp, fill = colors.surfaceContainerHigh.copy(alpha = 0.88f))) {
             Text(stringResource(R.string.common_resume_prompt), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.common_resume_position, formatTimestamp(positionMs)),
                 style = MaterialTheme.typography.bodyMedium,

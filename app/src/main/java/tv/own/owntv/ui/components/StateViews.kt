@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** Lightweight indeterminate spinner drawn with Canvas (no Material dependency). */
@@ -71,7 +72,7 @@ fun LoadingState(
         verticalArrangement = Arrangement.Center,
     ) {
         OwnTVSpinner()
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         Text(
             text = message,
             style = MaterialTheme.typography.bodyLarge,
@@ -99,7 +100,7 @@ fun ErrorState(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(text = resolvedTitle, style = MaterialTheme.typography.titleLarge, color = colors.textPrimary, textAlign = TextAlign.Center)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             text = message,
             style = MaterialTheme.typography.bodyMedium,
@@ -131,7 +132,7 @@ fun EmptyState(
         verticalArrangement = Arrangement.Center,
     ) {
         OwnTVIcon(icon = icon, tint = colors.textSecondary, modifier = Modifier.size(56.dp))
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,

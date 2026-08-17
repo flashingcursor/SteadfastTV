@@ -41,6 +41,7 @@ import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
 import tv.own.owntv.ui.components.roundedPanel
@@ -161,12 +162,12 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
                 OwnTVButton(stringResource(R.string.player_subtitles_refresh), onClick = { vm.refresh() }, style = OwnTVButtonStyle.SECONDARY)
             }
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             stringResource(R.string.player_subtitles_free_description_full),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium),
         )
         Spacer(Modifier.height(12.dp))
 
@@ -186,7 +187,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
                     )
                 }
                 session.resetTime?.let { InfoRow(stringResource(R.string.player_subtitles_resets), stringResource(R.string.player_subtitles_in, it)) }
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 Row2(
                     icon = OwnTVIcon.SUBTITLE, title = stringResource(R.string.player_subtitles_sign_out),
                     desc = stringResource(R.string.player_subtitles_delete_login_message),
@@ -200,7 +201,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
                     stringResource(R.string.player_subtitles_contacting),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(horizontal = Dimens.GapMedium),
                 )
             }
             OpenSubtitlesViewModel.UiState.SignedOut -> {
@@ -215,7 +216,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
         }
 
         // Search language filter (available regardless of sign-in state — it's a search preference).
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         GroupLabel(stringResource(R.string.player_subtitles_search))
         Row2(
             icon = OwnTVIcon.SUBTITLE, title = stringResource(R.string.player_subtitles_filter_title),
@@ -240,7 +241,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
         }
 
         // Delete downloaded subtitles (available regardless of sign-in state — cached files are local).
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         GroupLabel(stringResource(R.string.player_subtitles_downloads))
         Row2(
             icon = OwnTVIcon.SUBTITLE, title = stringResource(R.string.player_subtitles_delete_action),
@@ -257,14 +258,14 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
         androidx.compose.foundation.Image(
             painter = androidx.compose.ui.res.painterResource(tv.own.owntv.R.drawable.ic_opensubtitles_logo),
             contentDescription = stringResource(R.string.settings_open_subtitles),
-            modifier = Modifier.padding(start = 16.dp),
+            modifier = Modifier.padding(start = Dimens.GapMedium),
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             stringResource(R.string.player_subtitles_api_notice),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
-            modifier = Modifier.padding(start = 16.dp),
+            modifier = Modifier.padding(start = Dimens.GapMedium),
         )
     }
 
@@ -319,7 +320,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
 private fun InfoRow(label: String, value: String) {
     val colors = OwnTVTheme.colors
     Row(
-        Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
+        Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(label, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, modifier = Modifier.weight(1f))
@@ -349,7 +350,7 @@ internal fun OpenSubtitlesSignInDialog(onSubmit: (String, String, Boolean) -> Un
                     stringResource(R.string.player_subtitles_sign_in_to_use),
                     style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 OwnTVTextField(
                     value = username, onValueChange = { username = it },
                     label = stringResource(R.string.player_subtitles_username), modifier = Modifier.fillMaxWidth(), focusRequester = fieldFocus,
@@ -359,7 +360,7 @@ internal fun OpenSubtitlesSignInDialog(onSubmit: (String, String, Boolean) -> Un
                     value = password, onValueChange = { password = it },
                     label = stringResource(R.string.player_subtitles_password), isPassword = true, modifier = Modifier.fillMaxWidth(),
                 )
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 Row2(
                     icon = OwnTVIcon.SUBTITLE, title = stringResource(R.string.player_subtitles_stay_signed_in),
                     desc = stringResource(R.string.player_subtitles_session),

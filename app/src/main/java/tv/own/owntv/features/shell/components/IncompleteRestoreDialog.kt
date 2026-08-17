@@ -66,7 +66,7 @@ fun IncompleteRestoreDialog(
                 .clip(RoundedCornerShape(Dimens.CardCorner))
                 .background(colors.panel)
                 .verticalScroll(rememberScrollState())
-                .padding(32.dp),
+                .padding(Dimens.ScreenPaddingH),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -75,7 +75,7 @@ fun IncompleteRestoreDialog(
                 color = colors.textPrimary,
                 textAlign = TextAlign.Center,
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 text = androidx.compose.ui.res.stringResource(
                     R.string.content_restore_incomplete_message,
@@ -85,8 +85,8 @@ fun IncompleteRestoreDialog(
                 color = colors.textSecondary,
                 textAlign = TextAlign.Center,
             )
-            Spacer(Modifier.height(24.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
                 OwnTVButton(
                     label = androidx.compose.ui.res.stringResource(R.string.common_ok),
                     onClick = onDismiss,

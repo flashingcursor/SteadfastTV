@@ -365,14 +365,14 @@ fun AddSourceScreen(
             Spacer(Modifier.height(20.dp))
 
             OwnTVTextField(name, { name = it }, label = stringResource(R.string.setup_source_name_optional), placeholder = stringResource(R.string.setup_default_iptv), modifier = Modifier.fillMaxWidth(), focusRequester = if (editing) firstFocus else null)
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
 
             when (kind) {
                 SourceKind.XTREAM -> {
                     OwnTVTextField(server, { server = it }, label = stringResource(R.string.setup_server_url), placeholder = stringResource(R.string.setup_server_example), keyboardType = KeyboardType.Uri, modifier = Modifier.fillMaxWidth())
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     OwnTVTextField(username, { username = it }, label = stringResource(R.string.setup_username), modifier = Modifier.fillMaxWidth())
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     OwnTVTextField(password, { password = it }, label = if (editing) stringResource(R.string.setup_password_keep) else stringResource(R.string.setup_password), isPassword = true, modifier = Modifier.fillMaxWidth())
                 }
                 SourceKind.M3U -> {
@@ -390,7 +390,7 @@ fun AddSourceScreen(
                 }
                 SourceKind.STALKER -> {
                     OwnTVTextField(portalUrl, { portalUrl = it }, label = stringResource(R.string.setup_portal_url), placeholder = stringResource(R.string.setup_portal_example), keyboardType = KeyboardType.Uri, modifier = Modifier.fillMaxWidth())
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     OwnTVTextField(mac, { mac = it }, label = stringResource(R.string.setup_mac_address), placeholder = stringResource(R.string.setup_mac_example), modifier = Modifier.fillMaxWidth())
                     if (mac.isNotBlank() && !macValid) {
                         Spacer(Modifier.height(6.dp))
@@ -436,16 +436,16 @@ fun AddSourceScreen(
 
             // EPG is managed separately now (Settings → EPG Sources), so no EPG field here. For an
             // Xtream server the guide URL is still derived automatically; M3U EPG can be added there.
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             OwnTVTextField(userAgent, { userAgent = it }, label = stringResource(R.string.setup_user_agent_optional), placeholder = stringResource(R.string.setup_user_agent_example), modifier = Modifier.fillMaxWidth())
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             // Auto-refresh dropdown (replaces the old binary "Refresh on startup" toggle). Off/Startup or a
             // staleness threshold — the source is refreshed when its data is at least this old.
             AutoRefreshRow(selected = autoRefresh) { showAutoRefreshPicker = true }
 
             if (showDefaultToggle) {
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 ToggleRow(
                     label = stringResource(R.string.setup_default_playlist),
                     desc = stringResource(R.string.setup_default_playlist_description),
@@ -459,7 +459,7 @@ fun AddSourceScreen(
             // fresh install entirely. Detection only refines the wording below — it never disables the
             // toggle, because a panel that under-reports its formats must not veto the user's choice.
             if (kind == SourceKind.XTREAM) {
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 OwnTVButton(
                     label = stringResource(
                         if (hlsTest is HlsTestUi.Testing) R.string.setup_hls_testing else R.string.setup_hls_test_support,
@@ -493,7 +493,7 @@ fun AddSourceScreen(
                     }
                     else -> Unit
                 }
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 ToggleRow(
                     label = stringResource(R.string.setup_prefer_hls_live_tv),
                     desc = stringResource(
@@ -510,7 +510,7 @@ fun AddSourceScreen(
             if (showContentToggles) {
                 Spacer(Modifier.height(20.dp))
                 Text(stringResource(R.string.setup_what_to_sync), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     if (editing) {
                         stringResource(R.string.setup_sync_off_editing)
@@ -522,14 +522,14 @@ fun AddSourceScreen(
                 )
                 Spacer(Modifier.height(10.dp))
                 SyncScopeRow(label = stringResource(R.string.setup_live_tv), desc = stringResource(R.string.setup_channels_categories), value = syncLive, editing = editing) { syncLive = it }
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 SyncScopeRow(label = stringResource(R.string.setup_movies), desc = stringResource(R.string.setup_vod_movie_catalog), value = syncMovies, editing = editing) { syncMovies = it }
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 SyncScopeRow(label = stringResource(R.string.setup_series), desc = stringResource(R.string.setup_tv_series_catalog), value = syncSeries, editing = editing) { syncSeries = it }
             }
 
             if (!editing && hideNewCatsProfile >= 0) {
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 ToggleRow(
                     label = stringResource(R.string.setup_hide_new_categories),
                     desc = stringResource(R.string.setup_hide_new_categories_description),
@@ -668,7 +668,7 @@ private fun AutoRefreshRow(selected: PlaylistAutoRefresh, onClick: () -> Unit) {
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = Dimens.HeroGap), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(stringResource(R.string.setup_auto_refresh), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Text(
@@ -696,7 +696,7 @@ private fun ToggleRow(label: String, desc: String, checked: Boolean, onToggle: (
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = Dimens.HeroGap), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(label, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Text(desc, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -753,7 +753,7 @@ private fun SyncScopeRow(
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.CARDS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = Dimens.HeroGap), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(label, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Text(desc, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -785,7 +785,7 @@ private fun KindChip(label: String, selected: Boolean, modifier: Modifier, onCli
             label,
             style = MaterialTheme.typography.titleMedium,
             color = if (selected) colors.onPrimaryContainer else colors.onSurface,
-            modifier = Modifier.padding(vertical = 14.dp),
+            modifier = Modifier.padding(vertical = Dimens.HeroGap),
         )
     }
 }

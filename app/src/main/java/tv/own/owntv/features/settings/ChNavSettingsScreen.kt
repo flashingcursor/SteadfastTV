@@ -31,6 +31,7 @@ import tv.own.owntv.features.settings.data.ChNavLimits
 import tv.own.owntv.ui.components.NumberInputDialog
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.format.localizedInteger
 
@@ -91,13 +92,13 @@ fun ChNavSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         Header(title = stringResource(R.string.settings_ch_nav_title), onBack = onBack)
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(
             stringResource(R.string.settings_ch_nav_description),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         Row2(
             icon = OwnTVIcon.MENU,
@@ -138,7 +139,7 @@ fun ChNavSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             stringResource(R.string.settings_ch_nav_help),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 6.dp),
         )
     }
 

@@ -278,7 +278,7 @@ fun MoviesScreen(
     val panelShares = rememberPanelShares(PanelSection.MOVIES, settingsVm)
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
     val panels = panelShares?.let { computePanelWidths(it, maxWidth) }
-    Row(modifier = Modifier.fillMaxSize().onFocusChanged { if (it.hasFocus) onChildFocused() }, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+    Row(modifier = Modifier.fillMaxSize().onFocusChanged { if (it.hasFocus) onChildFocused() }, horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
         CategoryRail(
             width = panels?.category ?: Dimens.RailWidthFixed,
             categories = railItems.map { RailCategory(it.displayLabel(R.string.content_category_all_movies), it.icon, showGenreDot = it.key is LiveKey.Folder) },
@@ -368,7 +368,7 @@ fun MoviesScreen(
                 title = stringResource(R.string.content_section_category, stringResource(R.string.common_nav_movies), selectedLabel),
                 subtitle = pluralStringResource(R.plurals.content_count_movies, count, selectedLabel, count),
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SearchBar(
                     query = searchQuery,
@@ -387,7 +387,7 @@ fun MoviesScreen(
                     style = tv.own.owntv.ui.components.OwnTVButtonStyle.SECONDARY,
                 )
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
 
             if (movies.itemCount == 0) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -399,7 +399,7 @@ fun MoviesScreen(
             } else if (viewMode == SettingsRepository.VodViewMode.LIST) {
                 LazyColumn(
                     state = effectiveListState,
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                 ) {
                     items(
                         count = movies.itemCount,
@@ -796,7 +796,7 @@ private fun MovieDetailsPane(
                 }
             }
         }
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         // Always-visible, non-focusable resume label (kept above the title, not further down in the
         // pane, since movie metadata below can push a lower placement out of view once it scrolls long).
         if (resumePositionMs != null) {
@@ -813,7 +813,7 @@ private fun MovieDetailsPane(
         // Genres & cast are TMDB-only (§7.1) — a whole layer the provider never had.
         val genres = jsonList(meta?.genresJson)
         if (genres.isNotEmpty()) {
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(genres.joinToString(stringResource(R.string.content_genres_separator)), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
         }
         if (!plot.isNullOrBlank()) {

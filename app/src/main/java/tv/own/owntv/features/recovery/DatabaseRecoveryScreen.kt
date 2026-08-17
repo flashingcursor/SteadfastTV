@@ -26,6 +26,7 @@ import androidx.tv.material3.Button
 import androidx.tv.material3.Text
 import androidx.compose.ui.res.stringResource
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 
 /**
  * Shown instead of the shell when the database cannot be opened — a migration that failed, or a file
@@ -48,7 +49,7 @@ fun DatabaseRecoveryScreen(
     Box(Modifier.fillMaxSize().background(Color(0xFF0B0B0D)), contentAlignment = Alignment.Center) {
         Column(
             modifier = Modifier.widthIn(max = 760.dp).padding(48.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
         ) {
             Text(stringResource(R.string.recovery_title), fontSize = 30.sp, fontWeight = FontWeight.Bold, color = Color.White)
             Text(

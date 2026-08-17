@@ -240,20 +240,20 @@ internal fun ProgrammeDetailDialog(
                 Text(channelName.uppercase(), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(6.dp))
                 Text(programme.title, style = if (compact) MaterialTheme.typography.titleMedium else MaterialTheme.typography.headlineSmall, color = colors.onSurface)
-                Spacer(Modifier.height(if (compact) 4.dp else 8.dp))
+                Spacer(Modifier.height(if (compact) Dimens.GapTiny else Dimens.GapSmall))
                 Text(stringResource(R.string.content_epg_time_range, formatTime(programme.startMs), formatTime(programme.stopMs)), style = if (compact) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.titleMedium, color = colors.onSurfaceVariant)
                 if (!description.isNullOrBlank()) {
-                    Spacer(Modifier.height(if (compact) 10.dp else 14.dp))
+                    Spacer(Modifier.height(if (compact) 10.dp else Dimens.HeroGap))
                     Text(description.orEmpty(), style = if (compact) MaterialTheme.typography.bodySmall else MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                 }
-                Spacer(Modifier.height(if (compact) 16.dp else 24.dp))
+                Spacer(Modifier.height(if (compact) Dimens.GapMedium else Dimens.GapLarge))
                 // FlowRow so the actions wrap to a second line on narrower screens instead of the last
                 // button being clipped off the dialog edge (4 buttons don't fit one row when catch-up adds
                 // "Watch from start" + "Watch channel").
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(if (compact) 8.dp else 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(if (compact) 8.dp else 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(if (compact) Dimens.GapSmall else 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(if (compact) Dimens.GapSmall else 12.dp),
                 ) {
                     // Catch-up channels: replay this programme from its start (seekable archive playback).
                     if (canCatchup) {
@@ -306,16 +306,16 @@ private fun CatchupPlayerChooser(
             ) {
                 Column(Modifier.dialogPanel(width = 340.dp, corner = Dimens.CornerMedium, padding = 18.dp, scroll = false)) {
                     Text(stringResource(R.string.settings_catchup_player), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     Text(
                         stringResource(R.string.content_epg_player_choice_description),
                         style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     OwnTVButton(stringResource(R.string.content_epg_own_player), onClick = onInternal, icon = OwnTVIcon.PLAY, compact = true, modifier = Modifier.fillMaxWidth().focusRequester(fr))
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     OwnTVButton(stringResource(R.string.content_epg_external_player), onClick = onExternal, style = OwnTVButtonStyle.SECONDARY, compact = true, modifier = Modifier.fillMaxWidth())
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY, compact = true, modifier = Modifier.fillMaxWidth())
                 }
             }

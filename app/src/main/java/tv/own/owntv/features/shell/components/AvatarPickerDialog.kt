@@ -70,7 +70,7 @@ fun AvatarPickerDialog(
                 .background(colors.surfaceContainerHigh)
                 // Scrollable: the avatar grid is taller than small/low-res screens.
                 .verticalScroll(rememberScrollState())
-                .padding(32.dp),
+                .padding(Dimens.ScreenPaddingH),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -82,7 +82,7 @@ fun AvatarPickerDialog(
             Spacer(Modifier.height(20.dp))
 
             // Phase 7 — "no avatar" option showing the Rank 1 ProfileIcon (ID -1)
-            Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                 val noneSelected = selectedId == -1
                 FocusableSurface(
                     onClick = { onSelect(-1); onDismiss() },
@@ -100,11 +100,11 @@ fun AvatarPickerDialog(
                     ProfileIcon(color = OwnTVTheme.colors.primary, modifier = Modifier.size(40.dp))
                 }
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
 
             val ids = (0 until OwnTVAvatars.COUNT).toList()
             ids.chunked(4).forEach { rowIds ->
-                Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                     rowIds.forEach { id ->
                         val isSelected = id == selectedId
                         FocusableSurface(
@@ -124,7 +124,7 @@ fun AvatarPickerDialog(
                         }
                     }
                 }
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
             }
         }
     }

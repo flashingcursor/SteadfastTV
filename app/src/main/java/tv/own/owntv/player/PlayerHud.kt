@@ -101,7 +101,7 @@ private val SPEEDS = listOf(0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0)
 private fun Modifier.hudTextScrim(): Modifier = this
     .clip(RoundedCornerShape(Dimens.CornerMedium))
     .background(Color.Black.copy(alpha = 0.45f))
-    .padding(horizontal = 16.dp, vertical = 10.dp)
+    .padding(horizontal = Dimens.GapMedium, vertical = 10.dp)
 
 @Composable
 internal fun MediaSpec.displayText(): String {
@@ -637,7 +637,7 @@ fun PlayerHud(
                     modifier = Modifier
                         .clip(RoundedCornerShape(Dimens.CardCorner))
                         .background(Color.Black.copy(alpha = 0.55f))
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall),
                 )
             }
         }
@@ -650,7 +650,7 @@ fun PlayerHud(
                 // cap instead of stretching to a fraction of the whole screen.
                 Column(Modifier.hudTextScrim().widthIn(max = 560.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(R.string.player_playback_error), style = MaterialTheme.typography.titleLarge, color = Color.White)
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     error?.let {
                         Text(it.displayText(), style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.7f), textAlign = TextAlign.Center)
                     }
@@ -658,15 +658,15 @@ fun PlayerHud(
                     // plain reason → media spec (codec • resolution • decoder) → raw engine/codec line.
                     errorInfo?.let { info ->
                         info.reason?.let {
-                            Spacer(Modifier.height(8.dp))
+                            Spacer(Modifier.height(Dimens.GapSmall))
                             Text(it.displayText(), style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.92f), textAlign = TextAlign.Center)
                         }
                         info.spec?.let {
-                            Spacer(Modifier.height(4.dp))
+                            Spacer(Modifier.height(Dimens.GapTiny))
                             Text(it.displayText(), style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.55f), textAlign = TextAlign.Center)
                         }
                         info.raw?.takeIf { it.isNotBlank() }?.let {
-                            Spacer(Modifier.height(4.dp))
+                            Spacer(Modifier.height(Dimens.GapTiny))
                             Text(stringResource(R.string.player_raw_error, it), style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.6f), textAlign = TextAlign.Center)
                         }
                     }
@@ -745,12 +745,12 @@ private fun TopBar(
     }
     Row(modifier = modifier.fillMaxWidth().padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
         CircleButton(OwnTVIcon.BACK, size = 40, onClick = onBack)
-        Spacer(Modifier.width(14.dp))
+        Spacer(Modifier.width(Dimens.HeroGap))
         // Live: the channel logo sits with the channel NAME (identity), not with the programme — so the
         // whole "which channel am I on" group reads as one unit however wide the TV is.
         if (isLive) {
             ChannelLogo(meta.logoUrl, displayTitle, size = 46)
-            Spacer(Modifier.width(14.dp))
+            Spacer(Modifier.width(Dimens.HeroGap))
         }
         Column(Modifier.weight(1f)) {
             // Hoisted out of chipRow so the empty-metadata guard below can see whether the chip row
@@ -762,7 +762,7 @@ private fun TopBar(
                 addAll(chips) // aspect · resolution · fps · audio
             }
             val chipRow: @Composable () -> Unit = {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     chipParts.forEachIndexed { i, label ->
                         if (i > 0) Box(Modifier.size(3.dp).clip(CircleShape).background(Color.White.copy(alpha = 0.3f)))
                         Text(label, style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.5f))
@@ -839,8 +839,8 @@ private fun ChannelLogo(logoUrl: String?, title: String?, size: Int, modifier: M
 private fun LiveBadge() {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(HudPictorial.LiveBadge).padding(horizontal = 8.dp, vertical = 2.dp),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(HudPictorial.LiveBadge).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         Box(Modifier.size(6.dp).clip(CircleShape).background(Color.White))
         Text(stringResource(R.string.player_live), style = MaterialTheme.typography.labelSmall, color = Color.White, fontWeight = FontWeight.Bold)
@@ -857,7 +857,7 @@ private fun ChannelOsdCard(
 ) {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = modifier.widthIn(max = 340.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black.copy(alpha = 0.55f)).padding(14.dp),
+        modifier = modifier.widthIn(max = 340.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black.copy(alpha = 0.55f)).padding(Dimens.HeroGap),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Box(Modifier.size(44.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
@@ -914,7 +914,7 @@ private fun ChannelNumberCard(digits: String, error: String? = null, modifier: M
             }
             .padding(bottom = 3.dp),
     ) {
-        Column(Modifier.padding(start = 16.dp, end = 20.dp, top = 12.dp, bottom = 12.dp)) {
+        Column(Modifier.padding(start = Dimens.GapMedium, end = 20.dp, top = 12.dp, bottom = 12.dp)) {
             Text(
                 stringResource(R.string.player_channel_label),
                 style = MaterialTheme.typography.labelSmall, color = colors.primary, fontWeight = FontWeight.Bold,
@@ -928,7 +928,7 @@ private fun ChannelNumberCard(digits: String, error: String? = null, modifier: M
                 )
                 if (error == null) {
                     Box(
-                        Modifier.padding(start = 4.dp, bottom = 4.dp).width(3.dp).height(22.dp)
+                        Modifier.padding(start = Dimens.GapTiny, bottom = Dimens.GapTiny).width(3.dp).height(22.dp)
                             .clip(RoundedCornerShape(2.dp)).background(colors.primary.copy(alpha = caretAlpha)),
                     )
                 }
@@ -960,7 +960,7 @@ private fun CenterControls(
             )
             Spacer(Modifier.height(12.dp))
         }
-        Row(Modifier.focusGroup(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+        Row(Modifier.focusGroup(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapLarge)) {
             if (nav.hasPrev) CircleButton(OwnTVIcon.SKIP_PREVIOUS, size = 52) { player.previous() }
             when {
                 rewindMode -> CircleButton(OwnTVIcon.REWIND, size = 52) { onRewindLive() } // step back into the archive
@@ -1015,7 +1015,7 @@ private fun BottomBar(
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().focusGroup()) {
-            Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
                 CtrlButton(volumeIcon(volume)) { onOpenDialog(HudDialog.VOLUME) }
                 SpeedButton(label = speedLabel, active = speedLabel != stringResource(R.string.player_speed_normal_short)) { onOpenDialog(HudDialog.SPEED) }
                 CtrlButton(OwnTVIcon.SUBTITLE, badge = subCount.takeIf { it > 0 }) { onOpenDialog(HudDialog.SUBS) }
@@ -1023,7 +1023,7 @@ private fun BottomBar(
                 // Favorite the current channel/movie/series without leaving the stream (teal heart = on).
                 if (onToggleFavorite != null) CtrlButton(OwnTVIcon.FAVORITE, active = favorite) { onToggleFavorite() }
             }
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
                 // Live "compatibility mode" (Live TV + channels opened from the Guide): pin this channel
                 // to mpv. The pill shows the active engine and flips on click (teal while pinned to mpv).
                 if (onToggleCompatMode != null) {
@@ -1126,7 +1126,7 @@ private fun NextEpisodeCard(
             .widthIn(max = 360.dp)
             .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(Color.Black.copy(alpha = 0.82f))
-            .padding(horizontal = 18.dp, vertical = 14.dp),
+            .padding(horizontal = 18.dp, vertical = Dimens.HeroGap),
     ) {
         Text(
             stringResource(R.string.player_next_episode, seconds),
@@ -1134,7 +1134,7 @@ private fun NextEpisodeCard(
             color = colors.onSurface,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(
             title,
             style = MaterialTheme.typography.titleSmall,
@@ -1280,7 +1280,7 @@ private fun SeekBar(positionMs: Long, durationMs: Long, onSeek: (Long) -> Unit) 
             // so the bubble shows what's LEFT: "-12:34"). Uses a negative offset (not bottom padding) so it
             // floats clear above the 24dp-tall bar — padding can't lift it out of the height-constrained parent.
             Box(
-                Modifier.offset(y = (-32).dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = 8.dp, vertical = 3.dp),
+                Modifier.offset(y = (-32).dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
             ) {
                 Text(
                     stringResource(R.string.player_time_remaining, formatTime((durationMs - positionMs).coerceAtLeast(0))),
@@ -1313,7 +1313,7 @@ private fun LiveTimelineBar(offsetSec: Int, onScrub: (Int) -> Unit) {
             // negative offset: this bar's parent isn't height-constrained the way the VOD bar's is, so padding
             // is enough to clear the thumb. The two placements land ~2dp apart historically — deliberately
             // preserved rather than unified, since re-deriving one from the other risks nudging either bar.
-            Box(Modifier.padding(bottom = 30.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = 8.dp, vertical = 3.dp)) {
+            Box(Modifier.padding(bottom = 30.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = Dimens.GapSmall, vertical = 3.dp)) {
                 Text(
                     if (offsetSec <= 1) stringResource(R.string.player_live) else stringResource(R.string.player_live_offset, mmss(offsetSec)),
                     style = MaterialTheme.typography.labelMedium.copy(textDirection = TextDirection.Content),
@@ -1372,7 +1372,7 @@ private fun TrackDialog(
     }
     DialogScaffold(title = title, onDismiss = onDismiss, state = listState) {
         if (tracks.isEmpty() && onOff == null) {
-            item { Text(stringResource(R.string.player_no_tracks), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, modifier = Modifier.padding(16.dp)) }
+            item { Text(stringResource(R.string.player_no_tracks), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, modifier = Modifier.padding(Dimens.GapMedium)) }
         }
         if (onOff != null) {
             item {
@@ -1400,7 +1400,7 @@ private fun TrackDialog(
                     stringResource(R.string.player_add_subtitles),
                     style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 2.dp),
+                    modifier = Modifier.padding(start = Dimens.GapMedium, top = 10.dp, bottom = 2.dp),
                 )
             }
             if (onSearchSubtitles != null) {
@@ -1417,7 +1417,7 @@ private fun TrackDialog(
                     stringResource(R.string.player_adjust),
                     style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 2.dp),
+                    modifier = Modifier.padding(start = Dimens.GapMedium, top = 10.dp, bottom = 2.dp),
                 )
             }
             item { OptionRow(label = stringResource(R.string.player_subtitle_timing), selected = false, onClick = onSubtitleTiming) }
@@ -1426,7 +1426,7 @@ private fun TrackDialog(
         if (onAdjustAudioDelay != null) {
             item {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
@@ -1547,7 +1547,7 @@ private fun SubtitleTimingDialog(player: PlaybackEngine, onDismiss: () -> Unit) 
                     Text(stringResource(R.string.player_subtitle_timing), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                     Spacer(Modifier.height(10.dp))
                     Text(formatSubDelay(delay), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     Text(
                         when {
                             delay > 0 -> stringResource(R.string.player_subtitles_later)
@@ -1604,10 +1604,10 @@ private fun DialogScaffold(
                 // inner LazyColumn manages its own scroll, so scroll = false.
                 Column(modifier = Modifier.dialogPanel(width = 260.dp, corner = 16.dp, padding = 14.dp, scroll = false)) {
                     Text(title, style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     // Cap to the screen (minus dialog chrome) so all rows stay reachable on small screens.
                     val listMax = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 160.dp).coerceIn(140.dp, 240.dp)
-                    LazyColumn(state = state, modifier = Modifier.heightIn(max = listMax), verticalArrangement = Arrangement.spacedBy(4.dp), content = content)
+                    LazyColumn(state = state, modifier = Modifier.heightIn(max = listMax), verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny), content = content)
                 }
             }
         }
@@ -1622,7 +1622,7 @@ private fun OptionRow(label: String, selected: Boolean, modifier: Modifier = Mod
         selectedContainerColor = colors.primaryContainer, contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically) {
             Text(label, style = MaterialTheme.typography.bodyMedium, color = if (selected) colors.onPrimaryContainer else colors.onSurface)
             if (selected) {
                 Spacer(Modifier.weight(1f))

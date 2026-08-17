@@ -74,29 +74,29 @@ fun HomeSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .padding(horizontal = 40.dp, vertical = 28.dp),
     ) {
         Text(stringResource(R.string.settings_home_screen), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(
             stringResource(R.string.settings_home_description),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         LazyColumn(
             // Pin vertical focus inside the section list — a held Up/Down that outruns composition
             // would otherwise escape to the header / sidebar (every other browse list traps this).
             modifier = Modifier.weight(1f).fillMaxWidth().trapVerticalFocusExit(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             item {
                 Text(stringResource(R.string.settings_sections), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(R.string.settings_hidden_sections),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
             }
 
             itemsIndexed(config.settingsRows, key = { _, row -> row.name }) { index, row ->
@@ -121,7 +121,7 @@ fun HomeSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             }
 
             item {
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 GroupLabel(stringResource(R.string.settings_keep_watching))
             }
 
@@ -215,7 +215,7 @@ private fun HomeRowCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(colors.surfaceContainerHigh)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.weight(1f)) {

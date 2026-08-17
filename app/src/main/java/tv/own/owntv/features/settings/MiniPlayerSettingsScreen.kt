@@ -32,6 +32,7 @@ import tv.own.owntv.player.MiniPlayerSize
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.StepperDialog
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 private enum class MiniPlayerDialog { NONE, SIZE, POSITION }
@@ -79,13 +80,13 @@ fun MiniPlayerSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) 
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         Header(title = stringResource(R.string.settings_mini_player), onBack = onBack)
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(
             stringResource(R.string.settings_mini_player_description),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         Row2(
             icon = OwnTVIcon.ZOOM,

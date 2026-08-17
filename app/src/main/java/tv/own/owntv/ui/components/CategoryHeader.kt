@@ -11,6 +11,7 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvComponentPreview
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -48,7 +49,7 @@ fun CategoryHeader(
 @TvComponentPreview
 @Composable
 private fun CategoryHeaderPreview() = OwnTVPreview {
-    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(Modifier.padding(Dimens.GapMedium), verticalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
         CategoryHeader(title = "All Movies", subtitle = "3 titles")
         CategoryHeader(title = "Live TV", subtitle = null)
     }

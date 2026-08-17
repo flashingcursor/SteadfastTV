@@ -240,7 +240,7 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 SettingsViewModel.ImportState.Running -> CenterStatus {
                     val display = progress?.importProgressDisplay()
                     OwnTVSpinner(sizeDp = 56)
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(Dimens.GapMedium))
                     Text(
                         stringResource(R.string.settings_sources_importing),
                         style = MaterialTheme.typography.titleMedium,
@@ -248,7 +248,7 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     )
                     Spacer(Modifier.height(6.dp))
                     Text(display?.primaryText() ?: stringResource(R.string.settings_sources_preparing), style = MaterialTheme.typography.headlineSmall, color = colors.onSurfaceVariant)
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     Text(display?.detailText() ?: stringResource(R.string.settings_sources_preparing), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     Spacer(Modifier.height(20.dp))
                     OwnTVButton(stringResource(R.string.common_cancel), onClick = { showAdd = false; vm.cancelImport() }, style = OwnTVButtonStyle.SECONDARY)
@@ -260,14 +260,14 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     } else if (s.warnings.isNotEmpty() || s.remainder.hasAny) {
                         CenterStatus {
                             Text(stringResource(R.string.settings_sources_import_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                            Spacer(Modifier.height(8.dp))
+                            Spacer(Modifier.height(Dimens.GapSmall))
                             Text(s.counts.summaryText(), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                             s.warnings.warningText()?.let { warning ->
-                                Spacer(Modifier.height(4.dp))
+                                Spacer(Modifier.height(Dimens.GapTiny))
                                 Text(warning, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                             }
                             s.remainder.remainderText()?.let { remainder ->
-                                Spacer(Modifier.height(4.dp))
+                                Spacer(Modifier.height(Dimens.GapTiny))
                                 Text(remainder, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                             }
                             Spacer(Modifier.height(20.dp))
@@ -279,7 +279,7 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 }
                 is SettingsViewModel.ImportState.Failed -> CenterStatus {
                     Text(stringResource(R.string.settings_sources_import_failed), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     Text(s.failure.displayText(), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     Spacer(Modifier.height(20.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -315,7 +315,7 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     Spacer(Modifier.weight(1f))
                     OwnTVButton(stringResource(R.string.settings_sources_add), onClick = { showAdd = true }, icon = tv.own.owntv.ui.components.OwnTVIcon.ADD, modifier = Modifier.focusRequester(addFocus))
                 }
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(R.string.settings_sources_description), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                 Spacer(Modifier.height(20.dp))
 
@@ -409,38 +409,38 @@ private fun SourceRow(
     val activeSync = syncState as? CatalogSyncState.Syncing
     val activeCounts = activeSync?.countsLabel(source.type, counts)
     Row(
-        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(16.dp),
+        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(Dimens.GapMedium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(source.name, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 if (isDefault) {
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(Dimens.GapSmall))
                     Text(
                         stringResource(R.string.settings_sources_default),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
                     )
                 }
                 if (isDeleting) {
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(Dimens.GapSmall))
                     Text(
                         stringResource(R.string.settings_sources_deleting),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
                     )
                 }
                 activeSync?.let {
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(Dimens.GapSmall))
                     Text(
                         resyncProgressPercent(it.baseItemCount, it.totalProcessed)?.let { percent -> stringResource(R.string.sync_progress_percent, percent) }
                             ?: stringResource(R.string.sync_progress_syncing),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
                     )
                 }
             }

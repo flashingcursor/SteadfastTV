@@ -244,7 +244,7 @@ private fun SetupChoiceScreen(onCreate: () -> Unit, onRestore: () -> Unit, onBac
         title = { Text(stringResource(R.string.setup_set_up_owntv)) },
         subtitle = { Text(stringResource(R.string.setup_setup_choice_description)) },
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             ChoiceCard(icon = OwnTVIcon.PERSON, title = stringResource(R.string.setup_new_profile), desc = stringResource(R.string.setup_create_profile_add_sources), modifier = Modifier.focusRequester(fr), onClick = onCreate)
             ChoiceCard(icon = OwnTVIcon.DOWNLOADS, title = stringResource(R.string.setup_restore_backup), desc = stringResource(R.string.setup_import_profiles_playlists), onClick = onRestore)
         }
@@ -259,14 +259,14 @@ private fun AddContentScreen(hasExisting: Boolean, onNew: () -> Unit, onExisting
         title = { Text(stringResource(R.string.setup_add_playlist)) },
         subtitle = { Text(stringResource(R.string.setup_add_playlist_description)) },
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             ChoiceCard(icon = OwnTVIcon.ADD, title = stringResource(R.string.setup_new), desc = stringResource(R.string.setup_add_m3u_xtream), modifier = Modifier.focusRequester(fr), onClick = onNew)
             if (hasExisting) {
                 ChoiceCard(icon = OwnTVIcon.PLAYLIST, title = stringResource(R.string.setup_existing), desc = stringResource(R.string.setup_use_other_profile_playlists), onClick = onExisting)
             }
             ChoiceCard(icon = OwnTVIcon.DOWNLOADS, title = stringResource(R.string.setup_import), desc = stringResource(R.string.setup_restore_backup_file), onClick = onImport)
         }
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(Dimens.GapLarge))
         OwnTVButton(
             stringResource(R.string.setup_skip_for_now),
             onClick = onSkip,
@@ -290,7 +290,7 @@ private fun ExistingSourcesScreen(sources: List<SourceEntity>, onAdd: (Set<Long>
     ) {
         // Cap to the screen (minus header/footer) so Back/Add stay reachable on small screens.
         val listMax = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 260.dp).coerceIn(140.dp, 320.dp)
-        LazyColumn(Modifier.widthIn(max = 620.dp).fillMaxWidth().heightIn(max = listMax), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyColumn(Modifier.widthIn(max = 620.dp).fillMaxWidth().heightIn(max = listMax), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
             items(sources, key = { it.id }) { src ->
                 val checked = src.id in selected
                 FocusableSurface(
@@ -301,7 +301,7 @@ private fun ExistingSourcesScreen(sources: List<SourceEntity>, onAdd: (Set<Long>
                     selectedContainerColor = colors.primaryContainer,
                     contentAlignment = Alignment.CenterStart,
                 ) { _ ->
-                    Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = Dimens.HeroGap), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(src.name, style = MaterialTheme.typography.titleMedium, color = if (checked) colors.onPrimaryContainer else colors.onSurface)
                             Text(src.url, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -397,11 +397,11 @@ private fun ImportBackupChooserScreen(onRemote: () -> Unit, onLocal: () -> Unit,
         title = { Text(stringResource(R.string.setup_restore_a_backup)) },
         subtitle = { Text(stringResource(R.string.setup_restore_choice_description)) },
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             ChoiceCard(icon = OwnTVIcon.PLAYLIST, title = stringResource(R.string.setup_from_phone), desc = stringResource(R.string.setup_upload_from_wifi_device), modifier = Modifier.focusRequester(fr), onClick = onRemote)
             ChoiceCard(icon = OwnTVIcon.DOWNLOADS, title = stringResource(R.string.setup_local_file), desc = stringResource(R.string.setup_pick_backup_local), onClick = onLocal)
         }
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(Dimens.GapLarge))
         OwnTVButton(stringResource(R.string.common_back), onClick = onBack, style = OwnTVButtonStyle.SECONDARY)
     }
 }
@@ -422,9 +422,9 @@ private fun ChoiceCard(icon: OwnTVIcon, title: String, desc: String, modifier: M
             Box(modifier = Modifier.size(56.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
                 OwnTVIcon(icon, tint = colors.onPrimaryContainer, modifier = Modifier.size(28.dp))
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(desc, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center)
         }
     }
@@ -455,7 +455,7 @@ private fun ImportProgressScreen(
                 OwnTVSpinner(sizeDp = 56)
                 Spacer(Modifier.height(20.dp))
                 Text(stringResource(R.string.setup_importing_catalog), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     display?.primaryText() ?: stringResource(R.string.setup_preparing_catalog),
                     style = MaterialTheme.typography.headlineLarge,
@@ -467,7 +467,7 @@ private fun ImportProgressScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(Dimens.GapLarge))
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     // Enter the app right away; the import keeps running (VM is activity-scoped) and
                     // content appears as it lands — no need to sit through a big movies/series sync.

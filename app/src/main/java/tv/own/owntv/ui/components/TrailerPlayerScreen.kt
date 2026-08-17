@@ -175,7 +175,7 @@ fun TrailerPlayerScreen(videoKey: String, onExit: () -> Unit) {
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .background(Color.Black.copy(alpha = 0.55f))
-                    .padding(horizontal = 24.dp, vertical = 14.dp),
+                    .padding(horizontal = Dimens.GapLarge, vertical = Dimens.HeroGap),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(18.dp),
             ) {

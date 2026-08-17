@@ -100,13 +100,13 @@ fun PanelWidthSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) 
             verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             Header(title = stringResource(R.string.settings_panel_width), onBack = onBack)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(
                 stringResource(R.string.settings_panel_width_screen_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
 
             PanelSection.entries.forEach { section ->
                 val enabled by vm.panelWidthEnabled.getValue(section).collectAsStateWithLifecycle()
@@ -140,7 +140,7 @@ fun PanelWidthSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) 
                 stringResource(R.string.settings_panel_width_help),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+                modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 6.dp),
             )
         }
 
@@ -255,7 +255,7 @@ private fun PanelWidthDialog(
                     contentAlignment = Alignment.CenterStart,
                 ) { _ ->
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -314,13 +314,13 @@ private fun PanelWidthDialog(
                     }
 
                     if (showError) {
-                        Spacer(Modifier.height(8.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Box(
                             Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(Dimens.CornerSmall))
                                 .background(colors.favorite.copy(alpha = 0.18f))
-                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                                .padding(horizontal = 12.dp, vertical = Dimens.GapSmall),
                         ) {
                             Text(
                                 stringResource(R.string.settings_panel_width_invalid_total, draft.total),
@@ -332,8 +332,8 @@ private fun PanelWidthDialog(
                     }
                 }
 
-                Spacer(Modifier.height(14.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Spacer(Modifier.height(Dimens.HeroGap))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     OwnTVButton(
                         stringResource(R.string.common_reset),
                         onClick = { draft = stock; showError = false },
@@ -375,7 +375,7 @@ private fun StepRow(
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
     ) {
         Text(label, style = MaterialTheme.typography.bodyLarge, color = colors.onSurface, modifier = Modifier.weight(1f))
         // Both buttons stay focusable at the ends of the range: disabling the one holding focus would

@@ -316,7 +316,7 @@ fun LiveScreen(
         modifier = Modifier
             .fillMaxSize()
             .onFocusChanged { if (it.hasFocus) onChildFocused() },
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         CategoryRail(
             width = panels?.category ?: Dimens.RailWidthFixed,
@@ -413,7 +413,7 @@ fun LiveScreen(
                 title = stringResource(R.string.content_section_category, stringResource(R.string.common_nav_live_tv), selectedLabel),
                 subtitle = pluralStringResource(R.plurals.content_count_channels, count, selectedLabel, count),
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SearchBar(
@@ -425,7 +425,7 @@ fun LiveScreen(
                 Spacer(Modifier.size(10.dp))
                 SortChip(mode = sortMode, onToggle = vm::toggleSort)
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
 
             if (channels.itemCount == 0) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -645,7 +645,7 @@ private fun ChannelRow(
         onLongClick = onLongClick,
         modifier = modifier.onFocusChanged { if (it.hasFocus) onFocus() },
         leading = {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                 Box(
                     modifier = Modifier.size(48.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
                     contentAlignment = Alignment.Center,
@@ -787,14 +787,14 @@ private fun LivePreviewPane(
             val chips = streamChips.takeIf { it.isNotEmpty() } ?: videoRes?.let { listOf(it) }.orEmpty()
             chips.takeIf { previewPlaying && it.isNotEmpty() }?.let { list ->
                 Row(
-                    Modifier.align(Alignment.TopStart).padding(8.dp),
+                    Modifier.align(Alignment.TopStart).padding(Dimens.GapSmall),
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     list.forEach { label ->
                         Box(
                             Modifier.clip(RoundedCornerShape(50))
                                 .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.6f))
-                                .padding(horizontal = 8.dp, vertical = 3.dp),
+                                .padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
                         ) {
                             Text(label, style = MaterialTheme.typography.labelMedium, color = androidx.compose.ui.graphics.Color.White)
                         }
@@ -802,7 +802,7 @@ private fun LivePreviewPane(
                 }
             }
         }
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         Text(channel.name, style = MaterialTheme.typography.headlineMedium, color = colors.onSurface)
 
         // Metadata row — category · inferred genre (with colour dot) · catch-up status · EPG status.
@@ -813,7 +813,7 @@ private fun LivePreviewPane(
 
         // No action buttons — all management (Favorite / Rename / Hide / Match EPG / Catch-up) is in
         // the long-press menu. Just a hint so the watch affordance + where-to-find-options stay obvious.
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(Dimens.HeroGap))
         Text(
             stringResource(R.string.content_press_ok_fullscreen),
             style = MaterialTheme.typography.bodySmall,
@@ -864,7 +864,7 @@ private fun ChannelMetaRow(
     }
 
     FlowRow(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.GapTiny),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -890,7 +890,7 @@ private fun MetaChipBadge(chip: MetaChip) {
             .height(26.dp)                  // uniform chip height — long category names can't wrap to 2 lines and make one chip taller than the others
             .clip(RoundedCornerShape(Dimens.CornerXSmall))
             .background(colors.surfaceContainerLow)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = Dimens.GapSmall),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(5.dp),
     ) {
@@ -918,8 +918,8 @@ private fun EpgSection(nowNext: EpgNowNext?) {
     val next = nowNext?.next
     if (now == null && next == null) return
 
-    Spacer(Modifier.height(16.dp))
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Spacer(Modifier.height(Dimens.GapMedium))
+    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
         if (now != null) {
             Text(stringResource(R.string.content_live_now_label), style = MaterialTheme.typography.labelSmall, color = colors.primary, fontWeight = FontWeight.Bold)
             Text(
@@ -1042,7 +1042,7 @@ private fun CatchupDialog(
                                 contentAlignment = Alignment.CenterStart,
                                 surface = GlassSurface.DIALOGS,
                             ) { _ ->
-                                Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp)) {
+                                Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = Dimens.GapSmall)) {
                                     Text(p.title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                     Text(formatCatchupTime(p.startMs, p.stopMs, formatTime), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                                 }
@@ -1051,7 +1051,7 @@ private fun CatchupDialog(
                     }
                 }
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             OwnTVButton(stringResource(R.string.content_close), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
         }
         }
@@ -1145,7 +1145,7 @@ internal fun EpgMatchDialog(
                     }
                 }
                 Spacer(Modifier.width(10.dp))
-                Column(Modifier.width(110.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(Modifier.width(110.dp), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     OwnTVButton(stringResource(R.string.content_close), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
                     if (currentMatch != null) OwnTVButton(stringResource(R.string.content_clear_match), onClick = onClear, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
                 }
@@ -1195,7 +1195,7 @@ internal fun EpgOffsetDialog(
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OwnTVButton(
                     stringResource(R.string.content_epg_shift_minutes, "−", "30"),
@@ -1223,8 +1223,8 @@ internal fun EpgOffsetDialog(
                 ),
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(14.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Spacer(Modifier.height(Dimens.HeroGap))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 OwnTVButton(
                     stringResource(R.string.common_done),
                     onClick = { onSet(minutes); onDismiss() },

@@ -93,7 +93,7 @@ fun RemoteBackupRestoreScreen(
                     }
                     is CompanionServerState.Listening -> {
                         Text(stringResource(R.string.settings_enter_pin_browser), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(Dimens.GapTiny))
                         Text(
                             state.pin,
                             style = MaterialTheme.typography.headlineLarge,
@@ -101,7 +101,7 @@ fun RemoteBackupRestoreScreen(
                             color = colors.primary,
                             letterSpacing = 8.sp,
                         )
-                        Spacer(Modifier.height(14.dp))
+                        Spacer(Modifier.height(Dimens.HeroGap))
                         state.qr?.let { qr ->
                             Image(
                                 bitmap = qr,
@@ -112,7 +112,7 @@ fun RemoteBackupRestoreScreen(
                             Spacer(Modifier.height(12.dp))
                         }
                         Text(stringResource(R.string.settings_open_url), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(Dimens.GapTiny))
                         state.urls.forEach { url ->
                             Text(url, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, textAlign = TextAlign.Center)
                         }
@@ -130,9 +130,9 @@ fun RemoteBackupRestoreScreen(
                         OwnTVButton(stringResource(R.string.settings_new_pin), onClick = { onStart(CompanionLink.DEFAULT_PORT) })
                     }
                 }
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 OwnTVButton(stringResource(R.string.common_back), onClick = onBack, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.focusRequester(actionFocus))
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(Dimens.GapLarge))
             }
         }
     }
@@ -180,7 +180,7 @@ fun RemoteBackupExportScreen(
                     }
                     listening != null -> {
                         Text(stringResource(R.string.settings_enter_pin_browser), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(Dimens.GapTiny))
                         Text(
                             listening.pin,
                             style = MaterialTheme.typography.headlineLarge,
@@ -188,7 +188,7 @@ fun RemoteBackupExportScreen(
                             color = colors.primary,
                             letterSpacing = 8.sp,
                         )
-                        Spacer(Modifier.height(14.dp))
+                        Spacer(Modifier.height(Dimens.HeroGap))
                         listening.qr?.let { qr ->
                             Image(
                                 bitmap = qr,
@@ -199,7 +199,7 @@ fun RemoteBackupExportScreen(
                             Spacer(Modifier.height(12.dp))
                         }
                         Text(stringResource(R.string.settings_open_url), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-                        Spacer(Modifier.height(4.dp))
+                        Spacer(Modifier.height(Dimens.GapTiny))
                         listening.urls.forEach { url ->
                             Text(url, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, textAlign = TextAlign.Center)
                         }
@@ -211,7 +211,7 @@ fun RemoteBackupExportScreen(
                     }
                 }
                 OwnTVButton(stringResource(R.string.common_done), onClick = onBack, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.focusRequester(actionFocus))
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(Dimens.GapLarge))
             }
         }
     }

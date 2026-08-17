@@ -184,7 +184,7 @@ fun AudioNowPlayingBar(
                     color = if (active) colors.primary else colors.onSurfaceVariant.copy(alpha = 0.18f),
                     shape = RoundedCornerShape(Dimens.CornerMedium),
                 )
-                .padding(horizontal = 14.dp, vertical = 8.dp),
+                .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -229,7 +229,7 @@ fun AudioNowPlayingBar(
             }
 
             // Breathing room between the text block and the transport buttons (mock: buttons pushed right).
-            if (expanded) Spacer(Modifier.width(14.dp))
+            if (expanded) Spacer(Modifier.width(Dimens.HeroGap))
 
             if (expanded) {
                 Row(

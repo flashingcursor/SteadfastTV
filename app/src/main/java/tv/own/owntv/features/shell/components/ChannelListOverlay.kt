@@ -107,7 +107,7 @@ fun ChannelListOverlay(
                 state = listState,
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 6.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
             ) {
                 items(channels, key = { it.id }) { ch ->
                     val isCurrent = ch.id == currentId
@@ -141,7 +141,7 @@ private fun ChannelRow(
         modifier = modifier.fillMaxWidth(),
     ) { focused ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {

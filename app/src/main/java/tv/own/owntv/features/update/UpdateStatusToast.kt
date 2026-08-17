@@ -66,7 +66,7 @@ fun UpdateStatusToast(onDone: () -> Unit, onViewChangelog: () -> Unit, modifier:
             .widthIn(min = 260.dp, max = 380.dp)
             .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(colors.surfaceContainerHigh.copy(alpha = 0.90f))
-            .padding(horizontal = 18.dp, vertical = 14.dp)
+            .padding(horizontal = 18.dp, vertical = Dimens.HeroGap)
             .focusGroup(),
     ) {
         when (val s = state) {
@@ -86,7 +86,7 @@ fun UpdateStatusToast(onDone: () -> Unit, onViewChangelog: () -> Unit, modifier:
             is UpdateManager.State.Available -> {
                 BackHandler { onDone() } // Back = Later
                 Text(stringResource(R.string.update_available), style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(R.string.update_ready, s.info.version, manager.currentVersion),
                     style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,

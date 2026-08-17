@@ -35,6 +35,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -103,7 +104,7 @@ fun DeleteSubtitlesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     if (section == DeleteSubtitlesViewModel.Section.MOVIES) stringResource(R.string.settings_movies).lowercase() else stringResource(R.string.settings_series).lowercase(),
                 ),
                 style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(Dimens.GapMedium),
             )
         } else {
             items.forEach { item ->

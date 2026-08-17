@@ -333,7 +333,7 @@ fun EpgScreen(
             // (landing on the top bar) — trap vertical exits; Left/Right/Back leave normally.
             .trapVerticalFocusExit()
             .focusGroup()
-            .padding(horizontal = 32.dp, vertical = 24.dp),
+            .padding(horizontal = Dimens.ScreenPaddingH, vertical = Dimens.GapLarge),
     ) {
         // Header: back + title + date + refresh
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -372,7 +372,7 @@ fun EpgScreen(
             Spacer(Modifier.width(12.dp))
             // Smart-match: auto-link channels whose tvg-id doesn't match the EPG feed, by name (#13).
             if (matching) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     OwnTVSpinner(sizeDp = 20)
                     Text(stringResource(R.string.content_epg_matching), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant)
                 }
@@ -381,7 +381,7 @@ fun EpgScreen(
             }
         }
         state.stats?.let { stats ->
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(epgStatsText(stats), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant)
         }
         // Outcome of the last auto-match run (auto-applied count / how many need review). Dismissible.
@@ -389,7 +389,7 @@ fun EpgScreen(
             if (review.isEmpty()) {
                 Spacer(Modifier.height(6.dp))
                 FocusableSurface(onClick = vm::clearReview, shape = RoundedCornerShape(Dimens.CornerSmall), unfocusedContainerColor = colors.surfaceContainerHigh, contentAlignment = Alignment.CenterStart, surface = GlassSurface.CARDS) { _ ->
-                    Text(epgMatchSummaryText(summary), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+                    Text(epgMatchSummaryText(summary), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = 12.dp, vertical = Dimens.GapSmall))
                 }
             }
         }
@@ -438,9 +438,9 @@ fun EpgScreen(
                             }
                         }
                     }
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
 
-                    LazyColumn(modifier = Modifier.weight(1f), state = rowListState, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    LazyColumn(modifier = Modifier.weight(1f), state = rowListState, verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
                         itemsIndexed(state.channels, key = { _, ch -> ch.id }) { index, channel ->
                             GuideChannelRow(
                                 vm = vm,
@@ -603,7 +603,7 @@ private fun EpgMatchReviewDialog(
             LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 itemsIndexed(suggestions, key = { _, s -> s.channel.id }) { index, s ->
                     Row(
-                        Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = 12.dp, vertical = 8.dp),
+                        Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = 12.dp, vertical = Dimens.GapSmall),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
@@ -621,20 +621,20 @@ private fun EpgMatchReviewDialog(
                             unfocusedContainerColor = colors.primaryContainer,
                             contentAlignment = Alignment.Center,
                             surface = GlassSurface.DIALOGS,
-                        ) { _ -> Text(stringResource(R.string.content_epg_accept), style = MaterialTheme.typography.labelLarge, color = colors.onPrimaryContainer, modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)) }
+                        ) { _ -> Text(stringResource(R.string.content_epg_accept), style = MaterialTheme.typography.labelLarge, color = colors.onPrimaryContainer, modifier = Modifier.padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall)) }
                         FocusableSurface(
                             onClick = { onSkip(s) },
                             shape = RoundedCornerShape(Dimens.CornerSmall),
                             unfocusedContainerColor = colors.surfaceContainerHigh,
                             contentAlignment = Alignment.Center,
                             surface = GlassSurface.DIALOGS,
-                        ) { _ -> Text(stringResource(R.string.content_epg_skip), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)) }
+                        ) { _ -> Text(stringResource(R.string.content_epg_skip), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall)) }
                     }
                 }
             }
             }
             Spacer(Modifier.width(12.dp))
-            Column(Modifier.width(140.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(Modifier.width(140.dp), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 // Bulk actions only make sense for a multi-channel run; a single auto-match shows just accept/skip.
                 if (suggestions.size > 1) {
                     OwnTVButton(stringResource(R.string.content_epg_accept_all), onClick = onAcceptAll, icon = OwnTVIcon.PLAY, modifier = Modifier.fillMaxWidth())
@@ -680,7 +680,7 @@ private fun EpgMatchChooserDialog(
                 stringResource(R.string.content_epg_favourite_description),
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             OwnTVButton(
                 stringResource(if (isFavorite) R.string.content_epg_remove_favourite else R.string.content_epg_add_favourite),
                 onClick = { onToggleFavorite(); onDismiss() },
@@ -693,7 +693,7 @@ private fun EpgMatchChooserDialog(
             OwnTVButton(stringResource(R.string.content_epg_pick_manually), onClick = onManual, style = OwnTVButtonStyle.SECONDARY, icon = OwnTVIcon.SEARCH, modifier = Modifier.fillMaxWidth())
             Spacer(Modifier.height(10.dp))
             OwnTVButton(stringResource(R.string.content_epg_time_offset), onClick = onOffset, style = OwnTVButtonStyle.SECONDARY, icon = OwnTVIcon.EPG, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
         }
     }
@@ -756,7 +756,7 @@ private fun GuideChannelRow(
             Row(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             ) {
                 // Genre colour dot — best-effort keyword match on the channel's category name; no dot when
                 // the category is unknown (no wrong colour rather than a misleading one).
@@ -872,9 +872,9 @@ private fun GuideInfoStrip(
         value = programme?.id?.let { vm.programmeDescription(it) }
     }
     Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+        modifier = Modifier.fillMaxWidth().padding(top = Dimens.GapSmall)
             .clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh)
-            .padding(horizontal = 14.dp, vertical = 10.dp),
+            .padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {

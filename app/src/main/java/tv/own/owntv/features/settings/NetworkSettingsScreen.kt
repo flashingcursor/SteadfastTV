@@ -37,6 +37,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -85,10 +86,10 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusGroup()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         Header(stringResource(R.string.common_proxy), onBack)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
 
         GroupLabel(stringResource(R.string.settings_http_proxy))
         Row2(
@@ -136,7 +137,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         )
 
         Spacer(Modifier.height(20.dp))
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             OwnTVButton(stringResource(R.string.common_save), onClick = { save() })
             OwnTVButton(
                 label = if (testState is SettingsViewModel.ProxyTestState.Testing) stringResource(R.string.settings_testing) else stringResource(R.string.settings_test_proxy),
@@ -152,7 +153,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             stringResource(R.string.settings_proxy_limitations),
             style = MaterialTheme.typography.bodySmall,

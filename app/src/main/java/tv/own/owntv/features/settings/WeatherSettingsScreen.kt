@@ -27,6 +27,7 @@ import tv.own.owntv.R
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.TextInputDialog
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 
 /**
  * Weather settings — the top-bar weather chip: show/hide, manual location override, and °C/°F.
@@ -75,7 +76,7 @@ fun WeatherSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .padding(horizontal = 40.dp, vertical = 28.dp),
     ) {
         Header(stringResource(R.string.settings_weather), onBack)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
 
         GroupLabel(stringResource(R.string.settings_top_bar_weather))
         Row2(

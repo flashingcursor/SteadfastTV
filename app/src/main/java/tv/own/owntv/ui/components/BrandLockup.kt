@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.ui.theme.AccentCyan
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -95,7 +96,7 @@ fun BrandLockup(
         Column(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             mark()
             wordmark()

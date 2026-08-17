@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvComponentPreview
+import tv.own.owntv.ui.theme.Dimens
 
 /**
  * An object-themed avatar drawn entirely with Canvas — no image assets, fully scalable. There are
@@ -32,7 +33,7 @@ object OwnTVAvatars {
 fun OwnTVAvatar(avatarId: Int, modifier: Modifier = Modifier) {
     // Phase 7 — avatarId -1 = "no avatar" → show the Rank 1 ProfileIcon as a default silhouette.
     if (avatarId == -1) {
-        ProfileIcon(color = Color(0xFF54F2E2), modifier = modifier.padding(4.dp))
+        ProfileIcon(color = Color(0xFF54F2E2), modifier = modifier.padding(Dimens.GapTiny))
         return
     }
     val i = ((avatarId % OwnTVAvatars.COUNT) + OwnTVAvatars.COUNT) % OwnTVAvatars.COUNT
@@ -146,7 +147,7 @@ private fun pentagon(center: Offset, r: Float): Path = Path().apply {
 @TvComponentPreview
 @Composable
 private fun OwnTVAvatarPreview() = OwnTVPreview {
-    Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    Row(Modifier.padding(Dimens.GapMedium), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         OwnTVAvatar(avatarId = 0, modifier = Modifier.size(46.dp))
         OwnTVAvatar(avatarId = 3, modifier = Modifier.size(46.dp))
         OwnTVAvatar(avatarId = 6, modifier = Modifier.size(46.dp))

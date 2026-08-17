@@ -91,7 +91,7 @@ fun PosterCard(
                             .padding(6.dp)
                             .clip(RoundedCornerShape(50))
                             .background(Color.Black.copy(alpha = 0.55f))
-                            .padding(horizontal = 8.dp, vertical = 3.dp),
+                            .padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         OwnTVIcon(OwnTVIcon.STAR, tint = colors.accent, filled = true, modifier = Modifier.size(12.dp))

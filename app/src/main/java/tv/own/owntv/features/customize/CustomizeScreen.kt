@@ -146,7 +146,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             modifier = modifier.fillMaxSize().roundedPanel().padding(horizontal = 40.dp, vertical = 28.dp),
         ) {
             Text(stringResource(R.string.settings_customize_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(
                 stringResource(R.string.settings_customize_pin_locked),
                 style = MaterialTheme.typography.bodyMedium,
@@ -226,13 +226,13 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.headlineLarge,
             color = colors.onSurface,
         )
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(
             stringResource(R.string.settings_customize_description),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         // One compact strip, matching the agreed mockup: section tabs left, actions right.
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -302,7 +302,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 )
             }
         }
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
 
         if (rangeAnchorKey != null) {
             Row(
@@ -310,7 +310,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.primaryContainer)
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                    .padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -336,7 +336,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
 
         LazyColumn(
             state = listState,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             modifier = Modifier
                 .fillMaxSize()
                 // Pin vertical focus inside the category list: a held Up/Down that outruns the lazy
@@ -373,20 +373,20 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                         style = MaterialTheme.typography.titleLarge,
                         color = colors.onSurface,
                     )
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     Text(
                         stringResource(R.string.settings_customize_unhide_description),
                         style = MaterialTheme.typography.bodyMedium,
                         color = colors.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                 }
                 itemsIndexed(
                     hiddenChannels.entries.sortedBy { it.value.lowercase() },
                     key = { _, entry -> "hid:${entry.key}" },
                 ) { hiddenIndex, (key, label) ->
                     Row(
-                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh).padding(horizontal = 16.dp, vertical = 10.dp),
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh).padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -409,9 +409,9 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     }
                 }
                 item {
-                    Spacer(Modifier.height(14.dp))
+                    Spacer(Modifier.height(Dimens.HeroGap))
                     Text(stringResource(R.string.settings_customize_categories), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                 }
             }
 
@@ -421,7 +421,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                         stringResource(R.string.settings_customize_empty),
                         style = MaterialTheme.typography.bodyLarge,
                         color = colors.onSurfaceVariant,
-                        modifier = Modifier.padding(vertical = 24.dp),
+                        modifier = Modifier.padding(vertical = Dimens.GapLarge),
                     )
                 }
             }
@@ -696,7 +696,7 @@ private fun CategoryRow(
             .clip(RoundedCornerShape(Dimens.CornerSmall))
             // Tint every row in the span while a range is in progress, so the selected block is obvious.
             .background(if (isInSpan) colors.primaryContainer else colors.surfaceContainerHigh)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall)
             // CH+- paging: a focusGroup with a FocusRequester so a jump lands focus on this row's first
             // button; report up whenever any of the row's buttons gains focus (the paging anchor).
             .focusGroup()
@@ -724,7 +724,7 @@ private fun CategoryRow(
             surface = GlassSurface.CARDS,
             contentAlignment = Alignment.CenterStart,
         ) { _ ->
-            Column(Modifier.padding(horizontal = 16.dp, vertical = 6.dp)) {
+            Column(Modifier.padding(horizontal = Dimens.GapMedium, vertical = 6.dp)) {
                 Text(
                     row.displayName,
                     style = MaterialTheme.typography.titleSmall,
@@ -811,8 +811,8 @@ private fun PinConfirmDialog(
             Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             Spacer(Modifier.height(6.dp))
             Text(message, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(14.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Spacer(Modifier.height(Dimens.HeroGap))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(confirmLabel, onClick = onConfirm, modifier = Modifier.focusRequester(confirmFocus))

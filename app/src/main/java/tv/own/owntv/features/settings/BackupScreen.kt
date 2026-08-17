@@ -145,12 +145,12 @@ fun BackupScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .padding(horizontal = 40.dp, vertical = 28.dp),
     ) {
         Text(stringResource(R.string.settings_backup_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             stringResource(R.string.settings_backup_save_description),
             style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, modifier = Modifier.widthIn(max = 680.dp),
         )
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(Dimens.GapLarge))
 
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             OwnTVButton(stringResource(R.string.settings_backup_export_button), onClick = { dialogReturn = firstFocus; showExportChooser = true }, enabled = state != BackupViewModel.State.Working, modifier = Modifier.focusRequester(firstFocus))
@@ -374,7 +374,7 @@ private fun RemoteLocalChooserDialog(
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
             Spacer(Modifier.height(20.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -457,7 +457,7 @@ private fun ProfilePickerDialog(
                 stringResource(R.string.settings_backup_selected_profiles),
                 style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             profiles.forEachIndexed { i, p ->
                 val locked = p.pinHash != null && p.id != activeId
                 CheckRow(
@@ -519,12 +519,12 @@ private fun ProfilePinDialog(
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = 480.dp, padding = 28.dp)) {
             Text(stringResource(R.string.settings_backup_profile_locked, profileName), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.settings_backup_profile_pin_description),
                 style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             OwnTVTextField(
                 value = pin,
                 onValueChange = { pin = it; wrong = false },
@@ -533,7 +533,7 @@ private fun ProfilePinDialog(
                 focusRequester = fieldFocus,
             )
             if (wrong) {
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(R.string.settings_backup_pin_incorrect), style = MaterialTheme.typography.bodyMedium, color = colors.favorite)
             }
             Spacer(Modifier.height(20.dp))
@@ -589,7 +589,7 @@ private fun SectionPickerDialog(
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = 560.dp, padding = 28.dp)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
 
             CheckRow(
                 label = stringResource(R.string.settings_backup_everything),
@@ -634,7 +634,7 @@ private fun CheckRow(
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
                     .size(22.dp)
@@ -645,7 +645,7 @@ private fun CheckRow(
             ) {
                 if (checked) Box(Modifier.size(9.dp).clip(RoundedCornerShape(2.dp)).background(colors.onPrimary))
             }
-            Spacer(Modifier.width(14.dp))
+            Spacer(Modifier.width(Dimens.HeroGap))
             Column {
                 Text(label, style = MaterialTheme.typography.bodyLarge, color = colors.onSurface)
                 if (desc != null) {

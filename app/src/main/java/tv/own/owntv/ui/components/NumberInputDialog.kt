@@ -139,7 +139,7 @@ fun NumberInputDialog(
                         Modifier
                             .clip(RoundedCornerShape(Dimens.CornerSmall))
                             .background(colors.tertiaryContainer.copy(alpha = 0.55f))
-                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                            .padding(horizontal = 12.dp, vertical = Dimens.GapSmall),
                     ) {
                         Text(
                             warningText,
@@ -150,8 +150,8 @@ fun NumberInputDialog(
                     }
                 }
 
-                Spacer(Modifier.height(14.dp))
-                Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Spacer(Modifier.height(Dimens.HeroGap))
+                Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     OwnTVButton(stringResource(R.string.common_reset), onClick = onReset, style = OwnTVButtonStyle.SECONDARY)
                     Spacer(Modifier.weight(1f))
                     OwnTVButton(stringResource(R.string.common_save), onClick = {

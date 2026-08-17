@@ -224,7 +224,7 @@ private fun FirstRunLanguagePopup(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(max = 460.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
                 ) {
                     item(key = SupportedLocales.SYSTEM_DEFAULT_TAG) {
                         LanguageRow(
@@ -324,7 +324,7 @@ fun LanguageSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         )
         Spacer(Modifier.height(12.dp))
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         OwnTVButton(
             label = stringResource(R.string.settings_language_help_translate),
             onClick = { showContribution = true },
@@ -427,25 +427,25 @@ private fun TranslationContributionDialog(onDismiss: () -> Unit) {
                 style = MaterialTheme.typography.titleLarge,
                 color = colors.primary,
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.settings_language_contribution_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.primary,
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.settings_language_request_workflow),
                 style = MaterialTheme.typography.bodySmall,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             if (qr != null) {
                 Box(
                     Modifier
                         .clip(RoundedCornerShape(Dimens.CornerSmall))
                         .background(Color.White)
-                        .padding(8.dp),
+                        .padding(Dimens.GapSmall),
                 ) {
                     Image(
                         bitmap = qr,
@@ -460,7 +460,7 @@ private fun TranslationContributionDialog(onDismiss: () -> Unit) {
                     color = colors.onSurfaceVariant,
                 )
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             // The URL is itself a focusable action so TV users can activate it with OK; the copy
             // action below provides a second accessible way to transfer the exact same URL.
             OwnTVButton(
@@ -493,10 +493,10 @@ private fun TranslationContributionDialog(onDismiss: () -> Unit) {
                 style = OwnTVButtonStyle.SECONDARY,
             )
             status?.let {
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(it), style = MaterialTheme.typography.bodySmall)
             }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OwnTVButton(
                     label = stringResource(R.string.settings_language_contribution_copy),
@@ -541,9 +541,9 @@ private fun LanguageRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
         ) {
             RadioIndicator(selected = selected)
             Column(modifier = Modifier.weight(1f)) {

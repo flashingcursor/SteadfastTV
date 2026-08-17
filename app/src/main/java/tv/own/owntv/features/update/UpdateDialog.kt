@@ -128,7 +128,7 @@ fun UpdateDialog(onDismiss: () -> Unit, checkOnOpen: Boolean = false) {
                         Spacer(Modifier.width(12.dp))
                         Text(stringResource(R.string.update_downloading, s.percent), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     }
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     Text(
                         stringResource(R.string.update_installer),
                         style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,

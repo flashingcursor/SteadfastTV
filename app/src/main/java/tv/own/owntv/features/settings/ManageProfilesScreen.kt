@@ -190,11 +190,11 @@ fun ManageProfilesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
 private fun ProfileRow(profile: ProfileEntity, canDelete: Boolean, rowModifier: Modifier, onEdit: () -> Unit, onDelete: () -> Unit) {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(14.dp),
+        modifier = rowModifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(Dimens.HeroGap),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         OwnTVAvatar(avatarId = profile.avatarId, modifier = Modifier.size(48.dp))
-        Spacer(Modifier.width(14.dp))
+        Spacer(Modifier.width(Dimens.HeroGap))
         Column(Modifier.weight(1f)) {
             Text(profile.name, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             val tags = buildList {

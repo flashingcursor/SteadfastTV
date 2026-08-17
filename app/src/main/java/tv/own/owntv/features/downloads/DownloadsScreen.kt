@@ -139,7 +139,7 @@ fun DownloadsScreen(
 
         storage?.let {
             StorageBar(it)
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
         }
 
         if (downloads.isEmpty()) {
@@ -214,7 +214,7 @@ private fun buildDownloadRows(downloads: List<DownloadEntity>): List<DownloadLis
 
 @Composable
 private fun SectionHeader(group: DownloadGroup, count: Int) {
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 4.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall), modifier = Modifier.padding(top = Dimens.GapTiny)) {
         Text(stringResource(group.labelRes), style = MaterialTheme.typography.titleMedium, color = OwnTVTheme.colors.onSurface)
         Text(stringResource(R.string.content_downloads_count, count), style = MaterialTheme.typography.labelMedium, color = OwnTVTheme.colors.onSurfaceVariant)
     }
@@ -250,14 +250,14 @@ private fun DownloadRow(
 ) {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(14.dp),
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(Dimens.HeroGap),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(Modifier.size(56.dp, 78.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest), contentAlignment = Alignment.Center) {
             if (!download.posterUrl.isNullOrBlank()) AsyncImage(model = download.posterUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
             else OwnTVIcon(OwnTVIcon.MOVIES, tint = colors.onSurfaceVariant, modifier = Modifier.size(24.dp))
         }
-        Spacer(Modifier.width(14.dp))
+        Spacer(Modifier.width(Dimens.HeroGap))
         Column(Modifier.weight(1f)) {
             Text(download.title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
             folderCrumb(download.filePath, stringResource(R.string.content_downloads_folder_separator))?.let {
@@ -303,7 +303,7 @@ private fun StatusLine(d: DownloadEntity) {
                 Box(Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.surfaceContainerLowest)) {
                     Box(Modifier.fillMaxWidth(frac).height(4.dp).clip(RoundedCornerShape(2.dp)).background(colors.primary))
                 }
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     if (d.totalBytes > 0) stringResource(R.string.content_downloads_progress, (frac * 100).toInt(), sizeMb(d.downloadedBytes, stringResource(R.string.content_downloads_unknown_size)), sizeMb(d.totalBytes, stringResource(R.string.content_downloads_unknown_size)))
                     else stringResource(R.string.content_downloads_progress_unknown, sizeMb(d.downloadedBytes, stringResource(R.string.content_downloads_unknown_size))),

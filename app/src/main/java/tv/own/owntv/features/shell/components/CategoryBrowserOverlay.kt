@@ -102,7 +102,7 @@ fun CategoryBrowserOverlay(
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(
                     horizontal = 12.dp, vertical = 6.dp,
                 ),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
             ) {
                 items(categories, key = { it.first.id }) { (cat, displayName) ->
                     val isCurrent = cat.id == currentCategoryId

@@ -537,7 +537,7 @@ fun OwnTVShell(
                     // header — the same adjacency ("left of the weather chip") the old top bar gave it.
                     if (playerMode == PlayerMode.AUDIO) {
                         Row(
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.ScreenPaddingH),
                             horizontalArrangement = Arrangement.End,
                         ) {
                             val isLiveStream = liveOnExo || player.isLiveContent
@@ -923,7 +923,7 @@ fun OwnTVShell(
             } else {
                 // Dynamic docked size/position: a screen-width fraction at the chosen corner/edge, so it
                 // scales with the panel + UI zoom (unlike the old fixed 340×191 dp box).
-                Modifier.align(miniPos.alignment).padding(24.dp)
+                Modifier.align(miniPos.alignment).padding(Dimens.GapLarge)
                     .fillMaxWidth(tv.own.owntv.player.MiniPlayerSize.fraction(miniSizePct)).aspectRatio(16f / 9f)
                     .clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black)
             },
@@ -1196,7 +1196,7 @@ private fun OfflineBanner() {
         modifier = Modifier
             .fillMaxWidth()
             .background(colors.tertiaryContainer)
-            .padding(horizontal = 24.dp, vertical = 8.dp),
+            .padding(horizontal = Dimens.GapLarge, vertical = Dimens.GapSmall),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {

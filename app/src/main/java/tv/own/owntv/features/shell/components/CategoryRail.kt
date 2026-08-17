@@ -184,7 +184,7 @@ fun CategoryRail(
                         modifier = Modifier
                             .focusRequester(searchFocus)
                             .fillMaxWidth()
-                            .padding(bottom = 4.dp),
+                            .padding(bottom = Dimens.GapTiny),
                     )
                 }
             }
@@ -265,7 +265,7 @@ private fun RailPill(
         Row(
             modifier = Modifier
                 .then(if (expanded) Modifier.fillMaxWidth() else Modifier.size(Dimens.RailPillSize))
-                .then(if (expanded) Modifier.padding(horizontal = 10.dp, vertical = 8.dp) else Modifier),
+                .then(if (expanded) Modifier.padding(horizontal = 10.dp, vertical = Dimens.GapSmall) else Modifier),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = if (expanded) Arrangement.Start else Arrangement.Center,
         ) {
@@ -280,7 +280,7 @@ private fun RailPill(
                 // the rail — the two nav surfaces this shared ladder exists to keep identical (#47) had
                 // diverged on this one visual.
                 OwnTVIcon(icon = category.icon, tint = ladder.icon, filled = selected, modifier = Modifier.size(if (expanded) 20.dp else Dimens.RailPillSize / 2))
-                if (expanded) Spacer(Modifier.width(8.dp))
+                if (expanded) Spacer(Modifier.width(Dimens.GapSmall))
             } else if (expanded && category.showGenreDot) {
                 // Genre hint dot (Sport/News/Movies/Action/…); unknown categories show the grey
                 // "Other" dot rather than an empty slot, so every row has a consistent marker.

@@ -92,7 +92,7 @@ fun DownloadStatusStrip(state: DownloadStripState, modifier: Modifier = Modifier
             .padding(horizontal = 12.dp, vertical = 9.dp),
         verticalArrangement = Arrangement.spacedBy(7.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
             OwnTVIcon(OwnTVIcon.DOWNLOADS, tint = accent, modifier = Modifier.size(16.dp))
             Text(label, style = MaterialTheme.typography.labelLarge, color = accent, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.weight(1f))

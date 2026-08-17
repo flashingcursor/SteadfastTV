@@ -54,7 +54,7 @@ fun AddSourceChooserScreen(
         showLogoBadge = !embedded,
         showBackdrop = !embedded,
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             ChooserCard(
                 icon = OwnTVIcon.PLAYLIST,
                 title = stringResource(R.string.setup_from_phone),
@@ -69,7 +69,7 @@ fun AddSourceChooserScreen(
                 onClick = onManual,
             )
         }
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(Dimens.GapLarge))
         OwnTVButton(stringResource(R.string.common_back), onClick = onBack, style = OwnTVButtonStyle.SECONDARY)
     }
 }
@@ -99,9 +99,9 @@ private fun ChooserCard(
             ) {
                 OwnTVIcon(icon, tint = colors.onPrimaryContainer, modifier = Modifier.size(28.dp))
             }
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center)
         }
     }

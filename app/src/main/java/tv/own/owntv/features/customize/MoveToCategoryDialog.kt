@@ -36,6 +36,7 @@ import tv.own.owntv.ui.components.OwnTVButton
 import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.dialogPanel
 import tv.own.owntv.ui.components.trapAllFocusExit
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.GlassSurface
 import tv.own.owntv.ui.theme.OwnTVTheme
 import tv.own.owntv.ui.theme.PopupFontTheme
@@ -83,9 +84,9 @@ fun MoveToCategoryDialog(
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                     // Do not trap the list's vertical exit: Down from its last destination must
                     // reach the keep-in-origin toggle and the footer buttons. The dialog-level
                     // trapAllFocusExit above already prevents focus from escaping the popup.
@@ -139,7 +140,7 @@ fun MoveToCategoryDialog(
                         }
                     }
                 }
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 // "Keep in origin" toggle — checked = copy (item stays in its provider folder / favorites).
                 FocusableSurface(
                     onClick = { keepInOrigin = !keepInOrigin },

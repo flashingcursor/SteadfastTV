@@ -114,8 +114,8 @@ fun StepperDialog(
                 )
                 StepBtn("+", enabled = plusEnabled, modifier = Modifier.focusRequester(frPlus)) { onSet((value + step).coerceAtMost(max)) }
             }
-            Spacer(Modifier.height(14.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Spacer(Modifier.height(Dimens.HeroGap))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 if (onReset != null) {
                     OwnTVButton(stringResource(R.string.common_reset), onClick = onReset, style = OwnTVButtonStyle.SECONDARY)
                 }

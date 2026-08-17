@@ -125,9 +125,9 @@ private fun StorageBrowserContent(
     }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).focusGroup(), contentAlignment = Alignment.Center) {
-        Column(Modifier.width(270.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(14.dp)) {
+        Column(Modifier.width(270.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(colors.surfaceContainerHigh).padding(Dimens.HeroGap)) {
             Text(title, style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             Text(current?.absolutePath ?: stringResource(R.string.setup_pick_location), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Spacer(Modifier.height(12.dp))
 
@@ -154,7 +154,7 @@ private fun StorageBrowserContent(
 
             // Cap the list to the screen (minus dialog chrome) so the footer buttons stay reachable.
             val listMax = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 200.dp).coerceIn(140.dp, 200.dp)
-            LazyColumn(Modifier.heightIn(max = listMax).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            LazyColumn(Modifier.heightIn(max = listMax).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
                 if (dir == null) {
                     if (!hasAccess) {
                         item {
@@ -177,9 +177,9 @@ private fun StorageBrowserContent(
             Spacer(Modifier.height(12.dp))
             if (mode == BrowseMode.FOLDER && current != null) {
                 OwnTVButton(stringResource(R.string.setup_use_folder), onClick = { current?.let(onPick) }, modifier = Modifier.fillMaxWidth(), compact = true)
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
             }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY, compact = true)
                 Spacer(Modifier.weight(1f))
                 if (current != null) OwnTVButton(stringResource(R.string.setup_new_folder), onClick = { showNewFolder = true }, style = OwnTVButtonStyle.SECONDARY, icon = OwnTVIcon.ADD, compact = true)
@@ -209,7 +209,7 @@ private fun NewFolderDialog(onCreate: (String) -> Unit, onDismiss: () -> Unit) {
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.8f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = 420.dp, corner = 18.dp, fill = colors.surfaceContainerHighest)) {
             Text(stringResource(R.string.setup_new_folder), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(Dimens.HeroGap))
             OwnTVTextField(name, { name = it }, label = stringResource(R.string.setup_folder_name), placeholder = stringResource(R.string.setup_folder_example), modifier = Modifier.fillMaxWidth().focusRequester(focus), surface = GlassSurface.DIALOGS)
             Spacer(Modifier.height(18.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -232,7 +232,7 @@ private fun StorageAccess.StorageRoot.displayLabel(): String = when (kind) {
 private fun BrowserRow(icon: OwnTVIcon, label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val colors = OwnTVTheme.colors
     FocusableSurface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(Dimens.CornerSmall), contentAlignment = Alignment.CenterStart, surface = GlassSurface.DIALOGS) { focused ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
             OwnTVIcon(icon, tint = if (focused) colors.primary else colors.onSurfaceVariant, modifier = Modifier.size(16.dp))
             Text(
                 label,

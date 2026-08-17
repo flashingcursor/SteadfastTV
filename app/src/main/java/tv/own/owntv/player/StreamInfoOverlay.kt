@@ -55,7 +55,7 @@ fun StreamInfoOverlay(player: PlaybackEngine, modifier: Modifier = Modifier) {
             .widthIn(min = 300.dp, max = 460.dp)
             .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(Color.Black.copy(alpha = 0.78f))
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
     ) {
         Text(
             stringResource(R.string.player_stream_info),

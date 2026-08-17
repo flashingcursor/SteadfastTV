@@ -26,6 +26,7 @@ import androidx.tv.material3.Text
 import tv.own.owntv.R
 import tv.own.owntv.ui.preview.OwnTVPreview
 import tv.own.owntv.ui.preview.TvPreview
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /** One option row in a [MediaContextMenu]. The label arrives resolved (stringResource at the caller). */
@@ -60,10 +61,10 @@ fun MediaContextMenu(
     ) {
         Column(
             modifier = Modifier.dialogPanel(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             entries.forEachIndexed { index, entry ->
                 OwnTVButton(
                     entry.label,
@@ -73,7 +74,7 @@ fun MediaContextMenu(
                     modifier = if (index == 0) Modifier.fillMaxWidth().focusRequester(focus) else Modifier.fillMaxWidth(),
                 )
             }
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(Dimens.GapTiny))
             OwnTVButton(closeLabel, onClick = onDismiss, modifier = Modifier.fillMaxWidth())
         }
     }

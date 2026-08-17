@@ -160,7 +160,7 @@ fun OwnTVTextField(
                     onValueChange = onValueChange,
                     modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 14.dp)
+                    .padding(horizontal = Dimens.GapMedium, vertical = Dimens.HeroGap)
                     .bringIntoViewRequester(bringIntoView)
                     .focusRequester(innerFocus)
                         .focusProperties { canFocus = editing }

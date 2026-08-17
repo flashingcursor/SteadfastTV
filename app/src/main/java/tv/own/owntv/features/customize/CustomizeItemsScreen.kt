@@ -175,7 +175,7 @@ fun CustomizeItemsScreen(
                 style = OwnTVButtonStyle.SECONDARY,
                 modifier = Modifier.focusRequester(backFocus),
             )
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(Dimens.GapMedium))
             Text(
                 selectedCategory!!.displayName,
                 style = MaterialTheme.typography.headlineLarge,
@@ -185,7 +185,7 @@ fun CustomizeItemsScreen(
                 overflow = TextOverflow.Ellipsis,
             )
         }
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
         Text(
             when (section) {
                 MediaType.LIVE -> stringResource(R.string.settings_customize_channels_description)
@@ -217,7 +217,7 @@ fun CustomizeItemsScreen(
             Spacer(Modifier.height(12.dp))
         }
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(Dimens.GapTiny))
 
         if (rangeAnchorKey != null) {
             Row(
@@ -225,7 +225,7 @@ fun CustomizeItemsScreen(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.primaryContainer)
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                    .padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -255,7 +255,7 @@ fun CustomizeItemsScreen(
 
         LazyColumn(
             state = listState,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             modifier = Modifier
                 .fillMaxSize()
                 .trapVerticalFocusExit()
@@ -445,7 +445,7 @@ private fun ItemRow(
             .clip(RoundedCornerShape(Dimens.CornerSmall))
             // Tint every row in the span while a range is in progress, so the selected block is obvious.
             .background(if (isInSpan) colors.primaryContainer else colors.surfaceContainerHigh)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall)
             // CH+- paging: a focusGroup with a FocusRequester so a jump lands focus on this row's
             // first focusable (the name); report up whenever any of the row's buttons gains focus.
             .focusGroup()
@@ -466,7 +466,7 @@ private fun ItemRow(
             surface = GlassSurface.CARDS,
             contentAlignment = Alignment.CenterStart,
         ) { focused ->
-            Column(Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
+            Column(Modifier.padding(horizontal = 12.dp, vertical = Dimens.GapSmall)) {
                 Text(
                     row.displayName,
                     style = MaterialTheme.typography.titleSmall,

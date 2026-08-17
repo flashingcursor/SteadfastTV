@@ -36,6 +36,7 @@ import tv.own.owntv.ui.components.OwnTVButtonStyle
 import tv.own.owntv.ui.components.OwnTVIcon
 import tv.own.owntv.ui.components.OwnTVTextField
 import tv.own.owntv.ui.components.roundedPanel
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 
 /**
@@ -167,10 +168,10 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusGroup()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         Header(stringResource(R.string.settings_metadata), onBack)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
 
         GroupLabel(stringResource(R.string.settings_metadata_source))
         Text(
@@ -178,7 +179,7 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodySmall,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         tv.own.owntv.core.metadata.MetadataMode.entries.forEachIndexed { i, m ->
             val selected = m == mode
             Row2(
@@ -204,7 +205,7 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             color = colors.primary,
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         Row2(
             icon = OwnTVIcon.SUBTITLE,
             title = stringResource(R.string.settings_metadata_language),
@@ -214,7 +215,7 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             onClick = { showLangPicker = true },
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(Dimens.GapMedium))
         Row2(
             icon = OwnTVIcon.SETTINGS,
             title = stringResource(R.string.settings_advanced_options),
@@ -245,7 +246,7 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 placeholder = "https://your-worker.example.workers.dev",
                 modifier = Modifier.fillMaxWidth(),
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Dimens.GapMedium))
             OwnTVButton(stringResource(R.string.common_save), onClick = {
                 vm.setTmdbApiKey(key)
                 vm.setMetadataServerUrl(url)
@@ -263,7 +264,7 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(12.dp))
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             OwnTVButton(
                 label = if (testState is SettingsViewModel.MetadataTestState.Testing) stringResource(R.string.settings_looking_up) else stringResource(R.string.settings_test_lookup),
                 onClick = { vm.testMetadataLookup(testTitle) },
@@ -273,13 +274,13 @@ fun MetadataSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         }
         } // end if (mode.enrich)
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(Dimens.GapLarge))
         // TMDB attribution (plan §8) — logo + line, required by TMDB's API terms.
         androidx.compose.foundation.Image(
             painter = androidx.compose.ui.res.painterResource(tv.own.owntv.R.drawable.ic_tmdb_logo),
             contentDescription = stringResource(R.string.settings_metadata),
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             stringResource(R.string.settings_tmdb_attribution),
             style = MaterialTheme.typography.bodySmall,

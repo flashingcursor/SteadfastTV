@@ -71,9 +71,9 @@ fun SubtitleDeletePopup(
         ) {
             Column(Modifier.dialogPanel(width = 480.dp, padding = 24.dp)) {
                 Text(stringResource(R.string.player_subtitles_delete_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(contentTitle, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 LazyColumn(Modifier.fillMaxWidth().heightIn(max = 260.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     items(items, key = { it.cacheId }) { item ->
                         FocusableSurface(
@@ -83,7 +83,7 @@ fun SubtitleDeletePopup(
                             contentAlignment = Alignment.CenterStart,
                             surface = GlassSurface.DIALOGS,
                         ) { _ ->
-                            Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text(
                                         item.languageName ?: item.language ?: stringResource(R.string.player_subtitles_subtitle),
@@ -98,7 +98,7 @@ fun SubtitleDeletePopup(
                         }
                     }
                 }
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OwnTVButton(stringResource(R.string.settings_close), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 }

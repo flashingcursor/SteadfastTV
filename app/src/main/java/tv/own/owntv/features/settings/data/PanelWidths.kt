@@ -51,7 +51,7 @@ data class PanelWidthSpec(val category: Dp, val list: Dp, val preview: Dp)
  * "default" starts out looking like the shipped layout. Snapped to [PanelWidthLimits.STEP] and
  * corrected so the three always add up to 100.
  *
- * [gapTotal] is the space the browse row's `Arrangement.spacedBy(4.dp)` puts between the panels (two
+ * [gapTotal] is the space the browse row's `Arrangement.spacedBy(Dimens.GapTiny)` puts between the panels (two
  * gaps), which the panels themselves never occupy.
  */
 fun defaultPanelShares(section: PanelSection, rowWidth: Dp, gapTotal: Dp = 8.dp): PanelShares {

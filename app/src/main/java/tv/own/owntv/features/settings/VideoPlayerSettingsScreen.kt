@@ -238,7 +238,7 @@ fun VideoPlayerSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier)
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         Header(stringResource(R.string.settings_video_player_title), onBack)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
 
         GroupLabel(stringResource(R.string.settings_decoding))
         Row2(
@@ -592,7 +592,7 @@ internal fun GroupLabel(text: String) {
         style = MaterialTheme.typography.labelMedium,
         color = OwnTVTheme.colors.onSurfaceVariant,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 4.dp),
+        modifier = Modifier.padding(start = Dimens.GapMedium, top = 10.dp, bottom = Dimens.GapTiny),
     )
 }
 
@@ -601,7 +601,7 @@ internal fun Divider() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall)
             .height(1.dp)
             .background(OwnTVTheme.colors.outlineVariant),
     )
@@ -628,9 +628,9 @@ internal fun Row2(
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
         ) {
             Box(
                 modifier = Modifier.size(Dimens.IconTileSize).clip(RoundedCornerShape(Dimens.IconTileCorner)).background(colors.primaryContainer),
@@ -701,7 +701,7 @@ internal fun PickerDialog(
             }
             // Cap the list to the screen (minus dialog chrome) so Close stays reachable on small screens.
             val listMax = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 220.dp).coerceIn(140.dp, 240.dp)
-            LazyColumn(Modifier.fillMaxWidth().heightIn(max = listMax), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            LazyColumn(Modifier.fillMaxWidth().heightIn(max = listMax), verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
                 itemsIndexed(shown, key = { _, o -> o.first }) { index, (value, label) ->
                     val isSel = value == selected
                     FocusableSurface(
@@ -713,7 +713,7 @@ internal fun PickerDialog(
                         contentAlignment = Alignment.CenterStart,
                         surface = GlassSurface.DIALOGS,
                     ) { _ ->
-                        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically) {
                             Text(label, style = MaterialTheme.typography.bodyMedium, color = if (isSel) colors.onPrimaryContainer else colors.onSurface, modifier = Modifier.weight(1f))
                             if (isSel) OwnTVIcon(OwnTVIcon.STAR, tint = colors.onPrimaryContainer, filled = true, modifier = Modifier.size(14.dp))
                         }
@@ -757,14 +757,14 @@ private fun ExternalPlayerDialog(
         Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
             Column(modifier = Modifier.dialogPanel(width = 300.dp, corner = 16.dp, padding = 14.dp, scroll = false)) {
                 Text(stringResource(R.string.settings_external_player), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(R.string.settings_external_player_description),
                     style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(10.dp))
                 rows.forEachIndexed { index, (section, label, enabled) ->
-                    if (index > 0) Spacer(Modifier.height(4.dp))
+                    if (index > 0) Spacer(Modifier.height(Dimens.GapTiny))
                     FocusableSurface(
                         onClick = { onToggle(section, !enabled) },
                         modifier = if (index == 0) Modifier.fillMaxWidth().focusRequester(fr) else Modifier.fillMaxWidth(),
@@ -772,7 +772,7 @@ private fun ExternalPlayerDialog(
                         contentAlignment = Alignment.CenterStart,
                         surface = GlassSurface.DIALOGS,
                     ) { _ ->
-                        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically) {
                             Text(label, style = MaterialTheme.typography.bodyMedium, color = colors.onSurface, modifier = Modifier.weight(1f))
                             Text(
                                 if (enabled) stringResource(R.string.common_on) else stringResource(R.string.common_off),
@@ -910,12 +910,12 @@ private fun SubtitleAppearanceDialog(
                     stringResource(R.string.settings_subtitle_customize_description),
                     style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
 
                 // The overview sits above every row, including the master toggle, so the effect of a
                 // change is judged against a picture instead of guessed from a chip.
                 SubtitlePreview(enabled = enabled, scale = scale, color = color, position = position, bgOpacity = bgOpacity)
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
 
                 Row2(
                     icon = OwnTVIcon.SUBTITLE,
@@ -1022,7 +1022,7 @@ private fun SubtitleColorDialog(color: String, onColor: (String) -> Unit, onDism
         ) {
             Column(modifier = Modifier.dialogPanel(width = 440.dp, corner = 16.dp, padding = 18.dp)) {
                 Text(stringResource(R.string.settings_subtitle_color), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(R.string.settings_subtitle_color_default_description),
                     style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
@@ -1043,7 +1043,7 @@ private fun SubtitleColorDialog(color: String, onColor: (String) -> Unit, onDism
                     }
                 }
 
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 // Hex field above the picker: the on-screen keyboard covers the lower half of the
                 // screen, so it has to stay high enough to remain visible while typing.
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -1067,11 +1067,11 @@ private fun SubtitleColorDialog(color: String, onColor: (String) -> Unit, onDism
                     })
                 }
                 if (hexError) {
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     Text(stringResource(R.string.settings_subtitle_color_hex_hint), style = MaterialTheme.typography.bodySmall, color = colors.favorite)
                 }
 
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 tv.own.owntv.ui.components.HueBar(hue = hue) { h ->
                     hue = h
                     applyPicked(tv.own.owntv.ui.components.hsvToHex(hue, sat, value))
@@ -1082,8 +1082,8 @@ private fun SubtitleColorDialog(color: String, onColor: (String) -> Unit, onDism
                     applyPicked(tv.own.owntv.ui.components.hsvToHex(hue, sat, value))
                 }
 
-                Spacer(Modifier.height(16.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Spacer(Modifier.height(Dimens.GapMedium))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     OwnTVButton(stringResource(R.string.settings_subtitle_use_default), style = OwnTVButtonStyle.SECONDARY, onClick = {
                         hexInput = ""
                         hexError = false
@@ -1119,7 +1119,7 @@ private fun SubtitlePositionDialog(
         ) {
             Column(modifier = Modifier.dialogPanel(width = 430.dp, corner = 16.dp, padding = 18.dp, scroll = false)) {
                 Text(stringResource(R.string.settings_subtitle_position), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(R.string.settings_subtitle_position_default_description),
                     style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
@@ -1134,8 +1134,8 @@ private fun SubtitlePositionDialog(
                     onClick = { onSelect(SubtitleStyle.Position.DEFAULT) },
                 )
                 SubtitleStyle.Position.ANCHORS.chunked(3).forEach { anchorRow ->
-                    Spacer(Modifier.height(8.dp))
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Spacer(Modifier.height(Dimens.GapSmall))
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                         anchorRow.forEach { anchor ->
                             PositionCell(
                                 position = anchor,
@@ -1148,7 +1148,7 @@ private fun SubtitlePositionDialog(
                         }
                     }
                 }
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(Dimens.GapMedium))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OwnTVButton(stringResource(R.string.common_done), onClick = onDismiss)
                 }
@@ -1200,7 +1200,7 @@ private fun PositionCell(
                             .background(if (selected) colors.onPrimaryContainer else colors.outline),
                     )
                 }
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     subtitlePositionName(position), style = MaterialTheme.typography.labelSmall, color = labelColor,
                     textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(),
@@ -1248,7 +1248,7 @@ private fun SubtitleTransparencyDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(stringResource(R.string.settings_subtitle_background_transparency), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
                     stringResource(R.string.settings_subtitle_background_description),
                     style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
@@ -1258,7 +1258,7 @@ private fun SubtitleTransparencyDialog(
                     enabled = true, scale = scale, color = color, position = position,
                     bgOpacity = bgOpacity, height = 92.dp,
                 )
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(Dimens.HeroGap))
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     StepBtn("–", enabled = minusEnabled, modifier = Modifier.focusRequester(frMinus)) {
                         onSet(
@@ -1278,8 +1278,8 @@ private fun SubtitleTransparencyDialog(
                         )
                     }
                 }
-                Spacer(Modifier.height(14.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Spacer(Modifier.height(Dimens.HeroGap))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     OwnTVButton(stringResource(R.string.settings_subtitle_use_default), style = OwnTVButtonStyle.SECONDARY, onClick = { onSet(SubtitleStyle.OPACITY_DEFAULT) })
                     Spacer(Modifier.weight(1f))
                     OwnTVButton(stringResource(R.string.common_done), onClick = onDismiss)
@@ -1348,7 +1348,7 @@ private fun SubtitlePreview(
             Text(
                 stringResource(R.string.settings_subtitle_preview_stock),
                 style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant,
-                modifier = Modifier.align(Alignment.TopStart).padding(8.dp),
+                modifier = Modifier.align(Alignment.TopStart).padding(Dimens.GapSmall),
             )
         }
     }

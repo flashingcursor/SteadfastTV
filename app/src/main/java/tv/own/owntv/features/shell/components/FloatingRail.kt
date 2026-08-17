@@ -231,9 +231,9 @@ fun FloatingRail(
         // idle's would risk a collapse-animation frame measuring narrower than idle and corrupting
         // that floor.
         val columnPadding = if (active) {
-            PaddingValues(start = 9.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
+            PaddingValues(start = 9.dp, top = Dimens.GapMedium, end = Dimens.GapMedium, bottom = Dimens.GapMedium)
         } else {
-            PaddingValues(horizontal = 9.dp, vertical = 16.dp)
+            PaddingValues(horizontal = 9.dp, vertical = Dimens.GapMedium)
         }
         val columnAlignment = Alignment.Start
         Column(
@@ -332,7 +332,7 @@ fun FloatingRail(
                     animationSpec = if (expandedVisuals) ownTvTween(220) else snap(),
                     finishedListener = { _, _ -> settling = false },
                 )
-                .padding(horizontal = 14.dp, vertical = 8.dp),
+                .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(22.dp),
         ) {
@@ -528,7 +528,7 @@ private fun RailNavItem(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(Dimens.CornerXSmall))
                                 .background(colors.primaryContainer)
-                                .padding(horizontal = 8.dp, vertical = 2.dp),
+                                .padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
                         ) {
                             Text(
                                 text = localizedInteger(count),
@@ -638,7 +638,7 @@ private fun FloatingRailLeftActivePreview() = OwnTVPreview {
 @TvPreview
 @Composable
 private fun FloatingRailTopIdlePreview() = OwnTVPreview {
-    Box(Modifier.fillMaxSize().padding(24.dp)) {
+    Box(Modifier.fillMaxSize().padding(Dimens.GapLarge)) {
         FloatingRail(
             position = RailPosition.TOP,
             selected = MainSection.HOME,
@@ -660,7 +660,7 @@ private fun FloatingRailTopIdlePreview() = OwnTVPreview {
 @TvPreview
 @Composable
 private fun FloatingRailTopActivePreview() = OwnTVPreview {
-    Box(Modifier.fillMaxSize().padding(24.dp)) {
+    Box(Modifier.fillMaxSize().padding(Dimens.GapLarge)) {
         FloatingRail(
             position = RailPosition.TOP,
             selected = MainSection.HOME,
