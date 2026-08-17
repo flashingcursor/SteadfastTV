@@ -3,27 +3,30 @@ package tv.own.owntv.ui.theme
 import androidx.compose.ui.graphics.Color
 
 /**
- * Material 3 tonal palette for OwnTV. Neutral palette is charcoal with no hue bias (design spec
- * 2026-08-12): dark background #0B0D0E, neutrals identical under every accent. All color (hue,
- * saturation) carried by the accent; secondary/tertiary are theme-only. The `primary` roles are
- * seeded per [AccentColor] (default teal == these values).
+ * Material 3 tonal palette for OwnTV. Neutral palette is charcoal slate (design spec 2026-08-12,
+ * re-pinned to hue 220 on 2026-08-17): dark background #0B0C0E, neutrals identical under every
+ * accent. All accent color carried by the `primary` roles, seeded per [AccentColor] (default
+ * teal); secondary/tertiary are theme-only.
  */
 
 // Brand mark color (the OwnTV play logo) — constant.
 val AccentCyan = Color(0xFF52DBC8)
 
-// ---------------- DARK (charcoal, no hue bias — design spec 2026-08-12) ----------------
-val DarkBackground = Color(0xFF0B0D0E)
-val DarkSurface = Color(0xFF121517)
-val DarkSurfaceContainerLowest = Color(0xFF0E1113)
-val DarkSurfaceContainerLow = Color(0xFF16191C)
-val DarkSurfaceContainer = Color(0xFF1A1E21)
-val DarkSurfaceContainerHigh = Color(0xFF23282C)
-val DarkSurfaceContainerHighest = Color(0xFF2C3238)
-val DarkOnSurface = Color(0xFFE7EAEC)
-val DarkOnSurfaceVariant = Color(0xFFA9B0B5)
-val DarkOutline = Color(0xFF7E868C)
-val DarkOutlineVariant = Color(0xFF3A4046)
+// ---------------- DARK (charcoal slate) ----------------
+// 2026-08-17 (user request): the original ramp sat at hue ~200-210 (cyan-green cast); every
+// neutral was re-pinned to hue 220 (blue-slate, matching the brand navy) at identical
+// lightness/saturation to remove the green tint. Same ramp shape, cooler cast.
+val DarkBackground = Color(0xFF0B0C0E)
+val DarkSurface = Color(0xFF121417)
+val DarkSurfaceContainerLowest = Color(0xFF0E1013)
+val DarkSurfaceContainerLow = Color(0xFF16181C)
+val DarkSurfaceContainer = Color(0xFF1A1C21)
+val DarkSurfaceContainerHigh = Color(0xFF23262C)
+val DarkSurfaceContainerHighest = Color(0xFF2C3038)
+val DarkOnSurface = Color(0xFFE7E9EC)
+val DarkOnSurfaceVariant = Color(0xFFA9ADB5)
+val DarkOutline = Color(0xFF7E838C)
+val DarkOutlineVariant = Color(0xFF3A3E46)
 val DarkSecondary = Color(0xFFB6C1C9)
 val DarkOnSecondary = Color(0xFF212A31)
 val DarkSecondaryContainer = Color(0xFF39434B)
@@ -72,5 +75,5 @@ object HudPictorial {
     /** The LIVE badge fill — saturated broadcast red; white text/dot on it needs the depth. */
     val LiveBadge = Color(0xCCDC3232)
     /** Ink on the white circular transport button. Charcoal-neutral (was the old teal-tinted surface). */
-    val OnWhiteInk = Color(0xFF0B0D0E)
+    val OnWhiteInk = Color(0xFF0B0C0E)
 }
