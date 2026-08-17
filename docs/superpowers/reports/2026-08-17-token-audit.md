@@ -771,7 +771,7 @@ below is a call site **overriding** one of `width`/`corner`/`padding`.
 |---|---|---|---|
 | 480 | 11 | `MIGRATE-NEW` — new token `DialogPanelWidth` | `BulkRenameDialogs.kt:269`, `CustomizeItemsScreen.kt:396`, `CustomizeScreen.kt:625`, `BackupScreen.kt:520`, `EpgSyncPrompt.kt:85`, `OpenSubtitlesAccountScreen.kt:345`, `SettingsScreen.kt:1678,1977`, `SubtitleDeletePopup.kt:72`, `SetTmdbNameDialog.kt:66`, `TextInputDialog.kt:74` |
 | 560 | 9 | `MIGRATE-NEW` — new token `DialogPanelWidthWide` | `MoveToCategoryDialog.kt:77`, `BackupScreen.kt:375,409,453,590`, `EpgSourcesScreen.kt:497`, `PlayerHud.kt:1546`, `BackgroundImageChooserDialog.kt:69,123` |
-| 420, 460, 520, 500, 440, 640, 760, 680, 290, 576, 340, 384, 330, 280, 300, 430, 380, 620, 260, 320, 360 | 43 (across 21 magnitudes) | `INTENTIONAL` — content-driven one-off widths (mostly `dialogPanel(width=...)`, ~3 of the 43 rows on other composables sharing the `width=` parameter name, e.g. `LanguageSettingsScreen.kt:210`); a dialog-width delta of 20–80dp visibly reflows content, so no snap is offered, only exact reuse or literal | descriptive per-magnitude breakdown, matching the treatment already applied to Cluster 7 below; not exhaustively itemized to `file:line` here (mirrors `section-size.md`'s own level of detail for this specific sub-bucket) |
+| 420, 460, 520, 500, 440, 640, 760, 680, 290, 576, 340, 384, 330, 280, 300, 430, 380, 620, 260, 320, 360, 1.5 | 41 (across 22 magnitudes) | `INTENTIONAL` — content-driven one-off widths, nearly all `dialogPanel(width=...)` (including multi-line calls such as `LanguageSettingsScreen.kt:210`); the only non-`dialogPanel` `width=` row remaining here is `SetupScaffold.kt:78` (1.5dp divider) — the two 1dp `width=` rows (`HomeGuideSlice.kt:247`, `SetupScaffold.kt:84`) are counted once, under Cluster 2's `HairlineWidth`, not here; a dialog-width delta of 20–80dp visibly reflows content, so no snap is offered, only exact reuse or literal | descriptive per-magnitude breakdown, matching the treatment already applied to Cluster 7 below; not exhaustively itemized to `file:line` here (mirrors `section-size.md`'s own level of detail for this specific sub-bucket) |
 
 #### Cluster 2 — hairline border/divider stroke width (14 rows: 12 migrating + 2 `INTENTIONAL`,
 across 8 files for the migrating dozen)
@@ -817,8 +817,9 @@ Not included (3 more 44dp rows, `INTENTIONAL`, aspect-ratio-derived poster-thumb
 placeholders, not a touch target): `MoviesScreen.kt:913`, `SearchScreen.kt:424`,
 `SeriesScreen.kt:1422` — all `.size(width = 44.dp, height = 62.dp)`.
 
-#### Cluster 6 — icon-size scale (35 rows across 4 magnitudes: 11 new-token + 8 new-token +
-6 snap + 5 snap + 5 responsive-pair note, off the 24-row non-minted tail)
+#### Cluster 6 — icon-size scale (30 rows across 4 magnitudes: 11 new-token + 8 new-token +
+6 snap + 5 snap; plus the `OwnTVButton.kt:80` responsive-pair exclusion and the 24-row
+non-minted tail — 54 icon-context rows in all)
 
 | value | rows | verdict | sites |
 |---|---|---|---|
@@ -913,7 +914,7 @@ in the app to cluster with.
 | sp: pre-theme fallback screen | 4 | `DatabaseRecoveryScreen.kt:53,56,60,67` — cannot reference `MaterialTheme.typography`, renders before DI/theme init. |
 | sp: wordmark, tracking nudges | 4 | `OwnTVShell.kt:1248` (custom `buildAnnotatedString`), `LiveEpgCard.kt:139`, `PlayerHud.kt:921,927` — one-off, hand-tuned per site. |
 | dialogPanel `padding=`/`corner=` singles | 2 | `BulkRenameDialogs.kt:552` (12dp), `EpgSourcesScreen.kt:497` (corner 20dp) — too far from any token, single site each. |
-| dialogPanel `width=` one-offs (incl. 3 non-`dialogPanel` `width=` rows) | 43 | Content-driven dialog/component widths across ~22 magnitudes; a 20–80dp delta visibly reflows content, so no snap is offered — see Cluster 1's `width=` table. |
+| dialogPanel `width=` one-offs (incl. 1 non-`dialogPanel` row, `SetupScaffold.kt:78`) | 41 | Content-driven dialog/component widths across 22 magnitudes; a 20–80dp delta visibly reflows content, so no snap is offered — see Cluster 1's `width=` table. The two 1dp `width=` rows are counted under `HairlineWidth`, not here. |
 | hairline responsive pair | 2 | `ColorPicker.kt:78,141` — `if (editing \|\| focused) 3.dp else 1.dp`, one coupled unit (Task 2 precedent). |
 | icon-context tail | 24 | 11 magnitudes, none reaching the 3-site same-shape floor — see Cluster 6's tail table. |
 | touch-target-shaped, not touch targets | 3 | `MoviesScreen.kt:913`, `SearchScreen.kt:424`, `SeriesScreen.kt:1422` — aspect-ratio-derived poster-thumbnail placeholders at 44dp, unrelated to the `TouchTargetSizeCompact` role. |
@@ -921,9 +922,9 @@ in the app to cluster with.
 | `widthIn`/`heightIn` non-minted | 37 | See Cluster 7's full breakdown — every ≥2-site magnitude individually checked for a shared call shape; none clears the floor. |
 | `size-namedarg` odds and ends | 11 | `SkeletonRowPlaceholder` pair (4), `GridCells.Adaptive` pair (2), `CategoryBrowserOverlay.kt:103` pair (2), `OwnTVShell.kt:650,651` pair (2), `VideoPlayerSettingsScreen.kt:1259` (1); see the odds-and-ends list above for exact sites. |
 | extraction false positives (M4) | 3 | `ProfileComponents.kt:59,60`, `VideoPlayerSettingsScreen.kt:1304` — `Dp`-typed default-parameter declarations, not call sites; see the odds-and-ends note above and §7. |
-| **size-tag component dims (remainder)** | **150** | The bulk of the family's `INTENTIONAL` population: ordinary one-off `.size()`/`.height()`/`.width()` component dimensions scattered across the long tail of `inventory-size.tsv`'s histogram (dozens of magnitudes at 1–3 rows each — badge sizes, panel widths, card heights, dialog-internal spacing, etc.), each hand-tuned to its own component and never repeating enough to clear the 3-site same-shape floor used everywhere else in this audit. Not itemized value-by-value in `section-size.md` or here — this is the family-level reason the size family runs 60% `INTENTIONAL` (far higher than spacing's 2.5%): component dimensions are inherently more heterogeneous than a shared gap scale. |
+| **size-tag component dims (remainder)** | **152** | The bulk of the family's `INTENTIONAL` population: ordinary one-off `.size()`/`.height()`/`.width()` component dimensions scattered across the long tail of `inventory-size.tsv`'s histogram (dozens of magnitudes at 1–3 rows each — badge sizes, panel widths, card heights, dialog-internal spacing, etc.), each hand-tuned to its own component and never repeating enough to clear the 3-site same-shape floor used everywhere else in this audit. Not itemized value-by-value in `section-size.md` or here — this is the family-level reason the size family runs 60% `INTENTIONAL` (far higher than spacing's 2.5%): component dimensions are inherently more heterogeneous than a shared gap scale. |
 
-Row counts: 8 (sp) + 2 + 43 + 2 + 24 + 3 + 1 + 37 + 11 + 3 + 150 (dp) = 284, matching the
+Row counts: 8 (sp) + 2 + 41 + 2 + 24 + 3 + 1 + 37 + 11 + 3 + 152 (dp) = 284, matching the
 family's `INTENTIONAL` total exactly.
 
 ### Classification summary
@@ -1006,7 +1007,9 @@ table below is the substantive structure for this family. The few values that do
 `0xFFFFFFFF` (white) 9×, `0xFFEF4444` (the error-red finding below) 4×, `0xFF0C0C0C` 3×,
 and ten values (`0xFF191C1E`, `0xFF52DBC8`, `0xFF6FF8E4`, `0xFF8A8A94`, `0xFFC5E7FF`,
 `0xFFDDF8FF`, `0xFFFAFBFC`, `0xFFFFC24A`, `0xFFFFD166`, `0xFFFFDDB3`) 2× each — all traced to
-theme/pictorial files except `0xFFEF4444` and `0xFF0C0C0C` (see findings below).
+theme/pictorial files except `0xFFEF4444`, `0xFF0C0C0C`, and one `0xFFFFFFFF` row
+(`AudioNowPlayingBar.kt:181`, the same line that carries the `0xFF0C0C0C` instance; see
+findings below).
 
 | file | rows | verdict |
 |---|---|---|
@@ -1112,7 +1115,8 @@ None of this total represents literals known to exist and left unclassified with
 own inventory — every row that *was* extracted into a TSV is accounted for in §§2–6's
 reconciliation lines (2273/2273). The residual figures instead describe the boundary between
 families' extraction patterns (spacing/size's mutual, by-design overlap; expected/confirmed
-exclusions for motion and alpha) or a counting-unit mismatch (corner). Where a family's
+exclusions for motion and alpha) or, for corner, call sites already passing `Dimens.*` tokens
+— direct evidence the 2026-08-17 consolidation landed. Where a family's
 residual was not decomposed to individual `file:line` detail in this audit (motion, size,
 spacing), it is flagged **uninvestigated** above rather than asserted as fully explained.
 
