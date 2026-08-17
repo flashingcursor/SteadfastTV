@@ -68,13 +68,13 @@ fun SetTmdbNameDialog(
             Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
         ) {
             Text(stringResource(R.string.setup_tmdb_name), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.setup_tmdb_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(18.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
             OwnTVTextField(
                 value = title,
                 onValueChange = { title = it },
@@ -90,8 +90,8 @@ fun SetTmdbNameDialog(
                 modifier = Modifier.fillMaxWidth(),
                 keyboardType = KeyboardType.Number,
             )
-            Spacer(Modifier.height(22.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 if (hasOverride) OwnTVButton(stringResource(R.string.common_clear), onClick = onClear, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))

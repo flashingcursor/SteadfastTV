@@ -62,17 +62,17 @@ fun UpdateStatusToast(onDone: () -> Unit, onViewChangelog: () -> Unit, modifier:
 
     Column(
         modifier = modifier
-            .padding(top = 20.dp, end = 20.dp)
+            .padding(top = Dimens.GapWide, end = Dimens.GapWide)
             .widthIn(min = 260.dp, max = 380.dp)
             .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(colors.surfaceContainerHigh.copy(alpha = 0.90f))
-            .padding(horizontal = 18.dp, vertical = Dimens.HeroGap)
+            .padding(horizontal = Dimens.GapWide, vertical = Dimens.HeroGap)
             .focusGroup(),
     ) {
         when (val s = state) {
             UpdateManager.State.Idle, UpdateManager.State.Checking -> Row(verticalAlignment = Alignment.CenterVertically) {
                 OwnTVSpinner(sizeDp = 18)
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 Text(stringResource(R.string.update_checking), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
             }
             UpdateManager.State.UpToDate -> Text(
@@ -91,8 +91,8 @@ fun UpdateStatusToast(onDone: () -> Unit, onViewChangelog: () -> Unit, modifier:
                     stringResource(R.string.update_ready, s.info.version, manager.currentVersion),
                     style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(12.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Spacer(Modifier.height(Dimens.GapCompact))
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     // "What's New" opens the full changelog dialog (same view the manual check uses);
                     // both update paths show the changelog before downloading.
                     OwnTVButton(stringResource(R.string.update_whats_new), onClick = onViewChangelog, modifier = Modifier.focusRequester(focus))
@@ -101,7 +101,7 @@ fun UpdateStatusToast(onDone: () -> Unit, onViewChangelog: () -> Unit, modifier:
             }
             is UpdateManager.State.Downloading -> Row(verticalAlignment = Alignment.CenterVertically) {
                 OwnTVSpinner(sizeDp = 18)
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 Text(stringResource(R.string.update_downloading, s.percent), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
             }
         }

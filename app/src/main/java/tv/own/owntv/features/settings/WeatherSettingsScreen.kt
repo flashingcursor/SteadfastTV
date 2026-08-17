@@ -74,7 +74,7 @@ fun WeatherSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusProperties { onEnter = { runCatching { firstFocus.requestFocus() } } }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         Header(stringResource(R.string.settings_weather), onBack)
         Spacer(Modifier.height(Dimens.GapSmall))

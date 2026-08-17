@@ -130,7 +130,7 @@ private fun StorageBrowserContent(
             Text(title, style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapTiny))
             Text(current?.absolutePath ?: stringResource(R.string.setup_pick_location), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
 
             val dir = current
             // U2 — listFiles() plus the per-child isDirectory/isFile stats are disk work, and a
@@ -175,7 +175,7 @@ private fun StorageBrowserContent(
                 }
             }
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             if (mode == BrowseMode.FOLDER && current != null) {
                 OwnTVButton(stringResource(R.string.setup_use_folder), onClick = { current?.let(onPick) }, modifier = Modifier.fillMaxWidth(), compact = true)
                 Spacer(Modifier.height(Dimens.GapSmall))
@@ -212,8 +212,8 @@ private fun NewFolderDialog(onCreate: (String) -> Unit, onDismiss: () -> Unit) {
             Text(stringResource(R.string.setup_new_folder), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.HeroGap))
             OwnTVTextField(name, { name = it }, label = stringResource(R.string.setup_folder_name), placeholder = stringResource(R.string.setup_folder_example), modifier = Modifier.fillMaxWidth().focusRequester(focus), surface = GlassSurface.DIALOGS)
-            Spacer(Modifier.height(18.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapWide))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.common_create), onClick = { onCreate(name) }, enabled = name.isNotBlank())
@@ -233,7 +233,7 @@ private fun StorageAccess.StorageRoot.displayLabel(): String = when (kind) {
 private fun BrowserRow(icon: OwnTVIcon, label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val colors = OwnTVTheme.colors
     FocusableSurface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(Dimens.CornerSmall), contentAlignment = Alignment.CenterStart, surface = GlassSurface.DIALOGS) { focused ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
             OwnTVIcon(icon, tint = if (focused) colors.primary else colors.onSurfaceVariant, modifier = Modifier.size(Dimens.IconSizeMedium))
             Text(
                 label,

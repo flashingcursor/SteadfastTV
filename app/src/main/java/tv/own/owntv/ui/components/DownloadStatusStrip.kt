@@ -89,8 +89,8 @@ fun DownloadStatusStrip(state: DownloadStripState, modifier: Modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(colors.surfaceContainerHigh)
-            .padding(horizontal = 12.dp, vertical = 9.dp),
-        verticalArrangement = Arrangement.spacedBy(7.dp),
+            .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
             OwnTVIcon(OwnTVIcon.DOWNLOADS, tint = accent, modifier = Modifier.size(Dimens.IconSizeMedium))

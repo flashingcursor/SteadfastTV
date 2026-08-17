@@ -155,7 +155,7 @@ fun MediaDetailsScreen(details: MediaDetailsUi, onExit: () -> Unit, modifier: Mo
                         OwnTVIcon(OwnTVIcon.MOVIES, tint = colors.onSurfaceVariant, modifier = Modifier.height(36.dp))
                     }
                 }
-                Spacer(Modifier.width(20.dp))
+                Spacer(Modifier.width(Dimens.GapWide))
                 Column(modifier = Modifier.weight(1f).padding(top = Dimens.GapSmall)) {
                     Text(details.title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface, fontWeight = FontWeight.Bold)
                     if (!details.subtitle.isNullOrBlank()) {
@@ -167,24 +167,24 @@ fun MediaDetailsScreen(details: MediaDetailsUi, onExit: () -> Unit, modifier: Mo
                         Text(details.metaLine, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     }
                     if (details.genres.isNotEmpty()) {
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(details.genres.joinToString(" · "), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant)
                     }
                 }
             }
 
-            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
+            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = Dimens.GapWide), verticalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                 if (!details.plot.isNullOrBlank()) {
                     Column {
                         Text(stringResource(R.string.content_media_overview), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(details.plot, style = MaterialTheme.typography.bodyLarge, color = colors.onSurfaceVariant)
                     }
                 }
                 if (details.cast.isNotEmpty()) {
                     Column {
                         Text(stringResource(R.string.content_media_cast), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(details.cast.joinToString(", "), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     }
                 }

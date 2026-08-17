@@ -103,7 +103,7 @@ private val SPEEDS = listOf(0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0)
 private fun Modifier.hudTextScrim(): Modifier = this
     .clip(RoundedCornerShape(Dimens.CornerMedium))
     .background(Color.Black.copy(alpha = 0.45f))
-    .padding(horizontal = Dimens.GapMedium, vertical = 10.dp)
+    .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact)
 
 @Composable
 internal fun MediaSpec.displayText(): String {
@@ -512,7 +512,7 @@ fun PlayerHud(
         if (showInfo) {
             // Sits clear of the taller unified top strip (logo + guide) rather than under the old title row.
             // 112.dp encodes the scrimmed strip height (hudTextScrim adds 20dp) — verified on-device.
-            StreamInfoOverlay(player, modifier = Modifier.align(Alignment.TopEnd).padding(top = 112.dp, end = 20.dp))
+            StreamInfoOverlay(player, modifier = Modifier.align(Alignment.TopEnd).padding(top = 112.dp, end = Dimens.GapWide))
         }
 
         // Top-left OSD stack: the channel card (briefly on a zap, or the freshly tuned channel) plus the
@@ -525,7 +525,7 @@ fun PlayerHud(
             modifier = Modifier.align(Alignment.TopStart)
                 // 92.dp clears the scrimmed top strip (hudTextScrim adds 20dp) — verified on-device with direct tune.
                 .padding(start = 28.dp, top = if (controlsVisible) 92.dp else 28.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
         ) {
             if (isLive && (tuned != null || (showFlash && !controlsVisible))) {
                 // A fresh tune drives the card from the lookup result, not player metadata: the Stalker and
@@ -673,7 +673,7 @@ fun PlayerHud(
                         }
                     }
                 }
-                Spacer(Modifier.height(18.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
                 OwnTVButton(stringResource(R.string.common_retry), onClick = { player.retry() }, icon = OwnTVIcon.PLAY, modifier = Modifier.focusRequester(retryFocus))
             }
             buffering -> OwnTVSpinner(modifier = Modifier.align(Alignment.Center), sizeDp = 56)
@@ -745,7 +745,7 @@ private fun TopBar(
             meta.seasonNumber?.let { add(stringResource(R.string.player_season_number, it)) }
         }.joinToString(stringResource(R.string.content_metadata_separator)).ifBlank { null }
     }
-    Row(modifier = modifier.fillMaxWidth().padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier = modifier.fillMaxWidth().padding(Dimens.GapWide), verticalAlignment = Alignment.CenterVertically) {
         CircleButton(OwnTVIcon.BACK, size = 40, onClick = onBack)
         Spacer(Modifier.width(Dimens.HeroGap))
         // Live: the channel logo sits with the channel NAME (identity), not with the programme — so the
@@ -788,7 +788,7 @@ private fun TopBar(
                     // Live stacks the technical chips ABOVE the channel name; VOD keeps title-then-chips.
                     if (isLive) {
                         chipRow()
-                        Spacer(Modifier.height(2.dp))
+                        Spacer(Modifier.height(Dimens.GapHairline))
                         // Channel number ahead of the name — this is where you look to learn the number of a
                         // channel you arrived at by zapping. meta.subtitle carries it ("#123") only while the
                         // "Channel numbers" setting is on, so an off setting leaves the name alone.
@@ -802,7 +802,7 @@ private fun TopBar(
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                 )
-                                Spacer(Modifier.width(10.dp))
+                                Spacer(Modifier.width(Dimens.GapCompact))
                             }
                             Text(displayTitle, style = MaterialTheme.typography.titleMedium, color = Color.White, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
@@ -811,14 +811,14 @@ private fun TopBar(
                             Text(it, style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.45f), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                         Text(displayTitle, style = MaterialTheme.typography.titleMedium, color = Color.White, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        Spacer(Modifier.height(2.dp))
+                        Spacer(Modifier.height(Dimens.GapHairline))
                         chipRow()
                     }
                 }
             }
         }
         if (trailing != null) {
-            Spacer(Modifier.width(28.dp))
+            Spacer(Modifier.width(Dimens.GapLarge))
             trailing()
         }
     }
@@ -841,7 +841,7 @@ private fun ChannelLogo(logoUrl: String?, title: String?, size: Int, modifier: M
 private fun LiveBadge() {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(HudPictorial.LiveBadge).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(HudPictorial.LiveBadge).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         Box(Modifier.size(6.dp).clip(CircleShape).background(Color.White))
@@ -860,7 +860,7 @@ private fun ChannelOsdCard(
     val colors = OwnTVTheme.colors
     Row(
         modifier = modifier.widthIn(max = 340.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.Black.copy(alpha = 0.55f)).padding(Dimens.HeroGap),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
     ) {
         Box(Modifier.size(Dimens.TouchTargetSizeCompact).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.primaryContainer), contentAlignment = Alignment.Center) {
             if (!logoUrl.isNullOrBlank()) AsyncImage(model = logoUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
@@ -914,9 +914,9 @@ private fun ChannelNumberCard(digits: String, error: String? = null, modifier: M
                 drawRect(Color.White.copy(alpha = 0.08f), topLeft = top, size = Size(size.width, barHeight))
                 drawRect(colors.primary, topLeft = top, size = Size(size.width * countdown.value, barHeight))
             }
-            .padding(bottom = 3.dp),
+            .padding(bottom = Dimens.GapTiny),
     ) {
-        Column(Modifier.padding(start = Dimens.GapMedium, end = 20.dp, top = 12.dp, bottom = 12.dp)) {
+        Column(Modifier.padding(start = Dimens.GapMedium, end = Dimens.GapWide, top = Dimens.GapCompact, bottom = Dimens.GapCompact)) {
             Text(
                 stringResource(R.string.player_channel_label),
                 style = MaterialTheme.typography.labelSmall, color = colors.primary, fontWeight = FontWeight.Bold,
@@ -960,7 +960,7 @@ private fun CenterControls(
                 style = MaterialTheme.typography.labelLarge,
                 color = OwnTVTheme.colors.accent,
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
         }
         Row(Modifier.focusGroup(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapLarge)) {
             if (nav.hasPrev) CircleButton(OwnTVIcon.SKIP_PREVIOUS, size = 52) { player.previous() }
@@ -998,22 +998,22 @@ private fun BottomBar(
     favorite: Boolean = false, onToggleFavorite: (() -> Unit)? = null,
     onOpenDialog: (HudDialog) -> Unit, onPip: (() -> Unit)?, onAudioMode: (() -> Unit)?, onBack: () -> Unit, modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = 20.dp)) {
+    Column(modifier = modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = Dimens.GapWide)) {
         when {
             // Catch-up live channel → a scrubbable live timeline (last LIVE_WINDOW up to the live edge).
             onScrubLive != null -> {
                 LiveTimelineBar(offsetSec = timeshiftOffsetSec ?: 0, onScrub = onScrubLive)
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
             }
             !isLive && duration > 0 -> {
                 SeekBar(positionMs = position, durationMs = duration, onSeek = { player.seekBy(it) })
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Row(Modifier.fillMaxWidth()) {
                     Text(formatTime(position), style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.7f))
                     Spacer(Modifier.weight(1f))
                     Text(formatTime(duration), style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.7f))
                 }
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().focusGroup()) {
@@ -1098,7 +1098,7 @@ private fun SpeedButton(label: String, active: Boolean, onClick: () -> Unit) {
     ) { focused ->
         // The rate itself is the icon — the extra ">>" glyph read as a seek control next to the real
         // rewind/forward buttons, and "1.0x" already says everything the button does.
-        Row(Modifier.padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.padding(horizontal = Dimens.GapCompact), verticalAlignment = Alignment.CenterVertically) {
             Text(label, style = MaterialTheme.typography.labelLarge, color = hudTint(active, focused, colors), fontWeight = FontWeight.SemiBold)
         }
     }
@@ -1128,7 +1128,7 @@ private fun NextEpisodeCard(
             .widthIn(max = 360.dp)
             .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(Color.Black.copy(alpha = 0.82f))
-            .padding(horizontal = 18.dp, vertical = Dimens.HeroGap),
+            .padding(horizontal = Dimens.GapWide, vertical = Dimens.HeroGap),
     ) {
         Text(
             stringResource(R.string.player_next_episode, seconds),
@@ -1144,8 +1144,8 @@ private fun NextEpisodeCard(
             maxLines = 1,
             overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
         )
-        Spacer(Modifier.height(12.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Spacer(Modifier.height(Dimens.GapCompact))
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(
                 stringResource(R.string.player_play_now),
                 onClick = onPlayNow,
@@ -1177,9 +1177,9 @@ private fun EngineToggle(label: String, active: Boolean, onClick: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) { focused ->
         Row(
-            Modifier.padding(horizontal = 12.dp),
+            Modifier.padding(horizontal = Dimens.GapCompact),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             OwnTVIcon(OwnTVIcon.SWAP, tint = hudTint(active, focused, colors), filled = true, modifier = Modifier.size(Dimens.IconSizeMedium))
             Text(label, style = MaterialTheme.typography.labelLarge, color = hudTint(active, focused, colors), fontWeight = FontWeight.SemiBold)
@@ -1282,7 +1282,7 @@ private fun SeekBar(positionMs: Long, durationMs: Long, onSeek: (Long) -> Unit) 
             // so the bubble shows what's LEFT: "-12:34"). Uses a negative offset (not bottom padding) so it
             // floats clear above the 24dp-tall bar — padding can't lift it out of the height-constrained parent.
             Box(
-                Modifier.offset(y = (-32).dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
+                Modifier.offset(y = (-32).dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny),
             ) {
                 Text(
                     stringResource(R.string.player_time_remaining, formatTime((durationMs - positionMs).coerceAtLeast(0))),
@@ -1315,7 +1315,7 @@ private fun LiveTimelineBar(offsetSec: Int, onScrub: (Int) -> Unit) {
             // negative offset: this bar's parent isn't height-constrained the way the VOD bar's is, so padding
             // is enough to clear the thumb. The two placements land ~2dp apart historically — deliberately
             // preserved rather than unified, since re-deriving one from the other risks nudging either bar.
-            Box(Modifier.padding(bottom = 30.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = Dimens.GapSmall, vertical = 3.dp)) {
+            Box(Modifier.padding(bottom = 30.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(Color.Black.copy(alpha = 0.9f)).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny)) {
                 Text(
                     if (offsetSec <= 1) stringResource(R.string.player_live) else stringResource(R.string.player_live_offset, mmss(offsetSec)),
                     style = MaterialTheme.typography.labelMedium.copy(textDirection = TextDirection.Content),
@@ -1402,7 +1402,7 @@ private fun TrackDialog(
                     stringResource(R.string.player_add_subtitles),
                     style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = Dimens.GapMedium, top = 10.dp, bottom = 2.dp),
+                    modifier = Modifier.padding(start = Dimens.GapMedium, top = Dimens.GapCompact, bottom = Dimens.GapHairline),
                 )
             }
             if (onSearchSubtitles != null) {
@@ -1419,7 +1419,7 @@ private fun TrackDialog(
                     stringResource(R.string.player_adjust),
                     style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = Dimens.GapMedium, top = 10.dp, bottom = 2.dp),
+                    modifier = Modifier.padding(start = Dimens.GapMedium, top = Dimens.GapCompact, bottom = Dimens.GapHairline),
                 )
             }
             item { OptionRow(label = stringResource(R.string.player_subtitle_timing), selected = false, onClick = onSubtitleTiming) }
@@ -1428,9 +1428,9 @@ private fun TrackDialog(
         if (onAdjustAudioDelay != null) {
             item {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
                 ) {
                     Text(stringResource(R.string.player_av_sync), style = MaterialTheme.typography.titleSmall, color = colors.onSurface, modifier = Modifier.weight(1f))
                     StepButton(stringResource(R.string.common_minus), enabled = (audioDelayMs ?: 0) > -5_000) { onAdjustAudioDelay(-50) }
@@ -1514,14 +1514,14 @@ private fun VolumeDialog(player: PlaybackEngine, onDismiss: () -> Unit) {
         Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.7f)), contentAlignment = Alignment.Center) {
             Column(Modifier.dialogPanel(padding = Dimens.DialogPanelPadding), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.player_volume), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                Spacer(Modifier.height(20.dp))
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+                Spacer(Modifier.height(Dimens.GapWide))
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapWide)) {
                     StepButton(stringResource(R.string.common_minus), enabled = volume > 0, modifier = Modifier.focusRequester(focus)) { player.adjustVolume(-5) }
                     Text(stringResource(R.string.player_percent, volume), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface, modifier = Modifier.width(120.dp), textAlign = TextAlign.Center)
                     StepButton(stringResource(R.string.common_plus), enabled = volume < 150) { player.adjustVolume(5) }
                 }
-                Spacer(Modifier.height(22.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Spacer(Modifier.height(Dimens.GapLarge))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     OwnTVButton(stringResource(if (volume == 0) R.string.player_unmute else R.string.player_mute), onClick = { player.toggleMute() }, style = tv.own.owntv.ui.components.OwnTVButtonStyle.SECONDARY)
                     Spacer(Modifier.weight(1f))
                     OwnTVButton(stringResource(R.string.common_done), onClick = onDismiss)
@@ -1547,7 +1547,7 @@ private fun SubtitleTimingDialog(player: PlaybackEngine, onDismiss: () -> Unit) 
             Box(Modifier.fillMaxSize().padding(bottom = 56.dp), contentAlignment = Alignment.BottomCenter) {
                 Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(R.string.player_subtitle_timing), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                    Spacer(Modifier.height(10.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     Text(formatSubDelay(delay), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
                     Spacer(Modifier.height(Dimens.GapTiny))
                     Text(
@@ -1558,8 +1558,8 @@ private fun SubtitleTimingDialog(player: PlaybackEngine, onDismiss: () -> Unit) 
                         },
                         style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(18.dp))
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Spacer(Modifier.height(Dimens.GapWide))
+                    Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                         OwnTVButton(stringResource(R.string.player_subtitle_delay_negative, 0.5), onClick = { player.adjustSubtitleDelay(-500) }, style = tv.own.owntv.ui.components.OwnTVButtonStyle.SECONDARY)
                         OwnTVButton(stringResource(R.string.player_subtitle_delay_negative, 0.1), onClick = { player.adjustSubtitleDelay(-100) }, style = tv.own.owntv.ui.components.OwnTVButtonStyle.SECONDARY)
                         OwnTVButton(stringResource(R.string.common_reset), onClick = { player.resetSubtitleDelay() }, modifier = Modifier.focusRequester(focus))
@@ -1624,7 +1624,7 @@ private fun OptionRow(label: String, selected: Boolean, modifier: Modifier = Mod
         selectedContainerColor = colors.primaryContainer, contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically) {
             Text(label, style = MaterialTheme.typography.bodyMedium, color = if (selected) colors.onPrimaryContainer else colors.onSurface)
             if (selected) {
                 Spacer(Modifier.weight(1f))

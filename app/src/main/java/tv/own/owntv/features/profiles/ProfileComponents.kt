@@ -104,12 +104,12 @@ private fun PinDialogBody(title: String, onSubmit: (String) -> Unit, onDismiss: 
             isPassword = true,
             modifier = Modifier.fillMaxWidth().focusRequester(focus),
         )
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
         // Explicit start/end links: spatial D-pad search from Cancel would otherwise wander into
         // the gate's profile tiles BEHIND the dialog before reaching OK.
         val cancelFocus = remember { FocusRequester() }
         val okFocus = remember { FocusRequester() }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(
                 stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY,
                 modifier = Modifier.focusRequester(cancelFocus).focusProperties { end = okFocus },
@@ -153,7 +153,7 @@ internal fun ProfileEditorDialog(
         Spacer(Modifier.height(Dimens.GapMedium))
         OwnTVTextField(name, { name = it }, label = stringResource(R.string.profiles_name), placeholder = stringResource(R.string.profiles_name_hint), modifier = Modifier.fillMaxWidth().focusRequester(focus))
         if (nameTaken) {
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.profiles_name_taken),
                 style = MaterialTheme.typography.bodyMedium, color = colors.favorite,
@@ -163,7 +163,7 @@ internal fun ProfileEditorDialog(
 
         Text(stringResource(R.string.profiles_avatar), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
         Spacer(Modifier.height(Dimens.GapSmall))
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             items((-1 until OwnTVAvatars.COUNT).toList()) { id -> // Phase 7 — includes "no avatar" (-1)
                 FocusableSurface(
                     onClick = { avatarId = id },
@@ -181,10 +181,10 @@ internal fun ProfileEditorDialog(
         Spacer(Modifier.height(Dimens.GapMedium))
 
         ToggleRow(label = stringResource(R.string.profiles_kids), desc = stringResource(R.string.profiles_kids_description), checked = isKids) { isKids = it }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         if (initial?.pinHash != null) {
             ToggleRow(label = stringResource(R.string.profiles_remove_pin), desc = stringResource(R.string.profiles_no_pin), checked = removePin) { removePin = it }
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
         }
         if (!removePin) {
             OwnTVTextField(
@@ -198,8 +198,8 @@ internal fun ProfileEditorDialog(
             )
         }
 
-        Spacer(Modifier.height(22.dp))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Spacer(Modifier.height(Dimens.GapLarge))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
             Spacer(Modifier.weight(1f))
             OwnTVButton(
@@ -221,7 +221,7 @@ private fun ToggleRow(label: String, desc: String, checked: Boolean, onToggle: (
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(label, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Text(desc, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
@@ -231,7 +231,7 @@ private fun ToggleRow(label: String, desc: String, checked: Boolean, onToggle: (
                     .background(if (checked) colors.primary else colors.surfaceContainerHighest),
                 contentAlignment = if (checked) Alignment.CenterEnd else Alignment.CenterStart,
             ) {
-                Box(Modifier.padding(3.dp).size(24.dp).clip(CircleShape).background(Color.White))
+                Box(Modifier.padding(Dimens.GapTiny).size(24.dp).clip(CircleShape).background(Color.White))
             }
         }
     }

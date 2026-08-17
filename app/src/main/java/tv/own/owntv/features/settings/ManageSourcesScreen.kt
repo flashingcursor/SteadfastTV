@@ -248,11 +248,11 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                         style = MaterialTheme.typography.titleMedium,
                         color = colors.onSurface,
                     )
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     Text(display?.primaryText() ?: stringResource(R.string.settings_sources_preparing), style = MaterialTheme.typography.headlineSmall, color = colors.onSurfaceVariant)
                     Spacer(Modifier.height(Dimens.GapTiny))
                     Text(display?.detailText() ?: stringResource(R.string.settings_sources_preparing), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(Dimens.GapWide))
                     OwnTVButton(stringResource(R.string.common_cancel), onClick = { showAdd = false; vm.cancelImport() }, style = OwnTVButtonStyle.SECONDARY)
                 }
                 is SettingsViewModel.ImportState.Success -> {
@@ -272,7 +272,7 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                                 Spacer(Modifier.height(Dimens.GapTiny))
                                 Text(remainder, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                             }
-                            Spacer(Modifier.height(20.dp))
+                            Spacer(Modifier.height(Dimens.GapWide))
                             OwnTVButton(stringResource(R.string.common_done), onClick = { showAdd = false; vm.resetImport() })
                         }
                     } else {
@@ -283,8 +283,8 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     Text(stringResource(R.string.settings_sources_import_failed), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                     Spacer(Modifier.height(Dimens.GapSmall))
                     Text(s.failure.displayText(), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                    Spacer(Modifier.height(20.dp))
-                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Spacer(Modifier.height(Dimens.GapWide))
+                    Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                         OwnTVButton(stringResource(R.string.common_back), onClick = { showAdd = false; vm.resetImport() }, style = OwnTVButtonStyle.SECONDARY)
                         OwnTVButton(stringResource(R.string.settings_sources_try_again), onClick = { vm.resetImport() }, modifier = Modifier.focusRequester(errorFocus))
                     }
@@ -310,7 +310,7 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                         }
                     }
                     .focusGroup()
-                    .padding(horizontal = 40.dp, vertical = 28.dp),
+                    .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.settings_sources_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
@@ -319,14 +319,14 @@ fun ManageSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 }
                 Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(R.string.settings_sources_description), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
 
                 if (sources.isEmpty()) {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(stringResource(R.string.settings_sources_empty), color = colors.onSurfaceVariant, style = MaterialTheme.typography.bodyLarge)
                     }
                 } else {
-                    LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    LazyColumn(verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                         itemsIndexed(sources, key = { _, it -> it.id }) { index, source ->
                             // Default is only the explicitly-chosen source; when none is set every playlist shows
                             // (no badge). Chosen via the add/edit form's "Default playlist" toggle, not a row action.
@@ -423,7 +423,7 @@ private fun SourceRow(
                         stringResource(R.string.settings_sources_default),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
                     )
                 }
                 if (isDeleting) {
@@ -432,7 +432,7 @@ private fun SourceRow(
                         stringResource(R.string.settings_sources_deleting),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
                     )
                 }
                 activeSync?.let {
@@ -442,7 +442,7 @@ private fun SourceRow(
                             ?: stringResource(R.string.sync_progress_syncing),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
                     )
                 }
             }
@@ -468,17 +468,17 @@ private fun SourceRow(
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis,
             )
         }
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         if (isDeleting) {
             // Removing a huge source cascades through hundreds of thousands of rows — show that the
             // removal is running and take the row's actions away so it can't be edited/re-synced/
             // deleted again mid-delete.
             OwnTVSpinner(sizeDp = 22)
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             Text(stringResource(R.string.settings_sources_removing_detail), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         } else {
             OwnTVButton(stringResource(R.string.settings_sources_edit), onClick = onEdit, style = OwnTVButtonStyle.SECONDARY)
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             // One stable button whose label/action flips with syncState. Keeping the SAME composable
             // in the tree (instead of an if/else that disposes "Re-sync" and composes "Cancel") means
             // the focusable node is never removed, so D-pad focus survives the swap instead of escaping
@@ -488,7 +488,7 @@ private fun SourceRow(
                 onClick = if (syncState.isActive) onCancelSync else onResync,
                 style = OwnTVButtonStyle.SECONDARY,
             )
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             OwnTVButton(stringResource(R.string.settings_sources_delete), onClick = onDelete, style = OwnTVButtonStyle.SECONDARY)
         }
     }
@@ -555,10 +555,10 @@ internal fun ConfirmDialog(title: String, message: String, onConfirm: () -> Unit
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = 460.dp, padding = Dimens.DialogPanelPadding)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(22.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.focusRequester(focus))
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.common_delete), onClick = onConfirm)
@@ -593,14 +593,14 @@ private fun ResyncChoiceDialog(
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = 520.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_sources_resync_title_full, sourceName), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Text(
                 stringResource(R.string.settings_sources_resync_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(22.dp))
-            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.settings_sources_resync_now_full), onClick = onNormal, modifier = Modifier.fillMaxWidth().focusRequester(focus))
                 OwnTVButton(
                     stringResource(R.string.settings_sources_resync_remove_full),

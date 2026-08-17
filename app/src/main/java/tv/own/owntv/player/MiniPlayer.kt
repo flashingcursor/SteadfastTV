@@ -64,7 +64,7 @@ fun MiniPlayer(
         Row(
             modifier = Modifier.align(Alignment.TopStart).fillMaxWidth().alpha(controlsAlpha)
                 .background(Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.6f), Color.Transparent)))
-                .padding(start = 48.dp, end = 96.dp, top = 6.dp, bottom = 6.dp),
+                .padding(start = 48.dp, end = 96.dp, top = Dimens.GapSmall, bottom = Dimens.GapSmall),
         ) {
             Text(
                 meta.title ?: "",
@@ -80,7 +80,7 @@ fun MiniPlayer(
 
         // Audio Mode (top-left): switch to audio-only and surface the top-bar now-playing bar.
         Row(
-            modifier = Modifier.align(Alignment.TopStart).alpha(controlsAlpha).padding(6.dp).focusGroup(),
+            modifier = Modifier.align(Alignment.TopStart).alpha(controlsAlpha).padding(Dimens.GapSmall).focusGroup(),
         ) {
             MiniBtn(OwnTVIcon.HEADPHONES, onClick = onAudioMode)
         }
@@ -88,8 +88,8 @@ fun MiniPlayer(
         // Window controls (top-right): resize (cycles size) and move (cycles the 6 positions). Kept up
         // here so the bottom row stays short enough to fit even the smallest mini-player size.
         Row(
-            modifier = Modifier.align(Alignment.TopEnd).alpha(controlsAlpha).padding(6.dp).focusGroup(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.align(Alignment.TopEnd).alpha(controlsAlpha).padding(Dimens.GapSmall).focusGroup(),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             MiniBtn(OwnTVIcon.ZOOM, onClick = onCycleSize)
             MiniBtn(OwnTVIcon.PIP, onClick = onCyclePosition)
@@ -102,7 +102,7 @@ fun MiniPlayer(
                 .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.7f))))
                 .padding(Dimens.GapSmall).horizontalScroll(rememberScrollState()).focusGroup(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             MiniBtn(if (isPlaying) OwnTVIcon.PAUSE else OwnTVIcon.PLAY) { player.togglePlayPause() }
             // Single mute/unmute toggle — volume icon (not the audio-track icon).

@@ -339,7 +339,7 @@ fun EpgScreen(
             .padding(horizontal = Dimens.ScreenPaddingH, vertical = Dimens.GapLarge),
     ) {
         // Header: back + title + date + refresh
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             FocusableSurface(onClick = onBack, modifier = Modifier.size(Dimens.TouchTargetSizeCompact), shape = RoundedCornerShape(Dimens.CornerMedium), contentAlignment = Alignment.Center, surface = GlassSurface.CARDS) { _ ->
                 OwnTVIcon(OwnTVIcon.BACK, tint = colors.onSurface, modifier = Modifier.size(Dimens.IconSizeLarge))
             }
@@ -369,10 +369,10 @@ fun EpgScreen(
             if (guideCategories.isNotEmpty()) {
                 val catLabel = categoryFilter?.let { key -> guideCategories.firstOrNull { it.key == key }?.name } ?: stringResource(R.string.content_epg_all)
                 OwnTVButton(stringResource(R.string.content_epg_category_button, catLabel), onClick = { showCategoryPicker = true }, icon = OwnTVIcon.MENU, style = OwnTVButtonStyle.SECONDARY)
-                Spacer(Modifier.width(12.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
             }
             OwnTVButton(stringResource(R.string.content_epg_sort_button, sortLabel), onClick = vm::cycleGuideSort, icon = OwnTVIcon.SORT, style = OwnTVButtonStyle.SECONDARY)
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             // Smart-match: auto-link channels whose tvg-id doesn't match the EPG feed, by name (#13).
             if (matching) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
@@ -390,32 +390,32 @@ fun EpgScreen(
         // Outcome of the last auto-match run (auto-applied count / how many need review). Dismissible.
         matchSummary?.let { summary ->
             if (review.isEmpty()) {
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 FocusableSurface(onClick = vm::clearReview, shape = RoundedCornerShape(Dimens.CornerSmall), unfocusedContainerColor = colors.surfaceContainerHigh, contentAlignment = Alignment.CenterStart, surface = GlassSurface.CARDS) { _ ->
-                    Text(epgMatchSummaryText(summary), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = 12.dp, vertical = Dimens.GapSmall))
+                    Text(epgMatchSummaryText(summary), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall))
                 }
             }
         }
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         SearchBar(
             query = query,
             onQueryChange = vm::setQuery,
             placeholder = stringResource(R.string.content_epg_search_hint),
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         when {
             state.loading -> CenterBox { OwnTVSpinner(sizeDp = 56) }
             // No EPG feed added yet → guide it can't fill. Point the user to EPG Sources.
             !state.hasEpgSources && state.channels.isEmpty() -> CenterBox {
                 Text(stringResource(R.string.content_epg_empty), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     stringResource(R.string.content_epg_add_description),
                     style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
                 OwnTVButton(stringResource(R.string.content_epg_add), onClick = onAddEpg, icon = OwnTVIcon.ADD)
             }
             state.channels.isEmpty() -> CenterBox {
@@ -436,7 +436,7 @@ fun EpgScreen(
                                     style = MaterialTheme.typography.labelMedium.copy(textDirection = TextDirection.Content),
                                     color = colors.onSurfaceVariant,
                                     fontWeight = FontWeight.SemiBold,
-                                    modifier = Modifier.width((GuideGridDefaults.SlotMin * GuideGridDefaults.PxPerMin.value).dp).padding(start = 6.dp),
+                                    modifier = Modifier.width((GuideGridDefaults.SlotMin * GuideGridDefaults.PxPerMin.value).dp).padding(start = Dimens.GapSmall),
                                 )
                             }
                         }
@@ -592,23 +592,23 @@ private fun EpgMatchReviewDialog(
     ) {
         Column(Modifier.dialogPanel(width = 576.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact)) {
             Text(stringResource(R.string.content_epg_review_matches), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(
                 stringResource(R.string.content_epg_review_description),
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             // Actions live in a right-hand column so a D-pad right from ANY suggestion row reaches
             // Accept all/Skip all/Done directly — no scrolling to the bottom of a long list.
             val listHeight = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 200.dp).coerceIn(160.dp, 300.dp)
             Row(Modifier.fillMaxWidth()) {
             Column(Modifier.weight(1f)) {
-            LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 itemsIndexed(suggestions, key = { _, s -> s.channel.id }) { index, s ->
                     Row(
-                        Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = 12.dp, vertical = Dimens.GapSmall),
+                        Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
                     ) {
                         Column(Modifier.weight(1f)) {
                             Text(s.channel.name, style = MaterialTheme.typography.bodyMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -636,7 +636,7 @@ private fun EpgMatchReviewDialog(
                 }
             }
             }
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             Column(Modifier.width(140.dp), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 // Bulk actions only make sense for a multi-channel run; a single auto-match shows just accept/skip.
                 if (suggestions.size > 1) {
@@ -678,7 +678,7 @@ private fun EpgMatchChooserDialog(
     ) {
         Column(Modifier.dialogPanel()) {
             Text(channelName, style = MaterialTheme.typography.titleLarge, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(
                 stringResource(R.string.content_epg_favourite_description),
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
@@ -690,11 +690,11 @@ private fun EpgMatchChooserDialog(
                 icon = OwnTVIcon.FAVORITE,
                 modifier = Modifier.fillMaxWidth().focusRequester(firstFocus),
             )
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             OwnTVButton(stringResource(R.string.content_epg_match_button), onClick = onAuto, style = OwnTVButtonStyle.SECONDARY, icon = OwnTVIcon.EPG, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             OwnTVButton(stringResource(R.string.content_epg_pick_manually), onClick = onManual, style = OwnTVButtonStyle.SECONDARY, icon = OwnTVIcon.SEARCH, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             OwnTVButton(stringResource(R.string.content_epg_time_offset), onClick = onOffset, style = OwnTVButtonStyle.SECONDARY, icon = OwnTVIcon.EPG, modifier = Modifier.fillMaxWidth())
             Spacer(Modifier.height(Dimens.GapMedium))
             OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
@@ -745,7 +745,7 @@ private fun GuideChannelRow(
         FocusableSurface(
             onClick = onTune,
             onLongClick = onMatchEpg,
-            modifier = Modifier.width(GuideGridDefaults.ChannelCol).height(GuideGridDefaults.RowHeight).padding(end = 6.dp)
+            modifier = Modifier.width(GuideGridDefaults.ChannelCol).height(GuideGridDefaults.RowHeight).padding(end = Dimens.GapSmall)
                 .focusRequester(labelFR)
                 .then(if (labelFocus != null) Modifier.focusRequester(labelFocus) else Modifier)
                 // Physical by design: the guide is an LTR timeline, so the strip is always right.
@@ -757,7 +757,7 @@ private fun GuideChannelRow(
             surface = GlassSurface.CARDS,
         ) { _ ->
             Row(
-                modifier = Modifier.padding(horizontal = 12.dp),
+                modifier = Modifier.padding(horizontal = Dimens.GapCompact),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             ) {
@@ -877,9 +877,9 @@ private fun GuideInfoStrip(
     Row(
         modifier = Modifier.fillMaxWidth().padding(top = Dimens.GapSmall)
             .clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh)
-            .padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
+            .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
     ) {
         val p = programme
         if (p != null && focusedChannel != null) {

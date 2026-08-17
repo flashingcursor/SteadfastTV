@@ -30,10 +30,20 @@ object Dimens {
     val IconTileSize = 42.dp
     val IconTileCorner = 6.dp  // halved with the corner scale (2026-08-17)
 
+    val GapHairline = 2.dp
     val GapTiny = 4.dp
     val GapSmall = 8.dp
+    val GapCompact = 12.dp
     val GapMedium = 16.dp
+    val GapWide = 20.dp
     val GapLarge = 24.dp
+
+    // Settings-detail outer container padding (2026-08-17 token audit, Phase 5, §2): the
+    // identical horizontal=40dp/vertical=28dp pattern repeated across 20+ settings/customize
+    // detail screens — paired tokens rather than folded into the Gap ladder since neither value
+    // is a general-purpose gap on its own.
+    val DetailPanelPaddingH = 40.dp
+    val DetailPanelPaddingV = 28.dp
 
     // Floating shell rail, TOP position only (shell-refinements Task 3): the header→rail gap, and
     // (doubled, matching the existing header/rail/content symmetric-gap arithmetic in

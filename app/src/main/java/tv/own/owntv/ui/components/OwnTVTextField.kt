@@ -131,7 +131,7 @@ fun OwnTVTextField(
     }
     Column(modifier = modifier) {
         Text(label, style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -202,7 +202,7 @@ fun OwnTVTextField(
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .padding(end = 12.dp)
+                        .padding(end = Dimens.GapCompact)
                         .clickable(interactionSource = eyeInteraction, indication = null) { showPassword = !showPassword }
                         .onPreviewKeyEvent {
                             if (it.key == Key.DirectionCenter && it.type == KeyEventType.KeyUp) {

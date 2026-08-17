@@ -124,7 +124,7 @@ private fun ProfileTile(profile: ProfileEntity, modifier: Modifier = Modifier, o
                 }
             }
         }
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         Text(profile.name, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, textAlign = TextAlign.Center)
         if (profile.isKids) {
             Text(stringResource(R.string.profiles_kids_badge), style = MaterialTheme.typography.labelSmall, color = colors.primary)
@@ -149,7 +149,7 @@ private fun AddTile(onClick: () -> Unit) {
                 OwnTVIcon(OwnTVIcon.ADD, tint = colors.onSurfaceVariant, modifier = Modifier.size(40.dp))
             }
         }
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         Text(stringResource(R.string.profiles_add), style = MaterialTheme.typography.titleMedium, color = colors.onSurfaceVariant)
     }
 }

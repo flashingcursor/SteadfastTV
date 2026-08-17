@@ -133,9 +133,9 @@ private fun ChannelCardsRow(
                         Row(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(10.dp),
+                                .padding(Dimens.GapCompact),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
                         ) {
                             ChannelLogo(channel, size = 44)
                             Text(
@@ -242,13 +242,13 @@ private fun OnNowRow(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(1.dp)
+                .padding(Dimens.GapHairline)
                 .border(
                     width = Dimens.HairlineWidth,
                     color = if (focused) colors.focusBorder else Color.Transparent,
                     shape = sectionShape,
                 )
-                .padding(10.dp),
+                .padding(Dimens.GapCompact),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -277,7 +277,7 @@ private fun OnNowRow(
             Spacer(Modifier.height(Dimens.GapSmall))
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(7.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
             ) {
                 rows.drop(visibleStartIndex)
                     .take(HOME_ON_NOW_VISIBLE_ROWS)
@@ -350,7 +350,7 @@ private fun OnNowChannelItem(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = Dimens.HeroGap, end = 12.dp, top = 9.dp, bottom = 9.dp),
+                .padding(start = Dimens.HeroGap, end = Dimens.GapCompact, top = Dimens.GapSmall, bottom = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap),
         ) {
@@ -367,7 +367,7 @@ private fun OnNowChannelItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(Modifier.height(2.dp))
+                Spacer(Modifier.height(Dimens.GapHairline))
                 Text(
                     text = info.title,
                     style = MaterialTheme.typography.titleMedium,
@@ -376,7 +376,7 @@ private fun OnNowChannelItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(Modifier.height(2.dp))
+                Spacer(Modifier.height(Dimens.GapHairline))
                 Text(
                     text = info.timeLabel,
                     style = MaterialTheme.typography.labelSmall,
@@ -384,7 +384,7 @@ private fun OnNowChannelItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(Modifier.height(5.dp))
+                Spacer(Modifier.height(Dimens.GapTiny))
                 ProgrammeProgressBar(progress = info.progress)
             }
 

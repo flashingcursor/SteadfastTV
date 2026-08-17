@@ -147,7 +147,7 @@ private fun pentagon(center: Offset, r: Float): Path = Path().apply {
 @TvComponentPreview
 @Composable
 private fun OwnTVAvatarPreview() = OwnTVPreview {
-    Row(Modifier.padding(Dimens.GapMedium), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    Row(Modifier.padding(Dimens.GapMedium), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
         OwnTVAvatar(avatarId = 0, modifier = Modifier.size(46.dp))
         OwnTVAvatar(avatarId = 3, modifier = Modifier.size(46.dp))
         OwnTVAvatar(avatarId = 6, modifier = Modifier.size(46.dp))

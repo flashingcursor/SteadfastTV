@@ -199,7 +199,7 @@ private fun WelcomeScreen(onNext: () -> Unit) {
         showLogoBadge = false,
     ) {
         FirstRunLanguageSelector()
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         OwnTVButton(
             stringResource(R.string.setup_get_started),
             onClick = onNext,
@@ -219,7 +219,7 @@ private fun DisclaimerScreen(onAgree: () -> Unit, onBack: () -> Unit) {
         title = { Text(stringResource(R.string.setup_before_you_start)) },
         subtitle = { Text(stringResource(R.string.setup_disclaimer)) },
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(
                 stringResource(R.string.common_back),
                 onClick = onBack,
@@ -311,8 +311,8 @@ private fun ExistingSourcesScreen(sources: List<SourceEntity>, onAdd: (Set<Long>
                 }
             }
         }
-        Spacer(Modifier.height(20.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Spacer(Modifier.height(Dimens.GapWide))
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(stringResource(R.string.common_back), onClick = onBack, style = OwnTVButtonStyle.SECONDARY)
             OwnTVButton(pluralStringResource(R.plurals.setup_add_selected_playlists, selected.size, selected.size), onClick = { onAdd(selected) }, enabled = selected.isNotEmpty())
         }
@@ -359,8 +359,8 @@ private fun ImportBackupScreen(
                     focusRequester = firstFocus,
                     modifier = Modifier.widthIn(max = 420.dp),
                 )
-                Spacer(Modifier.height(20.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Spacer(Modifier.height(Dimens.GapWide))
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     OwnTVButton(stringResource(R.string.common_back), onClick = onBack, style = OwnTVButtonStyle.SECONDARY)
                     // No "Skip" for a sealed container: without the password there is nothing to restore.
                     if (!state.sealed) {
@@ -453,7 +453,7 @@ private fun ImportProgressScreen(
             is SetupViewModel.ImportState.NeedPassword -> {
                 val display = progress?.importProgressDisplay()
                 OwnTVSpinner(sizeDp = 56)
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
                 Text(stringResource(R.string.setup_importing_catalog), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
@@ -461,20 +461,20 @@ private fun ImportProgressScreen(
                     style = MaterialTheme.typography.headlineLarge,
                     color = colors.onSurface,
                 )
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     display?.detailText() ?: stringResource(R.string.setup_preparing_catalog),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(Dimens.GapLarge))
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     // Enter the app right away; the import keeps running (VM is activity-scoped) and
                     // content appears as it lands — no need to sit through a big movies/series sync.
                     OwnTVButton(stringResource(R.string.setup_run_in_background), onClick = onBackground, icon = OwnTVIcon.PLAY, modifier = Modifier.focusRequester(bgFr))
                     OwnTVButton(stringResource(R.string.common_cancel), onClick = onCancel, style = OwnTVButtonStyle.SECONDARY)
                 }
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 Text(
                     stringResource(R.string.setup_watching_during_import),
                     style = MaterialTheme.typography.bodySmall,
@@ -483,7 +483,7 @@ private fun ImportProgressScreen(
             }
             is SetupViewModel.ImportState.Success -> {
                 Text(stringResource(R.string.setup_all_set), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 state.counts?.let { counts ->
                     Text(counts.summaryText(includeEpg = true), style = MaterialTheme.typography.titleMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.widthIn(max = 560.dp))
                 }
@@ -505,15 +505,15 @@ private fun ImportProgressScreen(
                 state.remainder.remainderText()?.let { remainder ->
                     Text(remainder, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center)
                 }
-                Spacer(Modifier.height(28.dp))
+                Spacer(Modifier.height(Dimens.GapLarge))
                 OwnTVButton(stringResource(R.string.setup_continue), onClick = onContinue, icon = OwnTVIcon.PLAY, modifier = Modifier.focusRequester(fr))
             }
             is SetupViewModel.ImportState.Failed -> {
                 Text(stringResource(R.string.setup_import_failed), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 Text(state.failure.displayText(), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.widthIn(max = 520.dp))
-                Spacer(Modifier.height(28.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Spacer(Modifier.height(Dimens.GapLarge))
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     OwnTVButton(stringResource(R.string.common_back), onClick = onCancel, style = OwnTVButtonStyle.SECONDARY)
                     OwnTVButton(stringResource(R.string.setup_try_again_caps), onClick = onRetry, modifier = Modifier.focusRequester(fr))
                 }

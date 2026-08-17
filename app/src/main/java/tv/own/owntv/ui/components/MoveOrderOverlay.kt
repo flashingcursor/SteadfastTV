@@ -121,7 +121,7 @@ fun MoveOrderOverlay(
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(Dimens.CornerXSmall))
                             .background(if (isActive) colors.primary else colors.surfaceContainerLowest)
-                            .padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
+                            .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact),
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             if (isActive) {
@@ -139,7 +139,7 @@ fun MoveOrderOverlay(
                 }
             }
             Spacer(Modifier.height(Dimens.GapTiny))
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact), modifier = Modifier.fillMaxWidth()) {
                 // Save gets the focus: TV focus lands here on overlay open, so onKeyEvent fires.
                 OwnTVButton(stringResource(R.string.common_save), onClick = onCommit, modifier = Modifier.weight(1f).focusRequester(focus))
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onCancel, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.weight(1f))

@@ -68,7 +68,7 @@ fun InAppToast(state: InAppToastState) {
             modifier = Modifier
                 .clip(RoundedCornerShape(Dimens.CornerMedium))
                 .background(OwnTVTheme.colors.surfaceContainerHigh)
-                .padding(horizontal = 22.dp, vertical = 12.dp),
+                .padding(horizontal = Dimens.GapLarge, vertical = Dimens.GapCompact),
             style = MaterialTheme.typography.titleMedium,
             color = OwnTVTheme.colors.onSurface,
         )

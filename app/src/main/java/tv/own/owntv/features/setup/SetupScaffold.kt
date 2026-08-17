@@ -116,7 +116,7 @@ fun SetupScaffold(
             ) {
                 if (showLogoBadge) {
                     BrandLockup(markSize = 40, textSize = 30)
-                    Spacer(Modifier.height(22.dp))
+                    Spacer(Modifier.height(Dimens.GapLarge))
                 }
                 // Title slot: provide the canonical hero style + on-surface content colour so a bare
                 // Text() in the slot needs no styling.
@@ -126,7 +126,7 @@ fun SetupScaffold(
                     }
                 }
                 if (subtitle != null) {
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     Box(Modifier.widthIn(max = 620.dp)) {
                         ProvideTextStyle(
                             OwnTVTypography.bodyLarge.copy(textAlign = TextAlign.Center),

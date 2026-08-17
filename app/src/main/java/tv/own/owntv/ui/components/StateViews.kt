@@ -109,7 +109,7 @@ fun ErrorState(
             modifier = Modifier.widthIn(max = 460.dp),
         )
         if (onRetry != null) {
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
             OwnTVButton(label = resolvedRetryLabel, onClick = onRetry, icon = OwnTVIcon.HISTORY)
         }
     }
@@ -139,7 +139,7 @@ fun EmptyState(
             color = colors.textPrimary,
             textAlign = TextAlign.Center,
         )
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             text = message,
             style = MaterialTheme.typography.bodyMedium,
@@ -148,7 +148,7 @@ fun EmptyState(
             modifier = Modifier.widthIn(max = 420.dp),
         )
         if (actionLabel != null && onAction != null) {
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
             OwnTVButton(label = actionLabel, onClick = onAction, icon = OwnTVIcon.MENU)
         }
     }

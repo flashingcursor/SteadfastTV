@@ -167,7 +167,7 @@ fun CustomizeItemsScreen(
             .fillMaxSize()
             .roundedPanel()
             .focusGroup()
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         // Header: category name + back
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -197,12 +197,12 @@ fun CustomizeItemsScreen(
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         // Bulk rename pills — Movies/Series only: rename the WHOLE category, optionally with the
         // ✨ Auto cleanup preset applied immediately (issue #86). Live renames go per-row or via span.
         if (!isLive) {
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(
                     stringResource(R.string.settings_customize_rename_items),
                     onClick = { dialogReturn = renameItemsFocus; vm.bulkRenameAll(autocleanup = false) },
@@ -216,7 +216,7 @@ fun CustomizeItemsScreen(
                     modifier = Modifier.focusRequester(autoCleanupFocus),
                 )
             }
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
         }
 
         Spacer(Modifier.height(Dimens.GapTiny))
@@ -227,7 +227,7 @@ fun CustomizeItemsScreen(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.primaryContainer)
-                    .padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
+                    .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -249,10 +249,10 @@ fun CustomizeItemsScreen(
                     color = colors.onPrimaryContainer,
                     modifier = Modifier.weight(1f),
                 )
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = { vm.cancelRange() }, style = OwnTVButtonStyle.SECONDARY)
             }
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
         }
 
         LazyColumn(
@@ -398,14 +398,14 @@ private fun ItemsRangeHideDialog(count: Int, onHide: () -> Unit, onShow: () -> U
             Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
         ) {
             Text(stringResource(R.string.settings_customize_hide_show_items), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 pluralStringResource(R.plurals.settings_customize_selected_items, count, count),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(22.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.common_show), onClick = onShow, style = OwnTVButtonStyle.SECONDARY)
@@ -468,7 +468,7 @@ private fun ItemRow(
             surface = GlassSurface.CARDS,
             contentAlignment = Alignment.CenterStart,
         ) { focused ->
-            Column(Modifier.padding(horizontal = 12.dp, vertical = Dimens.GapSmall)) {
+            Column(Modifier.padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall)) {
                 Text(
                     row.displayName,
                     style = MaterialTheme.typography.titleSmall,
@@ -496,19 +496,19 @@ private fun ItemRow(
                 }
             }
         }
-        Spacer(Modifier.width(10.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         // Long-pressing any arrow anchors a move span; pressing an arrow on a second row picks the
         // span end and moves the whole block, and keeps it selected for further steps.
         OwnTVButton("⤒", onClick = onMoveTop, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("↑", onClick = onMoveUp, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("↓", onClick = onMoveDown, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("⤓", onClick = onMoveBottom, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
         // Live TV channels get a per-row Rename button; Movies/Series get bulk rename only (Phase 2).
         if (isLive) {
-            Spacer(Modifier.width(6.dp))
+            Spacer(Modifier.width(Dimens.GapSmall))
             // Long-press anchors a rename span; a normal press picks the span end while one is
             // active, otherwise it opens the single-row rename dialog.
             OwnTVButton(
@@ -518,11 +518,11 @@ private fun ItemRow(
                 style = OwnTVButtonStyle.SECONDARY,
             )
         }
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         // Move to… a user's combined category (issue #87). Always available — Live and non-Live rows
         // alike can join a custom category.
         OwnTVButton(stringResource(R.string.settings_customize_move_to), onClick = onMove, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton(
             label = stringResource(if (row.hidden) R.string.common_show else R.string.common_hide),
             // Long-press anchors a range; a normal press picks the span end while a range is active,

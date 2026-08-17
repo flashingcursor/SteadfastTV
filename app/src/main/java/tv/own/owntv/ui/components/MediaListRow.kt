@@ -58,12 +58,12 @@ fun MediaListRow(
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             leading?.invoke()
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline)) {
                 Text(
                     title,
                     style = MaterialTheme.typography.titleMedium,

@@ -377,9 +377,9 @@ fun MoviesScreen(
                     placeholder = stringResource(R.string.content_search_movies, selectedLabel),
                     modifier = Modifier.weight(1f),
                 )
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 SortChip(mode = sortMode, onToggle = vm::toggleSort, playlistLabel = stringResource(R.string.content_provider))
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 // View mode (#10): poster wall vs a compact list (more titles at once).
                 tv.own.owntv.ui.components.OwnTVButton(
                     label = stringResource(if (viewMode == SettingsRepository.VodViewMode.GRID) R.string.settings_view_grid else R.string.settings_view_list),
@@ -431,8 +431,8 @@ fun MoviesScreen(
                 LazyVerticalGrid(
                     state = effectiveGridState,
                     columns = GridCells.Adaptive(minSize = 130.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
                 ) {
                     items(
                         count = movies.itemCount,
@@ -777,7 +777,7 @@ private fun MovieDetailsPane(
         // Non-focusable download status strip — only present while this movie is actually downloading.
         if (downloadStrip != null) {
             tv.own.owntv.ui.components.DownloadStatusStrip(downloadStrip)
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
         }
         // Tall portrait poster (like the list / a phone screen), centred in the pane.
         Box(modifier = Modifier.fillMaxWidth().height(340.dp), contentAlignment = Alignment.Center) {
@@ -806,10 +806,10 @@ private fun MovieDetailsPane(
                 style = MaterialTheme.typography.labelMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
         }
         Text(movie.name, style = MaterialTheme.typography.headlineMedium, color = colors.onSurface)
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(metaLine(movie, meta, tmdbWins), style = MaterialTheme.typography.labelMedium.copy(fontFeatureSettings = "tnum"), color = colors.onSurfaceVariant)
         // Genres & cast are TMDB-only (§7.1) — a whole layer the provider never had.
         val genres = jsonList(meta?.genresJson)
@@ -818,17 +818,17 @@ private fun MovieDetailsPane(
             Text(genres.joinToString(stringResource(R.string.content_genres_separator)), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
         }
         if (!plot.isNullOrBlank()) {
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Text(plot, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, maxLines = 6, overflow = TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 360.dp))
         }
         val cast = jsonList(meta?.castJson)
         if (cast.isNotEmpty()) {
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Text(stringResource(R.string.content_media_cast), style = MaterialTheme.typography.labelMedium, color = colors.onSurface)
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(cast.take(6).joinToString(", "), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
         }
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
         // Display-only pane (§11.1): actions live on the poster — OK plays, long-press opens the menu
         // (Favorite / Download / TMDB Details). Keeping the pane non-focusable fixes grid→pane navigation.
         Text(
@@ -926,7 +926,7 @@ private fun MovieListRow(
         } else null,
         trailing = if (completed || isFavorite) {
             {
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact), verticalAlignment = Alignment.CenterVertically) {
                     if (completed) {
                         Box(
                             modifier = Modifier.size(20.dp).clip(RoundedCornerShape(50)).background(colors.surfaceContainerHigh),

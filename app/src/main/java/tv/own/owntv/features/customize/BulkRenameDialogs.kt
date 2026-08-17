@@ -269,7 +269,7 @@ private fun BulkRenameChoicePopup(session: BulkRenameSession) {
     ) {
         Column(
             Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
         ) {
             Text(stringResource(R.string.settings_bulk_rename_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Text(
@@ -383,7 +383,7 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
                             .focusGroup()
                             .then(if (i < rowFocusers.size) Modifier.focusRequester(rowFocusers[i]) else Modifier),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                     ) {
                         OwnTVButton(
                             label = stringResource(
@@ -438,10 +438,10 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
                     modifier = Modifier.fillMaxWidth().focusRequester(addRuleFocus),
                 )
             }
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
 
             // The two options as toggle chips (Trim leftover spaces / Ignore case, both default ON).
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(
                     label = stringResource(
                         if (trim) R.string.settings_bulk_rename_trim_spaces_selected
@@ -461,11 +461,11 @@ private fun BulkRuleBuilderDialog(session: BulkRenameSession) {
             }
 
             errorRes?.let {
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(it), style = MaterialTheme.typography.bodySmall, color = colors.favorite)
             }
             Spacer(Modifier.height(Dimens.GapMedium))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = { session.backToChoice() }, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.settings_bulk_rename_apply), onClick = { submit() })
@@ -553,25 +553,25 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
         // scroll = false: this column holds a LazyColumn, which manages its own scrolling.
                 Column(Modifier.dialogPanel(width = 680.dp, corner = Dimens.DialogPanelCorner, padding = 12.dp, scroll = false)) {
             Text(stringResource(R.string.settings_bulk_rename_review), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(
                 stringResource(R.string.settings_bulk_rename_review_description),
                 style = MaterialTheme.typography.bodySmall,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(7.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             val listHeight = (LocalConfiguration.current.screenHeightDp.dp - 220.dp).coerceIn(160.dp, 320.dp)
             Row(Modifier.fillMaxWidth()) {
                 // Left: the pending rows. Rows are removed on Apply/Decline; keys keep the list stable.
                 LazyColumn(
                     Modifier.weight(1f).height(listHeight),
-                    verticalArrangement = Arrangement.spacedBy(3.dp),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
                 ) {
                     itemsIndexed(rows, key = { _, r -> r.key }) { index, r ->
                         Row(
-                            Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = Dimens.GapSmall, vertical = 5.dp),
+                            Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surface).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                         ) {
                             Column(Modifier.weight(1f)) {
                                 Text(r.oldName, style = MaterialTheme.typography.bodyMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -611,14 +611,14 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                                     unfocusedContainerColor = colors.primaryContainer,
                                     contentAlignment = Alignment.Center,
                                     surface = GlassSurface.DIALOGS,
-                                ) { _ -> Text(stringResource(R.string.settings_bulk_rename_apply), style = MaterialTheme.typography.labelMedium, color = colors.onPrimaryContainer, modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp)) }
+                                ) { _ -> Text(stringResource(R.string.settings_bulk_rename_apply), style = MaterialTheme.typography.labelMedium, color = colors.onPrimaryContainer, modifier = Modifier.padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny)) }
                                 FocusableSurface(
                                     onClick = { session.declineRows(setOf(r.key)) },
                                     shape = RoundedCornerShape(Dimens.CornerXSmall),
                                     unfocusedContainerColor = colors.surfaceContainerHigh,
                                     contentAlignment = Alignment.Center,
                                     surface = GlassSurface.DIALOGS,
-                                ) { _ -> Text(stringResource(R.string.settings_bulk_rename_decline), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp)) }
+                                ) { _ -> Text(stringResource(R.string.settings_bulk_rename_decline), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant, modifier = Modifier.padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny)) }
                             }
                         }
                     }
@@ -631,7 +631,7 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline)) {
                         Text(
                             pluralStringResource(
                                 R.plurals.settings_bulk_rename_will_change,
@@ -672,11 +672,11 @@ private fun BulkReviewDialog(session: BulkRenameSession) {
                         modifier = Modifier.fillMaxWidth().then(if (firstChanged == -1) Modifier.focusRequester(firstApplyFocus) else Modifier),
                         compact = true,
                     )
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     OwnTVButton(stringResource(R.string.settings_bulk_rename_decline_all), onClick = { session.declineAll() }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth(), compact = true)
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     OwnTVButton(stringResource(R.string.settings_bulk_rename_edit_rules), onClick = { session.editRules() }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth(), compact = true)
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     OwnTVButton(stringResource(R.string.common_done), onClick = { session.done() }, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth(), compact = true)
                 }
             }
@@ -700,14 +700,14 @@ private fun BulkRestoreConfirmDialog(session: BulkRenameSession) {
     ) {
         Column(Modifier.dialogPanel(width = 420.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_bulk_rename_restore_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.settings_bulk_rename_restore_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(18.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapWide))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = { session.backToChoice() }, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.settings_bulk_rename_restore), onClick = { session.confirmRestore() }, modifier = Modifier.focusRequester(restoreFocus))
@@ -731,9 +731,9 @@ private fun BulkRefusedDialog(session: BulkRenameSession) {
     ) {
         Column(Modifier.dialogPanel(width = 420.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_bulk_rename_too_many_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(stringResource(R.string.settings_bulk_rename_too_many_description), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(18.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OwnTVButton(stringResource(R.string.common_ok), onClick = { session.dismissRefused() }, modifier = Modifier.focusRequester(okFocus))
             }

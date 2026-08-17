@@ -239,7 +239,7 @@ internal fun ProgrammeDetailDialog(
                     .verticalScroll(rememberScrollState()).padding(if (compact) 18.dp else 28.dp),
             ) {
                 Text(channelName.uppercase(), style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(programme.title, style = if (compact) MaterialTheme.typography.titleMedium else MaterialTheme.typography.headlineSmall, color = colors.onSurface)
                 Spacer(Modifier.height(if (compact) Dimens.GapTiny else Dimens.GapSmall))
                 Text(stringResource(R.string.content_epg_time_range, formatTime(programme.startMs), formatTime(programme.stopMs)), style = if (compact) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.titleMedium, color = colors.onSurfaceVariant)
@@ -253,8 +253,8 @@ internal fun ProgrammeDetailDialog(
                 // "Watch from start" + "Watch channel").
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(if (compact) Dimens.GapSmall else 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(if (compact) Dimens.GapSmall else 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(if (compact) Dimens.GapSmall else Dimens.GapCompact),
+                    verticalArrangement = Arrangement.spacedBy(if (compact) Dimens.GapSmall else Dimens.GapCompact),
                 ) {
                     // Catch-up channels: replay this programme from its start (seekable archive playback).
                     if (canCatchup) {

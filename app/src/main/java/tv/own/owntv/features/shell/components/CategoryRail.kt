@@ -169,7 +169,7 @@ fun CategoryRail(
                 // on the top bar) — trap vertical exits; Left/Right/Back still leave normally.
                 .trapVerticalFocusExit()
                 .focusGroup(),
-            contentPadding = PaddingValues(vertical = Dimens.GapLarge, horizontal = 10.dp),
+            contentPadding = PaddingValues(vertical = Dimens.GapLarge, horizontal = Dimens.GapCompact),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
@@ -206,7 +206,7 @@ fun CategoryRail(
                         stringResource(tv.own.owntv.R.string.content_no_categories_match),
                         color = colors.textSecondary,
                         style = MaterialTheme.typography.labelMedium,
-                        modifier = Modifier.padding(12.dp),
+                        modifier = Modifier.padding(Dimens.GapCompact),
                     )
                 }
             }
@@ -265,7 +265,7 @@ private fun RailPill(
         Row(
             modifier = Modifier
                 .then(if (expanded) Modifier.fillMaxWidth() else Modifier.size(Dimens.RailPillSize))
-                .then(if (expanded) Modifier.padding(horizontal = 10.dp, vertical = Dimens.GapSmall) else Modifier),
+                .then(if (expanded) Modifier.padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall) else Modifier),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = if (expanded) Arrangement.Start else Arrangement.Center,
         ) {
@@ -286,7 +286,7 @@ private fun RailPill(
                 // "Other" dot rather than an empty slot, so every row has a consistent marker.
                 val genreDot = ChannelGenre.fromCategory(category.fullName).dot
                 Box(Modifier.size(Dimens.StatusDotSize).clip(CircleShape).background(genreDot))
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
             }
             if (expanded) {
                 Text(

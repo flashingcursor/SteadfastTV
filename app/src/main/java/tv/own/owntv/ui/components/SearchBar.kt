@@ -144,7 +144,7 @@ fun SearchBar(
                 tint = if (focused) colors.primary else colors.onSurfaceVariant,
                 modifier = Modifier.size(Dimens.IconSizeLarge),
             )
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             Box(modifier = Modifier.weight(1f)) {
                 if (query.isEmpty()) {
                     Text(resolvedPlaceholder, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)

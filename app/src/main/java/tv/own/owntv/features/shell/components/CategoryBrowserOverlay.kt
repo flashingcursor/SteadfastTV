@@ -89,19 +89,19 @@ fun CategoryBrowserOverlay(
                         onDismiss(); true
                     } else false
                 }
-                .padding(vertical = 18.dp),
+                .padding(vertical = Dimens.GapWide),
         ) {
             Text(
                 stringResource(R.string.content_category_browser_title),
                 style = MaterialTheme.typography.titleMedium,
                 color = colors.onSurface,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
+                modifier = Modifier.padding(horizontal = Dimens.GapWide, vertical = Dimens.GapSmall),
             )
             LazyColumn(
                 state = listState,
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                    horizontal = 12.dp, vertical = 6.dp,
+                    horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall,
                 ),
                 verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
             ) {
@@ -137,9 +137,9 @@ private fun CategoryRow(
         modifier = modifier.fillMaxWidth(),
     ) { focused ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 10.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapCompact),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
         ) {
             Box(
                 modifier = Modifier

@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import tv.own.owntv.R
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.OwnTVTheme
 import java.text.NumberFormat
 
@@ -37,7 +38,7 @@ fun CountBadge(
         modifier = modifier
             .clip(RoundedCornerShape(50))
             .background(bg)
-            .padding(horizontal = 10.dp, vertical = 3.dp),
+            .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapTiny),
     )
 }
 

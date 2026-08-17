@@ -648,8 +648,8 @@ fun OwnTVShell(
                             } else {
                                 0.dp
                             },
-                            end = 6.dp,
-                            bottom = 6.dp,
+                            end = Dimens.GapSmall,
+                            bottom = Dimens.GapSmall,
                         ),
                 ) {
                     when {
@@ -1229,7 +1229,7 @@ private fun ShellWatermark(modifier: Modifier = Modifier) {
             .padding(end = Dimens.GapLarge, bottom = Dimens.GapLarge)
             .alpha(0.13f),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
     ) {
         Box(
             modifier = Modifier

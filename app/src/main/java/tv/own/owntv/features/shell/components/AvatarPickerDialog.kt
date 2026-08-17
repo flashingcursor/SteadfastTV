@@ -80,7 +80,7 @@ fun AvatarPickerDialog(
                 color = colors.onSurface,
                 textAlign = TextAlign.Center,
             )
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
 
             // Phase 7 — "no avatar" option showing the Rank 1 ProfileIcon (ID -1)
             Row(horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {

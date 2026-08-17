@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import tv.own.owntv.ui.theme.Dimens
 import tv.own.owntv.ui.theme.MotionAccentBarMs
 import tv.own.owntv.ui.theme.MotionColorMs
 import tv.own.owntv.ui.theme.OwnTVTheme
@@ -123,7 +124,7 @@ fun BoxScope.NavAccentBar(visible: Boolean, height: Dp = 22.dp, modifier: Modifi
         Box(
             modifier = modifier
                 .align(Alignment.CenterStart)
-                .padding(start = 2.dp)
+                .padding(start = Dimens.GapHairline)
                 .height(height)
                 .width(width)
                 .clip(RoundedCornerShape(50))

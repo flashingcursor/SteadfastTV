@@ -99,27 +99,27 @@ fun RemoteSetupScreen(
                         Image(
                             bitmap = qr,
                             contentDescription = stringResource(R.string.common_qr_code_companion_url),
-                            modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(9.dp),
+                            modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(Dimens.GapSmall),
                             contentScale = ContentScale.Fit,
                         )
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(Dimens.GapCompact))
                     }
                     Text(stringResource(R.string.setup_open_url), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                     Spacer(Modifier.height(Dimens.GapTiny))
                     state.urls.forEach { url ->
                         Text(url, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, textAlign = TextAlign.Center)
                     }
-                    Spacer(Modifier.height(18.dp))
+                    Spacer(Modifier.height(Dimens.GapWide))
                     OwnTVButton(stringResource(R.string.setup_stop_server), onClick = onStopListener, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.focusRequester(actionFocus))
                 }
                 is CompanionServerState.Failed -> {
                     Text(state.failure.displayText(), style = MaterialTheme.typography.bodyMedium, color = colors.favorite, textAlign = TextAlign.Center)
-                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(Dimens.GapWide))
                     OwnTVButton(stringResource(R.string.setup_try_again), onClick = { onStartListener(CompanionLink.DEFAULT_PORT) }, modifier = Modifier.focusRequester(actionFocus))
                 }
                 CompanionServerState.Locked -> {
                     Text(companionLockedText(), style = MaterialTheme.typography.bodyMedium, color = colors.favorite, textAlign = TextAlign.Center)
-                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(Dimens.GapWide))
                     // Restarting mints a fresh PIN, so this is the recovery path — not a retry of a failure.
                     OwnTVButton(stringResource(R.string.setup_start_again_new_pin), onClick = { onStartListener(CompanionLink.DEFAULT_PORT) }, modifier = Modifier.focusRequester(actionFocus))
                 }

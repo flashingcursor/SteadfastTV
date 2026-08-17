@@ -55,7 +55,7 @@ fun StreamInfoOverlay(player: PlaybackEngine, modifier: Modifier = Modifier) {
             .widthIn(min = 300.dp, max = 460.dp)
             .clip(RoundedCornerShape(Dimens.CornerSmall))
             .background(Color.Black.copy(alpha = 0.78f))
-            .padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
+            .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
     ) {
         Text(
             stringResource(R.string.player_stream_info),
@@ -63,9 +63,9 @@ fun StreamInfoOverlay(player: PlaybackEngine, modifier: Modifier = Modifier) {
             color = colors.onSurface,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(Modifier.width(2.dp))
+        Spacer(Modifier.width(Dimens.GapHairline))
         rows.forEach { row ->
-            Row(modifier = Modifier.fillMaxWidth().padding(top = 5.dp)) {
+            Row(modifier = Modifier.fillMaxWidth().padding(top = Dimens.GapTiny)) {
                 Text(
                     stringResource(row.label.resourceId),
                     style = MaterialTheme.typography.bodySmall,

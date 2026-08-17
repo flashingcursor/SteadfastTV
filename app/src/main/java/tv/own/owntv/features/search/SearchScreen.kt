@@ -126,7 +126,7 @@ fun SearchScreen(
             placeholder = stringResource(R.string.search_hint),
             modifier = Modifier.fillMaxWidth().focusRequester(searchFocus),
         )
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
 
         when {
             !searching && intent == null ->
@@ -175,11 +175,11 @@ private fun LauncherEmptyState(
     val colors = OwnTVTheme.colors
     Column(
         modifier = Modifier.fillMaxSize().focusGroup(),
-        verticalArrangement = Arrangement.spacedBy(18.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapWide),
     ) {
         // Intent launcher chips
         SectionLabel(stringResource(R.string.search_jump_to))
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             SearchIntent.entries.forEach { i ->
                 PillChip(label = i.displayLabel()) { onIntent(i) }
             }
@@ -187,13 +187,13 @@ private fun LauncherEmptyState(
 
         // Recent searches
         if (recent.isNotEmpty()) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 SectionLabel(stringResource(R.string.search_recent))
                 PillChip(label = stringResource(R.string.search_clear), onClick = onClearRecent)
             }
             Column(verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall), modifier = Modifier.fillMaxWidth()) {
                 recent.chunked(4).forEach { rowTerms ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                         rowTerms.forEach { term ->
                             PillChip(label = term, icon = OwnTVIcon.HISTORY) { onRecent(term) }
                         }
@@ -238,7 +238,7 @@ private fun ResultsWithDetail(
         if (autoFocusFirst && items.isNotEmpty()) runCatching { firstRowFocus.requestFocus() }
     }
 
-    Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+    Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapWide)) {
         LazyColumn(
             modifier = Modifier.weight(1f).fillMaxHeight().focusGroup(),
             verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
@@ -344,7 +344,7 @@ private fun DetailPane(
             .clip(RoundedCornerShape(Dimens.CornerMedium))
             .background(colors.surfaceContainerLowest)
             .padding(Dimens.GapMedium),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
     ) {
         Box(
             modifier = Modifier.fillMaxWidth().height(180.dp).clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh),
@@ -363,7 +363,7 @@ private fun DetailPane(
         if (!plot.isNullOrBlank()) {
             Text(plot, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, maxLines = 5, overflow = TextOverflow.Ellipsis)
         }
-        Spacer(Modifier.height(2.dp))
+        Spacer(Modifier.height(Dimens.GapHairline))
         FocusableSurface(
             onClick = action,
             modifier = Modifier.fillMaxWidth(),
@@ -375,7 +375,7 @@ private fun DetailPane(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(colors.primary, RoundedCornerShape(Dimens.CornerSmall))
-                    .padding(vertical = 12.dp),
+                    .padding(vertical = Dimens.GapCompact),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -416,9 +416,9 @@ private fun ResultRow(
         surface = GlassSurface.CARDS,
     ) { _ ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(10.dp),
+            modifier = Modifier.fillMaxWidth().padding(Dimens.GapCompact),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
         ) {
             Box(
                 modifier = Modifier.size(44.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),
@@ -466,9 +466,9 @@ private fun PillChip(
         Row(
             modifier = Modifier
                 .background(colors.surfaceContainerHigh, RoundedCornerShape(999.dp))
-                .padding(horizontal = Dimens.GapMedium, vertical = 9.dp),
+                .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(7.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
             if (icon != null) {
                 OwnTVIcon(icon, tint = fg, modifier = Modifier.size(15.dp))

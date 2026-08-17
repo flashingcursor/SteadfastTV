@@ -88,7 +88,7 @@ fun StepperDialog(
         ) {
             Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
             if (description != null) {
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 Text(
                     description,
                     style = MaterialTheme.typography.bodySmall,
@@ -96,11 +96,11 @@ fun StepperDialog(
                     textAlign = TextAlign.Center,
                 )
             }
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
             ) {
                 StepBtn("–", enabled = minusEnabled, modifier = Modifier.focusRequester(frMinus)) { onSet((value - step).coerceAtLeast(min)) }
                 Text(

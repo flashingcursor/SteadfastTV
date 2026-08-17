@@ -75,8 +75,8 @@ fun NavMenuSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusProperties { onEnter = { runCatching { firstFocus.requestFocus() } } }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline),
     ) {
         Header(title = stringResource(R.string.settings_sidebar_customization), onBack = onBack)
         Spacer(Modifier.height(Dimens.GapTiny))
@@ -106,7 +106,7 @@ fun NavMenuSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         // The per-icon toggle list only exists in STATIC mode. In DYNAMIC there's nothing to toggle —
         // the icons are decided by the playlist's content, so the list is hidden entirely.
         if (mode == SettingsRepository.NavMenuMode.STATIC) {
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             GroupLabel(stringResource(R.string.settings_icons))
             MainSection.browseOrder.forEach { section ->
                 NavMenuRow(
@@ -152,7 +152,7 @@ private fun NavMenuRow(
         contentAlignment = Alignment.CenterStart,
     ) { _ ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
         ) {
@@ -188,7 +188,7 @@ private fun NavMenuRow(
                 modifier = Modifier
                     .clip(RoundedCornerShape(Dimens.CornerXSmall))
                     .background(bg)
-                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                    .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
             )
         }
     }

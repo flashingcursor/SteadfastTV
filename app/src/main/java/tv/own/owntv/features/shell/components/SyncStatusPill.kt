@@ -126,7 +126,7 @@ fun SyncStatusPill(modifier: Modifier = Modifier) {
                 cornerRadius = radius,
                 frostScale = 0.8f,
             )
-            .padding(horizontal = Dimens.HeroGap, vertical = 7.dp),
+            .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall),
         verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         shown.forEach { line ->

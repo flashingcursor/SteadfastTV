@@ -26,7 +26,7 @@ fun CategoryHeader(
     modifier: Modifier = Modifier,
 ) {
     val colors = OwnTVTheme.colors
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline)) {
         Text(
             title,
             style = MaterialTheme.typography.headlineMedium,

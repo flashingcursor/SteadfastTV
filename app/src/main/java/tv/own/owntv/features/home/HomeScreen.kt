@@ -506,7 +506,7 @@ private fun HeroRowSection(
 
     Column(modifier = modifier) {
         HomeRowHeader(title = stringResource(R.string.home_keep_watching))
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         Box(
             modifier = Modifier
@@ -730,7 +730,7 @@ private fun HeroRowSection(
                                     )
 
                                     if (item.durationMs > 0) {
-                                        Spacer(Modifier.height(6.dp))
+                                        Spacer(Modifier.height(Dimens.GapSmall))
                                         val fraction = (item.positionMs.toFloat() / item.durationMs.toFloat()).coerceIn(0f, 1f)
                                         Box(
                                             modifier = Modifier
@@ -910,7 +910,7 @@ private fun HeroRowSection(
 
                             val plot = expandedHeroPlot(expandedItem, expandedMeta)
                             if (!plot.isNullOrBlank()) {
-                                Spacer(Modifier.height(6.dp))
+                                Spacer(Modifier.height(Dimens.GapSmall))
                                 Text(
                                     text = plot,
                                     style = MaterialTheme.typography.bodyMedium,
@@ -920,7 +920,7 @@ private fun HeroRowSection(
                                 )
                             }
 
-                            Spacer(Modifier.height(10.dp))
+                            Spacer(Modifier.height(Dimens.GapCompact))
                             OwnTVButton(
                                 label = when (expandedItem.watchNextType) {
                                     LauncherWatchNextType.NEXT -> stringResource(R.string.home_play_next)
@@ -1151,7 +1151,7 @@ private fun LandscapeContinuationCard(
         contentAlignment = Alignment.Center,
         surface = GlassSurface.CARDS,
     ) { _ ->
-        Column(modifier = Modifier.fillMaxWidth().padding(6.dp)) {
+        Column(modifier = Modifier.fillMaxWidth().padding(Dimens.GapSmall)) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -1183,7 +1183,7 @@ private fun LandscapeContinuationCard(
                             .padding(Dimens.GapSmall)
                             .clip(RoundedCornerShape(50))
                             .background(Color.Black.copy(alpha = 0.62f))
-                            .padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
+                            .padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny),
                     )
                 }
 
@@ -1204,7 +1204,7 @@ private fun LandscapeContinuationCard(
                     }
                 }
             }
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 title,
                 style = MaterialTheme.typography.labelLarge,

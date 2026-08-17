@@ -89,8 +89,8 @@ fun ChNavSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusProperties { onEnter = { runCatching { firstFocus.requestFocus() } } }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline),
     ) {
         Header(title = stringResource(R.string.settings_ch_nav_title), onBack = onBack)
         Spacer(Modifier.height(Dimens.GapTiny))
@@ -112,7 +112,7 @@ fun ChNavSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.focusRequester(firstFocus),
         )
 
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         GroupLabel(stringResource(R.string.settings_skip_counts))
 
         Row2(
@@ -134,13 +134,13 @@ fun ChNavSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.focusRequester(downSkipFocus),
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         GroupLabel(stringResource(R.string.settings_how_it_works))
         Text(
             stringResource(R.string.settings_ch_nav_help),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
-            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 6.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall),
         )
     }
 

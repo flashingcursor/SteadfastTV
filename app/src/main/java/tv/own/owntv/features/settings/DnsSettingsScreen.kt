@@ -122,7 +122,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusProperties { onEnter = { runCatching { toggleFocus.requestFocus() } } }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
         verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         Header(stringResource(R.string.settings_dns), onBack)
@@ -154,13 +154,13 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         // Simple conditional visibility — AnimatedVisibility interferes with D-pad focus on TV.
         if (toggleOn) {
             Column {
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
 
                 // DoH preset chips — first chip gets focus when toggle turns on.
                 // Explicit vertical links: the 2D focus search otherwise jumps straight from the
                 // preset row to the header / Save, skipping the toggle above and the field below.
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
                     modifier = Modifier.focusProperties {
                         up = toggleFocus
                         down = serverFieldFocus
@@ -187,7 +187,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     }
                 }
 
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 OwnTVTextField(
                     value = server,
                     onValueChange = { server = it },
@@ -202,7 +202,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                         },
                 )
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
@@ -226,7 +226,7 @@ fun DnsSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             }
         }
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
         Text(
             stringResource(R.string.settings_dns_explanation),
             style = MaterialTheme.typography.bodyMedium,

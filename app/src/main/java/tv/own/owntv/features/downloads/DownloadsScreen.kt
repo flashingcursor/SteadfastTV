@@ -134,9 +134,9 @@ fun DownloadsScreen(
             .padding(horizontal = Dimens.ScreenPaddingH, vertical = Dimens.ScreenPaddingV),
     ) {
         Text(stringResource(R.string.content_downloads_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(stringResource(R.string.content_downloads_description), style = MaterialTheme.typography.titleMedium, color = colors.onSurfaceVariant)
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
 
         storage?.let {
             StorageBar(it)
@@ -148,7 +148,7 @@ fun DownloadsScreen(
                 Text(stringResource(R.string.content_downloads_empty), color = colors.onSurfaceVariant, style = MaterialTheme.typography.bodyLarge)
             }
         } else {
-            LazyColumn(state = listState, verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.focusGroup()) {
+            LazyColumn(state = listState, verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact), modifier = Modifier.focusGroup()) {
                 itemsIndexed(rows, key = { _, r -> r.key }) { index, r ->
                     when (r) {
                         is DownloadListRow.Header -> SectionHeader(r.group, r.count)
@@ -230,7 +230,7 @@ private fun StorageBar(info: tv.own.owntv.core.download.DownloadStorageInfo) {
             Spacer(Modifier.weight(1f))
             Text(stringResource(R.string.content_downloads_storage_free, storageSize(info.freeBytes, stringResource(R.string.content_downloads_unknown_size)), storageSize(info.totalBytes, stringResource(R.string.content_downloads_unknown_size))), style = MaterialTheme.typography.labelLarge, color = colors.onSurfaceVariant)
         }
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Box(Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)).background(colors.surfaceContainerLowest)) {
             Box(Modifier.fillMaxWidth(info.usedFraction).height(6.dp).clip(RoundedCornerShape(3.dp)).background(colors.primary))
         }
@@ -264,12 +264,12 @@ private fun DownloadRow(
             folderCrumb(download.filePath, stringResource(R.string.content_downloads_folder_separator))?.let {
                 Text(it, style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             StatusLine(download)
         }
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         when (download.status) {
-            DownloadStatus.COMPLETED -> Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            DownloadStatus.COMPLETED -> Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.content_downloads_play), onClick = onPlay, icon = OwnTVIcon.PLAY, modifier = focusModifier)
                 // Phase B: one-off external playback, independent of the global "External player" toggle.
                 OwnTVButton(stringResource(R.string.content_downloads_external), onClick = onPlayExternal, style = OwnTVButtonStyle.SECONDARY)
@@ -278,7 +278,7 @@ private fun DownloadRow(
             DownloadStatus.PAUSED -> OwnTVButton(stringResource(R.string.common_resume), onClick = onResume, style = OwnTVButtonStyle.SECONDARY, modifier = focusModifier)
             DownloadStatus.RUNNING, DownloadStatus.QUEUED -> OwnTVButton(stringResource(R.string.content_downloads_pause), onClick = onPause, style = OwnTVButtonStyle.SECONDARY, modifier = focusModifier)
         }
-        Spacer(Modifier.width(10.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         OwnTVButton(stringResource(R.string.common_delete), onClick = onDelete, style = OwnTVButtonStyle.SECONDARY)
     }
 }

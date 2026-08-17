@@ -101,11 +101,11 @@ fun NumberInputDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
 
                 // Bottom-align: the text field carries a label above its input box, so it's taller than
                 // the − / + buttons. Aligning to the bottom lines the buttons up with the input box row.
-                Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     StepBtn(stringResource(R.string.common_minus), enabled = value > min, modifier = Modifier.focusRequester(minusFocus)) {
                         commit(value - step)
                     }
@@ -128,19 +128,19 @@ fun NumberInputDialog(
                 }
 
                 if (suffix.isNotBlank()) {
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     Text(suffix, style = MaterialTheme.typography.labelMedium, color = colors.onSurfaceVariant)
                 }
 
                 // Advisory warning — never blocks Save. Only shown above warnAbove.
                 val showWarn = warnAbove != null && value > warnAbove && warningText != null
                 if (showWarn) {
-                    Spacer(Modifier.height(10.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     Box(
                         Modifier
                             .clip(RoundedCornerShape(Dimens.CornerSmall))
                             .background(colors.tertiaryContainer.copy(alpha = 0.55f))
-                            .padding(horizontal = 12.dp, vertical = Dimens.GapSmall),
+                            .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
                     ) {
                         Text(
                             warningText,

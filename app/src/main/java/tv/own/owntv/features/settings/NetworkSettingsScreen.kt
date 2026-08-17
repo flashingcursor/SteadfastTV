@@ -85,7 +85,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .focusProperties { onEnter = { runCatching { firstFocus.requestFocus() } } }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
         verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         Header(stringResource(R.string.common_proxy), onBack)
@@ -101,7 +101,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             onClick = { enabled = !enabled; save() },
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         OwnTVTextField(
             value = host,
             onValueChange = { host = it },
@@ -109,7 +109,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             placeholder = stringResource(R.string.settings_proxy_host_hint),
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         OwnTVTextField(
             value = port,
             onValueChange = { port = it.filter { c -> c.isDigit() }.take(5) },
@@ -118,7 +118,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             keyboardType = KeyboardType.Number,
             modifier = Modifier.width(220.dp),
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         OwnTVTextField(
             value = user,
             onValueChange = { user = it },
@@ -126,7 +126,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             placeholder = "",
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         OwnTVTextField(
             value = pass,
             onValueChange = { pass = it },
@@ -136,7 +136,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
             OwnTVButton(stringResource(R.string.common_save), onClick = { save() })
             OwnTVButton(
@@ -147,7 +147,7 @@ fun NetworkSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             ProxyTestLabel(testState)
         }
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
         Text(
             stringResource(R.string.settings_proxy_privacy),
             style = MaterialTheme.typography.bodyMedium,

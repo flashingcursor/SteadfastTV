@@ -78,14 +78,14 @@ fun RemoteBackupRestoreScreen(
         ) {
             Column(modifier = Modifier.widthIn(max = Dimens.ContentColumnMaxWidth), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.settings_restore_remote_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     stringResource(R.string.settings_restore_remote_description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
 
                 when (state) {
                     CompanionServerState.Idle, CompanionServerState.Starting -> {
@@ -106,26 +106,26 @@ fun RemoteBackupRestoreScreen(
                             Image(
                                 bitmap = qr,
                                 contentDescription = stringResource(R.string.settings_companion_qr),
-                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(9.dp),
+                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(Dimens.GapSmall),
                                 contentScale = ContentScale.Fit,
                             )
-                            Spacer(Modifier.height(12.dp))
+                            Spacer(Modifier.height(Dimens.GapCompact))
                         }
                         Text(stringResource(R.string.settings_open_url), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                         Spacer(Modifier.height(Dimens.GapTiny))
                         state.urls.forEach { url ->
                             Text(url, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, textAlign = TextAlign.Center)
                         }
-                        Spacer(Modifier.height(18.dp))
+                        Spacer(Modifier.height(Dimens.GapWide))
                     }
                     is CompanionServerState.Failed -> {
                         Text(state.failure.displayText(), style = MaterialTheme.typography.bodyMedium, color = colors.favorite, textAlign = TextAlign.Center)
-                        Spacer(Modifier.height(20.dp))
+                        Spacer(Modifier.height(Dimens.GapWide))
                         OwnTVButton(stringResource(R.string.settings_try_again), onClick = { onStart(CompanionLink.DEFAULT_PORT) })
                     }
                     CompanionServerState.Locked -> {
                         Text(companionLockedText(), style = MaterialTheme.typography.bodyMedium, color = colors.favorite, textAlign = TextAlign.Center)
-                        Spacer(Modifier.height(20.dp))
+                        Spacer(Modifier.height(Dimens.GapWide))
                         // Restarting mints a fresh PIN, so this is the recovery path — not a retry of a failure.
                         OwnTVButton(stringResource(R.string.settings_new_pin), onClick = { onStart(CompanionLink.DEFAULT_PORT) })
                     }
@@ -164,14 +164,14 @@ fun RemoteBackupExportScreen(
         ) {
             Column(modifier = Modifier.widthIn(max = Dimens.ContentColumnMaxWidth), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.settings_download_remote_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     stringResource(R.string.settings_download_remote_description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
 
                 val listening = state as? CompanionServerState.Listening
                 when {
@@ -193,21 +193,21 @@ fun RemoteBackupExportScreen(
                             Image(
                                 bitmap = qr,
                                 contentDescription = stringResource(R.string.settings_companion_qr),
-                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(9.dp),
+                                modifier = Modifier.size(188.dp).clip(RoundedCornerShape(Dimens.CornerMedium)).background(Color.White).padding(Dimens.GapSmall),
                                 contentScale = ContentScale.Fit,
                             )
-                            Spacer(Modifier.height(12.dp))
+                            Spacer(Modifier.height(Dimens.GapCompact))
                         }
                         Text(stringResource(R.string.settings_open_url), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                         Spacer(Modifier.height(Dimens.GapTiny))
                         listening.urls.forEach { url ->
                             Text(url, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, textAlign = TextAlign.Center)
                         }
-                        Spacer(Modifier.height(18.dp))
+                        Spacer(Modifier.height(Dimens.GapWide))
                     }
                     state is CompanionServerState.Failed -> {
                         Text(state.failure.displayText(), style = MaterialTheme.typography.bodyMedium, color = colors.favorite, textAlign = TextAlign.Center)
-                        Spacer(Modifier.height(18.dp))
+                        Spacer(Modifier.height(Dimens.GapWide))
                     }
                 }
                 OwnTVButton(stringResource(R.string.common_done), onClick = onBack, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.focusRequester(actionFocus))

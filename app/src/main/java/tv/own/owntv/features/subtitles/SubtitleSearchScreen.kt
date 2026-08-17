@@ -97,7 +97,7 @@ fun SubtitleSearchScreen(
                         color = OwnTVTheme.colors.onSurfaceVariant,
                     )
                 }
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
 
                 if (editing) {
                     EditSearchField(
@@ -117,7 +117,7 @@ fun SubtitleSearchScreen(
                             primary = stringResource(tv.own.owntv.R.string.settings_close), onPrimary = onDismiss,
                         )
                         SubtitleSearchViewModel.UiState.Loading ->
-                            Centered { OwnTVSpinner(); Spacer(Modifier.height(12.dp)); Text(stringResource(tv.own.owntv.R.string.player_subtitles_working), color = OwnTVTheme.colors.onSurfaceVariant) }
+                            Centered { OwnTVSpinner(); Spacer(Modifier.height(Dimens.GapCompact)); Text(stringResource(tv.own.owntv.R.string.player_subtitles_working), color = OwnTVTheme.colors.onSurfaceVariant) }
                         is SubtitleSearchViewModel.UiState.Empty -> Message(
                             if (s.showingAllLanguages) {
                                 stringResource(tv.own.owntv.R.string.player_subtitles_no_matches_all_languages)
@@ -165,7 +165,7 @@ private fun OpenSubtitlesAttribution() {
         contentDescription = stringResource(tv.own.owntv.R.string.settings_open_subtitles),
         modifier = Modifier.height(28.dp),
     )
-    Spacer(Modifier.height(6.dp))
+    Spacer(Modifier.height(Dimens.GapSmall))
     Text(
         stringResource(tv.own.owntv.R.string.player_subtitles_api_notice),
         style = MaterialTheme.typography.bodySmall,
@@ -186,7 +186,7 @@ private fun ResultsList(
     val firstFocus = remember { FocusRequester() }
     LaunchedEffect(Unit) { runCatching { firstFocus.requestFocus() } }
     Column {
-        LazyColumn(Modifier.fillMaxWidth().heightIn(max = 320.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        LazyColumn(Modifier.fillMaxWidth().heightIn(max = 320.dp), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
             items(results, key = { it.fileId }) { r ->
                 val isApplying = applyingFileId == r.fileId
                 FocusableSurface(
@@ -197,7 +197,7 @@ private fun ResultsList(
                     contentAlignment = Alignment.CenterStart,
                     surface = GlassSurface.DIALOGS,
                 ) { _ ->
-                    Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
                                 r.languageName ?: r.language ?: stringResource(tv.own.owntv.R.string.player_subtitles_subtitle),
@@ -220,7 +220,7 @@ private fun ResultsList(
             }
         }
         Spacer(Modifier.height(Dimens.HeroGap))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(stringResource(tv.own.owntv.R.string.player_subtitles_edit_search), onClick = onEdit, style = OwnTVButtonStyle.SECONDARY)
             onShowAll?.let { OwnTVButton(stringResource(tv.own.owntv.R.string.player_subtitles_all_languages), onClick = it, style = OwnTVButtonStyle.SECONDARY) }
             Spacer(Modifier.weight(1f))
@@ -236,10 +236,10 @@ private fun EditSearchField(initial: String, onSubmit: (String) -> Unit, onCance
     LaunchedEffect(Unit) { runCatching { fieldFocus.requestFocus() } }
     Column {
         Text(stringResource(tv.own.owntv.R.string.player_subtitles_edit_search), style = MaterialTheme.typography.titleSmall, color = OwnTVTheme.colors.onSurface)
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         OwnTVTextField(value = value, onValueChange = { value = it }, label = stringResource(tv.own.owntv.R.string.player_subtitles_title_label), modifier = Modifier.fillMaxWidth(), focusRequester = fieldFocus)
         Spacer(Modifier.height(Dimens.GapMedium))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(stringResource(tv.own.owntv.R.string.common_cancel), onClick = onCancel, style = OwnTVButtonStyle.SECONDARY)
             Spacer(Modifier.weight(1f))
             OwnTVButton(stringResource(tv.own.owntv.R.string.player_subtitles_search), onClick = { onSubmit(value.trim()) })
@@ -261,8 +261,8 @@ private fun Message(
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     Column {
         Text(text, style = MaterialTheme.typography.bodyMedium, color = OwnTVTheme.colors.onSurfaceVariant)
-        Spacer(Modifier.height(18.dp))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Spacer(Modifier.height(Dimens.GapWide))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             secondary?.let { OwnTVButton(it, onClick = { onSecondary?.invoke() }, style = OwnTVButtonStyle.SECONDARY) }
             tertiary?.let { OwnTVButton(it, onClick = { onTertiary?.invoke() }, style = OwnTVButtonStyle.SECONDARY) }
             Spacer(Modifier.weight(1f))

@@ -78,13 +78,13 @@ fun TextInputDialog(
             ) {
                 Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
                 if (hint != null) {
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     Text(hint, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                 }
-                Spacer(Modifier.height(18.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
                 OwnTVTextField(value = value, onValueChange = { value = it }, label = resolvedLabel, modifier = Modifier.fillMaxWidth(), focusRequester = fieldFocus, surface = GlassSurface.DIALOGS)
-                Spacer(Modifier.height(22.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Spacer(Modifier.height(Dimens.GapLarge))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     if (onDelete != null) {
                         OwnTVButton(stringResource(R.string.common_delete), onClick = onDelete, style = OwnTVButtonStyle.SECONDARY)
                         Spacer(Modifier.weight(1f))

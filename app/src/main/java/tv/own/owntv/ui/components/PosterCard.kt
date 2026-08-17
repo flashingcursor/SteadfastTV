@@ -88,10 +88,10 @@ fun PosterCard(
                     Row(
                         modifier = Modifier
                             .align(Alignment.TopStart)
-                            .padding(6.dp)
+                            .padding(Dimens.GapSmall)
                             .clip(RoundedCornerShape(50))
                             .background(Color.Black.copy(alpha = 0.55f))
-                            .padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
+                            .padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         OwnTVIcon(OwnTVIcon.STAR, tint = colors.accent, filled = true, modifier = Modifier.size(12.dp))
@@ -107,7 +107,7 @@ fun PosterCard(
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
-                            .padding(6.dp)
+                            .padding(Dimens.GapSmall)
                             .size(22.dp)
                             .clip(RoundedCornerShape(50))
                             .background(colors.primary),
@@ -122,7 +122,7 @@ fun PosterCard(
                         OwnTVIcon.FAVORITE,
                         tint = colors.favorite,
                         filled = true,
-                        modifier = Modifier.align(Alignment.TopEnd).padding(6.dp).size(18.dp),
+                        modifier = Modifier.align(Alignment.TopEnd).padding(Dimens.GapSmall).size(18.dp),
                     )
                 }
 
@@ -144,7 +144,7 @@ fun PosterCard(
                 }
             }
         }
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(Dimens.GapSmall))
         Text(
             title,
             style = MaterialTheme.typography.labelLarge,

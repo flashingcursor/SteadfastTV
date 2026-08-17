@@ -96,18 +96,18 @@ fun ChannelListOverlay(
                         true
                     } else false
                 }
-                .padding(vertical = 18.dp),
+                .padding(vertical = Dimens.GapWide),
         ) {
             Text(
                 title ?: stringResource(R.string.content_channel_overlay_title),
                 style = MaterialTheme.typography.titleMedium,
                 color = colors.onSurface,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
+                modifier = Modifier.padding(horizontal = Dimens.GapWide, vertical = Dimens.GapSmall),
             )
             LazyColumn(
                 state = listState,
                 modifier = Modifier.fillMaxWidth(),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 6.dp),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
                 verticalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
             ) {
                 items(channels, key = { it.id }) { ch ->
@@ -142,9 +142,9 @@ private fun ChannelRow(
         modifier = modifier.fillMaxWidth(),
     ) { focused ->
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = Dimens.GapSmall),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
         ) {
             Box(
                 modifier = Modifier.size(40.dp).clip(androidx.compose.foundation.shape.RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerLowest),

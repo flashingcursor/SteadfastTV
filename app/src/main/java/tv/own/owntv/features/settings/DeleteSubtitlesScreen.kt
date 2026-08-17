@@ -67,8 +67,8 @@ fun DeleteSubtitlesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             .fillMaxSize()
             .roundedPanel()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline),
     ) {
         // Title + Delete all (top-right).
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -77,10 +77,10 @@ fun DeleteSubtitlesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 OwnTVButton(stringResource(R.string.settings_delete_all), onClick = { showDeleteAll = true }, style = OwnTVButtonStyle.SECONDARY)
             }
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         // Movies / Series toggle (like Customize's section switch).
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             DeleteSubtitlesViewModel.Section.entries.forEach { s ->
                 val count = if (s == DeleteSubtitlesViewModel.Section.MOVIES) movieCount else seriesCount
                 OwnTVButton(
@@ -95,7 +95,7 @@ fun DeleteSubtitlesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 )
             }
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         if (items.isEmpty()) {
             Text(

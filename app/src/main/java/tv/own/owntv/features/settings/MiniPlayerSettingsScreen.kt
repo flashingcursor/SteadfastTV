@@ -77,8 +77,8 @@ fun MiniPlayerSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) 
             .focusProperties { onEnter = { runCatching { firstFocus.requestFocus() } } }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline),
     ) {
         Header(title = stringResource(R.string.settings_mini_player), onBack = onBack)
         Spacer(Modifier.height(Dimens.GapTiny))

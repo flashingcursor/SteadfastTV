@@ -99,8 +99,8 @@ fun PanelWidthSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) 
                 .focusProperties { onEnter = { runCatching { rowFocus.getValue(PanelSection.LIVE).requestFocus() } } }
                 .focusGroup()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 40.dp, vertical = 28.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+                .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline),
         ) {
             Header(title = stringResource(R.string.settings_panel_width), onBack = onBack)
             Spacer(Modifier.height(Dimens.GapTiny))
@@ -137,13 +137,13 @@ fun PanelWidthSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) 
                 )
             }
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             GroupLabel(stringResource(R.string.settings_how_it_works))
             Text(
                 stringResource(R.string.settings_panel_width_help),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 6.dp),
+                modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall),
             )
         }
 
@@ -217,14 +217,14 @@ private fun PanelWidthDialog(
                         style = MaterialTheme.typography.titleLarge,
                         color = colors.onSurface,
                     )
-                    Spacer(Modifier.height(10.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     Text(
                         stringResource(R.string.settings_panel_width_disable_preview_description),
                         style = MaterialTheme.typography.bodyMedium,
                         color = colors.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(22.dp))
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Spacer(Modifier.height(Dimens.GapLarge))
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                         OwnTVButton(
                             stringResource(R.string.common_cancel),
                             onClick = { showPreviewDisableConfirmation = false },
@@ -248,7 +248,7 @@ private fun PanelWidthDialog(
                     style = MaterialTheme.typography.titleMedium,
                     color = colors.onSurface,
                 )
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
 
                 FocusableSurface(
                     onClick = { enabled = !enabled },
@@ -258,7 +258,7 @@ private fun PanelWidthDialog(
                     contentAlignment = Alignment.CenterStart,
                 ) { _ ->
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 12.dp),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -275,26 +275,26 @@ private fun PanelWidthDialog(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(Dimens.CornerXSmall))
                                 .background(if (enabled) colors.primaryContainer else colors.secondaryContainer)
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                                .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
                         )
                     }
                 }
 
                 if (enabled) {
-                    Spacer(Modifier.height(10.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     StepRow(stringResource(R.string.settings_panel_width_category), draft.category) { draft = draft.copy(category = it) }
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     StepRow(stringResource(R.string.settings_panel_width_list), draft.list) { draft = draft.copy(list = it) }
-                    Spacer(Modifier.height(6.dp))
+                    Spacer(Modifier.height(Dimens.GapSmall))
                     StepRow(
                         stringResource(R.string.settings_panel_width_preview_panel, previewLabel(section)),
                         draft.preview,
                         minimum = 0,
                     ) { draft = draft.copy(preview = it) }
 
-                    Spacer(Modifier.height(10.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapHairline),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -323,7 +323,7 @@ private fun PanelWidthDialog(
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(Dimens.CornerSmall))
                                 .background(colors.favorite.copy(alpha = 0.18f))
-                                .padding(horizontal = 12.dp, vertical = Dimens.GapSmall),
+                                .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
                         ) {
                             Text(
                                 stringResource(R.string.settings_panel_width_invalid_total, draft.total),
@@ -376,7 +376,7 @@ private fun StepRow(
 ) {
     val colors = OwnTVTheme.colors
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.GapHairline),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
     ) {

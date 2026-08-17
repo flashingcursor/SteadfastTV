@@ -87,7 +87,7 @@ fun ShellHeader(
     titleVisible: Boolean = true,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = Dimens.ScreenPaddingH, vertical = 20.dp),
+        modifier = modifier.fillMaxWidth().padding(horizontal = Dimens.ScreenPaddingH, vertical = Dimens.GapWide),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
@@ -134,7 +134,7 @@ private fun ShellSearchPill(onClick: () -> Unit, focusable: Boolean) {
         contentAlignment = Alignment.Center,
     ) { _ ->
         Row(
-            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 9.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
         ) {
@@ -154,7 +154,7 @@ private fun ShellSearchPill(onClick: () -> Unit, focusable: Boolean) {
 private fun ShellWeatherAndClock(weatherInfo: WeatherInfo?, weatherFahrenheit: Boolean) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium)) {
         if (weatherInfo != null) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                 WeatherConditionIcon(info = weatherInfo, modifier = Modifier.size(Dimens.IconSizeMedium))
                 val temp = if (weatherFahrenheit) {
                     stringResource(R.string.common_weather_fahrenheit, (weatherInfo.temperatureC * 9 / 5 + 32).toInt())
@@ -164,7 +164,7 @@ private fun ShellWeatherAndClock(weatherInfo: WeatherInfo?, weatherFahrenheit: B
                 Text(temp, style = MaterialTheme.typography.labelLarge.copy(color = Color.White, shadow = HeaderTextShadow))
             }
             // Hairline separator between the weather block and the clock, only when weather is shown.
-            // The outer Row's spacedBy(16.dp) already gives it the same gap used elsewhere in this zone.
+            // The outer Row's spacedBy(Dimens.GapMedium) already gives it the same gap used elsewhere in this zone.
             Box(Modifier.width(Dimens.HairlineWidth).height(16.dp).background(Color.White.copy(alpha = 0.25f)))
         }
         ShellClock()

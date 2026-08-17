@@ -156,8 +156,8 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
             }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.weight(1f)) { Header(stringResource(R.string.settings_open_subtitles), onBack) }
@@ -172,7 +172,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
             color = colors.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = Dimens.GapMedium),
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         when (val s = state) {
             is OpenSubtitlesViewModel.UiState.SignedIn -> {
@@ -199,7 +199,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
                 )
             }
             OpenSubtitlesViewModel.UiState.Busy -> {
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 Text(
                     stringResource(R.string.player_subtitles_contacting),
                     style = MaterialTheme.typography.bodyMedium,
@@ -233,7 +233,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
             },
         )
         if (filterEnabled) {
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Row2(
                 icon = OwnTVIcon.SUBTITLE, title = stringResource(R.string.player_subtitles_search_language),
                 desc = stringResource(R.string.player_subtitles_search_language_description),
@@ -323,7 +323,7 @@ fun OpenSubtitlesAccountScreen(onBack: () -> Unit, modifier: Modifier = Modifier
 private fun InfoRow(label: String, value: String) {
     val colors = OwnTVTheme.colors
     Row(
-        Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = 6.dp),
+        Modifier.fillMaxWidth().padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(label, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, modifier = Modifier.weight(1f))
@@ -348,7 +348,7 @@ internal fun OpenSubtitlesSignInDialog(onSubmit: (String, String, Boolean) -> Un
         ) {
             Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding)) {
                 Text(stringResource(R.string.player_subtitles_sign_in_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     stringResource(R.string.player_subtitles_sign_in_to_use),
                     style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
@@ -358,7 +358,7 @@ internal fun OpenSubtitlesSignInDialog(onSubmit: (String, String, Boolean) -> Un
                     value = username, onValueChange = { username = it },
                     label = stringResource(R.string.player_subtitles_username), modifier = Modifier.fillMaxWidth(), focusRequester = fieldFocus,
                 )
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 OwnTVTextField(
                     value = password, onValueChange = { password = it },
                     label = stringResource(R.string.player_subtitles_password), isPassword = true, modifier = Modifier.fillMaxWidth(),
@@ -370,8 +370,8 @@ internal fun OpenSubtitlesSignInDialog(onSubmit: (String, String, Boolean) -> Un
                     chip = if (staySignedIn) stringResource(R.string.common_on) else stringResource(R.string.common_off), primaryChip = staySignedIn,
                     onClick = { staySignedIn = !staySignedIn },
                 )
-                Spacer(Modifier.height(18.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Spacer(Modifier.height(Dimens.GapWide))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                     Spacer(Modifier.weight(1f))
                     OwnTVButton(stringResource(R.string.player_subtitles_sign_in), onClick = { onSubmit(username.trim(), password, staySignedIn) })
@@ -394,9 +394,9 @@ private fun ErrorDialog(message: String, onDismiss: () -> Unit) {
         ) {
             Column(Modifier.dialogPanel(width = 420.dp, padding = Dimens.DialogPanelPadding)) {
                 Text(stringResource(R.string.settings_open_subtitles), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                Spacer(Modifier.height(18.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OwnTVButton(stringResource(R.string.settings_close), onClick = onDismiss, modifier = Modifier.focusRequester(focus))
                 }

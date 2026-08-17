@@ -163,7 +163,7 @@ fun EpgSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier, startOnA
                 }
             }
             .focusGroup()
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.settings_epg_sources_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
@@ -175,14 +175,14 @@ fun EpgSourcesScreen(onBack: () -> Unit, modifier: Modifier = Modifier, startOnA
             stringResource(R.string.settings_epg_sources_description),
             style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, modifier = Modifier.widthIn(max = 700.dp),
         )
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
 
         if (sources.isEmpty()) {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(stringResource(R.string.settings_epg_sources_empty), color = colors.onSurfaceVariant, style = MaterialTheme.typography.bodyLarge)
             }
         } else {
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 itemsIndexed(sources, key = { _, it -> it.id }) { index, source ->
                     val syncState by remember(source.id) { vm.observeSync(source.id) }
                         .collectAsStateWithLifecycle(EpgSyncState.Idle)
@@ -270,7 +270,7 @@ private fun EpgRow(
                         stringResource(R.string.settings_epg_sources_deleting),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -281,7 +281,7 @@ private fun EpgRow(
                         syncPercent?.let { stringResource(R.string.settings_epg_sources_syncing_percent, it) } ?: stringResource(R.string.settings_epg_sources_syncing_label),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -292,7 +292,7 @@ private fun EpgRow(
                         stringResource(R.string.settings_sources_auto_refresh, epgAutoRefreshLabel(autoRefresh)),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerHighest).padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.surfaceContainerHighest).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -337,7 +337,7 @@ private fun EpgRow(
             }
             Text(status, style = MaterialTheme.typography.labelMedium, color = if (source.lastError != null && activeSync == null) colors.favorite else colors.primary)
         }
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         // While the guide data is being deleted, hide the actions — the row is on its way out and a
         // large delete can take a moment.
         if (!deleting) {
@@ -381,10 +381,10 @@ internal fun EpgSourceForm(
     Column(
         modifier = modifier.fillMaxSize().roundedPanel()
             .verticalScroll(rememberScrollState()) // scroll so lower fields/buttons stay reachable on small screens / large zoom
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         Text(stringResource(if (initial == null) R.string.settings_epg_sources_add else R.string.settings_epg_sources_edit), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
         OwnTVTextField(name, { name = it }, label = stringResource(R.string.settings_epg_sources_name), placeholder = stringResource(R.string.settings_epg_sources_name_hint), modifier = Modifier.fillMaxWidth().widthIn(max = 680.dp).focusRequester(firstFocus))
         Spacer(Modifier.height(Dimens.HeroGap))
         val fillButtonFocus = remember { FocusRequester() }
@@ -398,12 +398,12 @@ internal fun EpgSourceForm(
         // Auto-refresh dropdown — same Off/Startup/staleness-threshold semantics as playlist sources.
         EpgAutoRefreshRow(selected = autoRefresh) { showAutoRefreshPicker = true }
 
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         // Per-feed logo override: this guide's <icon src> replaces the playlist's channel logos.
         EpgUseLogosRow(enabled = useLogos) { useLogos = !useLogos }
 
         Spacer(Modifier.height(Dimens.GapLarge))
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(stringResource(R.string.common_cancel), onClick = onCancel, style = OwnTVButtonStyle.SECONDARY)
             OwnTVButton(stringResource(if (initial == null) R.string.settings_epg_sources_add_sync else R.string.settings_epg_sources_save_sync), onClick = { onSave(name, url, ua, autoRefresh, useLogos) }, enabled = url.isNotBlank())
         }
@@ -513,7 +513,7 @@ private fun PlaylistEpgPicker(
                             contentAlignment = Alignment.CenterStart,
                             surface = GlassSurface.DIALOGS,
                         ) { _ ->
-                            Column(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp)) {
+                            Column(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact)) {
                                 Text(opt.name, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                                 Text(opt.url, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }

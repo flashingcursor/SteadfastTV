@@ -186,7 +186,7 @@ fun AudioNowPlayingBar(
                 )
                 .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
         ) {
             // Bare equalizer, no cover tile (mini-player mock in future-plan/audio-hud-options.html).
             Equalizer(playing = isPlaying, color = colors.primary, modifier = Modifier.size(width = 26.dp, height = 20.dp))
@@ -234,7 +234,7 @@ fun AudioNowPlayingBar(
             if (expanded) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                 ) {
                     AudioBtn(0, OwnTVIcon.SKIP_PREVIOUS, active && enabled[0], canPrev, requesters, { focusedSlot = it }, onClick = onPrev)
                     // Play/pause leads the row visually: one step bigger than the rest (mock proportions).
@@ -277,7 +277,7 @@ private fun LiveRow(dotColor: Color) {
         animationSpec = infiniteRepeatable(tween(700, easing = LinearEasing), RepeatMode.Reverse),
         label = "liveDotAlpha",
     )
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny)) {
         Box(Modifier.size(6.dp).clip(CircleShape).background(dotColor).alpha(a))
         Text(stringResource(R.string.player_live), style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant, fontWeight = FontWeight.Bold)
     }

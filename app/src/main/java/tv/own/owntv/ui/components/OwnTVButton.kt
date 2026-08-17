@@ -100,7 +100,7 @@ fun OwnTVButton(
 @TvComponentPreview
 @Composable
 private fun OwnTVButtonPreview() = OwnTVPreview {
-    Row(Modifier.padding(Dimens.GapMedium), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    Row(Modifier.padding(Dimens.GapMedium), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
         OwnTVButton(label = "Primary", onClick = {})
         OwnTVButton(label = "Secondary", onClick = {}, style = OwnTVButtonStyle.SECONDARY)
         OwnTVButton(label = "Compact", onClick = {}, compact = true)

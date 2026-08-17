@@ -145,7 +145,7 @@ fun BackupScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 }
             }
             .focusGroup()
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         Text(stringResource(R.string.settings_backup_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
         Spacer(Modifier.height(Dimens.GapSmall))
@@ -155,16 +155,16 @@ fun BackupScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         )
         Spacer(Modifier.height(Dimens.GapLarge))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             OwnTVButton(stringResource(R.string.settings_backup_export_button), onClick = { dialogReturn = firstFocus; showExportChooser = true }, enabled = state != BackupViewModel.State.Working, modifier = Modifier.focusRequester(firstFocus))
             OwnTVButton(stringResource(R.string.settings_backup_restore_button), onClick = { dialogReturn = restoreBtnFocus; showRestoreChooser = true }, style = OwnTVButtonStyle.SECONDARY, enabled = state != BackupViewModel.State.Working, modifier = Modifier.focusRequester(restoreBtnFocus))
         }
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
 
         when (val s = state) {
             BackupViewModel.State.Working -> Row(verticalAlignment = Alignment.CenterVertically) {
                 OwnTVSpinner(sizeDp = 22)
-                Spacer(Modifier.width(12.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 Text(stringResource(R.string.settings_backup_working), style = MaterialTheme.typography.bodyLarge, color = colors.onSurfaceVariant)
             }
             is BackupViewModel.State.Done -> when (s.kind) {
@@ -379,8 +379,8 @@ private fun RemoteLocalChooserDialog(
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapSmall))
             Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(20.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapWide))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.settings_backup_local_file), onClick = onLocal, style = OwnTVButtonStyle.SECONDARY)
@@ -411,9 +411,9 @@ private fun BackupPasswordDialog(
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding)) {
             Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Text(message, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
             OwnTVTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -421,8 +421,8 @@ private fun BackupPasswordDialog(
                 isPassword = true,
                 focusRequester = firstFocus,
             )
-            Spacer(Modifier.height(20.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapWide))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 if (skipLabel != null) OwnTVButton(skipLabel, onClick = onSkip, style = OwnTVButtonStyle.SECONDARY)
@@ -455,7 +455,7 @@ private fun ProfilePickerDialog(
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(), contentAlignment = Alignment.Center) {
         Column(Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.settings_backup_which_profiles), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(R.string.settings_backup_selected_profiles),
                 style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
@@ -485,8 +485,8 @@ private fun ProfilePickerDialog(
                     modifier = if (i == 0) Modifier.focusRequester(firstFocus) else Modifier,
                 )
             }
-            Spacer(Modifier.height(20.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapWide))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.settings_backup_continue), onClick = { onConfirm(ticked) }, enabled = ticked.isNotEmpty())
@@ -539,8 +539,8 @@ private fun ProfilePinDialog(
                 Spacer(Modifier.height(Dimens.GapSmall))
                 Text(stringResource(R.string.settings_backup_pin_incorrect), style = MaterialTheme.typography.bodyMedium, color = colors.favorite)
             }
-            Spacer(Modifier.height(20.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapWide))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(
@@ -601,7 +601,7 @@ private fun SectionPickerDialog(
                 onToggle = { selected = if (selected.size == sections.size) emptySet() else sections.toSet() },
                 modifier = Modifier.focusRequester(firstFocus),
             )
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             sections.forEach { section ->
                 CheckRow(
                     label = stringResource(sectionLabelRes(section)),
@@ -611,8 +611,8 @@ private fun SectionPickerDialog(
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapWide))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(confirmLabel, onClick = { onConfirm(selected) }, enabled = selected.isNotEmpty())
@@ -637,7 +637,7 @@ private fun CheckRow(
         contentAlignment = Alignment.CenterStart,
         surface = GlassSurface.DIALOGS,
     ) { _ ->
-        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact), verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
                     .size(22.dp)

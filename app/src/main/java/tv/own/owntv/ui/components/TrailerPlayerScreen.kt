@@ -178,7 +178,7 @@ fun TrailerPlayerScreen(videoKey: String, onExit: () -> Unit) {
                     .background(Color.Black.copy(alpha = 0.55f))
                     .padding(horizontal = Dimens.GapLarge, vertical = Dimens.HeroGap),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(18.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.GapWide),
             ) {
                 OwnTVButton(
                     stringResource(R.string.player_trailer_exit),

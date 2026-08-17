@@ -220,7 +220,7 @@ private fun FirstRunLanguagePopup(
                     style = MaterialTheme.typography.titleLarge,
                     color = OwnTVTheme.colors.onSurface,
                 )
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 LazyColumn(
                     state = listState,
                     modifier = Modifier
@@ -309,11 +309,11 @@ fun LanguageSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             }
             .focusGroup()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 40.dp, vertical = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapHairline),
     ) {
         Header(title = stringResource(R.string.settings_language), onBack = onBack)
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         SearchBar(
             query = query,
@@ -324,7 +324,7 @@ fun LanguageSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 .focusRequester(searchFocus),
             surface = GlassSurface.CARDS,
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         Spacer(Modifier.height(Dimens.GapMedium))
         OwnTVButton(
@@ -333,9 +333,9 @@ fun LanguageSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
             style = OwnTVButtonStyle.SECONDARY,
         )
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
         Divider()
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(Dimens.GapCompact))
 
         if (showSystemDefault) {
             LanguageRow(
@@ -480,7 +480,7 @@ private fun TranslationContributionDialog(onDismiss: () -> Unit) {
                     .focusRequester(urlFocus),
                 style = OwnTVButtonStyle.SECONDARY,
             )
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             OwnTVButton(
                 label = stringResource(R.string.settings_language_request_new),
                 onClick = {
@@ -499,7 +499,7 @@ private fun TranslationContributionDialog(onDismiss: () -> Unit) {
                 Text(stringResource(it), style = MaterialTheme.typography.bodySmall)
             }
             Spacer(Modifier.height(Dimens.GapMedium))
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(
                     label = stringResource(R.string.settings_language_contribution_copy),
                     onClick = {
@@ -543,7 +543,7 @@ private fun LanguageRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Dimens.GapMedium, vertical = 12.dp),
+                .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Dimens.GapMedium),
         ) {
@@ -578,7 +578,7 @@ private fun LanguageRow(
                     modifier = Modifier
                         .clip(RoundedCornerShape(Dimens.CornerXSmall))
                         .background(if (selected) colors.primary.copy(alpha = 0.25f) else colors.secondaryContainer)
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                        .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall),
                 )
             }
         }

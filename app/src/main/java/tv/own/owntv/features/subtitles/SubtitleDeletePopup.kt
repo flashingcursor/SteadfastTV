@@ -75,7 +75,7 @@ fun SubtitleDeletePopup(
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(contentTitle, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Spacer(Modifier.height(Dimens.HeroGap))
-                LazyColumn(Modifier.fillMaxWidth().heightIn(max = 260.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                LazyColumn(Modifier.fillMaxWidth().heightIn(max = 260.dp), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     items(items, key = { it.cacheId }) { item ->
                         FocusableSurface(
                             onClick = { onDelete(item) },
@@ -84,7 +84,7 @@ fun SubtitleDeletePopup(
                             contentAlignment = Alignment.CenterStart,
                             surface = GlassSurface.DIALOGS,
                         ) { _ ->
-                            Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Row(Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact), verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text(
                                         item.languageName ?: item.language ?: stringResource(R.string.player_subtitles_subtitle),

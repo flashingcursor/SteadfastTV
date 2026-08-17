@@ -127,16 +127,16 @@ fun ManageProfilesScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 }
             }
             .focusGroup()
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.profiles_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
             Spacer(Modifier.weight(1f))
             OwnTVButton(stringResource(R.string.profiles_add_button), onClick = { creating = true }, icon = OwnTVIcon.ADD, modifier = Modifier.focusRequester(addFocus))
         }
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.GapWide))
 
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
             itemsIndexed(profiles, key = { _, it -> it.id }) { index, p ->
                 ProfileRow(
                     profile = p,
@@ -206,10 +206,10 @@ private fun ProfileRow(profile: ProfileEntity, canDelete: Boolean, rowModifier: 
                 Text(tags.joinToString(" • "), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
             }
         }
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         OwnTVButton(stringResource(R.string.common_edit), onClick = onEdit, style = OwnTVButtonStyle.SECONDARY)
         if (canDelete) {
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             OwnTVButton(stringResource(R.string.common_delete), onClick = onDelete, style = OwnTVButtonStyle.SECONDARY)
         }
     }

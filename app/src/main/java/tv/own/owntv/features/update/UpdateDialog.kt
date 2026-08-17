@@ -75,15 +75,15 @@ fun UpdateDialog(onDismiss: () -> Unit, checkOnOpen: Boolean = false) {
         modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = AlphaTokens.AlphaScrim)).trapAllFocusExit().focusGroup(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.width(520.dp).clip(RoundedCornerShape(Dimens.CardCorner)).background(colors.surfaceContainerHigh).padding(28.dp)) {
+        Column(Modifier.width(520.dp).clip(RoundedCornerShape(Dimens.CardCorner)).background(colors.surfaceContainerHigh).padding(Dimens.GapLarge)) {
             Text(stringResource(R.string.update_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
 
             when (val s = state) {
                 UpdateManager.State.Idle, UpdateManager.State.Checking -> {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         OwnTVSpinner(sizeDp = 28)
-                        Spacer(Modifier.width(12.dp))
+                        Spacer(Modifier.width(Dimens.GapCompact))
                         Text(stringResource(R.string.update_checking), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     }
                 }
@@ -92,7 +92,7 @@ fun UpdateDialog(onDismiss: () -> Unit, checkOnOpen: Boolean = false) {
                         stringResource(R.string.update_latest, manager.currentVersion),
                         style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(Dimens.GapWide))
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                         OwnTVButton(stringResource(R.string.settings_close), onClick = onDismiss, modifier = Modifier.focusRequester(focus))
                     }
@@ -103,9 +103,9 @@ fun UpdateDialog(onDismiss: () -> Unit, checkOnOpen: Boolean = false) {
                         style = MaterialTheme.typography.bodyMedium, color = colors.onSurface,
                     )
                     if (s.info.notes.isNotBlank()) {
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(Dimens.GapCompact))
                         Text(stringResource(R.string.update_whats_new), style = MaterialTheme.typography.titleSmall, color = colors.onSurface)
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(
                             renderReleaseNotes(s.info.notes, headingColor = colors.onSurface),
                             style = MaterialTheme.typography.bodySmall,
@@ -116,8 +116,8 @@ fun UpdateDialog(onDismiss: () -> Unit, checkOnOpen: Boolean = false) {
                                 .verticalScroll(rememberScrollState()),
                         )
                     }
-                    Spacer(Modifier.height(20.dp))
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Spacer(Modifier.height(Dimens.GapWide))
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                         OwnTVButton(stringResource(R.string.update_later), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                         Spacer(Modifier.weight(1f))
                         OwnTVButton(stringResource(R.string.update_now), onClick = { manager.downloadAndInstall() }, icon = OwnTVIcon.DOWNLOADS, modifier = Modifier.focusRequester(focus))
@@ -126,7 +126,7 @@ fun UpdateDialog(onDismiss: () -> Unit, checkOnOpen: Boolean = false) {
                 is UpdateManager.State.Downloading -> {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         OwnTVSpinner(sizeDp = 28)
-                        Spacer(Modifier.width(12.dp))
+                        Spacer(Modifier.width(Dimens.GapCompact))
                         Text(stringResource(R.string.update_downloading, s.percent), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                     }
                     Spacer(Modifier.height(Dimens.GapSmall))
@@ -141,8 +141,8 @@ fun UpdateDialog(onDismiss: () -> Unit, checkOnOpen: Boolean = false) {
                         style = MaterialTheme.typography.bodyMedium,
                         color = colors.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(20.dp))
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Spacer(Modifier.height(Dimens.GapWide))
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                         OwnTVButton(stringResource(R.string.settings_close), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                         Spacer(Modifier.weight(1f))
                         OwnTVButton(stringResource(R.string.update_try_again), onClick = { manager.retry() }, modifier = Modifier.focusRequester(focus))

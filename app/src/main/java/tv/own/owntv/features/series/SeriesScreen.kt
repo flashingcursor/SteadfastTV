@@ -444,9 +444,9 @@ private fun SeriesGrid(
             Spacer(Modifier.height(Dimens.HeroGap))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SearchBar(query = searchQuery, onQueryChange = vm::setSearchQuery, placeholder = stringResource(R.string.content_search_series, selectedLabel), modifier = Modifier.weight(1f))
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 SortChip(mode = sortMode, onToggle = vm::toggleSort, playlistLabel = stringResource(R.string.content_provider))
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 tv.own.owntv.ui.components.OwnTVButton(
                     label = stringResource(if (viewMode == SettingsRepository.VodViewMode.GRID) R.string.settings_view_grid else R.string.settings_view_list),
                     onClick = vm::toggleViewMode,
@@ -495,8 +495,8 @@ private fun SeriesGrid(
                 LazyVerticalGrid(
                     state = effectiveGridState,
                     columns = GridCells.Adaptive(minSize = 130.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
                 ) {
                     items(
                         count = series.itemCount,
@@ -564,7 +564,7 @@ private fun SeriesGrid(
                     // Non-focusable status strip — only present while this series' episodes are downloading.
                     tv.own.owntv.ui.components.downloadStripFor(selectedSeriesDownloads)?.let {
                         tv.own.owntv.ui.components.DownloadStatusStrip(it)
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(Dimens.GapCompact))
                     }
                     // Tall portrait poster (like the list / a phone screen), centred in the pane.
                     Box(modifier = Modifier.fillMaxWidth().height(340.dp), contentAlignment = Alignment.Center) {
@@ -587,17 +587,17 @@ private fun SeriesGrid(
                         Text(metaBits.joinToString(stringResource(R.string.content_metadata_separator)), style = MaterialTheme.typography.labelMedium.copy(fontFeatureSettings = "tnum"), color = OwnTVTheme.colors.onSurfaceVariant)
                     }
                     if (genres.isNotEmpty()) {
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(genres.joinToString(stringResource(R.string.content_genres_separator)), style = MaterialTheme.typography.labelMedium, color = OwnTVTheme.colors.onSurfaceVariant)
                     }
                     if (!plot.isNullOrBlank()) {
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(Dimens.GapCompact))
                         Text(plot, style = MaterialTheme.typography.bodyMedium, color = OwnTVTheme.colors.onSurfaceVariant, maxLines = 8, overflow = TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 360.dp))
                     }
                     if (cast.isNotEmpty()) {
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(Dimens.GapCompact))
                         Text(stringResource(R.string.content_media_cast), style = MaterialTheme.typography.labelMedium, color = OwnTVTheme.colors.onSurface)
-                        Spacer(Modifier.height(2.dp))
+                        Spacer(Modifier.height(Dimens.GapHairline))
                         Text(cast.take(6).joinToString(", "), style = MaterialTheme.typography.bodySmall, color = OwnTVTheme.colors.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     }
                     Spacer(Modifier.height(Dimens.GapMedium))
@@ -827,16 +827,16 @@ private fun EpisodeDetailPane(
         nextUpEpisode?.takeIf { it.id != episode.id }?.let { nup ->
             Column(
                 modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall))
-                    .background(colors.primaryContainer.copy(alpha = 0.22f)).padding(12.dp),
+                    .background(colors.primaryContainer.copy(alpha = 0.22f)).padding(Dimens.GapCompact),
             ) {
                 Text(stringResource(R.string.content_next_up), style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant)
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(stringResource(R.string.content_season_episode_title, nup.seasonNumber, nup.episodeNumber, episodeDisplayTitle(nup)), style = MaterialTheme.typography.titleMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 if (nextUpPositionMs > 0) {
-                    Spacer(Modifier.height(2.dp))
+                    Spacer(Modifier.height(Dimens.GapHairline))
                     Text(stringResource(R.string.content_resume_at, formatTimestamp(nextUpPositionMs)), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                 }
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 OwnTVButton(label = stringResource(R.string.content_play), onClick = onPlayNextUp, icon = OwnTVIcon.PLAY, modifier = Modifier.fillMaxWidth())
             }
             Spacer(Modifier.height(Dimens.HeroGap))
@@ -856,7 +856,7 @@ private fun EpisodeDetailPane(
         Spacer(Modifier.height(Dimens.GapTiny))
         Text(bits.joinToString(stringResource(R.string.content_metadata_separator)), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         if (!plot.isNullOrBlank()) {
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Text(plot, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         }
         Spacer(Modifier.height(Dimens.GapMedium))
@@ -1153,7 +1153,7 @@ private fun EpisodeView(
                             }
                             Spacer(Modifier.height(Dimens.HeroGap))
                         }
-                        LazyColumn(state = epListState, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        LazyColumn(state = epListState, verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                             // Keyed by episode id, not index: on a season switch the item at a
                             // given position is a different episode, and index keys would carry
                             // focus/row state across to it.
@@ -1328,7 +1328,7 @@ private fun SeasonChip(season: Int, selected: Boolean, completedCount: Int, tota
             label,
             style = MaterialTheme.typography.labelLarge,
             color = if (selected) colors.onPrimaryContainer else colors.onSurface,
-            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
         )
     }
 }
@@ -1359,7 +1359,7 @@ private fun EpisodeRow(
     ) { focused ->
         LaunchedEffect(focused) { if (focused) onFocus() }
         Column(modifier = Modifier.fillMaxWidth()) {
-            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
+            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapCompact), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.HeroGap)) {
                 Box(
                     modifier = Modifier.size(34.dp).clip(RoundedCornerShape(Dimens.CornerXSmall)).background(if (completed) colors.primaryContainer else colors.surfaceContainerLowest),
                     contentAlignment = Alignment.Center,
@@ -1386,7 +1386,7 @@ private fun EpisodeRow(
                         stringResource(R.string.content_last_watched),
                         style = MaterialTheme.typography.labelSmall,
                         color = colors.onPrimaryContainer,
-                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
+                        modifier = Modifier.clip(RoundedCornerShape(Dimens.CornerXSmall)).background(colors.primaryContainer).padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny),
                     )
                 }
             }
@@ -1468,7 +1468,7 @@ private fun SeriesSortingDialog(
     ) {
         Column(Modifier.dialogPanel(width = 680.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.content_sorting), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
             SortingRow(
                 label = stringResource(R.string.content_seasons),
                 descending = order.seasonsDescending,
@@ -1476,7 +1476,7 @@ private fun SeriesSortingDialog(
                 // Pre-focus the row the user is most likely to change first.
                 focusRequester = focus,
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             SortingRow(
                 label = stringResource(R.string.content_episodes),
                 descending = order.episodesDescending,
@@ -1497,7 +1497,7 @@ private fun SortingRow(
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
     ) {
         Text(
             label,

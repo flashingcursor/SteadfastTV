@@ -350,7 +350,7 @@ fun AddSourceScreen(
         Column(modifier = Modifier.widthIn(max = 560.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             // Source type selector (locked while editing — the type can't change, so initial focus
             // goes to the Name field instead of a dead chip).
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 // While editing, the type is fixed — show only the matching chip.
                 if (!editing || kind == SourceKind.XTREAM) {
                     KindChip(stringResource(R.string.setup_xtream), kind == SourceKind.XTREAM, Modifier.weight(1f).then(if (!editing) Modifier.focusRequester(firstFocus) else Modifier)) { if (!editing) kind = SourceKind.XTREAM }
@@ -362,7 +362,7 @@ fun AddSourceScreen(
                     KindChip(stringResource(R.string.setup_stalker_mac), kind == SourceKind.STALKER, Modifier.weight(1f)) { if (!editing) kind = SourceKind.STALKER }
                 }
             }
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.GapWide))
 
             OwnTVTextField(name, { name = it }, label = stringResource(R.string.setup_source_name_optional), placeholder = stringResource(R.string.setup_default_iptv), modifier = Modifier.fillMaxWidth(), focusRequester = if (editing) firstFocus else null)
             Spacer(Modifier.height(Dimens.HeroGap))
@@ -380,7 +380,7 @@ fun AddSourceScreen(
                         if (m3uUrl.startsWith("/")) java.io.File(m3uUrl).name else null
                     }
                     OwnTVTextField(m3uUrl, { m3uUrl = it }, label = stringResource(R.string.setup_playlist_url_local_file), placeholder = stringResource(R.string.setup_playlist_example), keyboardType = KeyboardType.Uri, modifier = Modifier.fillMaxWidth())
-                    Spacer(Modifier.height(10.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     OwnTVButton(
                         label = if (pickedName != null) stringResource(R.string.setup_local_file_prefix, pickedName) else stringResource(R.string.setup_local_file_choose),
                         onClick = { showFileBrowser = true },
@@ -393,10 +393,10 @@ fun AddSourceScreen(
                     Spacer(Modifier.height(Dimens.HeroGap))
                     OwnTVTextField(mac, { mac = it }, label = stringResource(R.string.setup_mac_address), placeholder = stringResource(R.string.setup_mac_example), modifier = Modifier.fillMaxWidth())
                     if (mac.isNotBlank() && !macValid) {
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(stringResource(R.string.setup_mac_invalid), style = MaterialTheme.typography.bodySmall, color = colors.favorite)
                     }
-                    Spacer(Modifier.height(10.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     OwnTVButton(
                         label = stringResource(R.string.setup_device_model_preset),
                         onClick = { showUaPresetPicker = true },
@@ -404,7 +404,7 @@ fun AddSourceScreen(
                         modifier = Modifier.fillMaxWidth(),
                     )
                     if (onTestStalker != null) {
-                        Spacer(Modifier.height(10.dp))
+                        Spacer(Modifier.height(Dimens.GapCompact))
                         OwnTVButton(
                             label = if (stalkerTest is StalkerTestUi.Testing) stringResource(R.string.setup_testing) else stringResource(R.string.setup_test_connection),
                             onClick = { onTestStalker(portalUrl, mac, userAgent) },
@@ -414,7 +414,7 @@ fun AddSourceScreen(
                         )
                         when (stalkerTest) {
                             is StalkerTestUi.Ok -> {
-                                Spacer(Modifier.height(6.dp))
+                                Spacer(Modifier.height(Dimens.GapSmall))
                                 Text(
                                     pluralStringResource(R.plurals.setup_stalker_test_connected, stalkerTest.profileFields, stalkerTest.endpoint, stalkerTest.profileFields),
                                     style = MaterialTheme.typography.bodySmall,
@@ -425,7 +425,7 @@ fun AddSourceScreen(
                                 }
                             }
                             is StalkerTestUi.Failed -> {
-                                Spacer(Modifier.height(6.dp))
+                                Spacer(Modifier.height(Dimens.GapSmall))
                                 Text(stalkerTest.failure.displayText(), style = MaterialTheme.typography.bodySmall, color = colors.favorite)
                             }
                             else -> Unit
@@ -476,7 +476,7 @@ fun AddSourceScreen(
                 )
                 when (val t = hlsTest) {
                     is HlsTestUi.Complete -> {
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(
                             t.displayText(),
                             style = MaterialTheme.typography.bodySmall,
@@ -484,7 +484,7 @@ fun AddSourceScreen(
                         )
                     }
                     is HlsTestUi.Failed -> {
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.GapSmall))
                         Text(
                             stringResource(R.string.setup_hls_test_failed, t.rawMessage),
                             style = MaterialTheme.typography.bodySmall,
@@ -508,7 +508,7 @@ fun AddSourceScreen(
             }
 
             if (showContentToggles) {
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.GapWide))
                 Text(stringResource(R.string.setup_what_to_sync), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
                 Spacer(Modifier.height(Dimens.GapTiny))
                 Text(
@@ -520,7 +520,7 @@ fun AddSourceScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                 )
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.GapCompact))
                 SyncScopeRow(label = stringResource(R.string.setup_live_tv), desc = stringResource(R.string.setup_channels_categories), value = syncLive, editing = editing) { syncLive = it }
                 Spacer(Modifier.height(Dimens.GapSmall))
                 SyncScopeRow(label = stringResource(R.string.setup_movies), desc = stringResource(R.string.setup_vod_movie_catalog), value = syncMovies, editing = editing) { syncMovies = it }
@@ -537,8 +537,8 @@ fun AddSourceScreen(
                 ) { hidden -> scope.launch { settings.setHideNewCategoriesDefault(hideNewCatsProfile, hidden) } }
             }
 
-            Spacer(Modifier.height(28.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_back), onClick = onBack, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(
@@ -705,7 +705,7 @@ private fun ToggleRow(label: String, desc: String, checked: Boolean, onToggle: (
                 modifier = Modifier.size(52.dp, 30.dp).clip(CircleShape).background(if (checked) colors.primary else colors.surfaceContainerHighest),
                 contentAlignment = if (checked) Alignment.CenterEnd else Alignment.CenterStart,
             ) {
-                Box(Modifier.padding(3.dp).size(24.dp).clip(CircleShape).background(Color.White))
+                Box(Modifier.padding(Dimens.GapTiny).size(24.dp).clip(CircleShape).background(Color.White))
             }
         }
     }

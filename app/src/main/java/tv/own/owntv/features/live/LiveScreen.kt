@@ -438,7 +438,7 @@ fun LiveScreen(
                     )
                 }
             } else {
-                LazyColumn(state = effectiveListState, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                LazyColumn(state = effectiveListState, verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     items(
                         count = channels.itemCount,
                         key = channels.itemKey { it.id },
@@ -771,10 +771,10 @@ private fun LivePreviewPane(
             // leaving the user to read it as a broken channel (F31).
             if (singleSessionBlocked && !previewPlaying) {
                 Box(
-                    Modifier.align(Alignment.BottomCenter).padding(10.dp)
+                    Modifier.align(Alignment.BottomCenter).padding(Dimens.GapCompact)
                         .clip(RoundedCornerShape(50))
                         .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.7f))
-                        .padding(horizontal = 10.dp, vertical = 5.dp),
+                        .padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapTiny),
                 ) {
                     Text(
                         stringResource(R.string.content_preview_single_stream),
@@ -790,13 +790,13 @@ private fun LivePreviewPane(
             chips.takeIf { previewPlaying && it.isNotEmpty() }?.let { list ->
                 Row(
                     Modifier.align(Alignment.TopStart).padding(Dimens.GapSmall),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
                 ) {
                     list.forEach { label ->
                         Box(
                             Modifier.clip(RoundedCornerShape(50))
                                 .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.6f))
-                                .padding(horizontal = Dimens.GapSmall, vertical = 3.dp),
+                                .padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapTiny),
                         ) {
                             Text(label, style = MaterialTheme.typography.labelMedium, color = androidx.compose.ui.graphics.Color.White)
                         }
@@ -867,8 +867,8 @@ private fun ChannelMetaRow(
 
     FlowRow(
         modifier = Modifier.fillMaxWidth().padding(vertical = Dimens.GapTiny),
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
+        verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall),
     ) {
         chips.forEach { chip -> MetaChipBadge(chip) }
     }
@@ -894,7 +894,7 @@ private fun MetaChipBadge(chip: MetaChip) {
             .background(colors.surfaceContainerLow)
             .padding(horizontal = Dimens.GapSmall),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.GapTiny),
     ) {
         chip.dot?.let {
             Box(Modifier.size(Dimens.StatusDotSize).clip(androidx.compose.foundation.shape.CircleShape).background(it))
@@ -945,7 +945,7 @@ private fun EpgSection(nowNext: EpgNowNext?) {
             )
         }
         if (next != null) {
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(
                 stringResource(R.string.content_live_next_label, formatTime(next.startMs)),
                 style = MaterialTheme.typography.labelSmall.copy(fontFeatureSettings = "tnum"),
@@ -963,10 +963,10 @@ private fun EpgSection(nowNext: EpgNowNext?) {
         // Upcoming programmes after "next" — see what's on later without opening the Guide (#11).
         val later = nowNext.upcoming
         if (later.isNotEmpty()) {
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(stringResource(R.string.content_live_later_label), style = MaterialTheme.typography.labelSmall, color = colors.onSurfaceVariant, fontWeight = FontWeight.Bold)
             later.forEach { p ->
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     Text(formatTime(p.startMs), style = MaterialTheme.typography.labelSmall.copy(fontFeatureSettings = "tnum"), color = colors.primary)
                     Text(p.title, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
@@ -1024,9 +1024,9 @@ private fun CatchupDialog(
         val listHeight = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 220.dp).coerceIn(140.dp, 300.dp)
         Column(Modifier.dialogPanel(width = 460.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact, scroll = false)) {
             Text(stringResource(R.string.content_catchup_title, channelName), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(stringResource(R.string.content_catchup_prompt), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             when (val progs = list) {
                 null -> Box(Modifier.fillMaxWidth().height(80.dp), contentAlignment = Alignment.Center) { OwnTVSpinner(sizeDp = 28) }
                 else -> if (progs.isEmpty()) {
@@ -1035,7 +1035,7 @@ private fun CatchupDialog(
                         style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                     )
                 } else {
-                    LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                         items(progs, key = { it.id }) { p ->
                             FocusableSurface(
                                 onClick = { onPick(p) },
@@ -1044,7 +1044,7 @@ private fun CatchupDialog(
                                 contentAlignment = Alignment.CenterStart,
                                 surface = GlassSurface.DIALOGS,
                             ) { _ ->
-                                Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = Dimens.GapSmall)) {
+                                Column(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall)) {
                                     Text(p.title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                     Text(formatCatchupTime(p.startMs, p.stopMs, formatTime), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                                 }
@@ -1105,7 +1105,7 @@ internal fun EpgMatchDialog(
         val listHeight = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp - 260.dp).coerceIn(140.dp, 240.dp)
         Column(Modifier.dialogPanel(width = 384.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact)) {
             Text(stringResource(R.string.content_match_epg), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(
                 if (currentMatch != null) {
                     stringResource(R.string.content_epg_match_prompt_current, channelName, currentMatch)
@@ -1114,13 +1114,13 @@ internal fun EpgMatchDialog(
                 },
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             // Actions live in a right-hand column so a D-pad right from the search bar or ANY list row
             // reaches Close/Clear directly — no scrolling to the bottom of a long list.
             Row(Modifier.fillMaxWidth()) {
                 Column(Modifier.weight(1f)) {
                     SearchBar(query = query, onQueryChange = { query = it }, placeholder = stringResource(R.string.content_search_guide_channels), modifier = Modifier.fillMaxWidth().focusRequester(searchFocus), surface = GlassSurface.DIALOGS)
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(Dimens.GapCompact))
                     val list = results
                     when {
                         list == null -> androidx.compose.foundation.layout.Box(Modifier.fillMaxWidth().height(80.dp), contentAlignment = Alignment.Center) { OwnTVSpinner(sizeDp = 28) }
@@ -1128,7 +1128,7 @@ internal fun EpgMatchDialog(
                             if (query.isBlank()) stringResource(R.string.content_no_epg_data) else stringResource(R.string.content_no_guide_channels, query),
                             style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant,
                         )
-                        else -> LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        else -> LazyColumn(Modifier.fillMaxWidth().height(listHeight), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                             items(list, key = { it.id }) { epg ->
                                 FocusableSurface(
                                     onClick = { onPick(epg.epgChannelId) },
@@ -1137,7 +1137,7 @@ internal fun EpgMatchDialog(
                                     contentAlignment = Alignment.CenterStart,
                                     surface = GlassSurface.DIALOGS,
                                 ) { _ ->
-                                    Column(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 7.dp)) {
+                                    Column(Modifier.fillMaxWidth().padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapSmall)) {
                                         Text(epg.displayName ?: epg.epgChannelId, style = MaterialTheme.typography.bodyMedium, color = colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                         Text(epg.epgChannelId, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                     }
@@ -1146,7 +1146,7 @@ internal fun EpgMatchDialog(
                         }
                     }
                 }
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 Column(Modifier.width(110.dp), verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {
                     OwnTVButton(stringResource(R.string.content_close), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
                     if (currentMatch != null) OwnTVButton(stringResource(R.string.content_clear_match), onClick = onClear, style = OwnTVButtonStyle.SECONDARY, modifier = Modifier.fillMaxWidth())
@@ -1191,14 +1191,14 @@ internal fun EpgOffsetDialog(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(stringResource(R.string.content_epg_time_offset), style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-            Spacer(Modifier.height(2.dp))
+            Spacer(Modifier.height(Dimens.GapHairline))
             Text(
                 stringResource(R.string.content_epg_offset_channel_description, channelName),
                 style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.HeroGap))
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(
                     stringResource(R.string.content_epg_shift_minutes, "−", "30"),
                     onClick = { minutes = (minutes - 30).coerceAtLeast(-12 * 60) },
@@ -1217,7 +1217,7 @@ internal fun EpgOffsetDialog(
                     style = OwnTVButtonStyle.SECONDARY, compact = true,
                 )
             }
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 stringResource(
                     if (currentMinutes == null) R.string.content_epg_offset_following_global else R.string.content_epg_offset_channel_only,

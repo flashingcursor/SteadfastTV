@@ -90,7 +90,7 @@ fun LiveEpgCard(epg: EpgNowNext?, modifier: Modifier = Modifier) {
                 val span = (entry.stopMs - entry.startMs).toFloat()
                 if (span > 0f) {
                     val progress = ((nowMs - entry.startMs) / span).coerceIn(0f, 1f)
-                    Spacer(Modifier.height(5.dp))
+                    Spacer(Modifier.height(Dimens.GapTiny))
                     Box(
                         Modifier.fillMaxWidth().height(Dimens.ThinProgressHeight).clip(RoundedCornerShape(1.dp))
                             .background(Color.White.copy(alpha = 0.18f)),
@@ -140,6 +140,6 @@ private fun SlotLabel(text: String, color: Color) {
         style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.2.sp),
         color = color,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(bottom = 1.dp),
+        modifier = Modifier.padding(bottom = Dimens.GapHairline),
     )
 }

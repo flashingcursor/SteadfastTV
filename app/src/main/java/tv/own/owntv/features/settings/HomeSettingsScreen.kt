@@ -72,7 +72,7 @@ fun HomeSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 onEnter = { runCatching { firstFocus.requestFocus() } }
             }
             .focusGroup()
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         Text(stringResource(R.string.settings_home_screen), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
         Spacer(Modifier.height(Dimens.GapTiny))
@@ -158,7 +158,7 @@ fun HomeSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             }
 
             item {
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 GroupLabel(stringResource(R.string.settings_android_tv_home))
             }
             item {
@@ -237,23 +237,23 @@ private fun HomeRowCard(
                 )
             }
         }
-        Spacer(Modifier.width(10.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         if (liveMode != null) {
             OwnTVButton(
                 label = stringResource(R.string.settings_mode, liveMode.displayLabel()),
                 onClick = { onToggleLiveMode(liveMode) },
                 style = OwnTVButtonStyle.SECONDARY,
             )
-            Spacer(Modifier.width(6.dp))
+            Spacer(Modifier.width(Dimens.GapSmall))
         }
         OwnTVButton("⤒", onClick = onMoveTop, style = OwnTVButtonStyle.SECONDARY, enabled = canMoveUp)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("↑", onClick = onMoveUp, style = OwnTVButtonStyle.SECONDARY, enabled = canMoveUp)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("↓", onClick = onMoveDown, style = OwnTVButtonStyle.SECONDARY, enabled = canMoveDown)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("⤓", onClick = onMoveBottom, style = OwnTVButtonStyle.SECONDARY, enabled = canMoveDown)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton(
             label = stringResource(if (hidden) R.string.common_show else R.string.common_hide),
             onClick = onToggleHidden,

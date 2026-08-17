@@ -105,7 +105,7 @@ fun BrandLockup(
         Row(
             modifier = modifier,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact),
         ) {
             mark()
             wordmark()

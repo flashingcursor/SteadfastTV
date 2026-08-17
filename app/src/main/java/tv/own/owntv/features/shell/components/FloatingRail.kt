@@ -236,9 +236,9 @@ fun FloatingRail(
         // idle's would risk a collapse-animation frame measuring narrower than idle and corrupting
         // that floor.
         val columnPadding = if (active) {
-            PaddingValues(start = 9.dp, top = Dimens.GapMedium, end = Dimens.GapMedium, bottom = Dimens.GapMedium)
+            PaddingValues(start = Dimens.GapSmall, top = Dimens.GapMedium, end = Dimens.GapMedium, bottom = Dimens.GapMedium)
         } else {
-            PaddingValues(horizontal = 9.dp, vertical = Dimens.GapMedium)
+            PaddingValues(horizontal = Dimens.GapSmall, vertical = Dimens.GapMedium)
         }
         val columnAlignment = Alignment.Start
         Column(
@@ -274,7 +274,7 @@ fun FloatingRail(
                 .then(if (expandedVisuals) Modifier.width(IntrinsicSize.Max) else Modifier)
                 .padding(columnPadding),
             horizontalAlignment = columnAlignment,
-            verticalArrangement = Arrangement.spacedBy(18.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.GapWide),
         ) {
             // Profile + Settings (and their separators) are drawer furniture, not idle chrome —
             // composed only while expanded (user feedback; kept through `settling` so they don't
@@ -293,7 +293,7 @@ fun FloatingRail(
                 modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()),
                 contentAlignment = Alignment.Center,
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(9.dp), horizontalAlignment = columnAlignment) {
+                Column(verticalArrangement = Arrangement.spacedBy(Dimens.GapSmall), horizontalAlignment = columnAlignment) {
                     MainSection.browseOrder.filter { it in visibleSections }.forEach { section ->
                         RailNavItem(
                             section = section,
@@ -339,14 +339,14 @@ fun FloatingRail(
                 )
                 .padding(horizontal = Dimens.HeroGap, vertical = Dimens.GapSmall),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(22.dp),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.GapLarge),
         ) {
             if (expandedVisuals) {
                 RailAvatar(avatarId = avatarId, profileName = profileName, onSwitchProfile = onSwitchProfile, onPickAvatar = onPickAvatar)
                 RailSeparator(position = position)
             }
             Box(modifier = Modifier.horizontalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
-                Row(horizontalArrangement = Arrangement.spacedBy(9.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall), verticalAlignment = Alignment.CenterVertically) {
                     MainSection.browseOrder.filter { it in visibleSections }.forEach { section ->
                         RailNavItem(
                             section = section,
@@ -504,12 +504,12 @@ private fun RailNavItem(
                 // shift the icons 2dp on every expand/collapse. (Changing the shared outer inset
                 // instead would NOT close an avatar/icon gap: both shift by the same amount; only
                 // this row's own padding controls the icon's offset from the shared start inset.)
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                modifier = Modifier.padding(horizontal = Dimens.GapCompact, vertical = Dimens.GapCompact),
                 verticalAlignment = Alignment.CenterVertically,
                 // `expanded` packs Icon/Text/badge with no extra space to distribute (the Row is
                 // wrap-content width, not fillMaxWidth), so they already sit flush at the row's own
-                // start regardless of Arrangement's alignment parameter — plain spacedBy(12.dp).
-                horizontalArrangement = if (expanded) Arrangement.spacedBy(12.dp) else Arrangement.Center,
+                // start regardless of Arrangement's alignment parameter — plain spacedBy(Dimens.GapCompact).
+                horizontalArrangement = if (expanded) Arrangement.spacedBy(Dimens.GapCompact) else Arrangement.Center,
             ) {
                 Icon(
                     imageVector = navIcon(section = section, selected = selected),
@@ -533,7 +533,7 @@ private fun RailNavItem(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(Dimens.CornerXSmall))
                                 .background(colors.primaryContainer)
-                                .padding(horizontal = Dimens.GapSmall, vertical = 2.dp),
+                                .padding(horizontal = Dimens.GapSmall, vertical = Dimens.GapHairline),
                         ) {
                             Text(
                                 text = localizedInteger(count),
@@ -576,7 +576,7 @@ private fun BoxScope.HorizontalNavAccentBar(visible: Boolean, modifier: Modifier
         Box(
             modifier = modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 2.dp)
+                .padding(bottom = Dimens.GapHairline)
                 .width(22.dp)
                 .height(thickness)
                 .clip(RoundedCornerShape(50))

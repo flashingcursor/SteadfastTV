@@ -146,7 +146,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     }
     if (pinLock.pin != null && !unlocked) {
         Column(
-            modifier = modifier.fillMaxSize().roundedPanel().padding(horizontal = 40.dp, vertical = 28.dp),
+            modifier = modifier.fillMaxSize().roundedPanel().padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
         ) {
             Text(stringResource(R.string.settings_customize_title), style = MaterialTheme.typography.headlineLarge, color = colors.onSurface)
             Spacer(Modifier.height(Dimens.GapTiny))
@@ -222,7 +222,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             // onEnter fires only for directional entry from outside (internal moves don't re-trigger it).
             .focusProperties { onEnter = { runCatching { firstFocus.requestFocus() } } }
             .focusGroup()
-            .padding(horizontal = 40.dp, vertical = 28.dp),
+            .padding(horizontal = Dimens.DetailPanelPaddingH, vertical = Dimens.DetailPanelPaddingV),
     ) {
         Text(
             stringResource(R.string.settings_customize_title),
@@ -240,9 +240,9 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         // One compact strip, matching the agreed mockup: section tabs left, actions right.
         Row(verticalAlignment = Alignment.CenterVertically) {
             SectionChip(stringResource(R.string.settings_live_tv), section == MediaType.LIVE, Modifier.focusRequester(firstFocus)) { vm.selectSection(MediaType.LIVE) }
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             SectionChip(stringResource(R.string.settings_movies), section == MediaType.MOVIE) { vm.selectSection(MediaType.MOVIE) }
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             SectionChip(stringResource(R.string.settings_series), section == MediaType.SERIES) { vm.selectSection(MediaType.SERIES) }
             Spacer(Modifier.weight(1f))
             // Sort pill — reuses the same per-section sort mode that Browse uses.
@@ -255,7 +255,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 style = OwnTVButtonStyle.SECONDARY,
                 modifier = Modifier.focusRequester(sortFocus),
             )
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             // New categories pill — same setting as the old Row2, now compact.
             OwnTVButton(
                 label = stringResource(
@@ -266,7 +266,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 style = OwnTVButtonStyle.SECONDARY,
                 modifier = Modifier.focusRequester(newCategoriesFocus),
             )
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             // ＋ New category (issue #87) — creates an empty combined category; items are moved into
             // it from the browse context menus or this screen's items view.
             OwnTVButton(
@@ -275,7 +275,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 style = OwnTVButtonStyle.SECONDARY,
                 modifier = Modifier.focusRequester(newCatPillFocus),
             )
-            Spacer(Modifier.width(10.dp))
+            Spacer(Modifier.width(Dimens.GapCompact))
             // Optional PIN lock, restyled as compact pills instead of the old full-width block.
             if (pinLock.pin == null) {
                 OwnTVButton(
@@ -296,7 +296,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     style = OwnTVButtonStyle.SECONDARY,
                     modifier = Modifier.focusRequester(pinFocus),
                 )
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 OwnTVButton(
                     stringResource(R.string.settings_customize_remove_lock),
                     onClick = { dialogReturn = removePinFocus; editingPin = PinEdit.REMOVE },
@@ -313,7 +313,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(Dimens.CornerSmall))
                     .background(colors.primaryContainer)
-                    .padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
+                    .padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -331,10 +331,10 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     color = colors.onPrimaryContainer,
                     modifier = Modifier.weight(1f),
                 )
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Dimens.GapCompact))
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = { vm.cancelRange() }, style = OwnTVButtonStyle.SECONDARY)
             }
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
         }
 
         LazyColumn(
@@ -389,7 +389,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     key = { _, entry -> "hid:${entry.key}" },
                 ) { hiddenIndex, (key, label) ->
                     Row(
-                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh).padding(horizontal = Dimens.GapMedium, vertical = 10.dp),
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(Dimens.CornerSmall)).background(colors.surfaceContainerHigh).padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapCompact),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -400,7 +400,7 @@ fun CustomizeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.weight(1f),
                         )
-                        Spacer(Modifier.width(10.dp))
+                        Spacer(Modifier.width(Dimens.GapCompact))
                         OwnTVButton(
                             stringResource(R.string.settings_customize_unhide),
                             onClick = { vm.unhideChannel(key) },
@@ -628,14 +628,14 @@ private fun RangeHideDialog(count: Int, onHide: () -> Unit, onShow: () -> Unit, 
             Modifier.dialogPanel(width = Dimens.DialogPanelWidth, padding = Dimens.DialogPanelPadding),
         ) {
             Text(stringResource(R.string.settings_customize_hide_show_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(
                 pluralStringResource(R.plurals.settings_customize_selected_categories, count, count),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(22.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.settings_customize_show), onClick = onShow, style = OwnTVButtonStyle.SECONDARY)
@@ -665,7 +665,7 @@ private fun SectionChip(label: String, selected: Boolean, modifier: Modifier = M
                 selected -> colors.onPrimaryContainer
                 else -> colors.onSurface
             },
-            modifier = Modifier.padding(horizontal = 18.dp, vertical = 10.dp),
+            modifier = Modifier.padding(horizontal = Dimens.GapWide, vertical = Dimens.GapCompact),
         )
     }
 }
@@ -727,7 +727,7 @@ private fun CategoryRow(
             surface = GlassSurface.CARDS,
             contentAlignment = Alignment.CenterStart,
         ) { _ ->
-            Column(Modifier.padding(horizontal = Dimens.GapMedium, vertical = 6.dp)) {
+            Column(Modifier.padding(horizontal = Dimens.GapMedium, vertical = Dimens.GapSmall)) {
                 Text(
                     row.displayName,
                     style = MaterialTheme.typography.titleSmall,
@@ -753,17 +753,17 @@ private fun CategoryRow(
                 }
             }
         }
-        Spacer(Modifier.width(10.dp))
+        Spacer(Modifier.width(Dimens.GapCompact))
         // Long-pressing any arrow anchors a move span; pressing an arrow on a second row picks the
         // span end and moves the whole block, and keeps it selected for further steps.
         OwnTVButton("⤒", onClick = onMoveTop, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("↑", onClick = onMoveUp, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("↓", onClick = onMoveDown, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton("⤓", onClick = onMoveBottom, onLongClick = onMoveLongPress, style = OwnTVButtonStyle.SECONDARY)
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         // Long-press anchors a rename span; a normal press picks the span end while one is active,
         // otherwise it opens the single-row rename dialog.
         OwnTVButton(
@@ -772,7 +772,7 @@ private fun CategoryRow(
             onLongClick = onRenameLongPress,
             style = OwnTVButtonStyle.SECONDARY,
         )
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(Dimens.GapSmall))
         OwnTVButton(
             label = stringResource(if (row.hidden) R.string.settings_customize_show else R.string.settings_customize_hide),
             // Long-press anchors a range; a normal press picks the span end while a range is active,
@@ -812,7 +812,7 @@ private fun PinConfirmDialog(
             Modifier.dialogPanel(width = 290.dp, corner = Dimens.DialogPanelCorner, padding = Dimens.DialogPanelPaddingCompact),
         ) {
             Text(title, style = MaterialTheme.typography.titleMedium, color = colors.onSurface)
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(Dimens.GapSmall))
             Text(message, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
             Spacer(Modifier.height(Dimens.HeroGap))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapSmall)) {

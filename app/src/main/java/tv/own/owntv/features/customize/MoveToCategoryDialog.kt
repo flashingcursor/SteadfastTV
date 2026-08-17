@@ -79,7 +79,7 @@ fun MoveToCategoryDialog(
                 Modifier.dialogPanel(width = Dimens.DialogPanelWidthWide, padding = Dimens.DialogPanelPadding),
             ) {
                 Text(stringResource(R.string.settings_move_category_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(Dimens.GapSmall))
                 Text(
                     stringResource(R.string.settings_move_category_description, originName),
                     style = MaterialTheme.typography.bodyMedium,
@@ -104,7 +104,7 @@ fun MoveToCategoryDialog(
                                 stringResource(R.string.settings_move_category_new),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = colors.onSurface,
-                                modifier = Modifier.padding(horizontal = 18.dp, vertical = 12.dp),
+                                modifier = Modifier.padding(horizontal = Dimens.GapWide, vertical = Dimens.GapCompact),
                             )
                         }
                     }
@@ -118,7 +118,7 @@ fun MoveToCategoryDialog(
                             contentAlignment = Alignment.CenterStart,
                         ) {
                             Row(
-                                Modifier.padding(horizontal = 18.dp, vertical = 12.dp),
+                                Modifier.padding(horizontal = Dimens.GapWide, vertical = Dimens.GapCompact),
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Text(
@@ -155,11 +155,11 @@ fun MoveToCategoryDialog(
                             stringResource(R.string.settings_move_category_keep, originName),
                         style = MaterialTheme.typography.bodyMedium,
                         color = colors.onSurface,
-                        modifier = Modifier.padding(horizontal = 18.dp, vertical = 10.dp),
+                        modifier = Modifier.padding(horizontal = Dimens.GapWide, vertical = Dimens.GapCompact),
                     )
                 }
-                Spacer(Modifier.height(20.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Spacer(Modifier.height(Dimens.GapWide))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                     OwnTVButton(stringResource(R.string.common_cancel), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                     Spacer(Modifier.weight(1f))
                     OwnTVButton(

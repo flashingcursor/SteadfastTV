@@ -98,7 +98,7 @@ fun AutoFrameRatePrompt(
     ) {
         Column(Modifier.dialogPanel(width = 520.dp, padding = Dimens.DialogPanelPadding)) {
             Text(stringResource(R.string.player_frame_rate_prompt_title), style = MaterialTheme.typography.titleLarge, color = colors.onSurface)
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.GapCompact))
             Text(
                 stringResource(
                     R.string.player_frame_rate_prompt_description,
@@ -109,8 +109,8 @@ fun AutoFrameRatePrompt(
                 style = MaterialTheme.typography.bodyMedium,
                 color = colors.onSurfaceVariant,
             )
-            Spacer(Modifier.height(22.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(Modifier.height(Dimens.GapLarge))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.GapCompact)) {
                 OwnTVButton(stringResource(R.string.settings_not_now), onClick = onDismiss, style = OwnTVButtonStyle.SECONDARY)
                 Spacer(Modifier.weight(1f))
                 OwnTVButton(stringResource(R.string.player_frame_rate_turn_on), onClick = onEnable, modifier = Modifier.focusRequester(focus))
